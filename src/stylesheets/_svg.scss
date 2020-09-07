@@ -1,0 +1,103 @@
+$svg-stroke-black: #000000;
+$svg-white: #ffffff;
+$svg-fur-placeholder: #777470; // ce8b32
+$svg-snout-placeholder: #a3a19f; // fce7a8
+
+.svg-sprite {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+}
+
+.svg-grid {
+  &__base {
+    fill: none;
+    stroke: #ccc;
+    stroke-miterlimit: 10;
+  }
+
+  &__safety-lines {
+    fill: none;
+    stroke: #3cc;
+    stroke-miterlimit: 10;
+    stroke-width: 2;
+  }
+
+  &__star-lines {
+    fill: none;
+    stroke: #ccc;
+    stroke-miterlimit: 10;
+    stroke-width: 3;
+  }
+}
+
+.svg-base-tail {
+  &__border {
+    stroke: $svg-stroke-black;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+    stroke-width: 6.4829;
+    fill: $svg-fur-placeholder;
+  }
+
+  &__fill {
+    fill: $svg-fur-placeholder;
+  }
+}
+
+.svg-base-head {
+  &__st1 {
+    fill: none;
+    stroke: $svg-stroke-black;
+    stroke-width: 12.9659;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  &__st2 {
+    fill: $svg-fur-placeholder;
+  }
+  &__st3 {
+    fill: $svg-snout-placeholder;
+  }
+  &__nose,
+  &__pupil {
+    fill: #3b3a36;
+    stroke: $svg-stroke-black;
+    stroke-width: 6.4829;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+
+  &__eye {
+    fill: $svg-white;
+    stroke: $svg-stroke-black;
+    stroke-width: 6.4829;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+}
+
+.svg-base-body {
+  &__st1 {
+    fill: $svg-fur-placeholder;
+    stroke: $svg-stroke-black;
+    stroke-width: 6.4829;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+  &__st2 {
+    fill: $svg-fur-placeholder;
+  }
+  &__st3 {
+    fill: #58595b;
+    stroke: $svg-stroke-black;
+    stroke-width: 6.4829;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+}

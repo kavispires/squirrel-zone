@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/squirrel-zone/static/css/main.5fb087dd.chunk.css",
+    "main.js": "/squirrel-zone/static/js/main.8d93dd2e.chunk.js",
+    "main.js.map": "/squirrel-zone/static/js/main.8d93dd2e.chunk.js.map",
+    "runtime-main.js": "/squirrel-zone/static/js/runtime-main.8e216fff.js",
+    "runtime-main.js.map": "/squirrel-zone/static/js/runtime-main.8e216fff.js.map",
+    "static/css/2.6df4c8f8.chunk.css": "/squirrel-zone/static/css/2.6df4c8f8.chunk.css",
+    "static/js/2.2de7ecd4.chunk.js": "/squirrel-zone/static/js/2.2de7ecd4.chunk.js",
+    "static/js/2.2de7ecd4.chunk.js.map": "/squirrel-zone/static/js/2.2de7ecd4.chunk.js.map",
+    "index.html": "/squirrel-zone/index.html",
+    "precache-manifest.0c5a5ee2db95301dfa712962f71e7d00.js": "/squirrel-zone/precache-manifest.0c5a5ee2db95301dfa712962f71e7d00.js",
+    "service-worker.js": "/squirrel-zone/service-worker.js",
+    "static/css/2.6df4c8f8.chunk.css.map": "/squirrel-zone/static/css/2.6df4c8f8.chunk.css.map",
+    "static/css/main.5fb087dd.chunk.css.map": "/squirrel-zone/static/css/main.5fb087dd.chunk.css.map",
+    "static/js/2.2de7ecd4.chunk.js.LICENSE.txt": "/squirrel-zone/static/js/2.2de7ecd4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8e216fff.js",
+    "static/css/2.6df4c8f8.chunk.css",
+    "static/js/2.2de7ecd4.chunk.js",
+    "static/css/main.5fb087dd.chunk.css",
+    "static/js/main.8d93dd2e.chunk.js"
+  ]
+}

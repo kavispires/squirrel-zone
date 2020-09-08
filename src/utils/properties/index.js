@@ -1,11 +1,12 @@
 import { FUR } from './fur';
 import { SNOUT } from './snout';
+import { NOSE } from './nose';
 
 const PROPS = {
   FUR,
   HEAD: {
     SNOUT,
-    NOSE: [],
+    NOSE,
     EYES: [],
   },
 };

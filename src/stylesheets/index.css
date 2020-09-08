@@ -145,6 +145,42 @@ body {
 .snout-color-fill-2 {
   fill: #dacdbd !important; }
 
+.nose-color-bg-0 {
+  background-color: #522906 !important; }
+
+.nose-color-fill-0 {
+  fill: #522906 !important; }
+
+.nose-color-bg-1 {
+  background-color: #2b230e !important; }
+
+.nose-color-fill-1 {
+  fill: #2b230e !important; }
+
+.nose-color-bg-2 {
+  background-color: #725f10 !important; }
+
+.nose-color-fill-2 {
+  fill: #725f10 !important; }
+
+.nose-color-bg-3 {
+  background-color: #7a4f18 !important; }
+
+.nose-color-fill-3 {
+  fill: #7a4f18 !important; }
+
+.nose-color-bg-4 {
+  background-color: #b46838 !important; }
+
+.nose-color-fill-4 {
+  fill: #b46838 !important; }
+
+.nose-color-bg-5 {
+  background-color: #cc3f3f !important; }
+
+.nose-color-fill-5 {
+  fill: #cc3f3f !important; }
+
 .character {
   width: 600px;
   height: 600px;

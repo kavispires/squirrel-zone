@@ -3,11 +3,19 @@ import React from 'react';
 import PROPS from '../../utils/properties/';
 import DEFAULTS from '../../utils/properties/defaults';
 
-function BaseHead({ furColor = DEFAULTS.FUR, snoutColor = DEFAULTS.HEAD.SNOUT }) {
-  const furClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
-  const st2FurClass = `svg-base-head__st2 ${furClass}`;
-  const snoutClass = `snout-color-fill-${PROPS.HEAD.SNOUT[snoutColor].id}`;
-  const st3Class = `svg-base-head__snout ${snoutClass}`;
+function BaseHead({
+  furColor = DEFAULTS.FUR,
+  snoutColor = DEFAULTS.HEAD.SNOUT,
+  noseColor = DEFAULTS.HEAD.NOSE,
+}) {
+  const furColorClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
+  const st2FurClass = `svg-base-head__st2 ${furColorClass}`;
+
+  const snoutColorClass = `snout-color-fill-${PROPS.HEAD.SNOUT[snoutColor].id}`;
+  const snoutClass = `svg-base-head__snout ${snoutColorClass}`;
+
+  const noseColorClass = `nose-color-fill-${PROPS.HEAD.NOSE[noseColor].id}`;
+  const noseClass = `svg-base-head__nose ${noseColorClass}`;
 
   return (
     <svg
@@ -61,11 +69,11 @@ function BaseHead({ furColor = DEFAULTS.FUR, snoutColor = DEFAULTS.HEAD.SNOUT })
               <g>
                 <path
                   d="M727.3 465.5c-17.9-28.4-86.4-38.1-86.4-38.1-139.6-.2-171.3 42.9-178.7 72.2 28.7 21.1 69 35.4 125.8 35.5 58.9.1 117.9-2.7 139.3-69.6z"
-                  className={st3Class}
+                  className={snoutClass}
                 />
                 <path
                   d="M626.8 425.7s17.4-.6 19.9 4.4-13.6 33.3-21.7 33.3-26.5-29.8-22.9-34.3c3.7-4.5 21.8-3.4 24.7-3.4z"
-                  className="svg-base-head__nose"
+                  className={noseClass}
                 />
               </g>
             </g>

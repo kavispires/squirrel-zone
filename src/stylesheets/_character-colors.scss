@@ -25,3 +25,16 @@ $snout-colors: #f2d4b1, #f6ebb4, #dacdbd;
     fill: #{nth($snout-colors, $i)} !important;
   }
 }
+
+// NOSE
+$nose-colors: #522906, #2b230e, #725f10, #7a4f18, #b46838, #cc3f3f;
+
+@for $i from 1 through length($nose-colors) {
+  .nose-color-bg-#{$i - 1} {
+    background-color: #{nth($nose-colors, $i)} !important;
+  }
+
+  .nose-color-fill-#{$i - 1} {
+    fill: #{nth($nose-colors, $i)} !important;
+  }
+}

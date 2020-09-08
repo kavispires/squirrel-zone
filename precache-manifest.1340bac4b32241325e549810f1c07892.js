@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7667532d4c1ee6dcf730dc19dced7bf2",
+    "revision": "262d14bb60080368fba44f1921a6c044",
     "url": "/squirrel-zone/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/squirrel-zone/static/css/2.6df4c8f8.chunk.css"
   },
   {
-    "revision": "098d5cd38f2210297af8",
+    "revision": "140032c03e732b7f2f15",
     "url": "/squirrel-zone/static/css/main.25d67552.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/squirrel-zone/static/js/2.bb672d01.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "098d5cd38f2210297af8",
-    "url": "/squirrel-zone/static/js/main.616dcc27.chunk.js"
+    "revision": "140032c03e732b7f2f15",
+    "url": "/squirrel-zone/static/js/main.3c3a9840.chunk.js"
   },
   {
     "revision": "88143d403343b4d6f0d8",

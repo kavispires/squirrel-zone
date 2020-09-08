@@ -4,21 +4,21 @@ export const NOSE = {
     name: 'brown',
     dna: 'AA',
     hex: '#522906',
-    rate: 53,
+    rate: 48,
   },
   AB: {
     id: '1',
     name: 'black',
     dna: 'AB',
     hex: '#2b230e',
-    rate: 13,
+    rate: 6,
   },
   BA: {
     id: '2',
     name: 'hazel',
     dna: 'BA',
     hex: '#725f10',
-    rate: 10,
+    rate: 11,
   },
   BB: {
     id: '3',
@@ -32,7 +32,7 @@ export const NOSE = {
     name: 'brown-sugar',
     dna: 'CA',
     hex: '#b46838',
-    rate: 20,
+    rate: 17,
   },
   CB: {
     id: '5',

@@ -5,6 +5,7 @@ const initialState = {
   furColor: DEFAULTS.FUR,
   snoutColor: DEFAULTS.HEAD.SNOUT,
   noseColor: DEFAULTS.HEAD.NOSE,
+  eyeColor: DEFAULTS.HEAD.EYES,
 };
 
 const { useGlobalState } = createGlobalState(initialState);

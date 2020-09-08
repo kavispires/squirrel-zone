@@ -12,5 +12,6 @@ export function printProps(props, name = 'PROP') {
       return acc + f.rate;
     }, 0)
   );
+  console.log('Count:', props.length);
   console.log('==========');
 }

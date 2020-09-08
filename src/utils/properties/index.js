@@ -1,30 +1,40 @@
 import { FUR } from './fur';
 import { SNOUT } from './snout';
 import { NOSE } from './nose';
+import { EYES } from './eyes';
 
 const PROPS = {
   FUR,
   HEAD: {
     SNOUT,
     NOSE,
-    EYES: [],
+    EYES,
   },
 };
 
 const schema = {
+  FUR: [16],
   HEAD: {
     'hair-style': [15],
     'hair-bangs-style': [15],
     'hair-color': [10],
-    'head-prop': ['none', 'beanie', 'cowboy-hat', 'headphones', 'hat', 'hat-backwards'],
+    'head-prop': [
+      'none',
+      'beanie',
+      'cowboy-hat',
+      'headphones',
+      'hat',
+      'hat-backwards',
+      'color-lock',
+    ],
 
-    'eye-color': [8],
+    'eye-color': [10],
     'eye-style': ['normal', 'angry', 'calm', 'suspicious', 'tired', 'high', 'not-impressed'],
     'eye-prop': ['none', 'sunglasses-1', 'sunglasses-2', 'glasses', 'cool-glasses'],
 
-    'snout-color': [5],
+    'snout-color': [3],
     nose: ['small', 'normal', 'large'],
-    'nose-color': [5],
+    'nose-color': [6],
     tooth: ['large', 'normal', 'large', 'chipped', 'doubled', 'braces'],
     'ear-prop': ['none', 'earring', 'piercing', 'cut', 'cross'],
     'facial-hair': ['none', 'mustache', 'goatee', 'beard'],

@@ -7,6 +7,7 @@ function BaseHead({
   furColor = DEFAULTS.FUR,
   snoutColor = DEFAULTS.HEAD.SNOUT,
   noseColor = DEFAULTS.HEAD.NOSE,
+  eyeColor = DEFAULTS.HEAD.EYES,
 }) {
   const furColorClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
   const st2FurClass = `svg-base-head__st2 ${furColorClass}`;
@@ -16,6 +17,9 @@ function BaseHead({
 
   const noseColorClass = `nose-color-fill-${PROPS.HEAD.NOSE[noseColor].id}`;
   const noseClass = `svg-base-head__nose ${noseColorClass}`;
+
+  const eyeColorClass = `eye-color-fill-${PROPS.HEAD.EYES[eyeColor].id}`;
+  const pupilClass = `svg-base-head__pupil ${eyeColorClass}`;
 
   return (
     <svg
@@ -82,10 +86,10 @@ function BaseHead({
             </g>
             <g>
               <ellipse cx="506.6" cy="364.9" className="svg-base-head__eye" rx="70.6" ry="56.6" />
-              <circle cx="495.3" cy="368.4" r="29.6" className="svg-base-head__pupil" />
+              <circle cx="495.3" cy="368.4" r="29.6" className={pupilClass} />
               <g>
                 <ellipse cx="677.4" cy="364.9" className="svg-base-head__eye" rx="49.7" ry="56.6" />
-                <circle cx="662.7" cy="369.2" r="24.9" className="svg-base-head__pupil" />
+                <circle cx="662.7" cy="369.2" r="24.9" className={pupilClass} />
               </g>
             </g>
           </g>

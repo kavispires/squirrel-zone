@@ -1,0 +1,12 @@
+$fur-colors: #a3967a, #c49a48, #d9c350, #a3803b, #a5711f, #ab8925, #a38731, #d3b437, #977725,
+  #c28b40, #c17b38, #bf6c30, #7b623e, #574639, #bf4c30;
+
+@for $i from 1 through length($fur-colors) {
+  .fur-color-bg-#{$i - 1} {
+    background-color: #{nth($fur-colors, $i)} !important;
+  }
+
+  .fur-color-fill-#{$i - 1} {
+    fill: #{nth($fur-colors, $i)} !important;
+  }
+}

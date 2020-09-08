@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 
 // Components
 import Character from './Character';
+import CharacterOptions from './CharacterOptions';
 
 function Creator() {
   return (
@@ -13,6 +14,7 @@ function Creator() {
         <h1>Creator</h1>
         <section className="creator-container">
           <Character />
+          <CharacterOptions />
         </section>
       </main>
     </Layout.Content>

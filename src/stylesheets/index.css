@@ -5,14 +5,12 @@
  * Each color has 9 levels and 5 is the default mid color one
 */
 body {
-  background-color: #2e323d;
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif; }
 
 .app {
   width: 100%;
-  background-color: #2e323d;
   min-height: 100vh !important; }
 
 .container {

@@ -14,3 +14,14 @@ $fur-colors: #a3967a, #a5711f, #c28b40, #c49a48, #977725, #a38731, #b59a48, #ab8
 }
 
 // SNOUT
+$snout-colors: #f2d4b1, #f6ebb4, #dacdbd;
+
+@for $i from 1 through length($snout-colors) {
+  .snout-color-bg-#{$i - 1} {
+    background-color: #{nth($snout-colors, $i)} !important;
+  }
+
+  .snout-color-fill-#{$i - 1} {
+    fill: #{nth($snout-colors, $i)} !important;
+  }
+}

@@ -127,6 +127,24 @@ body {
 .fur-color-fill-15 {
   fill: #c17b38 !important; }
 
+.snout-color-bg-0 {
+  background-color: #f2d4b1 !important; }
+
+.snout-color-fill-0 {
+  fill: #f2d4b1 !important; }
+
+.snout-color-bg-1 {
+  background-color: #f6ebb4 !important; }
+
+.snout-color-fill-1 {
+  fill: #f6ebb4 !important; }
+
+.snout-color-bg-2 {
+  background-color: #dacdbd !important; }
+
+.snout-color-fill-2 {
+  fill: #dacdbd !important; }
+
 .character {
   width: 600px;
   height: 600px;

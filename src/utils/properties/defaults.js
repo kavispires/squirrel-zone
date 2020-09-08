@@ -1,6 +1,10 @@
 const DEFAULTS = {
   FUR: 'AA',
-  SNOUT: 'AA',
+  HEAD: {
+    SNOUT: 'AA',
+    NOSE: 'AA',
+    EYES: 'AA',
+  },
 };
 
 export default DEFAULTS;

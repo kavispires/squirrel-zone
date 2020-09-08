@@ -7,13 +7,14 @@ import useCharacterState from '../states/useCharacterState';
 
 function Character() {
   const [furColor] = useCharacterState('furColor');
-  console.log({ furColor });
+  const [snoutColor] = useCharacterState('snoutColor');
+
   return (
     <div className="character">
       <SVG.Grid />
       <SVG.Base.Tail furColor={furColor} />
       <SVG.Base.Body furColor={furColor} />
-      <SVG.Base.Head furColor={furColor} />
+      <SVG.Base.Head furColor={furColor} snoutColor={snoutColor} />
     </div>
   );
 }

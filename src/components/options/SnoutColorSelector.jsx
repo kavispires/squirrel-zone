@@ -8,35 +8,35 @@ import PROPS from '../../utils/properties/';
 import DEFAULTS from '../../utils/properties/defaults';
 import { printProps } from '../../utils';
 
-const FURS = Object.values(PROPS.FUR);
+const SNOUTS = Object.values(PROPS.HEAD.SNOUT);
 
-function FurColorSelector() {
-  const [furColor, setFurColor] = useCharacterState('furColor');
+function SnoutColorSelector() {
+  const [snoutColor, setSnoutColor] = useCharacterState('snoutColor');
 
   const onChange = useCallback(
     (e) => {
-      setFurColor(e?.target?.value ?? DEFAULTS.FUR);
+      setSnoutColor(e?.target?.value ?? DEFAULTS.HEAD.SNOUT);
     },
-    [setFurColor]
+    [setSnoutColor]
   );
 
-  printProps(FURS, 'FUR');
+  printProps(SNOUTS, 'SNOUTS');
 
   return (
     <div className="character-option character-option--radios">
-      <label htmlFor="fur">Fur Color:</label>
-      <Radio.Group onChange={onChange} value={furColor} name="fur">
-        {FURS.map((swatch) => {
+      <label htmlFor="snout">Snout Color:</label>
+      <Radio.Group onChange={onChange} value={snoutColor} name="snout">
+        {SNOUTS.map((swatch) => {
           return (
             <Radio.Button
-              key={`fur-color-swatch-${swatch.id}`}
+              key={`snout-color-swatch-${swatch.id}`}
               value={swatch.dna}
               className="color-swatch-radio"
-              checked={swatch.dna === furColor}
+              checked={swatch.dna === snoutColor}
             >
               <span
-                className={`color-swatch fur-color-bg-${swatch.id}`}
-                title={`Fur Color ${swatch.name}`}
+                className={`color-swatch snout-color-bg-${swatch.id}`}
+                title={`Snout Color ${swatch.name}`}
               />
             </Radio.Button>
           );
@@ -46,4 +46,4 @@ function FurColorSelector() {
   );
 }
 
-export default FurColorSelector;
+export default SnoutColorSelector;

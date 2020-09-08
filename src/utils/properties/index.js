@@ -1,7 +1,16 @@
 import { FUR } from './fur';
+import { SNOUT } from './snout';
 
 const PROPS = {
   FUR,
+  HEAD: {
+    SNOUT,
+    NOSE: [],
+    EYES: [],
+  },
+};
+
+const schema = {
   HEAD: {
     'hair-style': [15],
     'hair-bangs-style': [15],

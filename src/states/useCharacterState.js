@@ -3,7 +3,7 @@ import DEFAULTS from '../utils/properties/defaults';
 
 const initialState = {
   furColor: DEFAULTS.FUR,
-  snoutColor: DEFAULTS.SNOUT,
+  snoutColor: DEFAULTS.HEAD.SNOUT,
 };
 
 const { useGlobalState } = createGlobalState(initialState);

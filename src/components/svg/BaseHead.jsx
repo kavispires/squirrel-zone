@@ -1,9 +1,12 @@
 import React from 'react';
 
-function BaseHead({ furColor = 0 }) {
-  const furClass = `fur-color-fill-${furColor}`;
+import PROPS from '../../utils/properties/';
+import DEFAULTS from '../../utils/properties/defaults';
+
+function BaseHead({ furColor = DEFAULTS.FUR, snoutColor = DEFAULTS.SNOUT }) {
+  const furClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
   const st2FurClass = `svg-base-head__st2 ${furClass}`;
-  const st3FurClass = `svg-base-head__st3 ${furClass}`;
+  const st3FurClass = `svg-base-head__snout ${snoutColor}`;
 
   return (
     <svg

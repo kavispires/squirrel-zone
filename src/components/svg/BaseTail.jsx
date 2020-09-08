@@ -1,7 +1,10 @@
 import React from 'react';
 
-function BaseTail({ furColor = 0 }) {
-  const furClass = `fur-color-fill-${furColor}`;
+import PROPS from '../../utils/properties/';
+import DEFAULTS from '../../utils/properties/defaults';
+
+function BaseTail({ furColor = DEFAULTS.FUR }) {
+  const furClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
   const borderFurClass = `svg-base-tail__border ${furClass}`;
   const fillFurClass = `svg-base-tail__fill ${furClass}`;
 

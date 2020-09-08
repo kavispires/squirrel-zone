@@ -4,7 +4,9 @@ import { Radio } from 'antd';
 
 import useCharacterState from '../../states/useCharacterState';
 
-const FURS = new Array(15).fill(0).map((e, i) => e + i);
+import PROPS from '../../utils/properties/';
+
+const FURS = Object.values(PROPS.FUR);
 
 function FurColorSelector() {
   const [furColor, setFurColor] = useCharacterState('furColor');
@@ -13,22 +15,33 @@ function FurColorSelector() {
     setFurColor(e?.target?.value ?? 0);
   });
 
-  const options = { label: 'Fur Color' };
+  console.log(
+    FURS.reduce((acc, f) => {
+      return acc + f.rate;
+    }, 0)
+  );
 
   return (
-    <Radio.Group onChange={onChange} value={furColor} options={options}>
-      {FURS.map((swatch) => {
-        return (
-          <Radio.Button
-            key={`fur-color-swatch-${swatch}`}
-            value={swatch}
-            className="color-swatch-radio"
-          >
-            <span className={`color-swatch fur-color-bg-${swatch}`} title={`Fur Color ${swatch}`} />
-          </Radio.Button>
-        );
-      })}
-    </Radio.Group>
+    <div className="character-option character-option--radios">
+      <label htmlFor="fur">Fur:</label>
+      <Radio.Group onChange={onChange} value={furColor} name="fur">
+        {FURS.map((swatch) => {
+          return (
+            <Radio.Button
+              key={`fur-color-swatch-${swatch.id}`}
+              value={swatch.dna}
+              className="color-swatch-radio"
+              checked={swatch.dna === furColor}
+            >
+              <span
+                className={`color-swatch fur-color-bg-${swatch.id}`}
+                title={`Fur Color ${swatch.name}`}
+              />
+            </Radio.Button>
+          );
+        })}
+      </Radio.Group>
+    </div>
   );
 }
 

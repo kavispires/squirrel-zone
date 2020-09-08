@@ -1,7 +1,10 @@
 import React from 'react';
 
-function BaseBody({ furColor = 0 }) {
-  const furClass = `fur-color-fill-${furColor}`;
+import PROPS from '../../utils/properties/';
+import DEFAULTS from '../../utils/properties/defaults';
+
+function BaseBody({ furColor = DEFAULTS.FUR }) {
+  const furClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
   const st1FurClass = `svg-base-body__st1 ${furClass}`;
   const st2FurClass = `svg-base-body__st2 ${furClass}`;
 

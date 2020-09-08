@@ -8,3 +8,9 @@
   height: 25px;
   display: block;
 }
+
+.character-option {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 get-unit(2) get-unit(4);
+}

@@ -35,7 +35,7 @@ const schema = {
     'snout-color': [3],
     nose: ['small', 'normal', 'large'],
     'nose-color': [6],
-    tooth: ['large', 'normal', 'large', 'chipped', 'doubled', 'braces'],
+    tooth: ['large', 'normal', 'small', 'chipped', 'doubled', 'braces'],
     'ear-prop': ['none', 'earring', 'piercing', 'cut', 'cross'],
     'facial-hair': ['none', 'mustache', 'goatee', 'beard'],
   },

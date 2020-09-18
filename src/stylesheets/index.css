@@ -216,10 +216,10 @@ body {
   fill: #259361 !important; }
 
 .eye-color-bg-6 {
-  background-color: #208e58 !important; }
+  background-color: #1b694a !important; }
 
 .eye-color-fill-6 {
-  fill: #208e58 !important; }
+  fill: #1b694a !important; }
 
 .eye-color-bg-7 {
   background-color: #5e3a21 !important; }
@@ -337,5 +337,7 @@ body {
 
 .character-option {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; }
+
+.options {
   margin: 0 0 6px 24px; }

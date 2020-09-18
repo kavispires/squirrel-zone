@@ -45,7 +45,7 @@ export const EYES = {
     id: '6',
     name: 'deep-green',
     dna: 'CA',
-    hex: '#208e58',
+    hex: '#1b694a',
     rate: 6,
   },
   CB: {

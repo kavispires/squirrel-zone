@@ -12,5 +12,8 @@
 .character-option {
   display: flex;
   flex-direction: column;
+}
+
+.options {
   margin: 0 0 get-unit(2) get-unit(4);
 }

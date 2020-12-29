@@ -12,7 +12,7 @@ function Creator() {
     <Layout.Content className="container">
       <main className="main creator">
         <h1>Creator</h1>
-        <section className="creator-container">
+        <section className="section">
           <Character />
           <CharacterOptions />
         </section>

@@ -5,13 +5,12 @@ import { Layout } from 'antd';
 
 // Components
 import Header from './Header';
-import Creator from './Creator';
 
-function App() {
+function App({ children }) {
   return (
     <Layout className="app">
       <Header />
-      <Creator />
+      {children}
     </Layout>
   );
 }

@@ -3,7 +3,7 @@ import BaseTail from './BaseTail';
 import BaseHead from './BaseHead';
 import BaseBody from './BaseBody';
 
-export default {
+const svg = {
   Grid,
   Base: {
     Head: BaseHead,
@@ -11,3 +11,5 @@ export default {
     Tail: BaseTail,
   },
 };
+
+export default svg;

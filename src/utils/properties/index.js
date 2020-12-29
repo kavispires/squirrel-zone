@@ -12,21 +12,13 @@ const PROPS = {
   },
 };
 
-const schema = {
+export const schema = {
   FUR: [16],
   HEAD: {
     'hair-style': [15],
     'hair-bangs-style': [15],
     'hair-color': [10],
-    'head-prop': [
-      'none',
-      'beanie',
-      'cowboy-hat',
-      'headphones',
-      'hat',
-      'hat-backwards',
-      'color-lock',
-    ],
+    'head-prop': ['none', 'beanie', 'cowboy-hat', 'headphones', 'hat', 'hat-backwards', 'color-lock'],
 
     'eye-color': [10],
     'eye-style': ['normal', 'angry', 'calm', 'suspicious', 'tired', 'high', 'not-impressed'],
@@ -40,14 +32,7 @@ const schema = {
     'facial-hair': ['none', 'mustache', 'goatee', 'beard'],
   },
   body: {
-    hands: [
-      'gloves',
-      'globes-white',
-      'nail-polish-color',
-      'mail-polish-black',
-      'bracelet-1',
-      'bracelet-2',
-    ],
+    hands: ['gloves', 'globes-white', 'nail-polish-color', 'mail-polish-black', 'bracelet-1', 'bracelet-2'],
 
     necklace: ['none', 'army', 'hippie', 'simple'],
 

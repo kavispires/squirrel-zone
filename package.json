@@ -11,7 +11,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hooks-global-state": "^1.0.1",
-    "react-scripts": "3.4.3"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,12 +26,11 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "plugin:prettier/recommended"
+      "react-app"
     ]
   },
   "prettier": {
-    "printWidth": 100,
+    "printWidth": 110,
     "singleQuote": true,
     "trailingComma": "es5",
     "bracketSpacing": true
@@ -41,12 +41,9 @@
     }
   },
   "lint-staged": {
-    "*.+(js|jsx)": [
-      "eslint --fix"
-    ],
-    "*.+(json|css|md)": [
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
-    ]
+      ]
   },
   "browserslist": {
     "production": [
@@ -61,10 +58,11 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-prettier": "^3.3.0",
     "gh-pages": "^3.1.0",
     "husky": "^4.3.0",
     "lint-staged": "^10.3.0",
     "node-sass-chokidar": "^1.5.0",
-    "prettier": "^2.1.1"
+    "prettier": "^2.2.1"
   }
 }

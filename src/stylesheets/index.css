@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import url(~antd/dist/antd.css);
 /* get-color
  * Determines color and available shades
@@ -7,265 +7,363 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif; }
+  font-family: 'Lato', sans-serif;
+}
 
 .app {
   width: 100%;
-  min-height: 100vh !important; }
+  min-height: 100vh !important;
+}
 
 .container {
   padding: 12px 50px;
-  flex: 1; }
+  flex: 1;
+}
 
 .content {
-  display: flex; }
+  display: flex;
+}
 
-.creator-container {
-  display: flex; }
+.section {
+  display: flex;
+}
 
 .header {
   display: flex;
-  align-items: center; }
-  .header__logo {
-    height: 50px; }
+  align-items: center;
+}
+.header__logo {
+  height: 50px;
+}
+.header__nav ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 48px;
+}
+.header__nav a {
+  color: #00d8fa;
+}
+.header__nav li {
+  display: inline-flex;
+  margin: 0 12px;
+}
+.header__nav li .active {
+  border-bottom: 3px solid white;
+}
 
 .fur-color-bg-0 {
-  background-color: #a3967a !important; }
+  background-color: #a3967a !important;
+}
 
 .fur-color-fill-0 {
-  fill: #a3967a !important; }
+  fill: #a3967a !important;
+}
 
 .fur-color-bg-1 {
-  background-color: #a5711f !important; }
+  background-color: #a5711f !important;
+}
 
 .fur-color-fill-1 {
-  fill: #a5711f !important; }
+  fill: #a5711f !important;
+}
 
 .fur-color-bg-2 {
-  background-color: #c28b40 !important; }
+  background-color: #c28b40 !important;
+}
 
 .fur-color-fill-2 {
-  fill: #c28b40 !important; }
+  fill: #c28b40 !important;
+}
 
 .fur-color-bg-3 {
-  background-color: #c49a48 !important; }
+  background-color: #c49a48 !important;
+}
 
 .fur-color-fill-3 {
-  fill: #c49a48 !important; }
+  fill: #c49a48 !important;
+}
 
 .fur-color-bg-4 {
-  background-color: #977725 !important; }
+  background-color: #977725 !important;
+}
 
 .fur-color-fill-4 {
-  fill: #977725 !important; }
+  fill: #977725 !important;
+}
 
 .fur-color-bg-5 {
-  background-color: #a38731 !important; }
+  background-color: #a38731 !important;
+}
 
 .fur-color-fill-5 {
-  fill: #a38731 !important; }
+  fill: #a38731 !important;
+}
 
 .fur-color-bg-6 {
-  background-color: #b59a48 !important; }
+  background-color: #b59a48 !important;
+}
 
 .fur-color-fill-6 {
-  fill: #b59a48 !important; }
+  fill: #b59a48 !important;
+}
 
 .fur-color-bg-7 {
-  background-color: #ab8925 !important; }
+  background-color: #ab8925 !important;
+}
 
 .fur-color-fill-7 {
-  fill: #ab8925 !important; }
+  fill: #ab8925 !important;
+}
 
 .fur-color-bg-8 {
-  background-color: #d3b437 !important; }
+  background-color: #d3b437 !important;
+}
 
 .fur-color-fill-8 {
-  fill: #d3b437 !important; }
+  fill: #d3b437 !important;
+}
 
 .fur-color-bg-9 {
-  background-color: #d9c350 !important; }
+  background-color: #d9c350 !important;
+}
 
 .fur-color-fill-9 {
-  fill: #d9c350 !important; }
+  fill: #d9c350 !important;
+}
 
 .fur-color-bg-10 {
-  background-color: #574639 !important; }
+  background-color: #574639 !important;
+}
 
 .fur-color-fill-10 {
-  fill: #574639 !important; }
+  fill: #574639 !important;
+}
 
 .fur-color-bg-11 {
-  background-color: #7b623e !important; }
+  background-color: #7b623e !important;
+}
 
 .fur-color-fill-11 {
-  fill: #7b623e !important; }
+  fill: #7b623e !important;
+}
 
 .fur-color-bg-12 {
-  background-color: #8c754a !important; }
+  background-color: #8c754a !important;
+}
 
 .fur-color-fill-12 {
-  fill: #8c754a !important; }
+  fill: #8c754a !important;
+}
 
 .fur-color-bg-13 {
-  background-color: #bf4c30 !important; }
+  background-color: #bf4c30 !important;
+}
 
 .fur-color-fill-13 {
-  fill: #bf4c30 !important; }
+  fill: #bf4c30 !important;
+}
 
 .fur-color-bg-14 {
-  background-color: #bf6c30 !important; }
+  background-color: #bf6c30 !important;
+}
 
 .fur-color-fill-14 {
-  fill: #bf6c30 !important; }
+  fill: #bf6c30 !important;
+}
 
 .fur-color-bg-15 {
-  background-color: #c17b38 !important; }
+  background-color: #c17b38 !important;
+}
 
 .fur-color-fill-15 {
-  fill: #c17b38 !important; }
+  fill: #c17b38 !important;
+}
 
 .snout-color-bg-0 {
-  background-color: #f2d4b1 !important; }
+  background-color: #f2d4b1 !important;
+}
 
 .snout-color-fill-0 {
-  fill: #f2d4b1 !important; }
+  fill: #f2d4b1 !important;
+}
 
 .snout-color-bg-1 {
-  background-color: #f6ebb4 !important; }
+  background-color: #f6ebb4 !important;
+}
 
 .snout-color-fill-1 {
-  fill: #f6ebb4 !important; }
+  fill: #f6ebb4 !important;
+}
 
 .snout-color-bg-2 {
-  background-color: #dacdbd !important; }
+  background-color: #dacdbd !important;
+}
 
 .snout-color-fill-2 {
-  fill: #dacdbd !important; }
+  fill: #dacdbd !important;
+}
 
 .nose-color-bg-0 {
-  background-color: #522906 !important; }
+  background-color: #522906 !important;
+}
 
 .nose-color-fill-0 {
-  fill: #522906 !important; }
+  fill: #522906 !important;
+}
 
 .nose-color-bg-1 {
-  background-color: #2b230e !important; }
+  background-color: #2b230e !important;
+}
 
 .nose-color-fill-1 {
-  fill: #2b230e !important; }
+  fill: #2b230e !important;
+}
 
 .nose-color-bg-2 {
-  background-color: #725f10 !important; }
+  background-color: #725f10 !important;
+}
 
 .nose-color-fill-2 {
-  fill: #725f10 !important; }
+  fill: #725f10 !important;
+}
 
 .nose-color-bg-3 {
-  background-color: #7a4f18 !important; }
+  background-color: #7a4f18 !important;
+}
 
 .nose-color-fill-3 {
-  fill: #7a4f18 !important; }
+  fill: #7a4f18 !important;
+}
 
 .nose-color-bg-4 {
-  background-color: #b46838 !important; }
+  background-color: #b46838 !important;
+}
 
 .nose-color-fill-4 {
-  fill: #b46838 !important; }
+  fill: #b46838 !important;
+}
 
 .nose-color-bg-5 {
-  background-color: #cc3f3f !important; }
+  background-color: #cc3f3f !important;
+}
 
 .nose-color-fill-5 {
-  fill: #cc3f3f !important; }
+  fill: #cc3f3f !important;
+}
 
 .eye-color-bg-0 {
-  background-color: #626c7a !important; }
+  background-color: #626c7a !important;
+}
 
 .eye-color-fill-0 {
-  fill: #626c7a !important; }
+  fill: #626c7a !important;
+}
 
 .eye-color-bg-1 {
-  background-color: #6fcbd6 !important; }
+  background-color: #6fcbd6 !important;
+}
 
 .eye-color-fill-1 {
-  fill: #6fcbd6 !important; }
+  fill: #6fcbd6 !important;
+}
 
 .eye-color-bg-2 {
-  background-color: #3f76bb !important; }
+  background-color: #3f76bb !important;
+}
 
 .eye-color-fill-2 {
-  fill: #3f76bb !important; }
+  fill: #3f76bb !important;
+}
 
 .eye-color-bg-3 {
-  background-color: #016683 !important; }
+  background-color: #016683 !important;
+}
 
 .eye-color-fill-3 {
-  fill: #016683 !important; }
+  fill: #016683 !important;
+}
 
 .eye-color-bg-4 {
-  background-color: #3ab44a !important; }
+  background-color: #3ab44a !important;
+}
 
 .eye-color-fill-4 {
-  fill: #3ab44a !important; }
+  fill: #3ab44a !important;
+}
 
 .eye-color-bg-5 {
-  background-color: #259361 !important; }
+  background-color: #259361 !important;
+}
 
 .eye-color-fill-5 {
-  fill: #259361 !important; }
+  fill: #259361 !important;
+}
 
 .eye-color-bg-6 {
-  background-color: #1b694a !important; }
+  background-color: #1b694a !important;
+}
 
 .eye-color-fill-6 {
-  fill: #1b694a !important; }
+  fill: #1b694a !important;
+}
 
 .eye-color-bg-7 {
-  background-color: #5e3a21 !important; }
+  background-color: #5e3a21 !important;
+}
 
 .eye-color-fill-7 {
-  fill: #5e3a21 !important; }
+  fill: #5e3a21 !important;
+}
 
 .eye-color-bg-8 {
-  background-color: #42210a !important; }
+  background-color: #42210a !important;
+}
 
 .eye-color-fill-8 {
-  fill: #42210a !important; }
+  fill: #42210a !important;
+}
 
 .eye-color-bg-9 {
-  background-color: #261e03 !important; }
+  background-color: #261e03 !important;
+}
 
 .eye-color-fill-9 {
-  fill: #261e03 !important; }
+  fill: #261e03 !important;
+}
 
 .character {
   width: 600px;
   height: 600px;
   background: #fff;
-  border: 2px solid #eee; }
+  border: 2px solid #eee;
+}
 
 .svg-sprite {
   position: absolute;
   width: 600px;
-  height: 600px; }
+  height: 600px;
+}
 
 .svg-grid__base {
   fill: none;
   stroke: #ccc;
-  stroke-miterlimit: 10; }
+  stroke-miterlimit: 10;
+}
 
 .svg-grid__safety-lines {
   fill: none;
   stroke: #3cc;
   stroke-miterlimit: 10;
-  stroke-width: 2; }
+  stroke-width: 2;
+}
 
 .svg-grid__star-lines {
   fill: none;
   stroke: #ccc;
   stroke-miterlimit: 10;
-  stroke-width: 3; }
+  stroke-width: 3;
+}
 
 .svg-base-tail__border {
   stroke: #000000;
@@ -273,31 +371,38 @@ body {
   stroke-linejoin: round;
   stroke-miterlimit: 10;
   stroke-width: 6.4829;
-  fill: #777470; }
+  fill: #777470;
+}
 
 .svg-base-tail__fill {
-  fill: #777470; }
+  fill: #777470;
+}
 
 .svg-base-head__st1 {
   fill: none;
   stroke: #000000;
   stroke-width: 12.9659;
   stroke-linecap: round;
-  stroke-linejoin: round; }
+  stroke-linejoin: round;
+}
 
 .svg-base-head__st2 {
-  fill: #777470; }
+  fill: #777470;
+}
 
 .svg-base-head__snout {
-  fill: #a3a19f; }
+  fill: #a3a19f;
+}
 
-.svg-base-head__nose, .svg-base-head__pupil {
+.svg-base-head__nose,
+.svg-base-head__pupil {
   fill: #3b3a36;
   stroke: #000000;
   stroke-width: 6.4829;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-miterlimit: 10; }
+  stroke-miterlimit: 10;
+}
 
 .svg-base-head__eye {
   fill: #ffffff;
@@ -305,7 +410,8 @@ body {
   stroke-width: 6.4829;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-miterlimit: 10; }
+  stroke-miterlimit: 10;
+}
 
 .svg-base-body__st1 {
   fill: #777470;
@@ -313,10 +419,12 @@ body {
   stroke-width: 6.4829;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-miterlimit: 10; }
+  stroke-miterlimit: 10;
+}
 
 .svg-base-body__st2 {
-  fill: #777470; }
+  fill: #777470;
+}
 
 .svg-base-body__st3 {
   fill: #58595b;
@@ -324,20 +432,25 @@ body {
   stroke-width: 6.4829;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-miterlimit: 10; }
+  stroke-miterlimit: 10;
+}
 
 .color-swatch-radio.ant-radio-button-wrapper {
   padding: 0;
-  height: auto; }
+  height: auto;
+}
 
 .color-swatch {
   width: 25px;
   height: 25px;
-  display: block; }
+  display: block;
+}
 
 .character-option {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+}
 
 .options {
-  margin: 0 0 6px 24px; }
+  margin: 0 0 6px 24px;
+}

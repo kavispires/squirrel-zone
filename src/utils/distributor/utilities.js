@@ -1,3 +1,5 @@
+import { SEPARATOR } from '../constants';
+
 export const generateUniqueId = (function () {
   const cache = {};
 
@@ -17,8 +19,6 @@ export const generateUniqueId = (function () {
 export const convertStoMS = (seconds) => {
   return Math.round(seconds * 1000);
 };
-
-const SEPARATOR = '::';
 
 export const serializeKey = (id, type) => `${type}${SEPARATOR}${id}`;
 

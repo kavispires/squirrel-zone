@@ -10,3 +10,10 @@
 @import './character';
 @import './svg';
 @import './creator';
+@import './distributor';
+
+// Components
+@import '../components/distributor/key-capture';
+@import '../components/distributor/controls';
+@import '../components/distributor/instance-options';
+@import '../components/distributor/log';

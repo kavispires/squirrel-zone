@@ -1,5 +1,5 @@
 import { ASSIGNEE } from './enum';
-import { generateUniqueId } from './utilities';
+import { generateUniqueId, serializeKey } from './utilities';
 
 /**
  * Class representing a Part - the smallest part of the lyrics, it composes a line.
@@ -13,10 +13,15 @@ export class Part {
   constructor(data) {
     this._id = data?.id || generateUniqueId();
     this._type = 'part';
-    this.startTime = null;
-    this.endTime = null;
-    this.text = null;
+
+    // Attributes
     this.assignee = ASSIGNEE.A;
+    this.endTime = null;
+    this.startTime = null;
+    this.text = null;
+
+    // Relationships
+    this.parentLineId = null;
 
     if (data) {
       this.deserialize(data);
@@ -40,6 +45,14 @@ export class Part {
   }
 
   /**
+   * Get key.
+   * @type {string}
+   */
+  get key() {
+    return serializeKey(this.id, this.type);
+  }
+
+  /**
    * Get duration.
    * @type {number}
    */
@@ -52,7 +65,7 @@ export class Part {
    * @type {boolean}
    */
   get isComplete() {
-    return Boolean(this.startTime && this.endTime && this.text);
+    return Boolean(this.startTime && this.endTime && this.text && this.parentLineId);
   }
 
   /**
@@ -60,15 +73,23 @@ export class Part {
    * @type {object}
    */
   get data() {
-    return {
+    const data = {
       id: this._id,
       type: this.type,
-      startTime: this.startTime,
-      endTime: this.endTime,
+      // Getters
+      isComplete: this.isComplete,
       duration: this.duration,
-      text: this.text,
+      // Attributes
       assignee: this.assignee,
+      endTime: this.endTime,
+      startTime: this.startTime,
+      text: this.text,
+      // Relationships
+      parentLineId: this.parentLineId,
     };
+
+    Object.freeze(data);
+    return data;
   }
 
   /**
@@ -78,10 +99,13 @@ export class Part {
    */
   deserialize(data) {
     this._id = data.id || this._id || generateUniqueId();
-    this.startTime = data.startTime ?? null;
-    this.endTime = data.endTime ?? null;
-    this.text = data.text ?? null;
+    // Attributes
     this.assignee = data.assignee ?? ASSIGNEE.A;
+    this.endTime = data.endTime ?? null;
+    this.startTime = data.startTime ?? null;
+    this.text = data.text ?? null;
+    // Relationships
+    this.parentLineId = data.parentLineId ?? null;
 
     return this;
   }
@@ -95,10 +119,13 @@ export class Part {
     return {
       id: this.id,
       type: this.type,
-      startTime: this.startTime,
-      endTime: this.endTime,
-      text: this.text,
+      // Attributes
       assignee: this.assignee,
+      endTime: this.endTime,
+      startTime: this.startTime,
+      text: this.text,
+      // Relationships
+      parentLineId: this.parentLineId,
     };
   }
 }

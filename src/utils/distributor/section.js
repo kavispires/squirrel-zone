@@ -1,5 +1,5 @@
 import { SECTION } from './enum';
-import { generateUniqueId } from './utilities';
+import { generateUniqueId, serializeKey } from './utilities';
 import { setGlobalState } from '../../states/useDistributorState';
 import Line from './line';
 
@@ -42,6 +42,14 @@ export class Section {
    */
   get type() {
     return this._type;
+  }
+
+  /**
+   * Get key.
+   * @type {string}
+   */
+  get key() {
+    return serializeKey(this.id, this.type);
   }
 
   /**

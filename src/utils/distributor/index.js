@@ -1,3 +1,4 @@
+export * from './store';
 export * from './song';
 export * from './section';
 export * from './line';

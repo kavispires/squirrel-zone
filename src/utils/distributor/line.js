@@ -1,7 +1,6 @@
 import { SKILL, SKILL_LEVEL, SKILL_TYPE } from './enum';
 import Part from './part';
-import { generateUniqueId } from './utilities';
-import { setGlobalState } from '../../states/useDistributorState';
+import { generateUniqueId, serializeKey } from './utilities';
 
 /**
  * Class representing a Line - a collection of parts that will compose a section/verse.
@@ -16,13 +15,17 @@ export class Line {
     this._id = data?.id || generateUniqueId();
     this._type = 'line';
 
+    // Attributes
     this.isDismissible = false; // yeahs and yous that don't need to be displayed
     this.skill = SKILL.VOCAL;
     this.skillType = SKILL_TYPE.VOCAL.REGULAR;
-    this.level = SKILL_LEVEL['1'];
+    this.skillLevel = SKILL_LEVEL['1'];
 
-    this._parts = {};
-    this._sortedParts = [];
+    // Relationships
+    this.partsIds = [];
+    this.parentSectionId = null;
+
+    // Internal
     this._isSorted = true;
 
     if (data) {
@@ -47,10 +50,19 @@ export class Line {
   }
 
   /**
+   * Get key.
+   * @type {string}
+   */
+  get key() {
+    return serializeKey(this.id, this.type);
+  }
+
+  /**
    * List of parts.
    * @type {Part[]}
    */
   get parts() {
+    // TODO
     if (this._isSorted) {
       return this._sortedParts;
     }
@@ -62,10 +74,9 @@ export class Line {
    * @type {number}
    */
   get startTime() {
-    const start = this.parts[0];
-    if (start && start instanceof Part) return start.startTime;
+    const firstPart = this.parts[0];
 
-    return 0;
+    return firstPart?.startTime ?? 0;
   }
 
   /**
@@ -73,10 +84,9 @@ export class Line {
    * @type {number}
    */
   get endTime() {
-    const end = this.parts.length > 0 ? this.parts[this.parts.length - 1] : null;
-    if (end && end instanceof Part) return end.endTime;
+    const lastPart = this.parts.length > 0 ? this.parts[this.parts.length - 1] : null;
 
-    return 0;
+    return lastPart?.endTime ?? 0;
   }
 
   /**
@@ -84,7 +94,7 @@ export class Line {
    * @type {number}
    */
   get duration() {
-    return (this.endTime || 0) - (this.startTime || 0);
+    return this.endTime - this.startTime;
   }
 
   /**
@@ -135,6 +145,15 @@ export class Line {
   }
 
   /**
+   * Flag indicating if the line has all required values
+   * @type {boolean}
+   */
+  get isComplete() {
+    // TODO
+    return Boolean(this.parentSectionId && this.partsIds.length);
+  }
+
+  /**
    * Get the complete data set.
    * @type {object}
    */
@@ -142,13 +161,23 @@ export class Line {
     return {
       id: this.id,
       type: this.type,
-      startTime: this.startTime,
+      // Getters
+      duration: this.duration,
       endTime: this.endTime,
+      isAdLib: this.isAdLib,
+      isChoir: this.isChoir,
+      isComplete: this.isComplete,
+      isDance: this.isDance,
+      isRap: this.isRap,
+      startTime: this.startTime,
       text: this.text,
-      parts: this.parts,
+      // Attributes
       skill: this.skill,
       skillType: this.skillType,
-      level: this.level,
+      skillLevel: this.skillLevel,
+      // Relationships
+      partsIds: this.partsIds,
+      parentSectionId: this.parentSectionId,
     };
   }
 
@@ -186,9 +215,9 @@ export class Line {
    */
   addPart(part) {
     if (part.id) {
+      if (this._store.exists(part)) this.partsIds.push(part.id);
       this._parts[part.id] = part;
       this._isSorted = false;
-      this.forceState();
     }
 
     return this;
@@ -202,7 +231,6 @@ export class Line {
   removePart(id) {
     if (this._parts[id]) {
       delete this._parts[id];
-      this.forceState();
     }
 
     return this;
@@ -215,22 +243,27 @@ export class Line {
    */
   deserialize(data) {
     this._id = data.id || this._id || generateUniqueId();
+    // Attributes
     this.isDismissible = data.isDismissible ?? false;
     this.skill = data.skill || SKILL.VOCAL;
     this.skillType = data.skillType || SKILL_TYPE.VOCAL.REGULAR;
-    this.level = data.level || SKILL_LEVEL['1'];
+    this.skillLevel = data.skillLevel || SKILL_LEVEL['1'];
+    // Relationships
+    this.partsIds = data.partsIds || [];
+    this.parentSectionId = data.parentSectionId || null;
 
-    if (data.parts) {
-      this._isSorted = false;
-      this._sortedParts = [];
-      Object.values(data.parts).forEach((part) => {
-        if (part instanceof Part) {
-          this.addPart(part);
-        } else {
-          this.addPart(new Part(part));
-        }
-      });
-    }
+    // TODO: Add to store?
+    // if (data.parts) {
+    //   this._isSorted = false;
+    //   this._sortedParts = [];
+    //   Object.values(data.parts).forEach((part) => {
+    //     if (part instanceof Part) {
+    //       this.addPart(part);
+    //     } else {
+    //       this.addPart(new Part(part));
+    //     }
+    //   });
+    // }
 
     return this;
   }
@@ -244,16 +277,15 @@ export class Line {
     return {
       id: this.id,
       type: this.type,
-      parts: this._parts,
+      // Attributes
       isDismissible: this.isDismissible,
       skill: this.skill,
       skillType: this.skillType,
-      level: this.level,
+      skillLevel: this.skillLevel,
+      // Relationships
+      partsIds: this.partsIds,
+      parentSectionId: this.parentSectionId,
     };
-  }
-
-  forceState() {
-    // setGlobalState('activeLine', this);
   }
 }
 

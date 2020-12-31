@@ -1,0 +1,21 @@
+.key-capture {
+  width: 100%;
+  height: get-unit(1);
+  background-color: #ff4d4f;
+  animation: color-red-pulse 500ms infinite ease-in-out;
+  margin-bottom: get-unit(2);
+}
+
+@keyframes color-red-pulse {
+  0% {
+    background-color: #ff4d4f;
+  }
+
+  50% {
+    background-color: #fa9092;
+  }
+
+  100% {
+    background-color: #ff4d4f;
+  }
+}

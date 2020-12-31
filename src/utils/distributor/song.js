@@ -1,5 +1,5 @@
 import Section from './section';
-import { generateUniqueId } from './utilities';
+import { generateUniqueId, serializeKey } from './utilities';
 import { setGlobalState } from '../../states/useDistributorState';
 
 /**
@@ -39,7 +39,7 @@ export class Song {
 
   /**
    * Get id.
-   * @returns {string}
+   * @type {string}
    */
   get id() {
     return this._id;
@@ -47,10 +47,18 @@ export class Song {
 
   /**
    * Get type.
-   * @returns {string}
+   * @type {string}
    */
   get type() {
     return this._type;
+  }
+
+  /**
+   * Get key.
+   * @type {string}
+   */
+  get key() {
+    return serializeKey(this.id, this.type);
   }
 
   /**

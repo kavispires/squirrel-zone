@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.3.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -12,7 +13,8 @@
     "react-dom": "^16.13.1",
     "react-hooks-global-state": "^1.0.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1"
+    "react-scripts": "4.0.1",
+    "react-youtube": "^7.13.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,7 +45,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
-      ]
+    ]
   },
   "browserslist": {
     "production": [

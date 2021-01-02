@@ -533,6 +533,12 @@ body {
   grid-row-end: end;
 }
 
+.stepper-progress {
+  background: white;
+  padding: 24px 0 6px 0;
+  margin-bottom: 6px;
+}
+
 .load-song {
   display: flex;
   justify-content: center;

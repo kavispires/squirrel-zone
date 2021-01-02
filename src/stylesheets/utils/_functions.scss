@@ -1,52 +1,35 @@
-@function _get-unit($value) {
-  /* get-unit
-  * Determines unit with 3px reference, every value is double its predecessor
-  * Formula: 2^(x-1) x 3
-  * Examples:
-  * 1: 4px
-  * 2: 8px
-  * 3: 16px
-  * 4: 32px
-  * 5: 64px
-  */
+/*
+ * Converts a value (or list of values) into a standard scale with base 3px
+ * Example:
+ * get-unit(1) -> 3px
+ * get-unit(2 1) -> 3px 6px
+ * get-unit(4 2 4 1) -> 12px 6px 12px 3px
+ */
+@function get-unit($value) {
+  //  If value is a list
+  @if type-of($value) == list {
+    $result: ();
+    @each $i in $value {
+      $result: append($result, get-unit($i));
+    }
+    @return $result;
+  }
 
-  $raised: 1;
+  @if $value == auto {
+    @return auto;
+  }
 
   @if $value == 0 {
     @return 0;
   }
 
+  $base: 3px;
+
   @if $value < 0 {
-    $raised: -1;
+    @return -1 * $value * $base;
   }
 
-  $multiplier: abs($value);
-
-  @if $multiplier > 1 {
-    @for $i from 1 through $multiplier - 1 {
-      $raised: $raised * 2;
-    }
-  }
-
-  @return $raised * 3px;
-}
-
-@function get-unit($value1, $value2: null, $value3: null, $value4: null) {
-  $result: _get-unit($value1);
-
-  @if $value2 {
-    $result: $result + ' ' + _get-unit($value2);
-  }
-
-  @if $value3 {
-    $result: $result + ' ' + _get-unit($value3);
-  }
-
-  @if $value4 {
-    $result: $result + ' ' + _get-unit($value4);
-  }
-
-  @return unquote($result);
+  @return $value * $base;
 }
 
 /* get-color

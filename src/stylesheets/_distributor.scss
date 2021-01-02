@@ -10,7 +10,7 @@
 
     .separator {
       text-transform: uppercase;
-      margin: get-unit(0, 3);
+      margin: get-unit(0 3);
       font-size: 80%;
       transform: translateY(6px);
     }
@@ -21,7 +21,7 @@
   display: grid;
   grid-template-columns: [first] 40fr [second] 60fr [end];
   grid-template-rows: [start] get-unit(1) [first] 30px [second] 180px [third] auto [fourth] auto [fifth] auto [end];
-  gap: get-unit(3) get-unit(4);
+  gap: get-unit(3 4);
 
   &__key-capture {
     grid-column-start: first;
@@ -61,7 +61,7 @@
     background: $light-gray;
   }
 
-  &__options {
+  &__timestamps {
     grid-column-start: first;
     grid-column-end: second;
     grid-row-start: fourth;
@@ -76,7 +76,9 @@
     grid-row-start: second;
     grid-row-end: fifth;
 
-    background: $light-gray;
+    // background: $light-gray;
+    max-height: 60vh;
+    overflow-y: scroll;
   }
 
   &__actions {

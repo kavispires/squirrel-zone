@@ -1,15 +1,16 @@
+// Basic
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import '~antd/dist/antd.css';
 
-@import './constants';
-@import './functions';
+// Utils
+@import './utils/constants';
+@import './utils/functions';
+@import './utils/mixins';
 
-@import './app';
-@import './header';
-@import './character-colors';
-@import './character';
-@import './svg';
-@import './creator';
+// Global
+@import './global/reset';
+@import './global/app';
+
 @import './distributor';
 
 // Components
@@ -18,3 +19,10 @@
 @import '../components/distributor/key-capture';
 @import '../components/distributor/controls';
 @import '../components/distributor/log';
+
+// Creator
+@import './header';
+@import './character-colors';
+@import './character';
+@import './svg';
+@import './creator';

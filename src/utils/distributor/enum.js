@@ -1,3 +1,5 @@
+export const NULL = 'NULL';
+
 export const ASSIGNEE = {
   A: 'A',
   B: 'B',
@@ -66,6 +68,7 @@ export const SECTION = {
   POST_CHORUS: 'POST_CHORUS',
   PRE_CHORUS: 'PRE_CHORUS',
   RAP: 'RAP',
+  SPECIAL: 'SPECIAL',
   UNKNOWN: 'UNKNOWN',
   VERSE: 'VERSE',
 };

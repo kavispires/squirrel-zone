@@ -1,7 +1,17 @@
-import { SECTION } from './enum';
-import { generateUniqueId, serializeKey } from './utilities';
-import { setGlobalState } from '../../states/useDistributorState';
+// Global State
+import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+// Engine and utilities
 import Line from './line';
+import { NULL, SECTION } from './enum';
+import {
+  generateUniqueId,
+  getDefault,
+  getRelationshipsDefault,
+  getEnumDefault,
+  serializeKey,
+  getNullDefault,
+} from './utilities';
+import { ROMAN_NUMBER } from '../constants';
 
 /**
  * Class representing a Section - a collection of lines that will compose a song.
@@ -16,16 +26,30 @@ export class Section {
     this._id = data?.id || generateUniqueId();
     this._type = 'section';
 
-    this.kind = SECTION.VERSE;
+    // Attributes
+    this.kind = NULL;
     this.number = 1;
 
-    this._lines = {};
-    this._sortedLines = [];
-    this._isSorted = true;
+    // Relationships
+    this.linesIds = [];
+    this.songId = null;
+
+    // Internal
+    this._isSorted = false;
 
     if (data) {
       this.deserialize(data);
     }
+  }
+
+  /**
+   * Save section to the React Global State.
+   */
+  _save() {
+    console.log('%cSaving section...', 'color:red');
+    setGlobalState('sections', (state) => {
+      return { ...state, [this.id]: this };
+    });
   }
 
   /**
@@ -49,18 +73,55 @@ export class Section {
    * @type {string}
    */
   get key() {
-    return serializeKey(this.id, this.type);
+    return serializeKey(this.type, this.id);
   }
 
   /**
    * List of lines.
-   * @type {Part[]}
+   * @type {Line[]}
    */
   get lines() {
-    if (this._isSorted) {
-      return this._sortedLines;
+    const library = getGlobalState('lines') ?? {};
+    const lines = this.linesIds.map((lineId) => library[lineId]);
+    if (!this._isSorted) {
+      return this.sort(lines);
     }
-    return this.sort();
+    return lines;
+  }
+
+  /**
+   * Get parent song instance
+   * @type {Song|null}
+   */
+  get song() {
+    const song = getGlobalState('song') ?? {};
+    return song.id === this.songId ? song : null;
+  }
+
+  /**
+   * Get the section before this instance in the song
+   * @type {Section|null}
+   */
+  get previousSection() {
+    const { sections = {} } = this.song ?? {};
+    const { sectionsIds = {} } = this.song ?? {};
+    const index = sectionsIds.findIndex((id) => id === this.id);
+    if (index < 1) return null;
+
+    return sections[index - 1];
+  }
+
+  /**
+   * Get the section after this instance in the song
+   * @type {Section|null}
+   */
+  get nextSection() {
+    const { sections = {} } = this.song ?? {};
+    const { sectionsIds = {} } = this.song ?? {};
+    const index = sectionsIds.findIndex((id) => id === this.id);
+    if (index === -1 || index >= sectionsIds.length) return null;
+
+    return sections[index + 1];
   }
 
   /**
@@ -68,7 +129,7 @@ export class Section {
    * @type {string}
    */
   get name() {
-    return `${this.kind} ${this.number}`;
+    return `${this.kind} ${ROMAN_NUMBER[this.number]}`;
   }
 
   /**
@@ -76,10 +137,8 @@ export class Section {
    * @type {number}
    */
   get startTime() {
-    const start = this.lines[0];
-    if (start && start instanceof Line) return start.startTime;
-
-    return 0;
+    const firstLine = this.lines[0];
+    return firstLine?.startTime ?? 0;
   }
 
   /**
@@ -87,10 +146,8 @@ export class Section {
    * @type {number}
    */
   get endTime() {
-    const end = this.lines.length > 0 ? this.lines[this.lines.length - 1] : null;
-    if (end && end instanceof Line) return end.endTime;
-
-    return 0;
+    const lastLine = this.lines.length > 0 ? this.lines[this.lines.length - 1] : null;
+    return lastLine?.endTime ?? 0;
   }
 
   /**
@@ -106,6 +163,10 @@ export class Section {
    * @type {string}
    */
   get text() {
+    if (!this.linesIds?.length) {
+      return `[${this.placeholder}]`;
+    }
+
     return this.lines
       .map((line) => {
         if (line && line instanceof Line) {
@@ -121,30 +182,63 @@ export class Section {
   }
 
   /**
+   * Percentage (0-100) of completion of this instance.
+   * @type {number}
+   */
+  get completion() {
+    const criteria = [
+      Boolean(this.songId), // has parent song
+      Boolean(this.linesIds.length), // has at last one child line
+      Boolean(SECTION?.[this.kind]), // has a section
+    ];
+    const complete = criteria.filter((i) => i);
+    const attributesCompletion = (100 * complete.length) / criteria.length;
+
+    const relationshipsTotal = this.linesIds.length;
+    const relationshipsCompleted = this.lines.filter((l) => l.isComplete);
+
+    const relationshipsCompletion = (100 * relationshipsCompleted.length) / relationshipsTotal;
+    return Math.floor((attributesCompletion + relationshipsCompletion) / 2);
+  }
+
+  /**
+   * Flag indicating if the section has all required values.
+   * @type {boolean}
+   */
+  get isComplete() {
+    return this.completion === 100;
+  }
+
+  /**
    * Get the complete data set.
    * @type {object}
    */
   get data() {
     return {
       id: this._id,
-      kind: this.kind,
-      number: this.number,
+      // Getters
       name: this.name,
       startTime: this.startTime,
       endTime: this.endTime,
       duration: this.duration,
       text: this.text,
-      lines: this.lines,
+      // Attributes
+      kind: this.kind,
+      number: this.number,
+      // Relationships
+      linesIds: this.linesIds,
+      songId: this.songId,
     };
   }
 
   /**
-   * Sorts parts according to their starting time.
+   * Sorts lines according to their starting time.
    * @method
+   * @param {Line[]} lines
    * @returns {object[]}
    */
-  sort() {
-    const cache = Object.values(this._lines).reduce((res, line) => {
+  sort(lines = this.lines) {
+    const cache = Object.values(lines).reduce((res, line) => {
       if (line && line instanceof Line) {
         if (res[line.startTime]) {
           res[line.startTime].push(line);
@@ -157,39 +251,122 @@ export class Section {
 
     const sortedTimes = Object.keys(cache).map(Number).sort();
 
-    this._sortedLines = sortedTimes.reduce((acc, key) => {
+    const sortedLines = sortedTimes.reduce((acc, key) => {
       acc = [...acc, ...cache[key]];
       return acc;
     }, []);
+
+    this.linesIds = sortedLines.map((entry) => entry.id);
     this._isSorted = true;
-    return this._sortedLines;
+    return sortedLines;
   }
 
   /**
-   * Adds a part to the _lines object.
+   * Adds a line to the linesIds.
    * @method
-   * @param {Part} part
+   * @param {Line} line
    */
   addLine(line) {
-    if (line.id) {
-      this._lines[line.id] = line;
-      this._isSorted = false;
-      this.forceState();
-    }
+    const id = line?.id ? line.id : line;
+    const dict = Object.values(this.linesIds).reduce((acc, cur) => {
+      acc[cur] = true;
+      return acc;
+    }, {});
+
+    dict[id] = true;
+
+    this.linesIds = Object.keys(dict);
+    this.sort();
+
+    this._save();
 
     return this;
   }
 
   /**
-   * Removes a line from the _lines object.
+   * Removes a line from the linesIds.
    * @method
    * @param {string} id
    */
   removeLine(id) {
-    if (this._lines[id]) {
-      delete this._lines[id];
-      this.forceState();
+    const dict = Object.values(this.linesIds).reduce((acc, cur) => {
+      acc[cur] = true;
+      return acc;
+    }, {});
+
+    delete dict[id];
+
+    this.linesIds = Object.keys(dict);
+
+    this._save();
+    return this;
+  }
+
+  /**
+   * Connects parent relationship adding song-section one-to-many relationship end-to-end.
+   * @method
+   * @param {string} songId
+   */
+  connectSong(songId) {
+    const library = getGlobalState('song') ?? {};
+    const song = library.id === songId ? library : null;
+
+    if (!song) throw Error(`Song ${songId} does not exist in the state`);
+
+    song.addSection(this);
+    this.deserialize({ songId });
+
+    return this;
+  }
+
+  /**
+   * Disconnects parent relationship removing song-section one-to-many relationship end-to-end.
+   * @method
+   * @param {string} songId
+   */
+  disconnectSong(songId) {
+    const library = getGlobalState('song') ?? {};
+    const song = library.id === songId ? library : null;
+
+    if (song) {
+      song.removeSection(this.id);
     }
+    this.deserialize({ songId: null });
+
+    return this;
+  }
+
+  /**
+   * Connects child relationship adding section-line one-to-many relationship end-to-end.
+   * @method
+   * @param {string} lineId
+   */
+  connectLine(lineId) {
+    const library = getGlobalState('lines') ?? {};
+    const line = library[lineId] ?? null;
+
+    if (!line) throw Error(`Section ${lineId} does not exist in the state`);
+
+    line.deserialize({ sectionId: this.id });
+    this.addLine(lineId);
+
+    return this;
+  }
+
+  /**
+   * Disconnects child relationship removing section-line one-to-many relationship end-to-end.
+   * @method
+   * @param {string} lineId
+   */
+  disconnectLine(lineId) {
+    const library = getGlobalState('lines') ?? {};
+    const line = library[lineId] ?? null;
+
+    if (line) {
+      line.deserialize({ sectionId: null });
+    }
+    this.removeLine(lineId);
+
     return this;
   }
 
@@ -199,22 +376,16 @@ export class Section {
    * @param {object|null} data
    */
   deserialize(data) {
-    this._id = data.id || this._id || generateUniqueId();
-    this.kind = data.kind || SECTION.VERSE;
-    this.number = data.number || 1;
+    this._id = data.id ?? this._id ?? generateUniqueId();
+    // Attributes
+    this.kind = getEnumDefault(this, data, 'kind', SECTION, SECTION.VERSE);
+    this.number = getDefault(this, data, 'number', 1);
+    this.placeholder = getDefault(this, data, 'placeholder', '');
+    // Relationships
+    this.songId = getNullDefault(this, data, 'songId', null);
+    this.linesIds = getRelationshipsDefault(this, data, 'linesIds', Line);
 
-    if (data.lines) {
-      this._isSorted = false;
-      this._sortedLines = [];
-      Object.values(data.lines).forEach((line) => {
-        if (line instanceof Line) {
-          this.addLine(line);
-        } else {
-          this.addLine(new Line(line));
-        }
-      });
-    }
-
+    this._save();
     return this;
   }
 
@@ -227,14 +398,13 @@ export class Section {
     return {
       id: this.id,
       type: this.type,
-      lines: Object.values(this._lines).map((line) => line.serialize()),
+      // Attributes
       kind: this.kind,
       number: this.number,
+      // Relationships
+      linesIds: this.linesIds,
+      songId: this.songId,
     };
-  }
-
-  forceState() {
-    // setGlobalState('activeSection', this);
   }
 }
 

@@ -2,19 +2,25 @@ import { createGlobalState } from 'react-hooks-global-state';
 
 const initialState = {
   // videoId: null, // _1dZKhxrSoA
+  step: '0',
   videoId: '_1dZKhxrSoA',
   isRecording: false,
-  assignee: 'A',
   song: null,
+  sections: {},
+  lines: {},
+  parts: {},
+  activeInstance: null,
+  selection: [],
+  unassignedTimestamps: [],
+
+  assignee: 'A',
   currentLine: null,
   currentSection: null,
   timestamp: 0,
-  activeInstance: null,
-  unassignedParts: [],
 };
 
-const { useGlobalState, setGlobalState } = createGlobalState(initialState);
+const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState(initialState);
 
-export { setGlobalState };
+export { setGlobalState, getGlobalState };
 
 export default useGlobalState;

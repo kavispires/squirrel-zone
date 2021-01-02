@@ -1,5 +1,6 @@
 import { ASSIGNEE } from './enum';
-import { generateUniqueId, serializeKey } from './utilities';
+import { generateUniqueId, getDefault, getEnumDefault, getNullDefault, serializeKey } from './utilities';
+import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
 
 /**
  * Class representing a Part - the smallest part of the lyrics, it composes a line.
@@ -21,11 +22,21 @@ export class Part {
     this.text = null;
 
     // Relationships
-    this.parentLineId = null;
+    this.lineId = null;
 
     if (data) {
       this.deserialize(data);
     }
+  }
+
+  /**
+   * Save part to the React Global State.
+   */
+  _save() {
+    console.log('%cSaving part...', 'color:yellow');
+    setGlobalState('parts', (state) => {
+      return { ...state, [this.id]: this };
+    });
   }
 
   /**
@@ -49,7 +60,7 @@ export class Part {
    * @type {string}
    */
   get key() {
-    return serializeKey(this.id, this.type);
+    return serializeKey(this.type, this.id);
   }
 
   /**
@@ -61,11 +72,25 @@ export class Part {
   }
 
   /**
-   * Flag indicating if the part has all required values
+   * Percentage (0-100) of completion of this instance.
+   * @type {number}
+   */
+  get completion() {
+    const criteria = [
+      this.duration > 0, // If has start and end time positive difference
+      Boolean(this.text), // Has text
+      Boolean(this.lineId), // Has its parent line
+    ];
+    const complete = criteria.filter((i) => i);
+    return Math.floor((100 * complete.length) / criteria.length);
+  }
+
+  /**
+   * Flag indicating if the part has all required values.
    * @type {boolean}
    */
   get isComplete() {
-    return Boolean(this.startTime && this.endTime && this.text && this.parentLineId);
+    return Math.floor(this.completion === 100);
   }
 
   /**
@@ -85,11 +110,45 @@ export class Part {
       startTime: this.startTime,
       text: this.text,
       // Relationships
-      parentLineId: this.parentLineId,
+      lineId: this.lineId,
     };
 
     Object.freeze(data);
     return data;
+  }
+
+  /**
+   * Connects parent relationship adding line-part one-to-many relationship end-to-end.
+   * @method
+   * @param {string} lineId
+   */
+  connectSection(lineId) {
+    const library = getGlobalState('lines') ?? {};
+    const line = library[lineId] ?? null;
+
+    if (!line) throw Error(`Line ${lineId} does not exist in the state`);
+
+    line.addPart(this);
+    this.deserialize({ lineId });
+
+    return this;
+  }
+
+  /**
+   * Disconnects parent relationship removing line-part one-to-many relationship end-to-end.
+   * @method
+   * @param {string} lineId
+   */
+  disconnectSection(lineId) {
+    const library = getGlobalState('lines') ?? {};
+    const line = library[lineId] ?? null;
+
+    if (line) {
+      line.removePart(this.id);
+    }
+    this.deserialize({ lineId: null });
+
+    return this;
   }
 
   /**
@@ -100,13 +159,14 @@ export class Part {
   deserialize(data) {
     this._id = data.id || this._id || generateUniqueId();
     // Attributes
-    this.assignee = data.assignee ?? ASSIGNEE.A;
-    this.endTime = data.endTime ?? null;
-    this.startTime = data.startTime ?? null;
-    this.text = data.text ?? null;
+    this.assignee = getEnumDefault(this, data, 'assignee', ASSIGNEE, ASSIGNEE.A);
+    this.endTime = getDefault(this, data, 'endTime', null);
+    this.startTime = getDefault(this, data, 'startTime', null);
+    this.text = getDefault(this, data, 'text', null);
     // Relationships
-    this.parentLineId = data.parentLineId ?? null;
+    this.lineId = getNullDefault(this, data, 'lineId', null);
 
+    this._save();
     return this;
   }
 
@@ -125,7 +185,7 @@ export class Part {
       startTime: this.startTime,
       text: this.text,
       // Relationships
-      parentLineId: this.parentLineId,
+      lineId: this.lineId,
     };
   }
 }

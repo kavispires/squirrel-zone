@@ -1,6 +1,16 @@
-import { SKILL, SKILL_LEVEL, SKILL_TYPE } from './enum';
+// Global State
+import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+// Engine and utilities
 import Part from './part';
-import { generateUniqueId, serializeKey } from './utilities';
+import { SKILL, SKILL_LEVEL, SKILL_TYPE } from './enum';
+import {
+  generateUniqueId,
+  getDefault,
+  getRelationshipsDefault,
+  getEnumDefault,
+  serializeKey,
+  getNullDefault,
+} from './utilities';
 
 /**
  * Class representing a Line - a collection of parts that will compose a section/verse.
@@ -20,17 +30,28 @@ export class Line {
     this.skill = SKILL.VOCAL;
     this.skillType = SKILL_TYPE.VOCAL.REGULAR;
     this.skillLevel = SKILL_LEVEL['1'];
+    this.placeholder = 'oh yeah';
 
     // Relationships
     this.partsIds = [];
-    this.parentSectionId = null;
+    this.sectionId = null;
 
     // Internal
-    this._isSorted = true;
+    this._isSorted = false;
 
     if (data) {
       this.deserialize(data);
     }
+  }
+
+  /**
+   * Save line to the React Global State.
+   */
+  _save() {
+    console.log('%cSaving line...', 'color:orange');
+    setGlobalState('lines', (state) => {
+      return { ...state, [this.id]: this };
+    });
   }
 
   /**
@@ -54,7 +75,7 @@ export class Line {
    * @type {string}
    */
   get key() {
-    return serializeKey(this.id, this.type);
+    return serializeKey(this.type, this.id);
   }
 
   /**
@@ -62,11 +83,47 @@ export class Line {
    * @type {Part[]}
    */
   get parts() {
-    // TODO
-    if (this._isSorted) {
-      return this._sortedParts;
+    const library = getGlobalState('parts') ?? [];
+    const parts = this.partsIds.map((partId) => library[partId]);
+    if (!this._isSorted) {
+      return this.sort(parts);
     }
-    return this.sort();
+    return parts;
+  }
+
+  /**
+   * Get parent section instance.
+   * @type {Song|null}
+   */
+  get section() {
+    const sections = getGlobalState('sections') ?? {};
+    return sections[this.id] ?? null;
+  }
+
+  /**
+   * Get the line before this instance in the section
+   * @type {Line|null}
+   */
+  get previousLine() {
+    const { lines = {} } = this.section ?? {};
+    const { linesIds = {} } = this.section ?? {};
+    const index = linesIds.findIndex((id) => id === this.id);
+    if (index < 1) return null;
+
+    return lines[index - 1];
+  }
+
+  /**
+   * Get the line after this instance in the section
+   * @type {Line|null}
+   */
+  get nextSection() {
+    const { lines = {} } = this.section ?? {};
+    const { linesIds = {} } = this.section ?? {};
+    const index = linesIds.findIndex((id) => id === this.id);
+    if (index === -1 || index >= linesIds.length) return null;
+
+    return lines[index + 1];
   }
 
   /**
@@ -102,7 +159,7 @@ export class Line {
    * @type {boolean}
    */
   get isAdLib() {
-    return Boolean(SKILL.AD_LIB);
+    return this.skill === SKILL.AD_LIB;
   }
 
   /**
@@ -110,7 +167,7 @@ export class Line {
    * @type {boolean}
    */
   get isRap() {
-    return Boolean(SKILL.RAP);
+    return this.skill === SKILL.RAP;
   }
 
   /**
@@ -118,7 +175,7 @@ export class Line {
    * @type {boolean}
    */
   get isDance() {
-    return Boolean(SKILL.DANCE);
+    return this.skill === SKILL.DANCE;
   }
 
   /**
@@ -126,7 +183,7 @@ export class Line {
    * @type {boolean}
    */
   get isChoir() {
-    return Boolean(SKILL.CHOIR);
+    return this.skill === SKILL.CHOIR;
   }
 
   /**
@@ -134,6 +191,10 @@ export class Line {
    * @type {string}
    */
   get text() {
+    if (!this.partsIds?.length) {
+      return `[${this.placeholder}]`;
+    }
+
     return this.parts
       .map((part) => {
         if (part && part instanceof Part) {
@@ -145,12 +206,30 @@ export class Line {
   }
 
   /**
-   * Flag indicating if the line has all required values
+   * Percentage (0-100) of completion of this instance.
+   * @type {number}
+   */
+  get completion() {
+    const criteria = [
+      Boolean(this.sectionId), // has parent section
+      Boolean(this.partsIds.length), // has at last one child part
+    ];
+    const complete = criteria.filter((i) => i);
+    const attributesCompletion = (100 * complete.length) / criteria.length;
+
+    const relationshipsTotal = this.partsIds.length;
+    const relationshipsCompleted = this.parts.filter((p) => p.isComplete);
+
+    const relationshipsCompletion = (100 * relationshipsCompleted.length) / relationshipsTotal;
+    return Math.floor((attributesCompletion + relationshipsCompletion) / 2);
+  }
+
+  /**
+   * Flag indicating if the line has all required values.
    * @type {boolean}
    */
   get isComplete() {
-    // TODO
-    return Boolean(this.parentSectionId && this.partsIds.length);
+    return this.completion === 100;
   }
 
   /**
@@ -171,67 +250,152 @@ export class Line {
       isRap: this.isRap,
       startTime: this.startTime,
       text: this.text,
+      placeholder: this.placeholder,
       // Attributes
       skill: this.skill,
       skillType: this.skillType,
       skillLevel: this.skillLevel,
       // Relationships
       partsIds: this.partsIds,
-      parentSectionId: this.parentSectionId,
+      sectionId: this.sectionId,
     };
   }
 
   /**
    * Sorts parts according to their starting time.
    * @method
+   * @param {Part[]} parts
    * @returns {object[]}
    */
-  sort() {
-    const cache = Object.values(this._parts).reduce((res, part) => {
+  sort(parts = this.parts) {
+    const cache = Object.values(parts).reduce((res, part) => {
       if (part && part instanceof Part) {
-        if (res[part.startTime]) {
-          res[part.startTime].push(part);
-        } else {
-          res[part.startTime] = [part];
+        if (res[part.startTime ?? 0] === undefined) {
+          res[part.startTime ?? 0] = [];
         }
+        res[part.startTime ?? 0].push(part);
       }
       return res;
     }, {});
 
     const sortedTimes = Object.keys(cache).map(Number).sort();
-
-    this._sortedParts = sortedTimes.reduce((acc, key) => {
+    const sortedParts = sortedTimes.reduce((acc, key) => {
       acc = [...acc, ...cache[key]];
       return acc;
     }, []);
+
+    this.partsIds = sortedParts.map((entry) => entry.id);
     this._isSorted = true;
-    return this._sortedParts;
+
+    this._save();
+    return sortedParts;
   }
 
   /**
-   * Adds a part to the _parts object.
+   * Adds a part to the partsIds.
    * @method
-   * @param {Part} part
+   * @param {Part|string} part
    */
   addPart(part) {
-    if (part.id) {
-      if (this._store.exists(part)) this.partsIds.push(part.id);
-      this._parts[part.id] = part;
-      this._isSorted = false;
-    }
+    const id = part?.id ? part.id : part;
+    const dict = Object.values(this.partsIds).reduce((acc, cur) => {
+      acc[cur] = true;
+      return acc;
+    }, {});
+
+    dict[id] = true;
+
+    this.partsIds = Object.keys(dict);
+    this.sort();
+
+    this._save();
 
     return this;
   }
 
   /**
-   * Removes a part from the _parts object.
+   * Removes a part from the partsIds object.
    * @method
    * @param {string} id
    */
   removePart(id) {
-    if (this._parts[id]) {
-      delete this._parts[id];
+    const dict = Object.values(this.partsIds).reduce((acc, cur) => {
+      acc[cur] = true;
+      return acc;
+    }, {});
+
+    delete dict[id];
+
+    this.partsIds = Object.keys(dict);
+
+    this._save();
+    return this;
+  }
+
+  /**
+   * Connects parent relationship adding section-line one-to-many relationship end-to-end.
+   * @method
+   * @param {string} sectionId
+   */
+  connectSection(sectionId) {
+    const library = getGlobalState('sections') ?? {};
+    const section = library[sectionId] ?? null;
+
+    if (!section) throw Error(`Section ${sectionId} does not exist in the state`);
+
+    section.addLine(this);
+    this.deserialize({ sectionId });
+
+    return this;
+  }
+
+  /**
+   * Disconnects parent relationship removing section-line one-to-many relationship end-to-end.
+   * @method
+   * @param {string} sectionId
+   */
+  disconnectSection(sectionId) {
+    const library = getGlobalState('sections') ?? {};
+    const section = library[sectionId] ?? null;
+
+    if (section) {
+      section.removeLine(this.id);
     }
+    this.deserialize({ sectionId: null });
+
+    return this;
+  }
+
+  /**
+   * Connects child relationship adding line-part one-to-many relationship end-to-end.
+   * @method
+   * @param {string} partId
+   */
+  connectLine(partId) {
+    const library = getGlobalState('parts') ?? {};
+    const part = library[partId] ?? null;
+
+    if (!part) throw Error(`Part ${partId} does not exist in the state`);
+
+    part.deserialize({ lineId: this.id });
+    this.addPart(partId);
+
+    return this;
+  }
+
+  /**
+   * Disconnects child relationship removing line-part one-to-many relationship end-to-end.
+   * @method
+   * @param {string} partId
+   */
+  disconnectLine(partId) {
+    const library = getGlobalState('parts') ?? {};
+    const part = library[partId] ?? null;
+
+    if (part) {
+      part.deserialize({ lindId: null });
+    }
+    this.removePart(part);
 
     return this;
   }
@@ -244,27 +408,16 @@ export class Line {
   deserialize(data) {
     this._id = data.id || this._id || generateUniqueId();
     // Attributes
-    this.isDismissible = data.isDismissible ?? false;
-    this.skill = data.skill || SKILL.VOCAL;
-    this.skillType = data.skillType || SKILL_TYPE.VOCAL.REGULAR;
-    this.skillLevel = data.skillLevel || SKILL_LEVEL['1'];
+    this.isDismissible = getDefault(this, data, 'isDismissible', false);
+    this.skill = getEnumDefault(this, data, 'skill', SKILL, SKILL.VOCAL);
+    this.skillType = getDefault(this, data, 'skillType', SKILL_TYPE.VOCAL.REGULAR);
+    this.skillLevel = getEnumDefault(this, data, 'skillLevel', SKILL_LEVEL, SKILL_LEVEL['1']);
+    this.placeholder = getDefault(this, data, 'placeholder', '');
     // Relationships
-    this.partsIds = data.partsIds || [];
-    this.parentSectionId = data.parentSectionId || null;
+    this.sectionId = getNullDefault(this, data, 'sectionId', null);
+    this.partsIds = getRelationshipsDefault(this, data, 'partsIds', Part);
 
-    // TODO: Add to store?
-    // if (data.parts) {
-    //   this._isSorted = false;
-    //   this._sortedParts = [];
-    //   Object.values(data.parts).forEach((part) => {
-    //     if (part instanceof Part) {
-    //       this.addPart(part);
-    //     } else {
-    //       this.addPart(new Part(part));
-    //     }
-    //   });
-    // }
-
+    this._save();
     return this;
   }
 
@@ -284,7 +437,7 @@ export class Line {
       skillLevel: this.skillLevel,
       // Relationships
       partsIds: this.partsIds,
-      parentSectionId: this.parentSectionId,
+      sectionId: this.sectionId,
     };
   }
 }

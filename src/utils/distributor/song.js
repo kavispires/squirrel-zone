@@ -1,6 +1,14 @@
+// Global State
+import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+// Engine and utilities
 import Section from './section';
-import { generateUniqueId, serializeKey } from './utilities';
-import { setGlobalState } from '../../states/useDistributorState';
+import {
+  generateUniqueId,
+  getDefault,
+  getNullDefault,
+  getRelationshipsDefault,
+  serializeKey,
+} from './utilities';
 
 /**
  * Class representing a Song - a collection of sections.
@@ -14,27 +22,37 @@ export class Song {
   constructor(data) {
     this._id = data.id || generateUniqueId();
     this._type = 'song';
-
+    // Attributes
     this.videoId = '';
     this.title = '';
     this.version = '';
     this.createdAt = data.createdAt || Date.now();
     this.updatedAt = null;
-    this.albumId = '';
-    this.isSingle = '';
+
+    this.isSingle = false;
     this.idealGroupSize = 5;
     this.duration = 0;
     this.tempo = 0;
     this.genre = '';
     this.style = '';
+    // Relationships
+    this.sectionsIds = [];
+    this.albumId = null;
 
-    this._sections = {};
-    this._sortedSections = [];
+    // Internal
     this._isSorted = true;
 
     if (data) {
       this.deserialize(data);
     }
+  }
+
+  /**
+   * Save song to the React Global State.
+   */
+  _save() {
+    console.log('%cSaving song...', 'color:purple');
+    setGlobalState('song', this);
   }
 
   /**
@@ -58,7 +76,7 @@ export class Song {
    * @type {string}
    */
   get key() {
-    return serializeKey(this.id, this.type);
+    return serializeKey(this.type, this.id);
   }
 
   /**
@@ -66,10 +84,12 @@ export class Song {
    * @type {Part[]}
    */
   get sections() {
-    if (this._isSorted) {
-      return this._sortedSections;
+    const library = getGlobalState('sections') ?? [];
+    const sections = this.sectionsIds.map((sectionId) => library[sectionId]);
+    if (!this._isSorted) {
+      return this.sort(sections);
     }
-    return this.sort();
+    return sections;
   }
 
   /**
@@ -88,35 +108,101 @@ export class Song {
   }
 
   /**
+   * Get the id of the first line.
+   * @type {string}
+   */
+  get firstLineId() {
+    return this.sections?.[0]?.lines[0]?.id ?? null;
+  }
+
+  /**
+   * Get the id of the last line.
+   * @type {string}
+   */
+  get lastLineId() {
+    const lastSection = this.sections?.[this.sections.length - 1];
+    return lastSection?.lines[lastSection.lines.length - 1]?.id ?? null;
+  }
+
+  /**
+   * Get a list of all ids of all parts in the song
+   * @type {string[]}
+   */
+  get allPartsIds() {
+    return this.sections
+      .map((section) => section.lines)
+      .flat()
+      .map((line) => line.partsIds)
+      .flat();
+  }
+
+  /**
+   * Percentage (0-100) of completion of this instance.
+   * @type {number}
+   */
+  get completion() {
+    const criteria = [
+      Boolean(this.videoId), // has a videoId
+      Boolean(this.title), // has a title
+      Boolean(this.duration), // has a duration
+      Boolean(this.tempo), // has a tempo
+      Boolean(this.genre), // has a genre
+      Boolean(this.style), // has a style
+      Boolean(this.sectionsIds.length), // has at last one child section
+    ];
+    const complete = criteria.filter((i) => i);
+    const attributesCompletion = (100 * complete.length) / criteria.length;
+
+    const relationshipsTotal = this.sectionsIds.length;
+    const relationshipsCompleted = this.sections.filter((s) => s.isComplete);
+
+    const relationshipsCompletion = (100 * relationshipsCompleted.length) / relationshipsTotal;
+    return Math.floor((attributesCompletion + relationshipsCompletion) / 2);
+  }
+
+  /**
+   * Flag indicating if the section has all required values.
+   * @type {boolean}
+   */
+  get isComplete() {
+    return this.completion === 100;
+  }
+
+  /**
    * Get the complete data set.
    */
   get data() {
     return {
-      id: this._id,
+      id: this.id,
+      type: this._type,
+      // Getters
+      text: this.text,
+      // Attributes
       videoId: this.videoId,
       title: this.title,
       version: this.version,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      albumId: this.albumId,
       isSingle: this.isSingle,
       idealGroupSize: this.idealGroupSize,
       duration: this.duration,
       tempo: this.tempo,
       genre: this.genre,
       style: this.style,
-      sections: this.sections,
-      text: this.text,
+      // Relationships
+      albumId: this.albumId,
+      sectionsIds: this.sectionsIds,
     };
   }
 
   /**
    * Sorts sections according to their starting time.
    * @method
+   * @param {Section[]} sections
    * @returns {object[]}
    */
-  sort() {
-    const cache = Object.values(this._sections).reduce((res, section) => {
+  sort(sections = this.sections) {
+    const cache = Object.values(sections).reduce((res, section) => {
       if (section && section instanceof Section) {
         if (res[section.startTime]) {
           res[section.startTime].push(section);
@@ -129,39 +215,87 @@ export class Song {
 
     const sortedTimes = Object.keys(cache).map(Number).sort();
 
-    this._sortedSections = sortedTimes.reduce((acc, key) => {
+    const sortedSections = sortedTimes.reduce((acc, key) => {
       acc = [...acc, ...cache[key]];
       return acc;
     }, []);
+
+    this.sectionsIds = sortedSections.map((entry) => entry.id);
     this._isSorted = true;
-    return this._sortedSections;
+    return sortedSections;
   }
 
   /**
-   * Adds a section to the _sections object.
+   * Adds a section to the sectionsIds.
    * @method
    * @param {Section} section
    */
   addSection(section) {
-    if (section.id) {
-      this._sections[section.id] = section;
-      this._isSorted = false;
-      this.forceState();
-    }
+    const id = section?.id ? section.id : section;
+    const dict = Object.values(this.sectionsIds).reduce((acc, cur) => {
+      acc[cur] = true;
+      return acc;
+    }, {});
+
+    dict[id] = true;
+
+    this.sectionsIds = Object.keys(dict);
+    this.sort();
+
+    this._save();
 
     return this;
   }
 
   /**
-   * Removes a section from the _sections object.
+   * Removes a section from the sectionsIds.
    * @method
    * @param {string} id
    */
   removeSection(id) {
-    if (this._sections[id]) {
-      delete this._sections[id];
-      this.forceState();
+    const dict = Object.values(this.sectionsIds).reduce((acc, cur) => {
+      acc[cur] = true;
+      return acc;
+    }, {});
+
+    delete dict[id];
+
+    this.sectionsIds = Object.keys(dict);
+
+    this._save();
+    return this;
+  }
+
+  /**
+   * Connects child relationship adding song-section one-to-many relationship end-to-end.
+   * @method
+   * @param {string} sectionId
+   */
+  connectSection(sectionId) {
+    const library = getGlobalState('sections') ?? {};
+    const section = library[sectionId] ?? null;
+
+    if (!section) throw Error(`Section ${sectionId} does not exist in the state`);
+
+    section.deserialize({ songId: this.id });
+    this.addSection(this);
+
+    return this;
+  }
+
+  /**
+   * Removes song-section one-to-many relationship end-to-end.
+   * @method
+   * @param {string} sectionId
+   */
+  disconnectSection(sectionId) {
+    const library = getGlobalState('sections') ?? {};
+    const section = library[sectionId] ?? null;
+
+    if (section) {
+      section.deserialize({ songId: null });
     }
+    this.removeSection(sectionId);
 
     return this;
   }
@@ -172,32 +306,24 @@ export class Song {
    * @param {object|null} data
    */
   deserialize(data) {
-    this._id = data.id || this._id || generateUniqueId();
-    this.videoId = data.videoId || '';
-    this.title = data.title || '';
-    this.version = data.version || '';
-    this.createdAt = data.createdAt || Date.now();
-    this.updatedAt = data.updatedAt || Date.now();
-    this.albumId = data.albumId || '';
-    this.isSingle = data.isSingle || '';
-    this.idealGroupSize = data.idealGroupSize || 5;
-    this.duration = data.duration || 0;
-    this.tempo = data.tempo || 0;
-    this.genre = data.genre || '';
-    this.style = data.style || '';
+    this._id = data.id ?? this._id ?? generateUniqueId();
+    // Attributes
+    this.videoId = getDefault(this, data, 'videoId', '');
+    this.title = getDefault(this, data, 'title', '');
+    this.version = getDefault(this, data, 'version', '');
+    this.createdAt = getDefault(this, data, 'createdAt', Date.now());
+    this.updatedAt = getDefault(this, data, 'updatedAt', Date.now());
+    this.isSingle = getDefault(this, data, 'isSingle', false);
+    this.idealGroupSize = getDefault(this, data, 'idealGroupSize', 5);
+    this.duration = getDefault(this, data, 'duration', false);
+    this.tempo = getDefault(this, data, 'tempo', '');
+    this.genre = getDefault(this, data, 'genre', '');
+    this.style = getDefault(this, data, 'style', '');
+    // Relationships
+    this.albumId = getNullDefault(this, data, 'albumId', null);
+    this.sectionsIds = getRelationshipsDefault(this, data, 'sectionsIds', Section);
 
-    if (data.sections) {
-      this._isSorted = false;
-      this._sortedSections = [];
-      Object.values(data.sections).forEach((section) => {
-        if (section instanceof Section) {
-          this.addSection(section);
-        } else {
-          this.addSection(new Section(section));
-        }
-      });
-    }
-
+    this._save();
     return this;
   }
 
@@ -210,20 +336,21 @@ export class Song {
     return {
       id: this.id,
       type: this.type,
-      sections: Object.values(this._sections).map((section) => section.serialize()),
-
+      // Attributes
       videoId: this.videoId,
       title: this.title,
       version: this.version,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      albumId: this.albumId,
       isSingle: this.isSingle,
       idealGroupSize: this.idealGroupSize,
       duration: this.duration,
       tempo: this.tempo,
       genre: this.genre,
       style: this.style,
+      // Relationships
+      albumId: this.albumId,
+      sectionsIds: this.sectionsIds,
     };
   }
 

@@ -1,0 +1,21 @@
+.load-song {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .ant-input-group-wrapper {
+    width: auto;
+  }
+
+  &__title {
+    width: 100%;
+    text-align: center;
+  }
+
+  &__separator {
+    text-transform: uppercase;
+    margin: get-unit(0, 3);
+    font-size: 80%;
+    transform: translateY(6px);
+  }
+}

@@ -154,11 +154,17 @@ export class Song {
     const complete = criteria.filter((i) => i);
     const attributesCompletion = (100 * complete.length) / criteria.length;
 
+    return Math.floor((attributesCompletion + this.relationshipsCompletion) / 2);
+  }
+
+  /**
+   * Percentage (0-100) of completion of the child relationships of this instance.
+   */
+  get relationshipsCompletion() {
     const relationshipsTotal = this.sectionsIds.length;
     const relationshipsCompleted = this.sections.filter((s) => s.isComplete);
 
-    const relationshipsCompletion = (100 * relationshipsCompleted.length) / relationshipsTotal;
-    return Math.floor((attributesCompletion + relationshipsCompletion) / 2);
+    return (100 * relationshipsCompleted.length) / relationshipsTotal;
   }
 
   /**

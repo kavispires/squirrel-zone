@@ -10,11 +10,12 @@ import OptionsPart from './OptionsPart';
 function ModalOptions({ activeInstance, setActiveInstance }) {
   const [tempData, setTempData] = useState({});
 
-  const onCancelModal = useCallback(() => {
+  const onCancelModal = () => {
     setActiveInstance(null);
-    // Note: Modal.onCancel has a weird bug that forces overflow hidden on the body
+    // Note: Modal.onCancel has a weird bug that forces overflow hidden on the body.
+    // Note2: Do not use useCallback in this.
     document.body.style.overflow = 'auto';
-  }, [setActiveInstance]);
+  };
 
   const onSaveModal = useCallback(() => {
     activeInstance.deserialize(tempData);

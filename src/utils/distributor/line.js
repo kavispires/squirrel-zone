@@ -217,11 +217,17 @@ export class Line {
     const complete = criteria.filter((i) => i);
     const attributesCompletion = (100 * complete.length) / criteria.length;
 
+    return Math.floor((attributesCompletion + this.relationshipsCompletion) / 2);
+  }
+
+  /**
+   * Percentage (0-100) of completion of the child relationships of this instance.
+   */
+  get relationshipsCompletion() {
     const relationshipsTotal = this.partsIds.length;
     const relationshipsCompleted = this.parts.filter((p) => p.isComplete);
 
-    const relationshipsCompletion = (100 * relationshipsCompleted.length) / relationshipsTotal;
-    return Math.floor((attributesCompletion + relationshipsCompletion) / 2);
+    return (100 * relationshipsCompleted.length) / relationshipsTotal;
   }
 
   /**

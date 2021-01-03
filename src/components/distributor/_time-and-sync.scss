@@ -59,3 +59,10 @@
     grid-row-end: end;
   }
 }
+
+.time-and-sync {
+  &__action {
+    text-align: center;
+    margin: get-unit(1);
+  }
+}

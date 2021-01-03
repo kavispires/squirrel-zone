@@ -7,6 +7,12 @@
     display: flex;
     width: 100%;
     margin-bottom: get-unit(3);
+    justify-content: space-between;
+  }
+
+  &__paragraph {
+    width: 48%;
+    align-self: flex-end;
   }
 
   &__textarea {

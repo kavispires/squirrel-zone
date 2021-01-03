@@ -624,6 +624,12 @@ body {
   display: flex;
   width: 100%;
   margin-bottom: 12px;
+  justify-content: space-between;
+}
+
+.lyrics-and-sections__paragraph {
+  width: 48%;
+  align-self: flex-end;
 }
 
 .lyrics-and-sections__textarea {
@@ -696,6 +702,11 @@ body {
   grid-column-end: end;
   grid-row-start: fourth;
   grid-row-end: end;
+}
+
+.time-and-sync__action {
+  text-align: center;
+  margin: 4px;
 }
 
 .key-capture {

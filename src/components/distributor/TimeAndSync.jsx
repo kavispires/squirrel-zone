@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import YouTube from 'react-youtube';
 
 // Design Resources
-import { Button, Divider, Progress } from 'antd';
+import { Button, Divider, Progress, Tooltip } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Components
@@ -106,11 +106,15 @@ function TimeAndSync({ playerRef }) {
 
       <div className="distributor-grid__actions">
         <Divider />
-        <Progress percent={song?.completion} />
+        <Tooltip title="Sections Completion Rate">
+          <Progress percent={song?.relationshipsCompletion} />
+        </Tooltip>
         <Divider />
-        <Button type="primary" disabled={song?.isComplete} onClick={nextStepSongsOptions}>
-          Next Step
-        </Button>
+        <div className="time-and-sync__action">
+          <Button type="primary" disabled={!song?.relationshipsCompletion} onClick={nextStepSongsOptions}>
+            Next Step: Preview
+          </Button>
+        </div>
       </div>
     </section>
   );

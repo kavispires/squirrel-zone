@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 // Design Resources
 import { Button, Divider, Input, Typography } from 'antd';
+import { DatabaseFilled, MessageFilled, NotificationFilled } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
@@ -18,7 +19,7 @@ function LyricsAndSections() {
   const [, setStep] = useDistributorState('step');
 
   const [isBuiltOnce, setIsBuiltOnce] = useState(false);
-  const [textarea, setTextarea] = useState('Sample lyrics\nSample lyrics\n\nSampleLyrics');
+  const [textarea, setTextarea] = useState('Sample lyrics\nSample |lyrics\n\nSampleLyrics');
 
   const onTextareaChange = useCallback(
     (e) => {
@@ -78,7 +79,12 @@ function LyricsAndSections() {
       }
 
       if (index === list.length - 1 && tempSection.length) {
-        const newSection = new Section({ id: newSectionId, linesIds: tempSection, sectionId: newSectionId });
+        const newSection = new Section({
+          id: newSectionId,
+          linesIds: tempSection,
+          sectionId: newSectionId,
+          songId: song.id,
+        });
         tempSections.push(newSection);
       }
     });
@@ -91,10 +97,14 @@ function LyricsAndSections() {
   return (
     <section className="lyrics-and-sections">
       <h2 className="lyrics-and-sections__title">Add Lyrics</h2>
+
+      <Paragraph>Paste the lyrics and press enter to auto generate the sections and lines.</Paragraph>
       <Paragraph>
-        Paste the lyrics and press enter to auto generate the sections and lines.
-        <br />
         An line break creates a Line, a double line break generates a Section, and | generates parts.
+      </Paragraph>
+      <Paragraph>
+        Click on each Section {<DatabaseFilled />}, Line {<MessageFilled />}, and Part{' '}
+        {<NotificationFilled />} to edit their options
       </Paragraph>
 
       <div className="lyrics-and-sections__container">
@@ -127,9 +137,8 @@ function LyricsAndSections() {
 
       {isBuiltOnce && (
         <div className="lyrics-and-sections__action">
-          <Paragraph>Click on each section and each like to change their options.</Paragraph>
           <Button type="primary" onClick={() => setStep(2)}>
-            Next Step
+            Next Step: Time & Sync
           </Button>
         </div>
       )}

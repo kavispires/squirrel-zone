@@ -8,3 +8,8 @@
   border: 1px solid get-color(gray, 2);
   border-radius: 2px;
 }
+
+@mixin centered-title {
+  width: 100%;
+  text-align: center;
+}

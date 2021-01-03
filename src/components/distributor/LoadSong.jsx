@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // Design Resources
 import { Input, Button } from 'antd';
@@ -8,16 +8,19 @@ import useDistributorState from '../../states/useDistributorState';
 import { Song } from '../../utils/distributor';
 
 function LoadSong() {
+  const [, setSong] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
   const [videoId, setVideoId] = useDistributorState('videoId');
-  const [, setSong] = useDistributorState('song');
 
-  const onAddVideoId = (event) => {
-    const videoId = event.target.value;
-    setVideoId(videoId);
-    setSong(new Song({ videoId }));
-    setStep(1);
-  };
+  const onAddVideoId = useCallback(
+    (event) => {
+      const { value } = event.target;
+      setVideoId(value);
+      setSong(new Song({ value }));
+      setStep(1);
+    },
+    [setSong, setStep, setVideoId]
+  );
 
   return (
     <div className="load-song">

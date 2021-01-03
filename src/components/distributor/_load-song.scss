@@ -3,13 +3,13 @@
   justify-content: center;
   flex-wrap: wrap;
 
+  // antd override
   .ant-input-group-wrapper {
     width: auto;
   }
 
   &__title {
-    width: 100%;
-    text-align: center;
+    @include centered-title;
   }
 
   &__separator {

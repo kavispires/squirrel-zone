@@ -1,6 +1,8 @@
 import React from 'react';
-import { Steps } from 'antd';
 
+// Design Resources
+import { Steps } from 'antd';
+// Components
 const { Step } = Steps;
 
 function StepperProgress({ currentStep }) {

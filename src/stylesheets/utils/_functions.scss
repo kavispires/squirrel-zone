@@ -23,7 +23,7 @@
     @return 0;
   }
 
-  $base: 3px;
+  $base: 4px;
 
   @if $value < 0 {
     @return -1 * $value * $base;

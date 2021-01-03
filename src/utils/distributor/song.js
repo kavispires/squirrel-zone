@@ -52,6 +52,7 @@ export class Song {
    */
   _save() {
     console.log('%cSaving song...', 'color:purple');
+    this.updatedAt = Date.now();
     setGlobalState('song', this);
   }
 
@@ -84,7 +85,7 @@ export class Song {
    * @type {Part[]}
    */
   get sections() {
-    const library = getGlobalState('sections') ?? [];
+    const library = getGlobalState('sections') ?? {};
     const sections = this.sectionsIds.map((sectionId) => library[sectionId]);
     if (!this._isSorted) {
       return this.sort(sections);
@@ -333,29 +334,56 @@ export class Song {
    * @returns {object}
    */
   serialize() {
-    return {
-      id: this.id,
-      type: this.type,
-      // Attributes
-      videoId: this.videoId,
-      title: this.title,
-      version: this.version,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      isSingle: this.isSingle,
-      idealGroupSize: this.idealGroupSize,
-      duration: this.duration,
-      tempo: this.tempo,
-      genre: this.genre,
-      style: this.style,
-      // Relationships
-      albumId: this.albumId,
-      sectionsIds: this.sectionsIds,
-    };
-  }
+    const included = [];
+    // Gather included relationships
+    const sectionsLibrary = getGlobalState('sections') ?? {};
+    const linesLibrary = getGlobalState('lines') ?? {};
+    const partsLibrary = getGlobalState('parts') ?? {};
+    this.sectionsIds.forEach((sectionId) => {
+      const section = sectionsLibrary[sectionId];
+      // Add section serialized data to included
+      included.push(section.serialize());
+      // Iterate though lines
+      section.linesIds.forEach((lineId) => {
+        const line = linesLibrary[lineId];
+        // Add section serialized data to included
+        included.push(line.serialize());
+        // Iterate though parts
+        line.partsIds.forEach((partId) => {
+          const part = partsLibrary[partId];
+          // Add section serialized data to included
+          included.push(part.serialize());
+        });
+      });
+    });
 
-  forceState() {
-    // setGlobalState('activeLine', this);
+    return {
+      data: {
+        id: this.id,
+        type: this.type,
+        // Attributes
+        videoId: this.videoId,
+        title: this.title,
+        version: this.version,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt,
+        isSingle: this.isSingle,
+        idealGroupSize: this.idealGroupSize,
+        duration: this.duration,
+        tempo: this.tempo,
+        genre: this.genre,
+        style: this.style,
+        // Relationships
+        albumId: this.albumId,
+        sectionsIds: this.sectionsIds,
+      },
+      included,
+      meta: {
+        completion: this.completion,
+        isComplete: this.isComplete,
+        compiledAt: Date.now(),
+      },
+    };
   }
 }
 

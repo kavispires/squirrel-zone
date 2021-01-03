@@ -118,6 +118,25 @@ export class Part {
   }
 
   /**
+   * Updates time information and assignee.
+   * @param {*} timestamp
+   * @returns {string} the instance id
+   */
+  updateTimestamp({ startTime, endTime, assignee }) {
+    if (assignee) {
+      this.assignee = assignee;
+    }
+    this.startTime = startTime;
+    this.endTime = endTime;
+
+    // TODO: Since we have access to partId from the timestamp, should we disconnect?
+
+    this._save();
+
+    return this.id;
+  }
+
+  /**
    * Connects parent relationship adding line-part one-to-many relationship end-to-end.
    * @method
    * @param {string} lineId

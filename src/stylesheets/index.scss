@@ -3,26 +3,32 @@
 @import '~antd/dist/antd.css';
 
 // Utils
-@import './utils/constants';
 @import './utils/functions';
+@import './utils/constants';
+@import './utils/animations';
 @import './utils/mixins';
 
 // Global
 @import './global/reset';
 @import './global/app';
 
-@import './distributor';
-
-// Components
-@import '../components/distributor/stepper-progress';
-@import '../components/distributor/load-song';
-@import '../components/distributor/key-capture';
-@import '../components/distributor/controls';
-@import '../components/distributor/log';
-
 // Creator
 @import './header';
+
+// Pages
+@import './distributor';
 @import './character-colors';
 @import './character';
 @import './svg';
 @import './creator';
+
+// Components
+@import '../components/distributor/modal-options';
+@import '../components/distributor/stepper-progress';
+@import '../components/distributor/load-song';
+@import '../components/distributor/lyrics-and-sections';
+@import '../components/distributor/time-and-sync';
+@import '../components/distributor/key-capture';
+@import '../components/distributor/controls';
+@import '../components/distributor/timestamps-bank';
+@import '../components/distributor/log';

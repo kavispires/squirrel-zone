@@ -83,7 +83,7 @@ export class Line {
    * @type {Part[]}
    */
   get parts() {
-    const library = getGlobalState('parts') ?? [];
+    const library = getGlobalState('parts') ?? {};
     const parts = this.partsIds.map((partId) => library[partId]);
     if (!this._isSorted) {
       return this.sort(parts);

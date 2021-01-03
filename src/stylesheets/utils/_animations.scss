@@ -1,0 +1,13 @@
+@keyframes color-orange-pulse {
+  0% {
+    background-color: get-color(orange);
+  }
+
+  50% {
+    background-color: get-color(orange, 3);
+  }
+
+  100% {
+    background-color: get-color(orange);
+  }
+}

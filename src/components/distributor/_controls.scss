@@ -3,6 +3,21 @@
     width: 100%;
   }
 
+  &__other-controls {
+    background: get-color(gray, 1);
+    margin-top: get-unit(2);
+    padding: get-unit(4);
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+
+  &__description {
+    font-size: 90%;
+    color: get-color(gray);
+  }
+
   &__assignees {
     width: 100%;
     margin-top: get-unit(2);
@@ -13,8 +28,16 @@
     }
   }
 
+  &__buttons {
+    display: flex;
+  }
+
   &__button {
-    width: 50%;
-    margin-top: get-unit(2);
+    box-sizing: border-box;
+    width: 20%;
+    display: block;
+    min-height: 60px;
+    border-radius: get-unit(2);
+    margin: get-unit(0 1 0 0);
   }
 }

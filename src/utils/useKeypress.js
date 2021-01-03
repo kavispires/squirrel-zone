@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 
 /**
  * useKeyUp
- * @param {string} key - the name of the key to respond to, compared against event.key
+ * @param {string[]} keys - the name of the keys to respond to, compared against event.key
  * @param {function} action - the action to perform on key up
  */
-export function useKeyUp(key, action) {
+export function useKeyUp(keys, action) {
   useEffect(() => {
     function onKeyup(e) {
-      if (e.key === key) action(key);
+      if (keys.includes(e.key)) action(e.key);
     }
     window.addEventListener('keyup', onKeyup);
     return () => window.removeEventListener('keyup', onKeyup);
@@ -17,13 +17,13 @@ export function useKeyUp(key, action) {
 
 /**
  * useKeyUp
- * @param {string} key - the name of the key to respond to, compared against event.key
+ * @param {string[]} keys - the name of the keys to respond to, compared against event.key
  * @param {function} action - the action to perform on key down
  */
-export function useKeyDown(key, action) {
+export function useKeyDown(keys, action) {
   useEffect(() => {
     function onKeyDown(e) {
-      if (e.key === key) action(key);
+      if (keys.includes(e.key)) action(e.key);
     }
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);

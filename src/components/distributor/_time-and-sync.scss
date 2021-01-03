@@ -1,0 +1,61 @@
+.distributor-grid {
+  display: grid;
+  grid-template-columns: [start] 40% [middle] 60fr [end];
+  grid-template-rows: [start] get-unit(1) [first] 180px [second] auto [third] auto [fourth] auto [end];
+  gap: get-unit(3 4);
+
+  &__key-capture {
+    background: red;
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: start;
+    grid-row-end: first;
+
+    background: $light-gray;
+  }
+
+  &__video-container {
+    grid-column-start: start;
+    grid-column-end: middle;
+    grid-row-start: first;
+    grid-row-end: second;
+
+    display: flex;
+    justify-content: center;
+    background: black;
+  }
+
+  &__controls {
+    grid-column-start: start;
+    grid-column-end: middle;
+    grid-row-start: second;
+    grid-row-end: third;
+  }
+
+  &__timestamps {
+    grid-column-start: start;
+    grid-column-end: middle;
+    grid-row-start: third;
+    grid-row-end: fourth;
+
+    min-height: 200px;
+  }
+
+  &__log {
+    grid-column-start: middle;
+    grid-column-end: end;
+    grid-row-start: first;
+    grid-row-end: fourth;
+
+    max-height: 75vh;
+    overflow-y: scroll;
+    @include light-gray-border;
+  }
+
+  &__actions {
+    grid-column-start: start;
+    grid-column-end: end;
+    grid-row-start: fourth;
+    grid-row-end: end;
+  }
+}

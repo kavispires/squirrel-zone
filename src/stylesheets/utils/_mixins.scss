@@ -6,7 +6,7 @@
 
 @mixin light-gray-border {
   border: 1px solid get-color(gray, 2);
-  border-radius: 2px;
+  border-radius: get-unit(0.5);
 }
 
 @mixin centered-title {

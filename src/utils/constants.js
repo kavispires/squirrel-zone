@@ -18,3 +18,19 @@ export const ROMAN_NUMBER = {
   14: 'XIV',
   15: 'XV',
 };
+
+export const KEYS = [' ', '1', '2', '3', '4', '5'];
+
+export const KEY_ASSIGNEE = {
+  ' ': 'S',
+  1: 'A',
+  2: 'B',
+  3: 'C',
+  4: 'D',
+  5: 'E',
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D',
+  E: 'E',
+};

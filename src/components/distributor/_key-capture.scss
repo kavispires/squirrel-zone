@@ -8,14 +8,14 @@
 
 @keyframes color-red-pulse {
   0% {
-    background-color: #ff4d4f;
+    background-color: get-color(red);
   }
 
   50% {
-    background-color: #fa9092;
+    background-color: get-color(red, 3);
   }
 
   100% {
-    background-color: #ff4d4f;
+    background-color: get-color(red);
   }
 }

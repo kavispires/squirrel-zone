@@ -1,0 +1,29 @@
+.lyrics-and-sections {
+  &__title {
+    @include centered-title;
+  }
+
+  &__container {
+    display: flex;
+    width: 100%;
+    margin-bottom: get-unit(3);
+  }
+
+  &__textarea {
+    width: 50%;
+    margin-right: get-unit(1);
+    flex: 1;
+    min-height: 200px;
+  }
+
+  &__log {
+    width: 50%;
+    flex: 1;
+    @include light-gray-border;
+  }
+
+  &__action {
+    text-align: center;
+    margin: get-unit(1);
+  }
+}

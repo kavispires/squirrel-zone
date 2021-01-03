@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 import { Input, Button } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
-// Engine
+// Engine and utilities
 import { Song } from '../../utils/distributor';
 
 function LoadSong() {
@@ -16,7 +16,7 @@ function LoadSong() {
     (event) => {
       const { value } = event.target;
       setVideoId(value);
-      setSong(new Song({ value }));
+      setSong(new Song({ videoId: value }));
       setStep(1);
     },
     [setSong, setStep, setVideoId]

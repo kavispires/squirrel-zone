@@ -11,9 +11,11 @@ const initialState = {
   parts: {},
   activeInstance: null,
   selection: [],
-  unassignedTimestamps: [],
-
+  unassignedTimestamps: {},
   assignee: 'A',
+
+  selectedTimestamps: [],
+
   currentLine: null,
   currentSection: null,
   timestamp: 0,

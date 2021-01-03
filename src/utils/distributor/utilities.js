@@ -16,6 +16,18 @@ export const generateUniqueId = (function () {
   return generate;
 })();
 
+export const generateTempId = (function () {
+  let lastId = 100;
+
+  function generate() {
+    const id = lastId + 1;
+    lastId = id;
+    return id;
+  }
+
+  return generate;
+})();
+
 export const convertStoMS = (seconds) => {
   return Math.round(seconds * 1000);
 };

@@ -1,0 +1,65 @@
+$assignee-border-size: get-unit(4);
+
+.modal-options-form {
+  $self: &;
+
+  &--assignee-A {
+    border-top: $assignee-border-size solid $assignee-color-a;
+    padding: get-unit(2 0);
+  }
+
+  &--assignee-B {
+    border-top: $assignee-border-size solid $assignee-color-b;
+    padding: get-unit(2 0);
+  }
+
+  &--assignee-C {
+    border-top: $assignee-border-size solid $assignee-color-c;
+    padding: get-unit(2 0);
+  }
+
+  &--assignee-D {
+    border-top: $assignee-border-size solid $assignee-color-d;
+    padding: get-unit(2 0);
+  }
+
+  &--assignee-E {
+    border-top: $assignee-border-size solid $assignee-color-e;
+    padding: get-unit(2 0);
+  }
+
+  &__item {
+    margin-bottom: get-unit(3);
+  }
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+
+    &--2 {
+      & #{$self}__item {
+        width: 48%;
+      }
+    }
+
+    &--3 {
+      & #{$self}__item {
+        width: 30%;
+      }
+    }
+
+    &--4 {
+      & #{$self}__item {
+        width: 24%;
+      }
+    }
+  }
+
+  &__action-button {
+    width: 100%;
+
+    & button {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+.timestamps-bank {
+  &__list {
+    @include reset-list;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: get-unit(3);
+    padding: get-unit(2);
+    border: 1px solid $light-gray;
+  }
+
+  &__item {
+    margin-right: get-unit(1);
+    margin-bottom: get-unit(1);
+  }
+
+  &__button {
+    &--selected.ant-btn {
+      background: get-color(orange, 3);
+    }
+
+    &--active.ant-btn {
+      background: get-color(orange);
+      animation: color-orange-pulse 500ms infinite ease-in-out;
+    }
+  }
+
+  &__button-index {
+    transform: scale(0.7);
+    margin-left: get-unit(1);
+  }
+
+  &__point-and-click-button.ant-btn {
+    background: get-color(orange, 3);
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+
+  &__description {
+    font-size: 90%;
+    color: get-color(gray);
+  }
+
+  &__delete-options {
+    display: flex;
+  }
+}
+
+@keyframes color-orange-pulse {
+  0% {
+    background-color: get-color(orange);
+  }
+
+  50% {
+    background-color: get-color(orange, 4);
+  }
+
+  100% {
+    background-color: get-color(orange);
+  }
+}

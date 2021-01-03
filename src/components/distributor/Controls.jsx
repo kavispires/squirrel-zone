@@ -1,58 +1,40 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 
 // Design Resources
 import { Button, Radio } from 'antd';
-import { PlayCircleOutlined, PlusSquareFilled, PlusCircleFilled } from '@ant-design/icons';
-
+import { PlayCircleOutlined } from '@ant-design/icons';
+// State
 import useDistributorState from '../../states/useDistributorState';
-import { Section, Line } from '../../utils/distributor';
+// Engine and utilities
+import KeyCapture from './KeyCapture';
+import { ASSIGNEE } from '../../utils/distributor';
 
-function Controls({ playerRef, playVideo, pauseVideo }) {
+const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: i }));
+
+function Controls({ playerRef, playVideo, pauseVideo, isPlaying }) {
   const [isRecording, setIsRecording] = useDistributorState('isRecording');
   const [assignee, setAssignee] = useDistributorState('assignee');
-  const [song] = useDistributorState('song');
-  const [currentLine, setCurrentLine] = useDistributorState('currentLine');
-  const [currentSection, setCurrentSection] = useDistributorState('currentSection');
 
-  const options = [
-    { label: 'A', value: 'A' },
-    { label: 'B', value: 'B' },
-    { label: 'C', value: 'C' },
-    { label: 'D', value: 'D' },
-  ];
+  const onRadioGroupChange = useCallback(
+    (e) => {
+      setAssignee(e.target.value);
+    },
+    [setAssignee]
+  );
 
-  const onRadioGroupChange = (e) => {
-    setAssignee(e.target.value);
-  };
-
-  const toggleRecording = (e) => {
-    if (isRecording) {
-      pauseVideo();
-      setIsRecording(false);
-    } else {
-      playVideo();
-      setIsRecording(true);
-      e.currentTarget.blur();
-    }
-  };
-
-  const addNewLine = () => {
-    // Add current line to section
-    currentSection.addLine(currentLine);
-    // Create new line
-    const newLine = new Line();
-    // Activate new line
-    setCurrentLine(newLine);
-  };
-
-  const addNewSection = () => {
-    // Add current section to song
-    song.addSection(currentSection);
-    // Create new section
-    const newSection = new Section();
-    // Activate new section
-    setCurrentSection(newSection);
-  };
+  const toggleRecording = useCallback(
+    (e) => {
+      if (isRecording) {
+        pauseVideo();
+        setIsRecording(false);
+      } else {
+        playVideo();
+        setIsRecording(true);
+        e.currentTarget.blur();
+      }
+    },
+    [isRecording, pauseVideo, playVideo, setIsRecording]
+  );
 
   return (
     <div className="distributor-grid__controls distributor-controls">
@@ -65,21 +47,26 @@ function Controls({ playerRef, playVideo, pauseVideo }) {
       >
         {isRecording ? 'Recording' : 'Record'}
       </Button>
+      <div className="distributor-controls__other-controls">
+        <h4 className="distributor-controls__title">Active Assignee for SPACE bar</h4>
 
-      <Radio.Group
-        options={options}
-        onChange={onRadioGroupChange}
-        value={assignee}
-        optionType="button"
-        className="distributor-controls__assignees"
-      />
-
-      <Button icon={<PlusSquareFilled />} onClick={addNewSection} className="distributor-controls__button">
-        Add Section
-      </Button>
-      <Button icon={<PlusCircleFilled />} className="distributor-controls__button" onClick={addNewLine}>
-        Add Line
-      </Button>
+        <Radio.Group
+          options={ASSIGNEE_OPTIONS}
+          onChange={onRadioGroupChange}
+          value={assignee}
+          optionType="button"
+          className="distributor-controls__assignees assignees-radio-group"
+        />
+        <p className="distributor-controls__description">
+          This indicates what assignee the space bar will assign when recording.
+        </p>
+        <h4 className="distributor-controls__title">Capture Buttons</h4>
+        <p className="distributor-controls__description">
+          Click and hold to record. It allows multiple clicks at the same time. You may also use the number
+          keys on your keyboard.
+        </p>
+        <KeyCapture.MouseButtons />
+      </div>
     </div>
   );
 }

@@ -1,55 +1,137 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+// Design Resources
+import { Button } from 'antd';
+// State
 import useDistributorState from '../../states/useDistributorState';
-import { Part, convertStoMS, store } from '../../utils/distributor';
+// Engine and utilities
+import { ASSIGNEE, convertStoMS, generateTempId } from '../../utils/distributor';
 import { useKeyDown, useKeyUp } from '../../utils/useKeypress';
+import { KEYS, KEY_ASSIGNEE } from '../../utils/constants';
 
 // These variables are not using state since setState is asynchronous and is messing up with the time tracking
-let keyPressing = false;
-let tempPart = null;
+let playing = false;
 
-function KeyCapture({ videoRef, isPlaying }) {
+const temp = {
+  keyPressing: {},
+  part: {},
+};
+
+async function handleActionDown(key, videoRef, assignee) {
+  // Don't run if video is not playing
+  if (!playing) return;
+  // Don't run if this key is being captured
+  if (temp.keyPressing[key]) return;
+  // Don't run if a part for this key is present
+  if (temp.part[key]) return;
+  // Not allowed key
+  if (!KEY_ASSIGNEE[key]) return;
+
+  temp.keyPressing[key] = true;
+  const newTimestamp = {
+    startTime: convertStoMS(await videoRef.current.internalPlayer.getCurrentTime()),
+    assignee: key === ' ' ? assignee : KEY_ASSIGNEE[key],
+    partId: null,
+    id: generateTempId(),
+  };
+
+  temp.part[key] = newTimestamp;
+}
+
+async function handleActionUp(key, videoRef) {
+  // Don't run if video is not playing
+  if (!playing) return;
+  // Don't run if key is not being captured
+  if (!temp.keyPressing[key]) return;
+  // Don't run if a part is not present
+  if (!temp.part[key]) return;
+  // Not allowed key
+  if (!KEY_ASSIGNEE[key]) return;
+
+  temp.part[key].endTime = convertStoMS(await videoRef.current.internalPlayer.getCurrentTime());
+
+  const copy = { ...temp.part[key] };
+  temp.part[key] = null;
+  temp.keyPressing[key] = null;
+  return copy;
+}
+
+const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: i }));
+
+function MouseButtons({ videoRef, isPlaying }) {
   const [assignee] = useDistributorState('assignee');
-  const [, setUnassignedParts] = useDistributorState('unassignedParts');
+  const [, setUnassignedTimestamps] = useDistributorState('unassignedTimestamps');
+
+  // Work around since useKeyDown is not capturing isPlaying correctly
+  useEffect(() => {
+    playing = isPlaying;
+  }, [isPlaying]);
+
+  // Capture Button Down
+  const onCaptureButtonDown = async (key) => {
+    await handleActionDown(key, videoRef, assignee);
+  };
+
+  const onCaptureButtonUp = async (key) => {
+    const result = await handleActionUp(key, videoRef);
+
+    if (result?.endTime) {
+      setUnassignedTimestamps((state) => {
+        state[result.id] = { ...result };
+        return state;
+      });
+    }
+  };
+
+  return (
+    <div className="key-capture-capture-buttons distributor-controls__buttons">
+      {ASSIGNEE_OPTIONS.map((entry, index) => (
+        <Button
+          key={entry.value}
+          onClick={() => {}}
+          className={`distributor-controls__button assignee-background--${entry.value}`}
+          onMouseDown={() => onCaptureButtonDown(entry.value)}
+          onMouseUp={() => onCaptureButtonUp(entry.value)}
+        >
+          {index + 1} ({entry.label})
+        </Button>
+      ))}
+    </div>
+  );
+}
+
+function Keyboard({ videoRef, isPlaying }) {
+  const [assignee] = useDistributorState('assignee');
+  const [, setUnassignedTimestamps] = useDistributorState('unassignedTimestamps');
+
+  // Work around since useKeyDown is not capturing isPlaying correctly
+  useEffect(() => {
+    playing = isPlaying;
+  }, [isPlaying]);
 
   // Capture SPACE key down
-  useKeyDown(' ', async (e) => {
-    // Don't run if video is not playing
-    if (!isPlaying) return;
-    // Don't run if key is being captured
-    if (keyPressing) return;
-    // Don't run if a part is present
-    if (tempPart) return;
-
-    keyPressing = true;
-    const newPart = new Part({ assignee });
-    newPart.startTime = convertStoMS(await videoRef.current.internalPlayer.getCurrentTime());
-    tempPart = newPart;
+  useKeyDown(KEYS, async (key) => {
+    await handleActionDown(key, videoRef, assignee);
   });
 
   // Capture SPACE key up
-  useKeyUp(' ', async (e) => {
-    // Don't run if video is not playing
-    if (!isPlaying) return;
-    // Don't run if key is not being captured
-    if (!keyPressing) return;
-    // Don't run if a part is not present
-    if (!tempPart) return;
+  useKeyUp(KEYS, async (key) => {
+    const result = await handleActionUp(key, videoRef);
 
-    tempPart.endTime = convertStoMS(await videoRef.current.internalPlayer.getCurrentTime());
-
-    store.add(tempPart.data);
-
-    setUnassignedParts((state) => {
-      state.push(tempPart.data);
-      return state;
-    });
-
-    keyPressing = false;
-    tempPart = null;
+    if (result?.endTime) {
+      setUnassignedTimestamps((state) => {
+        state[result.id] = { ...result };
+        return state;
+      });
+    }
   });
 
   return <div className="distributor-grid__key-capture key-capture" />;
 }
+
+const KeyCapture = {
+  Keyboard,
+  MouseButtons,
+};
 
 export default KeyCapture;

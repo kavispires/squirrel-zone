@@ -1,0 +1,815 @@
+{
+  "data": {
+    "id": "_fnap6",
+    "type": "song",
+    "videoId": "_1dZKhxrSoA",
+    "title": "Basic Rules",
+    "version": "test",
+    "createdAt": 1609706145637,
+    "updatedAt": 1609706150121,
+    "isSingle": false,
+    "idealGroupSize": 5,
+    "duration": 206,
+    "tempo": 128,
+    "genre": "POP",
+    "style": "DANCE",
+    "albumId": null,
+    "sectionsIds": ["_c6rdo", "_drvzr", "_440jq", "_dz6lr", "_whs0a", "_2yi89", "_mwv2l", "_7bq6z", "_q6s71"]
+  },
+  "included": [
+    {
+      "id": "_c6rdo",
+      "type": "section",
+      "kind": "INTRO",
+      "number": 1,
+      "linesIds": ["_yvd25", "_q1cer", "_49ctr"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_yvd25",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_elbbt"],
+      "sectionId": "_c6rdo"
+    },
+    {
+      "id": "_elbbt",
+      "type": "part",
+      "assignee": "A",
+      "endTime": 5361,
+      "startTime": 4572,
+      "text": "Dance...",
+      "lineId": "_yvd25"
+    },
+    {
+      "id": "_q1cer",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_mwm01"],
+      "sectionId": "_c6rdo"
+    },
+    {
+      "id": "_mwm01",
+      "type": "part",
+      "assignee": "B",
+      "endTime": 8754,
+      "startTime": 8019,
+      "text": "Sing...",
+      "lineId": "_q1cer"
+    },
+    {
+      "id": "_49ctr",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_y4pyx"],
+      "sectionId": "_c6rdo"
+    },
+    {
+      "id": "_y4pyx",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 12624,
+      "startTime": 11558,
+      "text": "Move...",
+      "lineId": "_49ctr"
+    },
+    {
+      "id": "_drvzr",
+      "type": "section",
+      "kind": "VERSE",
+      "number": 1,
+      "linesIds": ["_gslab", "_qhsrr"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_gslab",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_6492e"],
+      "sectionId": "_drvzr"
+    },
+    {
+      "id": "_6492e",
+      "type": "part",
+      "assignee": "B",
+      "endTime": 17863,
+      "startTime": 15010,
+      "text": "Now everybody focus, grab your pens",
+      "lineId": "_gslab"
+    },
+    {
+      "id": "_qhsrr",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_9h0cm"],
+      "sectionId": "_drvzr"
+    },
+    {
+      "id": "_9h0cm",
+      "type": "part",
+      "assignee": "B",
+      "endTime": 21781,
+      "startTime": 18274,
+      "text": "We’re gonna teach how to reach your sixth sense",
+      "lineId": "_qhsrr"
+    },
+    {
+      "id": "_440jq",
+      "type": "section",
+      "kind": "RAP",
+      "number": 1,
+      "linesIds": ["_br96h", "_xgl8k", "_3n6wa", "_dmjrj", "_4xk2p", "_vfiej"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_br96h",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_b156i"],
+      "sectionId": "_440jq"
+    },
+    {
+      "id": "_b156i",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 23081,
+      "startTime": 22209,
+      "text": "That is how I then knew I was hot",
+      "lineId": "_br96h"
+    },
+    {
+      "id": "_xgl8k",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_cjzs3"],
+      "sectionId": "_440jq"
+    },
+    {
+      "id": "_cjzs3",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 24434,
+      "startTime": 23204,
+      "text": "But deep down in my heart",
+      "lineId": "_xgl8k"
+    },
+    {
+      "id": "_3n6wa",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_2cdrl"],
+      "sectionId": "_440jq"
+    },
+    {
+      "id": "_2cdrl",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 26227,
+      "startTime": 24554,
+      "text": "I was sure this could be my way~",
+      "lineId": "_3n6wa"
+    },
+    {
+      "id": "_dmjrj",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_jzb38"],
+      "sectionId": "_440jq"
+    },
+    {
+      "id": "_jzb38",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 27354,
+      "startTime": 26322,
+      "text": "Never thought it’d be hard",
+      "lineId": "_dmjrj"
+    },
+    {
+      "id": "_4xk2p",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_1mp7q"],
+      "sectionId": "_440jq"
+    },
+    {
+      "id": "_1mp7q",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 28089,
+      "startTime": 27443,
+      "text": "But then right from the start",
+      "lineId": "_4xk2p"
+    },
+    {
+      "id": "_vfiej",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_kh7y2"],
+      "sectionId": "_440jq"
+    },
+    {
+      "id": "_kh7y2",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 29410,
+      "startTime": 28194,
+      "text": "I began my journey to change",
+      "lineId": "_vfiej"
+    },
+    {
+      "id": "_dz6lr",
+      "type": "section",
+      "kind": "VERSE",
+      "number": 1,
+      "linesIds": ["_ci02w", "_buw47"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_ci02w",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_y840k"],
+      "sectionId": "_dz6lr"
+    },
+    {
+      "id": "_y840k",
+      "type": "part",
+      "assignee": "A",
+      "endTime": 32194,
+      "startTime": 29512,
+      "text": "It’s hard work in the spotlight I’m the news",
+      "lineId": "_ci02w"
+    },
+    {
+      "id": "_buw47",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_96bqt"],
+      "sectionId": "_dz6lr"
+    },
+    {
+      "id": "_96bqt",
+      "type": "part",
+      "assignee": "A",
+      "endTime": 36237,
+      "startTime": 32499,
+      "text": "It’s so exciting, pay attention, learn the rules",
+      "lineId": "_buw47"
+    },
+    {
+      "id": "_whs0a",
+      "type": "section",
+      "kind": "RAP",
+      "number": 1,
+      "linesIds": ["_7xk7x", "_lehhb", "_7u1g1", "_i97p6", "_7fr31", "_vsmm1"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_7xk7x",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_i0il1", "_92odw"],
+      "sectionId": "_whs0a"
+    },
+    {
+      "id": "_i0il1",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 36985,
+      "startTime": 36514,
+      "text": "Number One,",
+      "lineId": "_7xk7x"
+    },
+    {
+      "id": "_92odw",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 37897,
+      "startTime": 37099,
+      "text": "just make sure to have fun",
+      "lineId": "_7xk7x"
+    },
+    {
+      "id": "_lehhb",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_g16nm"],
+      "sectionId": "_whs0a"
+    },
+    {
+      "id": "_g16nm",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 38857,
+      "startTime": 38017,
+      "text": "Sing your heart, shake that bun; aim for the sun",
+      "lineId": "_lehhb"
+    },
+    {
+      "id": "_7u1g1",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_89qgi"],
+      "sectionId": "_whs0a"
+    },
+    {
+      "id": "_89qgi",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 39753,
+      "startTime": 38955,
+      "text": "This is not a game~",
+      "lineId": "_7u1g1"
+    },
+    {
+      "id": "_i97p6",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_9unaz", "_4t87l"],
+      "sectionId": "_whs0a"
+    },
+    {
+      "id": "_9unaz",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 41346,
+      "startTime": 40664,
+      "text": "And Number Two:",
+      "lineId": "_i97p6"
+    },
+    {
+      "id": "_4t87l",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 42233,
+      "startTime": 41500,
+      "text": "always have to look good",
+      "lineId": "_i97p6"
+    },
+    {
+      "id": "_7fr31",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_dakp0"],
+      "sectionId": "_whs0a"
+    },
+    {
+      "id": "_dakp0",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 43025,
+      "startTime": 42401,
+      "text": "Be the best of you",
+      "lineId": "_7fr31"
+    },
+    {
+      "id": "_vsmm1",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_3upbv"],
+      "sectionId": "_whs0a"
+    },
+    {
+      "id": "_3upbv",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 44290,
+      "startTime": 43202,
+      "text": "It’s for the fans",
+      "lineId": "_vsmm1"
+    },
+    {
+      "id": "_2yi89",
+      "type": "section",
+      "kind": "PRE_CHORUS",
+      "number": 1,
+      "linesIds": ["_aeys5", "_cwog0", "_32ln0", "_3ueq8", "_bhtnq"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_aeys5",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_vqlnb"],
+      "sectionId": "_2yi89"
+    },
+    {
+      "id": "_vqlnb",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 48621,
+      "startTime": 45107,
+      "text": "I take in everything that’s surrounding me",
+      "lineId": "_aeys5"
+    },
+    {
+      "id": "_cwog0",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_vp39f"],
+      "sectionId": "_2yi89"
+    },
+    {
+      "id": "_vp39f",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 51230,
+      "startTime": 48811,
+      "text": "It’s my destiny, I know",
+      "lineId": "_cwog0"
+    },
+    {
+      "id": "_32ln0",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_m4aln"],
+      "sectionId": "_2yi89"
+    },
+    {
+      "id": "_m4aln",
+      "type": "part",
+      "assignee": "B",
+      "endTime": 51952,
+      "startTime": 51361,
+      "text": "(I know)",
+      "lineId": "_32ln0"
+    },
+    {
+      "id": "_3ueq8",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_c18in"],
+      "sectionId": "_2yi89"
+    },
+    {
+      "id": "_c18in",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 55238,
+      "startTime": 52219,
+      "text": "I’ll do my best cos I’m on the way",
+      "lineId": "_3ueq8"
+    },
+    {
+      "id": "_bhtnq",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_ocfz1"],
+      "sectionId": "_2yi89"
+    },
+    {
+      "id": "_ocfz1",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 58002,
+      "startTime": 56645,
+      "text": "To be a squirrel boy",
+      "lineId": "_bhtnq"
+    },
+    {
+      "id": "_mwv2l",
+      "type": "section",
+      "kind": "CHORUS",
+      "number": 1,
+      "linesIds": ["_w9l2w", "_oa32m", "_vl9r2", "_5ka9h"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_w9l2w",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_z3phj"],
+      "sectionId": "_mwv2l"
+    },
+    {
+      "id": "_z3phj",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 60033,
+      "startTime": 58227,
+      "text": "Shake down, turn now, go round, get down",
+      "lineId": "_w9l2w"
+    },
+    {
+      "id": "_oa32m",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_74ckr"],
+      "sectionId": "_mwv2l"
+    },
+    {
+      "id": "_74ckr",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 63810,
+      "startTime": 61762,
+      "text": "Dancing, singing, rocking, right now",
+      "lineId": "_oa32m"
+    },
+    {
+      "id": "_vl9r2",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_aby40"],
+      "sectionId": "_mwv2l"
+    },
+    {
+      "id": "_aby40",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 67257,
+      "startTime": 65323,
+      "text": "Shake down, turn now, go round, get down",
+      "lineId": "_vl9r2"
+    },
+    {
+      "id": "_5ka9h",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_e208u"],
+      "sectionId": "_mwv2l"
+    },
+    {
+      "id": "_e208u",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 70818,
+      "startTime": 68939,
+      "text": "Dancing, singing, rocking, right now",
+      "lineId": "_5ka9h"
+    },
+    {
+      "id": "_7bq6z",
+      "type": "section",
+      "kind": "SPECIAL",
+      "number": 1,
+      "linesIds": ["_q9md8"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_q9md8",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_r9jpf"],
+      "sectionId": "_7bq6z"
+    },
+    {
+      "id": "_r9jpf",
+      "type": "part",
+      "assignee": "A",
+      "endTime": 72522,
+      "startTime": 71034,
+      "text": "And now I’m on my way!",
+      "lineId": "_q9md8"
+    },
+    {
+      "id": "_q6s71",
+      "type": "section",
+      "kind": "HOOK",
+      "number": 1,
+      "linesIds": ["_2pcfr", "_3oqs0", "_kb3sr", "_oqu8j", "_lvdip", "_84d4x", "_6qz12", "_d24wt"],
+      "songId": "_fnap6"
+    },
+    {
+      "id": "_2pcfr",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_yx2qr"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_yx2qr",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 74224,
+      "startTime": 72680,
+      "text": "Shake down, turn now, go round, get down",
+      "lineId": "_2pcfr"
+    },
+    {
+      "id": "_3oqs0",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_yoc9j"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_yoc9j",
+      "type": "part",
+      "assignee": "C",
+      "endTime": 75921,
+      "startTime": 74290,
+      "text": "Learn the basic rules to be a squirrel boy",
+      "lineId": "_3oqs0"
+    },
+    {
+      "id": "_kb3sr",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_utqpw"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_utqpw",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 77793,
+      "startTime": 76098,
+      "text": "Dancing, singing, rocking, right now",
+      "lineId": "_kb3sr"
+    },
+    {
+      "id": "_oqu8j",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_x0tyv"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_x0tyv",
+      "type": "part",
+      "assignee": "B",
+      "endTime": 79528,
+      "startTime": 77809,
+      "text": "Learn the basic rules to be a squirrel boy",
+      "lineId": "_oqu8j"
+    },
+    {
+      "id": "_lvdip",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_hzbtf"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_hzbtf",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 81308,
+      "startTime": 79722,
+      "text": "Shake down, turn now, go round, get down",
+      "lineId": "_lvdip"
+    },
+    {
+      "id": "_84d4x",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_m98zk"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_m98zk",
+      "type": "part",
+      "assignee": "D",
+      "endTime": 83106,
+      "startTime": 81362,
+      "text": "Learn the basic rules to be a squirrel boy",
+      "lineId": "_84d4x"
+    },
+    {
+      "id": "_6qz12",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_k44t4"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_k44t4",
+      "type": "part",
+      "assignee": "E",
+      "endTime": 84954,
+      "startTime": 83281,
+      "text": "Dancing, singing, rocking, right now",
+      "lineId": "_6qz12"
+    },
+    {
+      "id": "_d24wt",
+      "type": "line",
+      "isDismissible": false,
+      "skill": "VOCAL",
+      "skillType": "REGULAR",
+      "skillLevel": 1,
+      "partsIds": ["_gqq7c"],
+      "sectionId": "_q6s71"
+    },
+    {
+      "id": "_gqq7c",
+      "type": "part",
+      "assignee": "A",
+      "endTime": 86674,
+      "startTime": 84994,
+      "text": "Learn the basic rules to be a squirrel boy",
+      "lineId": "_d24wt"
+    }
+  ],
+  "meta": { "completion": 64, "isComplete": false, "compiledAt": 1609706530116 }
+}

@@ -15,6 +15,7 @@ function TimeAndSync({ playerRef }) {
   const [videoId] = useDistributorState('videoId');
   const [isRecording, setIsRecording] = useDistributorState('isRecording');
   const [song] = useDistributorState('song');
+  const [, setStep] = useDistributorState('step');
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -71,8 +72,9 @@ function TimeAndSync({ playerRef }) {
     console.log('onPlaybackRateChange', e);
   };
 
-  const nextStepSongsOptions = (key) => {
+  const nextStepSongsOptions = () => {
     console.log(song.serialize());
+    setStep(3);
   };
 
   return (

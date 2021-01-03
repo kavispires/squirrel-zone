@@ -10,6 +10,7 @@ import LoadSong from './distributor/LoadSong';
 import LyricsAndSections from './distributor/LyricsAndSections';
 import ModalOptions from './distributor/ModalOptions';
 import TimeAndSync from './distributor/TimeAndSync';
+import Preview from './distributor/Preview';
 
 const { Panel } = Collapse;
 
@@ -37,7 +38,18 @@ function Distributor() {
             <LyricsAndSections />
           </Panel>
           <Panel header="Capture Parts" key="2">
-            {Boolean(videoId) && <TimeAndSync playerRef={playerRef} />}
+            {Boolean(videoId) ? (
+              <TimeAndSync playerRef={playerRef} />
+            ) : (
+              <p>You can't see this step without a video.</p>
+            )}
+          </Panel>
+          <Panel header="Preview" key="3">
+            {Boolean(videoId) ? (
+              <Preview playerRef={playerRef} />
+            ) : (
+              <p>You can't see this step without a video.</p>
+            )}
           </Panel>
         </Collapse>
 

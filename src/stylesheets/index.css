@@ -1034,3 +1034,33 @@ body {
   justify-self: center;
   color: white;
 }
+
+.song-metadata__title {
+  text-align: center;
+}
+
+.song-metadata__action {
+  text-align: center;
+  margin: 4px;
+}
+
+.song-metadata-form {
+  width: 50%;
+  margin: 0 auto;
+}
+.song-metadata-form__item {
+  margin-bottom: 12px;
+}
+.song-metadata-form__items {
+  display: flex;
+  justify-content: space-between;
+}
+.song-metadata-form__items--2 .song-metadata-form__item {
+  width: 48%;
+}
+.song-metadata-form__items--3 .song-metadata-form__item {
+  width: 30%;
+}
+.song-metadata-form__items--4 .song-metadata-form__item {
+  width: 24%;
+}

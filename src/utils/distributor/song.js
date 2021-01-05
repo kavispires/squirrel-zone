@@ -9,6 +9,7 @@ import {
   getRelationshipsDefault,
   serializeKey,
 } from './utilities';
+import moment from 'moment';
 
 /**
  * Class representing a Song - a collection of sections.
@@ -31,7 +32,7 @@ export class Song {
 
     this.isSingle = false;
     this.idealGroupSize = 5;
-    this.duration = 0;
+    this.duration = moment(0, 'mm:ss');
     this.tempo = 0;
     this.genre = '';
     this.style = '';
@@ -126,7 +127,7 @@ export class Song {
   }
 
   /**
-   * Get a list of all ids of all parts in the song
+   * Get a list of all ids of all parts in the song.
    * @type {string[]}
    */
   get allPartsIds() {
@@ -135,6 +136,14 @@ export class Song {
       .flat()
       .map((line) => line.partsIds)
       .flat();
+  }
+
+  /**
+   * Total number of parts on the song.
+   * @type {type}
+   */
+  get partsCount() {
+    return this.allPartsIds.length;
   }
 
   /**
@@ -184,6 +193,7 @@ export class Song {
       type: this._type,
       // Getters
       text: this.text,
+      partsCount: this.partsCount,
       // Attributes
       videoId: this.videoId,
       title: this.title,
@@ -322,7 +332,10 @@ export class Song {
     this.updatedAt = getDefault(this, data, 'updatedAt', Date.now());
     this.isSingle = getDefault(this, data, 'isSingle', false);
     this.idealGroupSize = getDefault(this, data, 'idealGroupSize', 5);
-    this.duration = getDefault(this, data, 'duration', false);
+    const duration = getDefault(this, data, 'duration', 0);
+    if (duration) {
+      this.duration = moment(duration, 'mm:ss');
+    }
     this.tempo = getDefault(this, data, 'tempo', '');
     this.genre = getDefault(this, data, 'genre', '');
     this.style = getDefault(this, data, 'style', '');
@@ -375,7 +388,7 @@ export class Song {
         updatedAt: this.updatedAt,
         isSingle: this.isSingle,
         idealGroupSize: this.idealGroupSize,
-        duration: this.duration,
+        duration: this.duration.format('mm:ss'),
         tempo: this.tempo,
         genre: this.genre,
         style: this.style,

@@ -17,10 +17,6 @@ function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
   const [, setStep] = useDistributorState('step');
   const [isPlaying] = useDistributorState('isPlaying');
 
-  const nextStepSongsOptions = () => {
-    setStep(3);
-  };
-
   return (
     <section className="distributor-grid time-and-sync">
       {isRecording && <KeyCapture.Keyboard videoRef={playerRef} isPlaying={isPlaying} />}
@@ -45,7 +41,7 @@ function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
         </Tooltip>
         <Divider />
         <div className="time-and-sync__action">
-          <Button type="primary" disabled={!song?.relationshipsCompletion} onClick={nextStepSongsOptions}>
+          <Button type="primary" disabled={!song?.relationshipsCompletion} onClick={() => setStep(3)}>
             Next Step: Preview
           </Button>
         </div>

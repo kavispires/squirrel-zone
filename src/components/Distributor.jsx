@@ -11,12 +11,14 @@ import LyricsAndSections from './distributor/LyricsAndSections';
 import ModalOptions from './distributor/ModalOptions';
 import TimeAndSync from './distributor/TimeAndSync';
 import Preview from './distributor/Preview';
+import SongMetadata from './distributor/SongMetadata';
 
 const { Panel } = Collapse;
 
 function Distributor() {
   const [step, setStep] = useDistributorState('step');
   const [videoId] = useDistributorState('videoId');
+  const [song] = useDistributorState('song');
   const [activeInstance, setActiveInstance] = useDistributorState('activeInstance');
 
   const playerRef = useRef();
@@ -76,6 +78,9 @@ function Distributor() {
             ) : (
               <p>You can't see this step without a video.</p>
             )}
+          </Panel>
+          <Panel header="Song Metadata" key="4">
+            {song ? <SongMetadata /> : <p>You can't see this step without a loaded song.</p>}
           </Panel>
         </Collapse>
 

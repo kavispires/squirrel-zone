@@ -53,3 +53,41 @@ export const bemClassConditionalModifier = (baseClass, modifier, condition) => {
  * @param {{ endTime: number, startTime: number}} param0
  */
 export const getTimestampDuration = ({ endTime, startTime }) => endTime - startTime;
+
+/**
+ * Convert a timestamp into a frame based on the framerate.
+ * @param {number} timestamp
+ * @param {number} framerate
+ */
+export const getFrameFromTimestamp = (timestamp, framerate) => {
+  return Math.floor(timestamp / (1000 / framerate));
+};
+
+/**
+ * Convert a frame int a timestamp based on the framerate
+ * @param {number} frame
+ * @param {number} framerate
+ */
+export const getTimestampFromFrame = (frame, framerate) => {
+  return frame * (1000 / framerate);
+};
+
+/**
+ * Creates an mock distribution with random assignees
+ * @param {Part{}} partsIds
+ * @return {}
+ */
+export const buildMockDistribution = (parts) => {
+  const data = Object.values(parts).reduce((acc, part) => {
+    acc[part.id] = [part.assignee];
+    return acc;
+  }, {});
+
+  return {
+    id: 'sample-distribution-id',
+    type: 'distribution',
+    groupId: 'sample-group-id',
+    songId: 'sample-song-id',
+    data,
+  };
+};

@@ -7,7 +7,7 @@ import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
 import { Line, Part, Section, Song } from '../../utils/distributor';
 // Temp
-import sampleSong from '../../utils/sampleSong.json';
+import sampleSong from '../../utils/mock/sampleSong.json';
 
 function LoadSong() {
   const [, setSong] = useDistributorState('song');

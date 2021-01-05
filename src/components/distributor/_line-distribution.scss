@@ -1,0 +1,114 @@
+.line-distribution {
+  &__container {
+    display: grid;
+    width: 80vw;
+    height: 45vw;
+    margin: 0 auto;
+
+    grid-template-columns: [start] 25vw [middle] auto [end];
+    grid-template-rows: [start] 14vw [middle] auto [end];
+
+    background-color: black;
+  }
+
+  &__video {
+    grid-column: start / middle;
+    grid-row-start: start / middle;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__live-ranking {
+    grid-column: start / middle;
+    grid-row: middle / end;
+
+    @include reset-list;
+    padding: get-unit(3);
+    display: flex;
+    flex-direction: column;
+
+    background: #bdc3c7;
+    background: linear-gradient(to bottom, #030303, #5f6e79);
+  }
+
+  &__live-lyrics {
+    grid-column: middle / end;
+    grid-row: start / end;
+    background: linear-gradient(to bottom, #c7d3db, #5f6e79);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.rank-entry {
+  width: 100%;
+  height: 35px;
+  margin-bottom: get-unit(1);
+
+  display: grid;
+
+  opacity: 30%;
+
+  transition: opacity 500ms;
+
+  &--active {
+    opacity: 100%;
+  }
+
+  $avatar-size: 30px;
+  $progress-bar-size: 8px;
+
+  grid-template-columns: [start] $avatar-size [first] auto [second] 40px [end];
+  grid-template-rows: [start] 16px [middle] auto [end];
+  gap: get-unit(1);
+
+  &__avatar {
+    grid-column: start / first;
+    grid-row: start / end;
+    background: white;
+    display: flex;
+
+    width: 100%;
+    height: $avatar-size;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+  }
+
+  &__name {
+    grid-column: first / second;
+    grid-row: start / middle;
+    font-weight: bold;
+    color: white;
+    padding-left: get-unit(1);
+  }
+
+  &__progress {
+    grid-column: first / second;
+    grid-row: middle / end;
+
+    display: flex;
+    margin: get-unit(0 1 1 1);
+    background: rgba(255, 255, 255, 0.1);
+    height: $progress-bar-size;
+    border-radius: get-unit(1);
+  }
+
+  &__progress-bar {
+    height: $progress-bar-size;
+    border-radius: get-unit(1);
+    transition: width 500ms;
+  }
+
+  &__timestamp {
+    grid-column: second / end;
+    grid-row: start / end;
+    justify-self: center;
+    color: white;
+  }
+}

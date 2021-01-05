@@ -937,3 +937,100 @@ body {
   transform: scale(0.7);
   margin-left: 4px;
 }
+
+.preview__title {
+  text-align: center;
+}
+
+.line-distribution__container {
+  display: grid;
+  width: 80vw;
+  height: 45vw;
+  margin: 0 auto;
+  grid-template-columns: [start] 25vw [middle] auto [end];
+  grid-template-rows: [start] 14vw [middle] auto [end];
+  background-color: black;
+}
+
+.line-distribution__video {
+  grid-column: start / middle;
+  grid-row-start: start / middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.line-distribution__live-ranking {
+  grid-column: start / middle;
+  grid-row: middle / end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  background: #bdc3c7;
+  background: linear-gradient(to bottom, #030303, #5f6e79);
+}
+
+.line-distribution__live-lyrics {
+  grid-column: middle / end;
+  grid-row: start / end;
+  background: linear-gradient(to bottom, #c7d3db, #5f6e79);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rank-entry {
+  width: 100%;
+  height: 35px;
+  margin-bottom: 4px;
+  display: grid;
+  opacity: 30%;
+  transition: opacity 500ms;
+  grid-template-columns: [start] 30px [first] auto [second] 40px [end];
+  grid-template-rows: [start] 16px [middle] auto [end];
+  gap: 4px;
+}
+.rank-entry--active {
+  opacity: 100%;
+}
+.rank-entry__avatar {
+  grid-column: start / first;
+  grid-row: start / end;
+  background: white;
+  display: flex;
+  width: 100%;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.rank-entry__name {
+  grid-column: first / second;
+  grid-row: start / middle;
+  font-weight: bold;
+  color: white;
+  padding-left: 4px;
+}
+.rank-entry__progress {
+  grid-column: first / second;
+  grid-row: middle / end;
+  display: flex;
+  margin: 0 4px 4px 4px;
+  background: rgba(255, 255, 255, 0.1);
+  height: 8px;
+  border-radius: 4px;
+}
+.rank-entry__progress-bar {
+  height: 8px;
+  border-radius: 4px;
+  transition: width 500ms;
+}
+.rank-entry__timestamp {
+  grid-column: second / end;
+  grid-row: start / end;
+  justify-self: center;
+  color: white;
+}

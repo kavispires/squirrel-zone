@@ -15,6 +15,7 @@ const initialState = {
   assignee: 'A',
 
   selectedTimestamps: [],
+  isPlaying: false,
 
   currentLine: null,
   currentSection: null,

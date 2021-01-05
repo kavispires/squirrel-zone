@@ -1,0 +1,66 @@
+{
+  "id": "sample-group-id",
+  "type": "group",
+  "members": {
+    "A": {
+      "id": "A",
+      "type": "member",
+      "name": "Ace",
+      "color": "#14bdeb"
+    },
+    "B": {
+      "id": "B",
+      "type": "member",
+      "name": "Ben",
+      "color": "#d99ac5"
+    },
+    "C": {
+      "id": "C",
+      "type": "member",
+      "name": "Cory",
+      "color": "#faa916"
+    },
+    "D": {
+      "id": "D",
+      "type": "member",
+      "name": "Dan",
+      "color": "#0cca4a"
+    },
+    "E": {
+      "id": "E",
+      "type": "member",
+      "name": "Ethan",
+      "color": "#f42c04"
+    },
+    "F": {
+      "id": "F",
+      "type": "member",
+      "name": "Felix",
+      "color": "#8f3d7c"
+    },
+    "G": {
+      "id": "G",
+      "type": "member",
+      "name": "All",
+      "color": "#ddb832"
+    },
+    "H": {
+      "id": "H",
+      "type": "member",
+      "name": "None",
+      "color": "#9b5094"
+    },
+    "ALL": {
+      "id": "ALL",
+      "type": "member",
+      "name": "All",
+      "color": "#4c5c68"
+    },
+    "NONE": {
+      "id": "NONE",
+      "type": "member",
+      "name": "None",
+      "color": "#899ba9"
+    }
+  }
+}

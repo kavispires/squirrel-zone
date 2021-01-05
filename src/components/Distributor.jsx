@@ -25,6 +25,22 @@ function Distributor() {
     setStep(key);
   };
 
+  const playVideo = () => {
+    playerRef?.current?.internalPlayer?.playVideo();
+    // setIsPlaying(true);
+  };
+
+  const pauseVideo = () => {
+    playerRef?.current?.internalPlayer?.pauseVideo();
+    // setIsPlaying(false);
+  };
+
+  const seekAndPlay = (timestamp) => {
+    playerRef?.current?.internalPlayer?.seekTo(timestamp);
+    playerRef?.current?.internalPlayer?.playVideo();
+    // setIsPlaying(true);
+  };
+
   return (
     <Layout.Content className="container">
       <main className="main distributor">
@@ -39,14 +55,24 @@ function Distributor() {
           </Panel>
           <Panel header="Capture Parts" key="2">
             {Boolean(videoId) ? (
-              <TimeAndSync playerRef={playerRef} />
+              <TimeAndSync
+                playerRef={playerRef}
+                playVideo={playVideo}
+                pauseVideo={pauseVideo}
+                seekAndPlay={seekAndPlay}
+              />
             ) : (
               <p>You can't see this step without a video.</p>
             )}
           </Panel>
           <Panel header="Preview" key="3">
             {Boolean(videoId) ? (
-              <Preview playerRef={playerRef} />
+              <Preview
+                playerRef={playerRef}
+                playVideo={playVideo}
+                pauseVideo={pauseVideo}
+                seekAndPlay={seekAndPlay}
+              />
             ) : (
               <p>You can't see this step without a video.</p>
             )}

@@ -12,16 +12,17 @@
 @import './global/reset';
 @import './global/app';
 
-// Creator
-@import './header';
+// Global components
+@import '../components/global/header';
+@import '../components/global/loading';
 
 // Pages
-@import './distributor';
+@import '../components/login';
+@import '../components/distributor';
 @import './character-colors';
 @import './character';
 @import './svg';
 @import './creator';
-@import '../components/login';
 
 // Components
 @import '../components/distributor/modal-options';

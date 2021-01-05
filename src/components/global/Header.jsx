@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 // Design Resources
 import { Layout } from 'antd';
 
-import logo from '../images/logo.svg';
+import logo from '../../images/logo.svg';
 
 function Header({ isAuthenticated }) {
   return (

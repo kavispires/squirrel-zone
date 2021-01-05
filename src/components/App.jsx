@@ -5,7 +5,7 @@ import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import { Layout } from 'antd';
 
 // Components
-import Header from './Header';
+import Header from './global/Header';
 
 // Firebase
 import { auth } from '../services/firebase';
@@ -15,6 +15,7 @@ import Distributor from './Distributor';
 import Groups from './Groups';
 import Home from './Home';
 import Login from './Login';
+import Loading from './global/Loading';
 
 function PrivateRoute({ component: Component, authenticated, ...rest }) {
   return (
@@ -56,26 +57,22 @@ function App() {
     });
   });
 
-  if (isLoading) {
-    return (
-      <Layout className="app">
-        <h1>Loading</h1>
-      </Layout>
-    );
-  }
-
   return (
     <Layout className="app">
       <Router>
         <Header isAuthenticated={isAuthenticated} />
-        <Switch>
-          <Route exact path="/" component={Home}></Route>
-          <PrivateRoute path="/creator" authenticated={isAuthenticated} component={Creator} />
-          <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
-          <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Switch>
+            <Route exact path="/" component={Home}></Route>
+            <PrivateRoute path="/creator" authenticated={isAuthenticated} component={Creator} />
+            <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
+            <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} />
 
-          <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
-        </Switch>
+            <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
+          </Switch>
+        )}
       </Router>
     </Layout>
   );

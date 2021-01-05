@@ -21,6 +21,7 @@
 @import './character';
 @import './svg';
 @import './creator';
+@import '../components/login';
 
 // Components
 @import '../components/distributor/modal-options';
@@ -35,3 +36,4 @@
 @import '../components/distributor/preview';
 @import '../components/distributor/line-distribution';
 @import '../components/distributor/song-metadata';
+@import '../components/distributor/save-song';

@@ -29,7 +29,7 @@ function SongMetadata() {
         autoComplete="off"
         preserve={false}
       >
-        <Form.Item label="Video ID" name="videoId" className="song-metadata0form-item">
+        <Form.Item label="Video ID" name="videoId" className="song-metadata__form-item">
           <Input />
         </Form.Item>
 

@@ -1,7 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 // Design Resources
 import { Layout, Divider, Collapse } from 'antd';
+// API
+import API from '../api';
+
 // State
 import useDistributorState from '../states/useDistributorState';
 // Components
@@ -22,6 +25,19 @@ function Distributor() {
   const [activeInstance, setActiveInstance] = useDistributorState('activeInstance');
 
   const playerRef = useRef();
+
+  useEffect(() => {
+    async function fetchTest() {
+      try {
+        const response = await API.getTest();
+        console.log({ response });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchTest();
+  });
 
   const changePanel = (key) => {
     setStep(key);

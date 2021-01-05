@@ -559,6 +559,20 @@ body {
   margin: 0 0 8px 16px;
 }
 
+.login__title {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.login__form {
+  margin: 40px 0;
+}
+
+.login__form-action {
+  display: flex;
+  justify-content: center;
+}
+
 .modal-options-form {
   padding: 8px 0;
 }

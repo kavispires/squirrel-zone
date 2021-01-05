@@ -1,0 +1,15 @@
+.login {
+  &__title {
+    margin-top: get-unit(10);
+    text-align: center;
+  }
+
+  &__form {
+    margin: get-unit(10 0);
+  }
+
+  &__form-action {
+    display: flex;
+    justify-content: center;
+  }
+}

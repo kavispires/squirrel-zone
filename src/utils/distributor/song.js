@@ -22,7 +22,7 @@ export class Song {
    * @param {object} data - An object with the necessary data to be loaded in this instance
    */
   constructor(data) {
-    this._id = data.id || generateUniqueId();
+    this._id = data.id || 0; // Set to 0 so firebase can know to create a new key for it
     this._type = 'song';
     // Attributes
     this.videoId = '';
@@ -399,16 +399,14 @@ export class Song {
         title: nullifyDefault(this, 'title', this.defaultValues),
         version: nullifyDefault(this, 'version', this.defaultValues),
         videoId: nullifyDefault(this, 'videoId', this.defaultValues),
+        completion: this.completion,
+        isComplete: this.isComplete,
+        updatedAt: Date.now(),
       },
       data: {
         idealGroupSize: nullifyDefault(this, 'idealGroupSize', this.defaultValues),
         sectionsIds: this.sectionsIds,
         included,
-      },
-      meta: {
-        completion: this.completion,
-        isComplete: this.isComplete,
-        updatedAt: Date.now(),
       },
     };
   }

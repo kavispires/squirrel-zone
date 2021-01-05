@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 // Design Resources
 import { Layout } from 'antd';
@@ -6,11 +7,76 @@ import { Layout } from 'antd';
 // Components
 import Header from './Header';
 
-function App({ children }) {
+// Firebase
+import { auth } from '../services/firebase';
+
+import Creator from './Creator';
+import Distributor from './Distributor';
+import Groups from './Groups';
+import Home from './Home';
+import Login from './Login';
+
+function PrivateRoute({ component: Component, authenticated, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        authenticated === true ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+        )
+      }
+    />
+  );
+}
+
+function PublicRoute({ component: Component, authenticated, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => (authenticated === false ? <Component {...props} /> : <Redirect to="/" />)}
+    />
+  );
+}
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    auth().onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoading(false);
+        setIsAuthenticated(true);
+      } else {
+        setIsLoading(false);
+        setIsAuthenticated(false);
+      }
+    });
+  });
+
+  if (isLoading) {
+    return (
+      <Layout className="app">
+        <h1>Loading</h1>
+      </Layout>
+    );
+  }
+
   return (
     <Layout className="app">
-      <Header />
-      {children}
+      <Router>
+        <Header isAuthenticated={isAuthenticated} />
+        <Switch>
+          <Route exact path="/" component={Home}></Route>
+          <PrivateRoute path="/creator" authenticated={isAuthenticated} component={Creator} />
+          <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
+          <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} />
+
+          <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
+        </Switch>
+      </Router>
     </Layout>
   );
 }

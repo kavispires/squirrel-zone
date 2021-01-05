@@ -10,6 +10,7 @@ import {
   getEnumDefault,
   serializeKey,
   getNullDefault,
+  nullifyDefault,
 } from './utilities';
 
 /**
@@ -76,6 +77,18 @@ export class Line {
    */
   get key() {
     return serializeKey(this.type, this.id);
+  }
+
+  /**
+   * Dictionary of default values for this instance.
+   */
+  get defaultValues() {
+    return {
+      isDismissible: false,
+      skill: SKILL.VOCAL,
+      skillType: SKILL_TYPE.VOCAL.REGULAR,
+      skillLevel: SKILL_LEVEL['1'],
+    };
   }
 
   /**
@@ -274,21 +287,7 @@ export class Line {
    * @returns {object[]}
    */
   sort(parts = this.parts) {
-    const cache = Object.values(parts).reduce((res, part) => {
-      if (part && part instanceof Part) {
-        if (res[part.startTime ?? 0] === undefined) {
-          res[part.startTime ?? 0] = [];
-        }
-        res[part.startTime ?? 0].push(part);
-      }
-      return res;
-    }, {});
-
-    const sortedTimes = Object.keys(cache).map(Number).sort();
-    const sortedParts = sortedTimes.reduce((acc, key) => {
-      acc = [...acc, ...cache[key]];
-      return acc;
-    }, []);
+    const sortedParts = parts.sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
 
     this.partsIds = sortedParts.map((entry) => entry.id);
     this._isSorted = true;
@@ -415,10 +414,10 @@ export class Line {
     this._id = data.id || this._id || generateUniqueId();
     // Attributes
     this.isDismissible = getDefault(this, data, 'isDismissible', false);
-    this.skill = getEnumDefault(this, data, 'skill', SKILL, SKILL.VOCAL);
-    this.skillType = getDefault(this, data, 'skillType', SKILL_TYPE.VOCAL.REGULAR);
-    this.skillLevel = getEnumDefault(this, data, 'skillLevel', SKILL_LEVEL, SKILL_LEVEL['1']);
-    this.placeholder = getDefault(this, data, 'placeholder', '');
+    this.skill = getEnumDefault(this, data, 'skill', SKILL, this.defaultValues.skill);
+    this.skillType = getDefault(this, data, 'skillType', this.defaultValues.skillType);
+    this.skillLevel = getEnumDefault(this, data, 'skillLevel', SKILL_LEVEL, this.defaultValues.skillType);
+    this.placeholder = getDefault(this, data, 'placeholder', 'oh yeah');
     // Relationships
     this.sectionId = getNullDefault(this, data, 'sectionId', null);
     this.partsIds = getRelationshipsDefault(this, data, 'partsIds', Part);
@@ -437,10 +436,10 @@ export class Line {
       id: this.id,
       type: this.type,
       // Attributes
-      isDismissible: this.isDismissible,
-      skill: this.skill,
-      skillType: this.skillType,
-      skillLevel: this.skillLevel,
+      isDismissible: nullifyDefault(this, 'isDismissible', this.defaultValues),
+      skill: nullifyDefault(this, 'skill', this.defaultValues),
+      skillType: nullifyDefault(this, 'skillType', this.defaultValues),
+      skillLevel: nullifyDefault(this, 'skillLevel', this.defaultValues),
       // Relationships
       partsIds: this.partsIds,
       sectionId: this.sectionId,

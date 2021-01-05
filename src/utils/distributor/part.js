@@ -1,5 +1,12 @@
 import { ASSIGNEE } from './enum';
-import { generateUniqueId, getDefault, getEnumDefault, getNullDefault, serializeKey } from './utilities';
+import {
+  generateUniqueId,
+  getDefault,
+  getEnumDefault,
+  getNullDefault,
+  nullifyDefault,
+  serializeKey,
+} from './utilities';
 import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
 
 /**
@@ -61,6 +68,15 @@ export class Part {
    */
   get key() {
     return serializeKey(this.type, this.id);
+  }
+
+  /**
+   * Dictionary of default values for this instance.
+   */
+  get defaultValues() {
+    return {
+      assignee: ASSIGNEE.A,
+    };
   }
 
   /**
@@ -178,7 +194,7 @@ export class Part {
   deserialize(data) {
     this._id = data.id || this._id || generateUniqueId();
     // Attributes
-    this.assignee = getEnumDefault(this, data, 'assignee', ASSIGNEE, ASSIGNEE.A);
+    this.assignee = getEnumDefault(this, data, 'assignee', ASSIGNEE, this.defaultValues.assignee);
     this.endTime = getDefault(this, data, 'endTime', null);
     this.startTime = getDefault(this, data, 'startTime', null);
     this.text = getDefault(this, data, 'text', null);
@@ -199,7 +215,7 @@ export class Part {
       id: this.id,
       type: this.type,
       // Attributes
-      assignee: this.assignee,
+      assignee: nullifyDefault(this, 'assignee', this.defaultValues),
       endTime: this.endTime,
       startTime: this.startTime,
       text: this.text,

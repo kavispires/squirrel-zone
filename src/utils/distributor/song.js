@@ -7,6 +7,7 @@ import {
   getDefault,
   getNullDefault,
   getRelationshipsDefault,
+  nullifyDefault,
   serializeKey,
 } from './utilities';
 import moment from 'moment';
@@ -79,6 +80,17 @@ export class Song {
    */
   get key() {
     return serializeKey(this.type, this.id);
+  }
+
+  /**
+   * Dictionary of default values for this instance.
+   */
+  get defaultValues() {
+    return {
+      isSingle: false,
+      idealGroupSize: 5,
+      tempo: 0,
+    };
   }
 
   /**
@@ -219,25 +231,21 @@ export class Song {
    * @returns {object[]}
    */
   sort(sections = this.sections) {
-    const cache = Object.values(sections).reduce((res, section) => {
-      if (section && section instanceof Section) {
-        if (res[section.startTime]) {
-          res[section.startTime].push(section);
-        } else {
-          res[section.startTime] = [section];
-        }
+    const sortedSections = sections.sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
+
+    // Renumber the parts. e.g. VERSE 1, VERSE 2, etc...
+    const sectionsNumbers = {};
+    sortedSections.forEach((section) => {
+      if (sectionsNumbers[section.kind]) {
+        sectionsNumbers[section.kind] += 1;
+        section.deserialize({ number: sectionsNumbers[section.kind] });
+      } else {
+        sectionsNumbers[section.kind] = 1;
       }
-      return res;
-    }, {});
-
-    const sortedTimes = Object.keys(cache).map(Number).sort();
-
-    const sortedSections = sortedTimes.reduce((acc, key) => {
-      acc = [...acc, ...cache[key]];
-      return acc;
-    }, []);
+    });
 
     this.sectionsIds = sortedSections.map((entry) => entry.id);
+
     this._isSorted = true;
     return sortedSections;
   }
@@ -353,8 +361,8 @@ export class Song {
    * @returns {object}
    */
   serialize() {
-    const included = [];
     // Gather included relationships
+    const included = [];
     const sectionsLibrary = getGlobalState('sections') ?? {};
     const linesLibrary = getGlobalState('lines') ?? {};
     const partsLibrary = getGlobalState('parts') ?? {};
@@ -377,30 +385,30 @@ export class Song {
     });
 
     return {
-      data: {
-        id: this.id,
-        type: this.type,
-        // Attributes
-        videoId: this.videoId,
-        title: this.title,
-        version: this.version,
-        createdAt: this.createdAt,
-        updatedAt: this.updatedAt,
-        isSingle: this.isSingle,
-        idealGroupSize: this.idealGroupSize,
+      id: this.id,
+      type: this.song,
+
+      snippet: {
+        albumId: nullifyDefault(this, 'albumId', this.defaultValues),
+        createdAt: nullifyDefault(this, 'createdAt', this.defaultValues),
         duration: this.duration.format('mm:ss'),
-        tempo: this.tempo,
-        genre: this.genre,
-        style: this.style,
-        // Relationships
-        albumId: this.albumId,
-        sectionsIds: this.sectionsIds,
+        genre: nullifyDefault(this, 'genre', this.defaultValues),
+        isSingle: nullifyDefault(this, 'isSingle', this.defaultValues),
+        style: nullifyDefault(this, 'style', this.defaultValues),
+        tempo: nullifyDefault(this, 'tempo', this.defaultValues),
+        title: nullifyDefault(this, 'title', this.defaultValues),
+        version: nullifyDefault(this, 'version', this.defaultValues),
+        videoId: nullifyDefault(this, 'videoId', this.defaultValues),
       },
-      included,
+      data: {
+        idealGroupSize: nullifyDefault(this, 'idealGroupSize', this.defaultValues),
+        sectionsIds: this.sectionsIds,
+        included,
+      },
       meta: {
         completion: this.completion,
         isComplete: this.isComplete,
-        compiledAt: Date.now(),
+        updatedAt: Date.now(),
       },
     };
   }

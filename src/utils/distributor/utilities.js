@@ -89,6 +89,16 @@ export const getRelationshipsDefault = (context, data, propertyName, instance) =
 };
 
 /**
+ * Fallback to null if value of property is the same as the default value
+ * @param {*} data
+ * @param {*} propertyName
+ * @param {*} defaultValues
+ */
+export const nullifyDefault = (data, propertyName, defaultValues) => {
+  return data[propertyName] === defaultValues[propertyName] ? null : data[propertyName];
+};
+
+/**
  * Compare the entries of given list of ids/keys and return all equal values.
  * @param {*} dict
  * @param {*} list

@@ -10,6 +10,7 @@ import {
   getEnumDefault,
   serializeKey,
   getNullDefault,
+  nullifyDefault,
 } from './utilities';
 import { ROMAN_NUMBER } from '../constants';
 
@@ -74,6 +75,16 @@ export class Section {
    */
   get key() {
     return serializeKey(this.type, this.id);
+  }
+
+  /**
+   * Dictionary of default values for this instance.
+   */
+  get defaultValues() {
+    return {
+      kind: NULL,
+      number: 1,
+    };
   }
 
   /**
@@ -244,23 +255,7 @@ export class Section {
    * @returns {object[]}
    */
   sort(lines = this.lines) {
-    const cache = Object.values(lines).reduce((res, line) => {
-      if (line && line instanceof Line) {
-        if (res[line.startTime]) {
-          res[line.startTime].push(line);
-        } else {
-          res[line.startTime] = [line];
-        }
-      }
-      return res;
-    }, {});
-
-    const sortedTimes = Object.keys(cache).map(Number).sort();
-
-    const sortedLines = sortedTimes.reduce((acc, key) => {
-      acc = [...acc, ...cache[key]];
-      return acc;
-    }, []);
+    const sortedLines = lines.sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
 
     this.linesIds = sortedLines.map((entry) => entry.id);
     this._isSorted = true;
@@ -385,7 +380,7 @@ export class Section {
     this._id = data.id ?? this._id ?? generateUniqueId();
     // Attributes
     this.kind = getEnumDefault(this, data, 'kind', SECTION, SECTION.VERSE);
-    this.number = getDefault(this, data, 'number', 1);
+    this.number = getDefault(this, data, 'number', this.defaultValues.number);
     this.placeholder = getDefault(this, data, 'placeholder', '');
     // Relationships
     this.songId = getNullDefault(this, data, 'songId', null);
@@ -405,8 +400,8 @@ export class Section {
       id: this.id,
       type: this.type,
       // Attributes
-      kind: this.kind,
-      number: this.number,
+      kind: nullifyDefault(this, 'kind', this.defaultValues),
+      number: nullifyDefault(this, 'number', this.defaultValues),
       // Relationships
       linesIds: this.linesIds,
       songId: this.songId,

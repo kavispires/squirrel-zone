@@ -6,6 +6,9 @@ export const ASSIGNEE = {
   C: 'C',
   D: 'D',
   E: 'E',
+  F: 'F',
+  G: 'G',
+  H: 'H',
 };
 
 export const SKILL = {

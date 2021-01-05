@@ -52,23 +52,35 @@ body {
 }
 
 .assignee-background--A {
-  background: #ffef99;
+  background: #fec891;
 }
 
 .assignee-background--B {
-  background: #c0ece7;
+  background: #ffef99;
 }
 
 .assignee-background--C {
-  background: #fee6fb;
+  background: #c3f0c7;
 }
 
 .assignee-background--D {
-  background: #d8d2f9;
+  background: #99e0d8;
 }
 
 .assignee-background--E {
   background: #a5c2fe;
+}
+
+.assignee-background--F {
+  background: #e08686;
+}
+
+.assignee-background--G {
+  background: #d8d2f9;
+}
+
+.assignee-background--H {
+  background: #a2a2a2;
 }
 
 .assignees-radio-group {
@@ -76,23 +88,32 @@ body {
   margin-top: 8px;
 }
 .assignees-radio-group > label {
-  width: 20%;
+  width: 25%;
   text-align: center;
 }
 .assignees-radio-group > label:nth-child(1) {
-  background: #ffef99;
+  background: #fec891;
 }
 .assignees-radio-group > label:nth-child(2) {
-  background: #c0ece7;
+  background: #ffef99;
 }
 .assignees-radio-group > label:nth-child(3) {
-  background: #fee6fb;
+  background: #c3f0c7;
 }
 .assignees-radio-group > label:nth-child(4) {
-  background: #d8d2f9;
+  background: #99e0d8;
 }
 .assignees-radio-group > label:nth-child(5) {
   background: #a5c2fe;
+}
+.assignees-radio-group > label:nth-child(6) {
+  background: #e08686;
+}
+.assignees-radio-group > label:nth-child(7) {
+  background: #d8d2f9;
+}
+.assignees-radio-group > label:nth-child(8) {
+  background: #a2a2a2;
 }
 
 .header {
@@ -538,35 +559,36 @@ body {
   margin: 0 0 8px 16px;
 }
 
+.modal-options-form {
+  padding: 8px 0;
+}
 .modal-options-form--assignee-A {
-  border-top: 16px solid #ffef99;
-  padding: 8px 0;
+  border-top: 16px solid #fec891;
 }
-
 .modal-options-form--assignee-B {
-  border-top: 16px solid #c0ece7;
-  padding: 8px 0;
+  border-top: 16px solid #ffef99;
 }
-
 .modal-options-form--assignee-C {
-  border-top: 16px solid #fee6fb;
-  padding: 8px 0;
+  border-top: 16px solid #c3f0c7;
 }
-
 .modal-options-form--assignee-D {
-  border-top: 16px solid #d8d2f9;
-  padding: 8px 0;
+  border-top: 16px solid #99e0d8;
 }
-
 .modal-options-form--assignee-E {
   border-top: 16px solid #a5c2fe;
-  padding: 8px 0;
 }
-
+.modal-options-form--assignee-F {
+  border-top: 16px solid #e08686;
+}
+.modal-options-form--assignee-G {
+  border-top: 16px solid #d8d2f9;
+}
+.modal-options-form--assignee-H {
+  border-top: 16px solid #a2a2a2;
+}
 .modal-options-form__item {
   margin-bottom: 12px;
 }
-
 .modal-options-form__items {
   display: flex;
   justify-content: space-between;
@@ -580,7 +602,6 @@ body {
 .modal-options-form__items--4 .modal-options-form__item {
   width: 24%;
 }
-
 .modal-options-form__action-button {
   width: 100%;
 }
@@ -751,6 +772,9 @@ body {
 .distributor-controls__assignees {
   width: 100%;
   margin-top: 8px;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 .distributor-controls__assignees > label {
   width: 20%;
@@ -759,15 +783,17 @@ body {
 
 .distributor-controls__buttons {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .distributor-controls__button {
   box-sizing: border-box;
   width: 20%;
   display: block;
-  min-height: 60px;
+  min-height: 50px;
   border-radius: 8px;
-  margin: 0 4px 0 0;
+  margin: 0 4px 8px 0;
 }
 
 .timestamps-bank__list {

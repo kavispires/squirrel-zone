@@ -35,7 +35,8 @@ function OptionsPart({ part, onValuesChange }) {
         label="Assignee"
         name="assignee"
         className="modal-options-form__item"
-        hint="This is just a reference if the next part could or should be sung by a different person"
+        help="This is just a reference if the next part could or should be sung by a different person. Keep it semantic! Use A and B for vocals, C and D for raps, E and F for Ad-libs, G for All, and H
+        for None."
       >
         <Radio.Group
           options={ASSIGNEE_OPTIONS}

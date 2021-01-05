@@ -66,6 +66,10 @@ function Controls({ playerRef, playVideo, pauseVideo, isPlaying }) {
           keys on your keyboard.
         </p>
         <KeyCapture.MouseButtons />
+        <p className="distributor-controls__description">
+          Keep it semantic! Use A and B for vocals, C and D for raps, E and F for Ad-libs, G for All, and H
+          for None.
+        </p>
       </div>
     </div>
   );

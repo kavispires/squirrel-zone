@@ -6,49 +6,49 @@
       "id": "A",
       "type": "member",
       "name": "Ace",
-      "color": "#14bdeb"
+      "color": "#fec891"
     },
     "B": {
       "id": "B",
       "type": "member",
       "name": "Ben",
-      "color": "#d99ac5"
+      "color": "#ffef99"
     },
     "C": {
       "id": "C",
       "type": "member",
       "name": "Cory",
-      "color": "#faa916"
+      "color": "#c3f0c7"
     },
     "D": {
       "id": "D",
       "type": "member",
       "name": "Dan",
-      "color": "#0cca4a"
+      "color": "#99e0d8"
     },
     "E": {
       "id": "E",
       "type": "member",
       "name": "Ethan",
-      "color": "#f42c04"
+      "color": "#a5c2fe"
     },
     "F": {
       "id": "F",
       "type": "member",
       "name": "Felix",
-      "color": "#8f3d7c"
+      "color": "#e08686"
     },
     "G": {
       "id": "G",
       "type": "member",
       "name": "All",
-      "color": "#ddb832"
+      "color": "#d8d2f9"
     },
     "H": {
       "id": "H",
       "type": "member",
       "name": "None",
-      "color": "#9b5094"
+      "color": "#a2a2a2"
     },
     "ALL": {
       "id": "ALL",

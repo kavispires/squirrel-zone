@@ -21,6 +21,9 @@
   &__assignees {
     width: 100%;
     margin-top: get-unit(2);
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
 
     & > label {
       width: 20%;
@@ -30,14 +33,16 @@
 
   &__buttons {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   &__button {
     box-sizing: border-box;
     width: 20%;
     display: block;
-    min-height: 60px;
+    min-height: 50px;
     border-radius: get-unit(2);
-    margin: get-unit(0 1 0 0);
+    margin: get-unit(0 1 2 0);
   }
 }

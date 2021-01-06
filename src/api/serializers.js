@@ -20,7 +20,7 @@ const serializer = {
       albumId: data.albumId ?? 'N/A',
       completion: data.completion,
       createdAt: data.createdAt,
-      duration: '00:00',
+      duration: data.duration ?? '00:00',
       genre: data.genre ?? '',
       idealGroupSize: data.idealGroupSize ?? 5,
       isComplete: data.isComplete,

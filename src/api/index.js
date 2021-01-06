@@ -1,4 +1,3 @@
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 import { db } from '../services/firebase';
 
 import store from '../services/store';
@@ -204,8 +203,8 @@ const saveSong = async (data) => {
   try {
     // Create new key if it is a new instance
     const key = data.id || db.ref().child('songs').push().key;
-    console.log(key);
-    data.id = key;
+    data.song.id = key;
+    data.data.id = key;
 
     await db.ref(`/songs/${key}`).set({ ...data.song });
     store.setRecord(serialize(data.song), key);

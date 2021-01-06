@@ -48,7 +48,7 @@ function SongMetadata() {
           </Form.Item>
 
           <Form.Item label="Tempo" name="tempo" className="song-metadata-form__item">
-            <InputNumber min={60} formatter={(value) => `${value} bpm`} />
+            <InputNumber min={120} formatter={(value) => `${value} bpm`} />
           </Form.Item>
 
           <Form.Item label="Ideal Group Size" name="idealGroupSize" className="song-metadata-form__item">

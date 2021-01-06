@@ -18,7 +18,7 @@ function LyricsAndSections() {
   const [song] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
 
-  const [isBuiltOnce, setIsBuiltOnce] = useState(false);
+  const [isBuiltOnce, setIsBuiltOnce] = useState(Boolean(song.id));
   const [textarea, setTextarea] = useState('Sample lyrics\nSample |lyrics\n\nSampleLyrics');
 
   const onTextareaChange = useCallback(
@@ -94,6 +94,13 @@ function LyricsAndSections() {
     setIsBuiltOnce(true);
   }, [setLines, setParts, setSections, song, textarea]);
 
+  const rebuildSections = useCallback(() => {
+    const confirmation = window.confirm('Are you sure you want to rebuild sections for this song?');
+    if (confirmation) {
+      buildSections({});
+    }
+  }, [buildSections]);
+
   return (
     <section className="lyrics-and-sections">
       <h2 className="lyrics-and-sections__title">Add Lyrics</h2>
@@ -120,13 +127,14 @@ function LyricsAndSections() {
       <div className="lyrics-and-sections__action">
         {isBuiltOnce && (
           <Paragraph type="danger">
-            Rebuilding the sections will reset all details you might have enter to Sections, Lines, and Parts.
+            Rebuilding Sections is destruction and will reset all details you might have enter to Sections,
+            Lines, and Parts.
           </Paragraph>
         )}
         <Button
           type={isBuiltOnce ? 'default' : 'primary'}
           danger={isBuiltOnce}
-          onClick={buildSections}
+          onClick={Boolean(song.id) ? rebuildSections : buildSections}
           disabled={!textarea.length}
         >
           {isBuiltOnce ? 'Rebuild' : 'Build'} Sections

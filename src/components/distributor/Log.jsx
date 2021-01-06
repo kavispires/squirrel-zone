@@ -246,10 +246,8 @@ function LogLine({ line, section, onCheckboxChange, onShowModal, isCompact }) {
   const checkedClass = getBemModifier(isLineChecked, 'checked');
   const compactClass = getBemModifier(isCompact, 'compact');
 
-  // TODO
   const onAddNewPart = (line) => {
-    console.log(line);
-    const newPart = new Part({ lineId: line.id });
+    const newPart = new Part({ lineId: line.id, text: '[missing lyrics]' });
     line.addPart(newPart);
   };
 
@@ -313,7 +311,6 @@ function LogLine({ line, section, onCheckboxChange, onShowModal, isCompact }) {
                 icon={<PlusOutlined />}
                 className="preview-line__icon-button"
                 onClick={() => onAddNewPart(line)}
-                disabled
               />
             </Tooltip>
 

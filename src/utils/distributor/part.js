@@ -199,6 +199,9 @@ export class Part {
     this.endTime = getDefault(this, data, 'endTime', null);
     this.startTime = getDefault(this, data, 'startTime', null);
     this.text = getDefault(this, data, 'text', null);
+    if (this.text) {
+      this.text = this.text.trim();
+    }
     // Relationships
     this.lineId = getNullDefault(this, data, 'lineId', null);
 
@@ -219,7 +222,7 @@ export class Part {
       assignee: nullifyDefault(this, 'assignee', this.defaultValues),
       endTime: this.endTime,
       startTime: this.startTime,
-      text: this.text,
+      text: this.text ? this.text.trim() : this.text,
       // Relationships
       lineId: this.lineId,
     });

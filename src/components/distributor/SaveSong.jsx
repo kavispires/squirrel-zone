@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Checkbox, Divider, Tooltip, Progress, TimePicker } from 'antd';
+import { Button, Divider, Tooltip, Progress } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // API
@@ -19,6 +19,7 @@ function SaveSong() {
     try {
       await API.saveSong(song.serialize());
       setSuccess(true);
+      setStep(0);
     } catch (_) {}
   };
 
@@ -33,7 +34,7 @@ function SaveSong() {
         </Tooltip>
         <Divider />
         <div className="song-metadata__action">
-          <Button type="primary" disabled={isLoading} onClick={onSave}>
+          <Button type="primary" disabled={isLoading ?? success} onClick={onSave}>
             Save On Database
           </Button>
         </div>

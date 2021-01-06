@@ -1,5 +1,6 @@
 import { ASSIGNEE } from './enum';
 import {
+  cleanupObject,
   generateUniqueId,
   getDefault,
   getEnumDefault,
@@ -211,7 +212,7 @@ export class Part {
    * @returns {object}
    */
   serialize() {
-    return {
+    return cleanupObject({
       id: this.id,
       type: this.type,
       // Attributes
@@ -221,7 +222,7 @@ export class Part {
       text: this.text,
       // Relationships
       lineId: this.lineId,
-    };
+    });
   }
 }
 

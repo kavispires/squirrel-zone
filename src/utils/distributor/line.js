@@ -11,6 +11,7 @@ import {
   serializeKey,
   getNullDefault,
   nullifyDefault,
+  cleanupObject,
 } from './utilities';
 
 /**
@@ -287,11 +288,10 @@ export class Line {
    * @returns {object[]}
    */
   sort(parts = this.parts) {
-    const sortedParts = parts.sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
+    const sortedParts = parts.sort((a, b) => (a.startTime >= b.startTime ? 1 : -1));
 
     this.partsIds = sortedParts.map((entry) => entry.id);
     this._isSorted = true;
-
     this._save();
     return sortedParts;
   }
@@ -432,7 +432,7 @@ export class Line {
    * @returns {object}
    */
   serialize() {
-    return {
+    return cleanupObject({
       id: this.id,
       type: this.type,
       // Attributes
@@ -443,7 +443,7 @@ export class Line {
       // Relationships
       partsIds: this.partsIds,
       sectionId: this.sectionId,
-    };
+    });
   }
 }
 

@@ -11,6 +11,7 @@ import {
   serializeKey,
   getNullDefault,
   nullifyDefault,
+  cleanupObject,
 } from './utilities';
 import { ROMAN_NUMBER } from '../constants';
 
@@ -255,7 +256,7 @@ export class Section {
    * @returns {object[]}
    */
   sort(lines = this.lines) {
-    const sortedLines = lines.sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
+    const sortedLines = lines.sort((a, b) => (a.startTime >= b.startTime ? 1 : -1));
 
     this.linesIds = sortedLines.map((entry) => entry.id);
     this._isSorted = true;
@@ -396,7 +397,7 @@ export class Section {
    * @returns {object}
    */
   serialize() {
-    return {
+    return cleanupObject({
       id: this.id,
       type: this.type,
       // Attributes
@@ -405,7 +406,7 @@ export class Section {
       // Relationships
       linesIds: this.linesIds,
       songId: this.songId,
-    };
+    });
   }
 }
 

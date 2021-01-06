@@ -203,7 +203,8 @@ const saveSong = async (data) => {
 
   try {
     // Create new key if it is a new instance
-    const key = data.id ?? db.ref().child('songs').push().key;
+    const key = data.id || db.ref().child('songs').push().key;
+    console.log(key);
     data.id = key;
 
     await db.ref(`/songs/${key}`).set({ ...data.song });

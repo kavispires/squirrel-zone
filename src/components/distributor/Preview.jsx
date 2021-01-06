@@ -16,7 +16,7 @@ const { Paragraph } = Typography;
 function Preview({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
   const [song] = useDistributorState('song');
   const [parts] = useDistributorState('parts');
-  const [, setStep] = useDistributorState('step');
+  const [step, setStep] = useDistributorState('step');
   const [previewData, setPreviewData] = useState([]);
   const [sampleGroup] = useState(sampleGroupJson);
 
@@ -39,13 +39,15 @@ function Preview({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
         Visualize how this songs plays. For sampling purposes, Assignee E is considered ALL.
       </Paragraph>
 
-      <LineDistribution
-        playerRef={playerRef}
-        playVideo={playVideo}
-        pauseVideo={pauseVideo}
-        seekAndPlay={seekAndPlay}
-        lineDistributionData={previewData}
-      />
+      {step === 3 && (
+        <LineDistribution
+          playerRef={playerRef}
+          playVideo={playVideo}
+          pauseVideo={pauseVideo}
+          seekAndPlay={seekAndPlay}
+          lineDistributionData={previewData}
+        />
+      )}
 
       <Divider />
 

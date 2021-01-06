@@ -50,7 +50,7 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
           line: lines,
           section: sections,
         }[type];
-
+        console.log({ dict, selection, data });
         batchDeserializeInstancesSameData(dict, selection, data, true);
         setSelection([]);
       },
@@ -177,16 +177,18 @@ function LogSection({ section, onCheckboxChange, onShowModal, seekAndPlay, isCom
           >
             Section {section.kind}
           </Button>
-          <Tooltip title="Play song from here">
-            <Button
-              shape="circle"
-              type="default"
-              size="small"
-              icon={<PlayCircleOutlined />}
-              className="preview-section__icon-button"
-              onClick={onPlaySection}
-            />
-          </Tooltip>
+          {Boolean(seekAndPlay) && (
+            <Tooltip title="Play song from here">
+              <Button
+                shape="circle"
+                type="default"
+                size="small"
+                icon={<PlayCircleOutlined />}
+                className="preview-section__icon-button"
+                onClick={onPlaySection}
+              />
+            </Tooltip>
+          )}
           <div className="preview-section__actions">
             <Tooltip title="Add new line to this section">
               <Button

@@ -33,7 +33,7 @@ function SaveSong() {
         </Tooltip>
         <Divider />
         <div className="song-metadata__action">
-          <Button type="primary" disabled={isLoading || success} onClick={onSave}>
+          <Button type="primary" disabled={isLoading} onClick={onSave}>
             Save On Database
           </Button>
         </div>

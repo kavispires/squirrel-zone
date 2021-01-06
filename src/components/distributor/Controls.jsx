@@ -65,7 +65,7 @@ function Controls({ playerRef, playVideo, pauseVideo, isPlaying }) {
           Click and hold to record. It allows multiple clicks at the same time. You may also use the number
           keys on your keyboard.
         </p>
-        <KeyCapture.MouseButtons />
+        <KeyCapture.MouseButtons playerRef={playerRef} isPlaying={isPlaying} />
         <p className="distributor-controls__description">
           Keep it semantic! Use A and B for vocals, C and D for raps, E and F for Ad-libs, G for All, and H
           for None.

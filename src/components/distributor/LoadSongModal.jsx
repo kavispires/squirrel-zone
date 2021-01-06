@@ -111,7 +111,6 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
 
   const rowSelection = {
     onChange: (_, selectedRows) => {
-      console.log(selectedRows[0].id);
       setSelectedSongId(selectedRows[0].id);
     },
   };
@@ -126,7 +125,9 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
       okButtonProps={{ disabled: isLoading || Boolean(!selectedSongId) }}
     >
       {isLoading ? (
-        <Spin size="large" />
+        <div className="loading-container">
+          <Spin size="large" />
+        </div>
       ) : (
         <Table
           rowSelection={{

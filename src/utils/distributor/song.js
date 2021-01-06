@@ -386,27 +386,32 @@ export class Song {
 
     return {
       id: this.id,
-      type: this.song,
+      type: this.type,
 
-      snippet: {
+      song: {
+        id: this.id,
+        type: this.type,
         albumId: nullifyDefault(this, 'albumId', this.defaultValues),
+        completion: this.completion,
         createdAt: nullifyDefault(this, 'createdAt', this.defaultValues),
         duration: this.duration.format('mm:ss'),
         genre: nullifyDefault(this, 'genre', this.defaultValues),
+        isComplete: this.isComplete,
         isSingle: nullifyDefault(this, 'isSingle', this.defaultValues),
+        idealGroupSize: nullifyDefault(this, 'idealGroupSize', this.defaultValues),
         style: nullifyDefault(this, 'style', this.defaultValues),
         tempo: nullifyDefault(this, 'tempo', this.defaultValues),
         title: nullifyDefault(this, 'title', this.defaultValues),
         version: nullifyDefault(this, 'version', this.defaultValues),
         videoId: nullifyDefault(this, 'videoId', this.defaultValues),
-        completion: this.completion,
-        isComplete: this.isComplete,
         updatedAt: Date.now(),
       },
       data: {
-        idealGroupSize: nullifyDefault(this, 'idealGroupSize', this.defaultValues),
-        sectionsIds: this.sectionsIds,
-        included,
+        id: this.id,
+        type: 'song-data',
+
+        sectionsIds: JSON.stringify(this.sectionsIds),
+        included: JSON.stringify(included),
       },
     };
   }

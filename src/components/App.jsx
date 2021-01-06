@@ -16,6 +16,7 @@ import Groups from './Groups';
 import Home from './Home';
 import Login from './Login';
 import Loading from './global/Loading';
+import Notification from './global/Notification';
 
 function PrivateRoute({ component: Component, authenticated, ...rest }) {
   return (
@@ -73,6 +74,7 @@ function App() {
             <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
           </Switch>
         )}
+        <Notification />
       </Router>
     </Layout>
   );

@@ -4,9 +4,13 @@ const initialState = {
   notification: {
     type: null,
     message: null,
+    description: null,
   },
+  isLoading: false,
 };
 
-const { useGlobalState } = createGlobalState(initialState);
+const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState(initialState);
+
+export { setGlobalState, getGlobalState };
 
 export default useGlobalState;

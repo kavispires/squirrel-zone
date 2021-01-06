@@ -1,9 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 
 // Design Resources
 import { Layout, Divider, Collapse } from 'antd';
-// API
-import API from '../api';
 
 // State
 import useDistributorState from '../states/useDistributorState';
@@ -15,6 +13,7 @@ import ModalOptions from './distributor/ModalOptions';
 import TimeAndSync from './distributor/TimeAndSync';
 import Preview from './distributor/Preview';
 import SongMetadata from './distributor/SongMetadata';
+import SaveSong from './distributor/SaveSong';
 
 const { Panel } = Collapse;
 
@@ -25,19 +24,6 @@ function Distributor() {
   const [activeInstance, setActiveInstance] = useDistributorState('activeInstance');
 
   const playerRef = useRef();
-
-  useEffect(() => {
-    async function fetchTest() {
-      try {
-        const response = await API.getTest();
-        console.log({ response });
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    fetchTest();
-  });
 
   const changePanel = (key) => {
     setStep(key);
@@ -97,6 +83,9 @@ function Distributor() {
           </Panel>
           <Panel header="Song Metadata" key="4">
             {song ? <SongMetadata /> : <p>You can't see this step without a loaded song.</p>}
+          </Panel>
+          <Panel header="Save" key="5">
+            {song ? <SaveSong /> : <p>You can't see this step without a loaded song.</p>}
           </Panel>
         </Collapse>
 

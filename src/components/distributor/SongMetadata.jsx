@@ -22,7 +22,7 @@ function SongMetadata() {
 
       <Form
         layout="vertical"
-        name="options-line"
+        name="song-metadata"
         initialValues={song.data}
         onValuesChange={onValuesChange}
         className="song-metadata-form"

@@ -1,9 +1,8 @@
 import { createGlobalState } from 'react-hooks-global-state';
 
 const initialState = {
-  // videoId: null, // _1dZKhxrSoA
   step: '0',
-  videoId: '_1dZKhxrSoA',
+  videoId: null,
   isRecording: false,
   song: null,
   sections: {},

@@ -28,6 +28,9 @@ export class Store {
     }
 
     switch (type) {
+      case 'member':
+        await API.fetchMember(id);
+        break;
       case 'song':
         await API.fetchSong(id);
         break;
@@ -56,6 +59,10 @@ export class Store {
     }
 
     switch (type) {
+      case 'members':
+        await API.fetchMembers();
+        this._updateCollection('members', 'member');
+        break;
       case 'songs':
         await API.fetchSongs();
         this._updateCollection('songs', 'song');

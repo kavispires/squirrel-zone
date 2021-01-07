@@ -2,6 +2,7 @@ import { db } from '../services/firebase';
 
 import store from '../services/store';
 import { setGlobalState } from '../states/useGlobalState';
+import { cleanupObject } from '../utils/distributor';
 import serialize from './serializers';
 
 /**
@@ -126,6 +127,57 @@ const fetchMembers = async () => {
 };
 
 /**
+ * Query GET `/members/<id>`
+ */
+const fetchMember = async (memberId) => {
+  setGlobalState('isLoading', true);
+
+  try {
+    await db
+      .ref()
+      .child('members')
+      .child(memberId)
+      .once('value', function (snapshot) {
+        const { key } = snapshot;
+        store.setRecord(serialize(snapshot.val()), key);
+      });
+  } catch (error) {
+    errorNotification(`Failed to load song ${memberId}`, error);
+  } finally {
+    setGlobalState('isLoading', false);
+  }
+};
+
+/**
+ * Query POST `/members/<id>`
+ */
+const saveMember = async (data) => {
+  setGlobalState('isLoading', true);
+
+  let response;
+
+  try {
+    // Create new key if it is a new instance
+    const key = data.id || db.ref().child('members').push().key;
+    data.id = key;
+    data.type = 'member';
+
+    data = cleanupObject(data);
+
+    await db.ref(`/members/${key}`).set({ ...data });
+    store.setRecord(serialize(data), key);
+
+    successNotification('Member saved successfully', `id: ${key}`);
+  } catch (error) {
+    errorNotification('Failed to save member', error);
+  } finally {
+    setGlobalState('isLoading', false);
+  }
+
+  return response;
+};
+
+/**
  * Query GET `/songs`
  */
 const fetchSongs = async () => {
@@ -227,9 +279,11 @@ const API = {
   fetchDistributions,
   fetchGroups,
   fetchMembers,
+  fetchMember,
   fetchSongs,
   fetchSong,
   fetchSongData,
+  saveMember,
   saveSong,
 };
 

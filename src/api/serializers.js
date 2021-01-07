@@ -2,6 +2,8 @@ import { serializeKey } from '../utils/distributor';
 
 const serialize = (data, id) => {
   switch (data.type) {
+    case 'member':
+      return serializer.member(data, id);
     case 'song':
       return serializer.song(data, id);
     case 'song-data':
@@ -12,6 +14,20 @@ const serialize = (data, id) => {
 };
 
 const serializer = {
+  member: (data, id) => {
+    return {
+      id: id ?? data.id,
+      type: data.type,
+      key: serializeKey(data.type, id ?? data.id),
+      name: data.name,
+      color: data.color ?? '',
+      colorName: data.colorName ?? '',
+      codename: data.codename ?? '',
+      tagline: data.tagline ?? '',
+      isContestant: data.isContestant ?? '',
+      positions: data.positions ?? [],
+    };
+  },
   song: (data, id) => {
     return {
       id: id ?? data.id,

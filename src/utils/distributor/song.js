@@ -368,6 +368,7 @@ export class Song {
     const partsLibrary = getGlobalState('parts') ?? {};
     this.sectionsIds.forEach((sectionId) => {
       const section = sectionsLibrary[sectionId];
+      section.deserialize({ songId: this.id });
       // Add section serialized data to included
       included.push(section.serialize());
       // Iterate though lines

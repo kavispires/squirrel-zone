@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 
 // Components
 import EditMember from './admin/EditMember';
+import EditGroup from './admin/EditGroup';
 
 // Components
 
@@ -14,6 +15,7 @@ function Admin() {
       <main className="main admin">
         <h1>Admin</h1>
         <EditMember />
+        <EditGroup />
       </main>
     </Layout.Content>
   );

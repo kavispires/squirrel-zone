@@ -59,6 +59,10 @@ export class Store {
     }
 
     switch (type) {
+      case 'groups':
+        await API.fetchGroups();
+        this._updateCollection('groups', 'group');
+        break;
       case 'members':
         await API.fetchMembers();
         this._updateCollection('members', 'member');
@@ -72,7 +76,11 @@ export class Store {
         throw Error(`Provided type ${type} is not supported`);
     }
 
-    return Object.values(this._collections[type]);
+    return Object.values(this._collections[type]).sort((a, b) => {
+      const x = a?.name ?? a?.title ?? a.id;
+      const y = b?.name ?? b?.title ?? b.id;
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
   }
 
   /**
@@ -82,6 +90,7 @@ export class Store {
    * @param {object} data
    */
   setRecord(data, id) {
+    console.log(data);
     if (!data.type) throw Error('A type is required to access the store');
 
     if (!id && !data.id) throw Error('An id is required to access a store record');

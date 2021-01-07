@@ -91,3 +91,19 @@ export const buildMockDistribution = (parts) => {
     data,
   };
 };
+
+/**
+ * Injects a song id into the sections in the included array.
+ * This is necessary when the song is about to be created and does not have an id yet.
+ * @param {object[]} includedData
+ * @param {string} songId
+ * @returns {object[]}
+ */
+export const injectSongIdToSections = (includedData, songId) => {
+  return includedData.map((instance) => {
+    if (instance.type === 'section') {
+      instance.songId = songId;
+    }
+    return instance;
+  });
+};

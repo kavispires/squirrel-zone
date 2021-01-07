@@ -2,6 +2,8 @@ import { serializeKey } from '../utils/distributor';
 
 const serialize = (data, id) => {
   switch (data.type) {
+    case 'group':
+      return serializer.group(data, id);
     case 'member':
       return serializer.member(data, id);
     case 'song':
@@ -14,6 +16,17 @@ const serialize = (data, id) => {
 };
 
 const serializer = {
+  group: (data, id) => {
+    return {
+      id: id ?? data.id,
+      type: data.type,
+      key: serializeKey(data.type, id ?? data.id),
+      name: data.name,
+      debutYear: data.debutYear ?? 0,
+      disbandmentYear: data.disbandmentYear ?? 0,
+      membersIds: data.membersIds ?? [],
+    };
+  },
   member: (data, id) => {
     return {
       id: id ?? data.id,
@@ -25,7 +38,7 @@ const serializer = {
       colorName: data.colorName ?? '',
       codename: data.codename ?? '',
       tagline: data.tagline ?? '',
-      isContestant: data.isContestant ?? '',
+      isContestant: data.isContestant ?? false,
       positions: data.positions ?? [],
     };
   },

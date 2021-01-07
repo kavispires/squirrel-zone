@@ -7,16 +7,16 @@ import useGlobalState from '../../states/useGlobalState';
 // Store
 import store from '../../services/store';
 
-function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) {
+function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData }) {
   const [isLoading] = useGlobalState('isLoading');
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
-    async function loadMembers() {
-      setData(await store.getCollection('members'));
+    async function loadGroups() {
+      setData(await store.getCollection('groups'));
     }
-    loadMembers();
+    loadGroups();
   }, []);
 
   const onCancelModal = () => {
@@ -27,13 +27,13 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
   };
 
   const onLoadSong = useCallback(() => {
-    async function loadMember() {
-      setLoadedData(await store.getRecord('member', selectedId));
+    async function loadGroup() {
+      setLoadedData(await store.getRecord('group', selectedId));
 
       setModalVisibility(false);
     }
 
-    loadMember();
+    loadGroup();
   }, [selectedId, setLoadedData, setModalVisibility]);
 
   const columns = [
@@ -43,13 +43,13 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
     },
 
     {
-      title: 'Age',
-      dataIndex: 'age',
+      title: 'Debut Year',
+      dataIndex: 'debutYear',
     },
     {
-      title: 'Tagline',
-      dataIndex: 'tagline',
-      render: (text) => `"${text}"`,
+      title: 'Group Size',
+      dataIndex: 'membersIds',
+      render: (list) => `${list.length}`,
     },
   ];
 
@@ -61,10 +61,10 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
 
   return (
     <Modal
-      title="Members"
+      title="Groups"
       visible={isModalVisible}
       onOk={onLoadSong}
-      okText="Load Member"
+      okText="Load Group"
       onCancel={onCancelModal}
       okButtonProps={{ disabled: isLoading || Boolean(!setSelectedId) }}
     >
@@ -86,4 +86,4 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
   );
 }
 
-export default LoadMemberModal;
+export default LoadGroupModal;

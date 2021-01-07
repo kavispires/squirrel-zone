@@ -52,7 +52,6 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
           section: sections,
           part: parts,
         }[type];
-        console.log({ dict, selection, data });
         batchDeserializeInstancesSameData(dict, selection, data, true);
         setSelection([]);
       },

@@ -2,4 +2,7 @@
   "folders": [],
   "settings": {},
   "editor.formatOnSave": true,
+  "cSpell.words": [
+    "deserializers"
+  ],
 }

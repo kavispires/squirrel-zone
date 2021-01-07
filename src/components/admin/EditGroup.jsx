@@ -1,30 +1,39 @@
 import React, { useState, useEffect } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Checkbox, Select, Spin, Divider } from 'antd';
+import { Button, InputNumber, Form, Input, Select, Spin, Divider } from 'antd';
 // State
 import useGlobalState from '../../states/useGlobalState';
 // API
 import API from '../../api';
 // Utilities
-import { POSITIONS } from '../../utils/constants';
 import { bemClass } from '../../utils';
 // Components
-import LoadMemberModal from './LoadMemberModal';
+import LoadGroupModal from './LoadGroupModal';
+// Store
+import store from '../../services/store';
 
-function EditMember() {
+function EditGroup() {
   const [isLoading] = useGlobalState('isLoading');
   const [isModalVisible, setModalVisibility] = useState(false);
   const [loadedData, setLoadedData] = useState(false);
+  const [membersOptions, setMembersOptions] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
     form.setFieldsValue(loadedData);
   }, [form, loadedData]);
 
+  useEffect(() => {
+    async function loadMembers() {
+      setMembersOptions(await store.getCollection('members'));
+    }
+    loadMembers();
+  }, []);
+
   const onFinish = async (values) => {
     try {
-      await API.saveMember(values);
+      await API.saveGroup(values);
       form.resetFields();
     } catch (_) {}
   };
@@ -37,10 +46,10 @@ function EditMember() {
 
   return (
     <section className="admin__form-container">
-      <h3>Create/Edit Member</h3>
+      <h3>Create/Edit Group</h3>
       <div className={bemClass('admin-button-container', 'center')}>
         <Button type="primary" onClick={() => setModalVisibility(true)} disabled={isLoading}>
-          {isLoading ? <Spin size="small" /> : 'Load Member'}
+          {isLoading ? <Spin size="small" /> : 'Load Group'}
         </Button>
       </div>
 
@@ -49,9 +58,9 @@ function EditMember() {
       <Form
         layout="vertical"
         form={form}
-        name="edit-member"
+        name="edit-group"
         onFinish={onFinish}
-        className="admin-form admin-edit-member-form"
+        className="admin-form admin-edit-group-form"
         autoComplete="off"
         preserve={false}
       >
@@ -64,49 +73,25 @@ function EditMember() {
         </Form.Item>
 
         <div className={bemClass('admin-form__items', '2')}>
-          <Form.Item label="Color" name="color" className="admin-form__item" rules={requiredRule}>
-            <Input />
+          <Form.Item label="Debut Year" name="debutYear" className="admin-form__item">
+            <InputNumber min={1950} />
           </Form.Item>
-          <Form.Item label="Color Name" name="colorName" className="admin-form__item">
-            <Input />
-          </Form.Item>
-        </div>
-
-        <div className={bemClass('admin-form__items', '2')}>
-          <Form.Item label="Codename" name="codename" className="admin-form__item">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Tagline" name="tagline" className="admin-form__item">
-            <Input />
+          <Form.Item label="Disbandment Year" name="disbandmentYear" className="admin-form__item">
+            <InputNumber min={1950} />
           </Form.Item>
         </div>
 
-        <div className={bemClass('admin-form__items', '4')}>
-          <Form.Item label="Age" name="age" className="admin-form__item">
-            <InputNumber min={12} />
-          </Form.Item>
-          <Form.Item
-            label="Contestant"
-            name="isContestant"
-            className="admin-form__item"
-            valuePropName="checked"
+        <Form.Item label="Members" name="membersIds" className={bemClass('admin-form__item', 'double')}>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: '100%' }}
+            placeholder="Please select the members"
           >
-            <Checkbox />
-          </Form.Item>
-          <Form.Item label="Positions" name="positions" className={bemClass('admin-form__item', 'double')}>
-            <Select
-              mode="multiple"
-              allowClear
-              style={{ width: '100%' }}
-              placeholder="Please select a position"
-            >
-              {Object.values(POSITIONS).map((position) => (
-                <Select.Option key={position}>{position}</Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <div></div>
-        </div>
+            {membersOptions &&
+              membersOptions.map((member) => <Select.Option key={member.id}>{member.name}</Select.Option>)}
+          </Select>
+        </Form.Item>
 
         <Form.Item className="admin-form__item">
           <div className={bemClass('admin-button-container', 'right')}>
@@ -114,14 +99,14 @@ function EditMember() {
               Reset
             </Button>
             <Button type="primary" htmlType="submit">
-              Save Member
+              Save Group
             </Button>
           </div>
         </Form.Item>
       </Form>
 
       {isModalVisible && (
-        <LoadMemberModal
+        <LoadGroupModal
           isModalVisible={isModalVisible}
           setModalVisibility={setModalVisibility}
           setLoadedData={setLoadedData}
@@ -131,4 +116,4 @@ function EditMember() {
   );
 }
 
-export default EditMember;
+export default EditGroup;

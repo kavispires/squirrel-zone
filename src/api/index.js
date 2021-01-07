@@ -2,7 +2,7 @@ import { db } from '../services/firebase';
 
 import store from '../services/store';
 import { setGlobalState } from '../states/useGlobalState';
-import { cleanupObject } from '../utils/distributor';
+import deserialize from './deserializers';
 import serialize from './serializers';
 
 /**
@@ -104,6 +104,32 @@ const fetchGroups = async () => {
 };
 
 /**
+ * Query POST `/groups/<id>`
+ */
+const saveGroup = async (data) => {
+  setGlobalState('isLoading', true);
+
+  let response;
+
+  try {
+    // Create new key if it is a new instance
+    const key = data.id || db.ref().child('groups').push().key;
+    const deserializedData = deserialize({ ...data, type: 'group' }, key);
+
+    await db.ref(`/groups/${key}`).set(deserializedData);
+    store.setRecord(serialize(deserializedData));
+
+    successNotification('Group saved successfully', `id: ${key}`);
+  } catch (error) {
+    errorNotification('Failed to save group', error);
+  } finally {
+    setGlobalState('isLoading', false);
+  }
+
+  return response;
+};
+
+/**
  * Query GET `/members`
  */
 const fetchMembers = async () => {
@@ -159,13 +185,10 @@ const saveMember = async (data) => {
   try {
     // Create new key if it is a new instance
     const key = data.id || db.ref().child('members').push().key;
-    data.id = key;
-    data.type = 'member';
+    const deserializedData = deserialize({ ...data, type: 'member' }, key);
 
-    data = cleanupObject(data);
-
-    await db.ref(`/members/${key}`).set({ ...data });
-    store.setRecord(serialize(data), key);
+    await db.ref(`/members/${key}`).set(deserializedData);
+    store.setRecord(serialize(deserializedData));
 
     successNotification('Member saved successfully', `id: ${key}`);
   } catch (error) {
@@ -255,14 +278,14 @@ const saveSong = async (data) => {
   try {
     // Create new key if it is a new instance
     const key = data.id || db.ref().child('songs').push().key;
-    data.song.id = key;
-    data.data.id = key;
+    const deserializedSong = deserialize({ ...data.song }, key);
+    const deserializedSongData = deserialize({ ...data.data }, key);
 
-    await db.ref(`/songs/${key}`).set({ ...data.song });
-    store.setRecord(serialize(data.song), key);
+    await db.ref(`/songs/${key}`).set(deserializedSong);
+    store.setRecord(serialize(deserializedSong));
 
-    await db.ref(`/songs-data/${key}`).set({ ...data.data });
-    store.setRecord(serialize(data.data), key);
+    await db.ref(`/songs-data/${key}`).set(deserializedSongData);
+    store.setRecord(serialize(deserializedSongData));
 
     successNotification('Song saved successfully', `id: ${key}`);
   } catch (error) {
@@ -283,6 +306,7 @@ const API = {
   fetchSongs,
   fetchSong,
   fetchSongData,
+  saveGroup,
   saveMember,
   saveSong,
 };

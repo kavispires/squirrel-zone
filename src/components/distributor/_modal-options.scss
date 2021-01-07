@@ -36,6 +36,10 @@ $assignee-border-size: get-unit(4);
     border-top: $assignee-border-size solid $assignee-color-h;
   }
 
+  &--assignee-I {
+    border-top: $assignee-border-size solid $assignee-color-i;
+  }
+
   &__item {
     margin-bottom: get-unit(3);
   }

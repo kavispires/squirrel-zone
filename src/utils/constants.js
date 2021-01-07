@@ -19,7 +19,7 @@ export const ROMAN_NUMBER = {
   15: 'XV',
 };
 
-export const KEYS = [' ', '1', '2', '3', '4', '5', '6', '7', '8'];
+export const KEYS = [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 export const KEY_ASSIGNEE = {
   ' ': 'S',
@@ -31,6 +31,7 @@ export const KEY_ASSIGNEE = {
   6: 'F',
   7: 'G',
   8: 'H',
+  9: 'I',
   A: 'A',
   B: 'B',
   C: 'C',
@@ -39,4 +40,5 @@ export const KEY_ASSIGNEE = {
   F: '',
   G: 'G',
   H: 'H',
+  I: 'I',
 };

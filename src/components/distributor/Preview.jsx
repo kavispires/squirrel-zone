@@ -21,16 +21,17 @@ function Preview({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
   const [sampleGroup] = useState(sampleGroupJson);
 
   useEffect(() => {
-    const preview = new Previewer({
-      song,
-      parts,
-      members: sampleGroup.members,
-      distribution: buildMockDistribution(parts).data,
-      framerate: 30,
-    });
-
-    setPreviewData(preview.build());
-  }, []);
+    if (step === 3) {
+      const preview = new Previewer({
+        song,
+        parts,
+        members: sampleGroup.members,
+        distribution: buildMockDistribution(parts).data,
+        framerate: 30,
+      });
+      setPreviewData(preview.build());
+    }
+  }, [step, parts, song, sampleGroup.members]);
 
   return (
     <section className="preview">

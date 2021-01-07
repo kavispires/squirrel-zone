@@ -7,9 +7,9 @@ import { PlayCircleOutlined } from '@ant-design/icons';
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
 import KeyCapture from './KeyCapture';
-import { ASSIGNEE } from '../../utils/distributor';
+import { ASSIGNEE, ASSIGNEE_LABEL } from '../../utils/distributor';
 
-const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: i }));
+const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: ASSIGNEE_LABEL[i] }));
 
 function Controls({ playerRef, playVideo, pauseVideo, isPlaying }) {
   const [isRecording, setIsRecording] = useDistributorState('isRecording');

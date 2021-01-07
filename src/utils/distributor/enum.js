@@ -9,6 +9,19 @@ export const ASSIGNEE = {
   F: 'F',
   G: 'G',
   H: 'H',
+  I: 'I',
+};
+
+export const ASSIGNEE_LABEL = {
+  A: 'V1',
+  B: 'V2',
+  C: 'R1',
+  D: 'R2',
+  E: 'A1',
+  F: 'A2',
+  G: 'ALL',
+  H: 'NONE',
+  I: 'CENTER',
 };
 
 export const SKILL = {

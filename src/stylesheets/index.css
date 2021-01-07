@@ -83,8 +83,15 @@ body {
   background: #a2a2a2;
 }
 
+.assignee-background--I {
+  background: #fee6fb;
+}
+
 .assignees-radio-group {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: 8px;
 }
 .assignees-radio-group > label {
@@ -114,6 +121,9 @@ body {
 }
 .assignees-radio-group > label:nth-child(8) {
   background: #a2a2a2;
+}
+.assignees-radio-group > label:nth-child(9) {
+  background: #fee6fb;
 }
 
 .loading-container {
@@ -688,6 +698,9 @@ body {
 .modal-options-form--assignee-H {
   border-top: 16px solid #a2a2a2;
 }
+.modal-options-form--assignee-I {
+  border-top: 16px solid #fee6fb;
+}
 .modal-options-form__item {
   margin-bottom: 12px;
 }
@@ -891,7 +904,6 @@ body {
 
 .distributor-controls__button {
   box-sizing: border-box;
-  width: 20%;
   display: block;
   min-height: 50px;
   border-radius: 8px;
@@ -967,6 +979,10 @@ body {
   padding: 8px 0;
   margin-bottom: 12px;
   border-bottom: 1px solid #f0f1f1;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .log__sections {
   margin: 0;

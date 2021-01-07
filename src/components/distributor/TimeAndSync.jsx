@@ -43,7 +43,7 @@ function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
         </Tooltip>
         <Divider />
         <div className="time-and-sync__action">
-          <Button type="primary" disabled={!song?.relationshipsCompletion} onClick={() => setStep(3)}>
+          <Button type="primary" onClick={() => setStep(3)}>
             Next Step: Preview
           </Button>
         </div>

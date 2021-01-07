@@ -58,10 +58,17 @@ body {
   &--H {
     background: $assignee-color-h;
   }
+
+  &--I {
+    background: $assignee-color-i;
+  }
 }
 
 .assignees-radio-group {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: get-unit(2);
 
   & > label {
@@ -98,6 +105,10 @@ body {
 
     &:nth-child(8) {
       background: $assignee-color-h;
+    }
+
+    &:nth-child(9) {
+      background: $assignee-color-i;
     }
   }
 }

@@ -31,6 +31,7 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
   const [song] = useDistributorState('song');
   const [sections] = useDistributorState('sections');
   const [lines] = useDistributorState('lines');
+  const [parts] = useDistributorState('parts');
   const [, setActiveInstance] = useDistributorState('activeInstance');
   const [selection, setSelection] = useDistributorState('selection');
   const [isCompact, setIsCompact] = useState(defaultCompactSetting);
@@ -49,6 +50,7 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
         const dict = {
           line: lines,
           section: sections,
+          part: parts,
         }[type];
         console.log({ dict, selection, data });
         batchDeserializeInstancesSameData(dict, selection, data, true);
@@ -75,7 +77,7 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
     }
 
     setActiveInstance(instance);
-  }, [lines, sections, selection, setActiveInstance, setSelection]);
+  }, [parts, lines, sections, selection, setActiveInstance, setSelection]);
 
   const onShowModal = useCallback(
     (instance) => {

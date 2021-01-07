@@ -5,7 +5,7 @@ import { Button } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
-import { ASSIGNEE, convertStoMS, generateTempId } from '../../utils/distributor';
+import { ASSIGNEE, ASSIGNEE_LABEL, convertStoMS, generateTempId } from '../../utils/distributor';
 import { useKeyDown, useKeyUp } from '../../utils/useKeypress';
 import { KEYS, KEY_ASSIGNEE } from '../../utils/constants';
 
@@ -56,7 +56,7 @@ async function handleActionUp(key, playerRef) {
   return copy;
 }
 
-const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: i }));
+const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: ASSIGNEE_LABEL[i] }));
 
 function MouseButtons({ playerRef, isPlaying }) {
   const [assignee] = useDistributorState('assignee');

@@ -5,37 +5,37 @@
     "A": {
       "id": "A",
       "type": "member",
-      "name": "Ace",
+      "name": "Vocalist 1",
       "color": "#fec891"
     },
     "B": {
       "id": "B",
       "type": "member",
-      "name": "Ben",
+      "name": "Vocalist 2",
       "color": "#ffef99"
     },
     "C": {
       "id": "C",
       "type": "member",
-      "name": "Cory",
+      "name": "Rapper 1",
       "color": "#c3f0c7"
     },
     "D": {
       "id": "D",
       "type": "member",
-      "name": "Dan",
+      "name": "Rapper 2",
       "color": "#99e0d8"
     },
     "E": {
       "id": "E",
       "type": "member",
-      "name": "Ethan",
+      "name": "Ad Lib Regular",
       "color": "#a5c2fe"
     },
     "F": {
       "id": "F",
       "type": "member",
-      "name": "Felix",
+      "name": "Ad Lib Belt",
       "color": "#e08686"
     },
     "G": {
@@ -49,6 +49,12 @@
       "type": "member",
       "name": "None",
       "color": "#a2a2a2"
+    },
+    "I": {
+      "id": "I",
+      "type": "member",
+      "name": "Center",
+      "color": "##ec89bf"
     },
     "ALL": {
       "id": "ALL",

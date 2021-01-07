@@ -56,7 +56,7 @@ export class Store {
     if (!type) throw Error('A type is required to access the store');
 
     if (this._collections[type] && Object.values(this._collections[type]).length) {
-      return Object.values(this._collections[type]);
+      return Object.values(this._collections[type]).sort(collectionSorting);
     }
 
     switch (type) {
@@ -77,11 +77,7 @@ export class Store {
         throw Error(`Provided type ${type} is not supported`);
     }
 
-    return Object.values(this._collections[type]).sort((a, b) => {
-      const x = a?.name ?? a?.title ?? a.id;
-      const y = b?.name ?? b?.title ?? b.id;
-      return x < y ? -1 : x > y ? 1 : 0;
-    });
+    return Object.values(this._collections[type]).sort(collectionSorting);
   }
 
   /**
@@ -120,3 +116,9 @@ export class Store {
 const store = new Store();
 
 export default store;
+
+const collectionSorting = (a, b) => {
+  const x = a?.name ?? a?.title ?? a.id;
+  const y = b?.name ?? b?.title ?? b.id;
+  return x < y ? -1 : x > y ? 1 : 0;
+};

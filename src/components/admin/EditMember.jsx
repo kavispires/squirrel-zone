@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Checkbox, Select } from 'antd';
+import { Button, InputNumber, Form, Input, Checkbox, Select, Spin, Divider } from 'antd';
+// State
+import useGlobalState from '../../states/useGlobalState';
 // API
 import API from '../../api';
 // Utilities
 import { POSITIONS } from '../../utils/constants';
+import { bemClass } from '../../utils';
+// Components
+import LoadMemberModal from './LoadMemberModal';
 
 function EditMember() {
+  const [isLoading] = useGlobalState('isLoading');
+  const [isModalVisible, setModalVisibility] = useState(false);
+  const [loadedData, setLoadedData] = useState(false);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue(loadedData);
+  }, [form, loadedData]);
 
   const onFinish = async (values) => {
     try {
@@ -26,16 +38,27 @@ function EditMember() {
   return (
     <section className="admin__form-container">
       <h3>Create/Edit Member</h3>
+      <div className={bemClass('admin-button-container', 'center')}>
+        <Button type="primary" onClick={() => setModalVisibility(true)} disabled={isLoading}>
+          {isLoading ? <Spin size="small" /> : 'Load Member'}
+        </Button>
+      </div>
+
+      <Divider />
+
       <Form
         layout="vertical"
         form={form}
-        name="options-line"
-        initialValues={{}}
+        name="edit-member"
         onFinish={onFinish}
         className="admin-form admin-edit-member-form"
         autoComplete="off"
         preserve={false}
       >
+        <Form.Item label="ID" name="id" className="admin-form__item">
+          <Input disabled />
+        </Form.Item>
+
         <Form.Item label="Name" name="name" className="admin-form__item" rules={requiredRule}>
           <Input />
         </Form.Item>
@@ -86,14 +109,24 @@ function EditMember() {
         </div>
 
         <Form.Item className="Item">
-          <Button type="primary" htmlType="submit">
-            Save Member
-          </Button>
-          <Button htmlType="button" onClick={onReset}>
-            Reset
-          </Button>
+          <div className={bemClass('admin-button-container', 'right')}>
+            <Button htmlType="button" onClick={onReset}>
+              Reset
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Save Member
+            </Button>
+          </div>
         </Form.Item>
       </Form>
+
+      {isModalVisible && (
+        <LoadMemberModal
+          isModalVisible={isModalVisible}
+          setModalVisibility={setModalVisibility}
+          setLoadedData={setLoadedData}
+        />
+      )}
     </section>
   );
 }

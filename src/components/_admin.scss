@@ -40,3 +40,20 @@
     }
   }
 }
+
+.admin-button-container {
+  width: 100%;
+  display: flex;
+
+  & > * {
+    margin: get-unit(1 2);
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+}

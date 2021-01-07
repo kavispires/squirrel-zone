@@ -2,6 +2,8 @@ import React from 'react';
 
 // Design Resources
 import { Layout } from 'antd';
+
+// Components
 import EditMember from './admin/EditMember';
 
 // Components

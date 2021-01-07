@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // Design Resources
 import { Input, Button, Spin } from 'antd';
@@ -6,10 +6,8 @@ import { Input, Button, Spin } from 'antd';
 import useGlobalState from '../../states/useGlobalState';
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
-import { Line, Part, Section, Song } from '../../utils/distributor';
-// Temp
-import sampleSong from '../../utils/mock/sampleSong.json';
-import store from '../../services/store';
+import { Song } from '../../utils/distributor';
+// Components
 import LoadSongModal from './LoadSongModal';
 
 function LoadSong() {

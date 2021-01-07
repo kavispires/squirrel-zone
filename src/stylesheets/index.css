@@ -296,6 +296,20 @@ body {
   width: 48%;
 }
 
+.admin-button-container {
+  width: 100%;
+  display: flex;
+}
+.admin-button-container > * {
+  margin: 4px 8px;
+}
+.admin-button-container--center {
+  justify-content: center;
+}
+.admin-button-container--right {
+  justify-content: flex-end;
+}
+
 .fur-color-bg-0 {
   background-color: #a3967a !important;
 }

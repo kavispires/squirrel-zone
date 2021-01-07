@@ -20,6 +20,7 @@ const serializer = {
       type: data.type,
       key: serializeKey(data.type, id ?? data.id),
       name: data.name,
+      age: data.age,
       color: data.color ?? '',
       colorName: data.colorName ?? '',
       codename: data.codename ?? '',

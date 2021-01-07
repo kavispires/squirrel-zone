@@ -50,12 +50,16 @@ export class Store {
   /**
    * Retrieves collection of data from the store or fetches the API
    * @param {string} type
+   * @param {boolean} [asObject] return result as object
    * @returns {object[]}
    */
-  async getCollection(type) {
+  async getCollection(type, asObject = false) {
     if (!type) throw Error('A type is required to access the store');
 
     if (this._collections[type] && Object.values(this._collections[type]).length) {
+      if (asObject) {
+        return this._collections[type];
+      }
       return Object.values(this._collections[type]).sort(collectionSorting);
     }
 
@@ -75,6 +79,10 @@ export class Store {
 
       default:
         throw Error(`Provided type ${type} is not supported`);
+    }
+
+    if (asObject) {
+      return this._collections[type];
     }
 
     return Object.values(this._collections[type]).sort(collectionSorting);

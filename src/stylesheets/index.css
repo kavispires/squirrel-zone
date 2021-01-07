@@ -310,6 +310,29 @@ body {
   justify-content: flex-end;
 }
 
+.group-card-containers {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.group-card {
+  margin-bottom: 12px;
+}
+.group-card__members {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.group-card__member {
+  margin-bottom: 4px;
+}
+.group-card__member-name {
+  margin: 0 8px;
+}
+
 .fur-color-bg-0 {
   background-color: #a3967a !important;
 }

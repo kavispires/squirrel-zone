@@ -1,0 +1,24 @@
+.group-card-containers {
+  @include reset-list;
+}
+
+.group-card {
+  margin-bottom: get-unit(3);
+
+  &__tabs {
+  }
+
+  &__members {
+    display: flex;
+    flex-direction: column;
+    @include reset-list;
+  }
+
+  &__member {
+    margin-bottom: get-unit(1);
+  }
+
+  &__member-name {
+    margin: get-unit(0 2);
+  }
+}

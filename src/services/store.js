@@ -1,4 +1,5 @@
 import API from '../api';
+import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
 import { serializeKey } from '../utils/distributor';
 
 export class Store {
@@ -28,13 +29,13 @@ export class Store {
     }
 
     switch (type) {
-      case 'member':
+      case DATA_TYPE.MEMBER_DATA:
         await API.fetchMember(id);
         break;
-      case 'song':
+      case DATA_TYPE.SONG:
         await API.fetchSong(id);
         break;
-      case 'song-data':
+      case DATA_TYPE.SONG_DATA:
         await API.fetchSongData(id);
         break;
 
@@ -59,17 +60,17 @@ export class Store {
     }
 
     switch (type) {
-      case 'groups':
+      case DATA_TYPE_COLLECTION[DATA_TYPE.GROUP]:
         await API.fetchGroups();
-        this._updateCollection('groups', 'group');
+        this._updateCollection(DATA_TYPE.GROUP);
         break;
-      case 'members':
+      case DATA_TYPE_COLLECTION[DATA_TYPE.MEMBER]:
         await API.fetchMembers();
-        this._updateCollection('members', 'member');
+        this._updateCollection(DATA_TYPE.MEMBER);
         break;
-      case 'songs':
+      case DATA_TYPE_COLLECTION[DATA_TYPE.SONG]:
         await API.fetchSongs();
-        this._updateCollection('songs', 'song');
+        this._updateCollection(DATA_TYPE.SONG);
         break;
 
       default:
@@ -90,7 +91,6 @@ export class Store {
    * @param {object} data
    */
   setRecord(data, id) {
-    console.log(data);
     if (!data.type) throw Error('A type is required to access the store');
 
     if (!id && !data.id) throw Error('An id is required to access a store record');
@@ -104,13 +104,16 @@ export class Store {
    * Builds a dictionary with all the
    * @param {string} type
    */
-  _updateCollection(collectionName, type) {
-    this._collections[collectionName] = Object.entries(this._records).reduce((acc, [recordKey, record]) => {
-      if (record.type === type) {
-        acc[recordKey] = record;
-      }
-      return acc;
-    }, {});
+  _updateCollection(type) {
+    this._collections[DATA_TYPE_COLLECTION[type]] = Object.entries(this._records).reduce(
+      (acc, [recordKey, record]) => {
+        if (record.type === type) {
+          acc[recordKey] = record;
+        }
+        return acc;
+      },
+      {}
+    );
   }
 }
 

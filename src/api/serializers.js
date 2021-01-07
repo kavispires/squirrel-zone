@@ -1,14 +1,15 @@
+import { DATA_TYPE } from '../utils/constants';
 import { serializeKey } from '../utils/distributor';
 
 const serialize = (data, id) => {
   switch (data.type) {
-    case 'group':
+    case DATA_TYPE.GROUP:
       return serializer.group(data, id);
-    case 'member':
+    case DATA_TYPE.MEMBER:
       return serializer.member(data, id);
-    case 'song':
+    case DATA_TYPE.SONG:
       return serializer.song(data, id);
-    case 'song-data':
+    case DATA_TYPE.SONG_DATA:
       return serializer.songData(data, id);
     default:
       return { ...data, key: serializeKey(data.type, id ?? data.id) };

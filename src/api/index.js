@@ -2,6 +2,7 @@ import { db } from '../services/firebase';
 
 import store from '../services/store';
 import { setGlobalState } from '../states/useGlobalState';
+import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
 import deserialize from './deserializers';
 import serialize from './serializers';
 
@@ -40,10 +41,12 @@ const successNotification = (message, description) => {
 const fetchAlbums = async () => {
   setGlobalState('isLoading', true);
 
+  const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.ALBUM];
+
   try {
     await db
       .ref()
-      .child('albums')
+      .child(collectionName)
       .once('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           const { key } = childSnapshot;
@@ -51,7 +54,7 @@ const fetchAlbums = async () => {
         });
       });
   } catch (error) {
-    errorNotification('Failed to load albums', error);
+    errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -63,10 +66,12 @@ const fetchAlbums = async () => {
 const fetchDistributions = async () => {
   setGlobalState('isLoading', true);
 
+  const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION];
+
   try {
     await db
       .ref()
-      .child('distributions')
+      .child(collectionName)
       .once('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           const { key } = childSnapshot;
@@ -74,7 +79,7 @@ const fetchDistributions = async () => {
         });
       });
   } catch (error) {
-    errorNotification('Failed to load distributions', error);
+    errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -86,10 +91,12 @@ const fetchDistributions = async () => {
 const fetchGroups = async () => {
   setGlobalState('isLoading', true);
 
+  const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.GROUP];
+
   try {
     await db
       .ref()
-      .child('groups')
+      .child(collectionName)
       .once('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           const { key } = childSnapshot;
@@ -97,7 +104,7 @@ const fetchGroups = async () => {
         });
       });
   } catch (error) {
-    errorNotification('Failed to load groups', error);
+    errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -111,17 +118,20 @@ const saveGroup = async (data) => {
 
   let response;
 
+  const typeName = DATA_TYPE.GROUP;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
   try {
     // Create new key if it is a new instance
-    const key = data.id || db.ref().child('groups').push().key;
-    const deserializedData = deserialize({ ...data, type: 'group' }, key);
+    const key = data.id || db.ref().child(collectionName).push().key;
+    const deserializedData = deserialize({ ...data, type: typeName }, key);
 
-    await db.ref(`/groups/${key}`).set(deserializedData);
+    await db.ref(`/${collectionName}/${key}`).set(deserializedData);
     store.setRecord(serialize(deserializedData));
 
     successNotification('Group saved successfully', `id: ${key}`);
   } catch (error) {
-    errorNotification('Failed to save group', error);
+    errorNotification(`Failed to save ${typeName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -135,10 +145,12 @@ const saveGroup = async (data) => {
 const fetchMembers = async () => {
   setGlobalState('isLoading', true);
 
+  const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.MEMBER];
+
   try {
     await db
       .ref()
-      .child('members')
+      .child(collectionName)
       .once('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           const { key } = childSnapshot;
@@ -146,7 +158,7 @@ const fetchMembers = async () => {
         });
       });
   } catch (error) {
-    errorNotification('Failed to load members', error);
+    errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -158,17 +170,20 @@ const fetchMembers = async () => {
 const fetchMember = async (memberId) => {
   setGlobalState('isLoading', true);
 
+  const typeName = DATA_TYPE.MEMBER;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
   try {
     await db
       .ref()
-      .child('members')
+      .child(collectionName)
       .child(memberId)
       .once('value', function (snapshot) {
         const { key } = snapshot;
         store.setRecord(serialize(snapshot.val()), key);
       });
   } catch (error) {
-    errorNotification(`Failed to load song ${memberId}`, error);
+    errorNotification(`Failed to load ${typeName} ${memberId}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -182,17 +197,20 @@ const saveMember = async (data) => {
 
   let response;
 
+  const typeName = DATA_TYPE.MEMBER;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
   try {
     // Create new key if it is a new instance
-    const key = data.id || db.ref().child('members').push().key;
-    const deserializedData = deserialize({ ...data, type: 'member' }, key);
+    const key = data.id || db.ref().child(collectionName).push().key;
+    const deserializedData = deserialize({ ...data, type: typeName }, key);
 
-    await db.ref(`/members/${key}`).set(deserializedData);
+    await db.ref(`/${collectionName}/${key}`).set(deserializedData);
     store.setRecord(serialize(deserializedData));
 
     successNotification('Member saved successfully', `id: ${key}`);
   } catch (error) {
-    errorNotification('Failed to save member', error);
+    errorNotification(`Failed to save ${typeName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -206,10 +224,12 @@ const saveMember = async (data) => {
 const fetchSongs = async () => {
   setGlobalState('isLoading', true);
 
+  const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.SONG];
+
   try {
     await db
       .ref()
-      .child('songs')
+      .child(collectionName)
       .once('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           const { key } = childSnapshot;
@@ -217,7 +237,7 @@ const fetchSongs = async () => {
         });
       });
   } catch (error) {
-    errorNotification('Failed to load songs', error);
+    errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -229,17 +249,20 @@ const fetchSongs = async () => {
 const fetchSong = async (songId) => {
   setGlobalState('isLoading', true);
 
+  const typeName = DATA_TYPE[DATA_TYPE.SONG_DATA];
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
   try {
     await db
       .ref()
-      .child('songs')
+      .child(collectionName)
       .child(songId)
       .once('value', function (snapshot) {
         const { key } = snapshot;
         store.setRecord(serialize(snapshot.val()), key);
       });
   } catch (error) {
-    errorNotification(`Failed to load song ${songId}`, error);
+    errorNotification(`Failed to load ${typeName} ${songId}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -251,17 +274,20 @@ const fetchSong = async (songId) => {
 const fetchSongData = async (songId) => {
   setGlobalState('isLoading', true);
 
+  const typeName = DATA_TYPE.SONG_DATA;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
   try {
     await db
       .ref()
-      .child('songs-data')
+      .child(collectionName)
       .child(songId)
       .once('value', function (snapshot) {
         const { key } = snapshot;
         store.setRecord(serialize(snapshot.val()), key);
       });
   } catch (error) {
-    errorNotification(`Failed to load song ${songId}`, error);
+    errorNotification(`Failed to load ${typeName} ${songId}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
@@ -274,6 +300,9 @@ const saveSong = async (data) => {
   setGlobalState('isLoading', true);
 
   let response;
+  const typeName = DATA_TYPE.SONG;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+  const dataCollectionName = DATA_TYPE_COLLECTION[DATA_TYPE.SONG_DATA];
 
   try {
     // Create new key if it is a new instance
@@ -281,15 +310,15 @@ const saveSong = async (data) => {
     const deserializedSong = deserialize({ ...data.song }, key);
     const deserializedSongData = deserialize({ ...data.data }, key);
 
-    await db.ref(`/songs/${key}`).set(deserializedSong);
+    await db.ref(`/${collectionName}/${key}`).set(deserializedSong);
     store.setRecord(serialize(deserializedSong));
 
-    await db.ref(`/songs-data/${key}`).set(deserializedSongData);
+    await db.ref(`/${dataCollectionName}/${key}`).set(deserializedSongData);
     store.setRecord(serialize(deserializedSongData));
 
     successNotification('Song saved successfully', `id: ${key}`);
   } catch (error) {
-    errorNotification('Failed to save song', error);
+    errorNotification(`Failed to save ${typeName}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }

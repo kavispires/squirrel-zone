@@ -145,3 +145,12 @@ export const cleanupObject = (obj) => {
     .filter((k) => obj[k] != null && obj[k] !== undefined)
     .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
 };
+
+/**
+ * Check if two arrays are similar (have the same elements, even if in different order)
+ * Note: it won't work with arrays with non primitive elements
+ * @param {array} a
+ * @param {array} b
+ * @return {boolean}
+ */
+export const areArraysSimilar = (a, b) => JSON.stringify(a.sort()) === JSON.stringify(b.sort());

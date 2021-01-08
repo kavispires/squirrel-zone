@@ -8,7 +8,7 @@ import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
 import { Section, Line, Part, generateUniqueId } from '../../utils/distributor';
 // Components
-import Log from './Log';
+import Log from '../log/Log';
 const { Paragraph } = Typography;
 
 function LyricsAndSections() {

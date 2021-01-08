@@ -6,7 +6,7 @@ import { Button, Divider, Progress, Tooltip } from 'antd';
 import useDistributorState from '../../states/useDistributorState';
 // Components
 import KeyCapture from './KeyCapture';
-import Log from './Log';
+import Log from '../log/Log';
 import Controls from './Controls';
 import TimestampsBank from './TimestampsBank';
 import YoutubeVideo from './YoutubeVideo';

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Layout, Card, Spin, Descriptions, Tabs, Tag } from 'antd';
+import { Button, Layout, Card, Spin, Descriptions, Tabs } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 // Store
@@ -10,7 +10,6 @@ import store from '../services/store';
 // Utilities
 import { serializeKey } from '../utils/distributor';
 // Components
-import Avatar from './Avatar';
 import Member from './Member';
 const { TabPane } = Tabs;
 

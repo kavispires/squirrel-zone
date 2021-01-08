@@ -13,7 +13,7 @@ import { serializeKey } from '../utils/distributor';
 // Components
 import LoadSongModal from './modals/LoadSongModal';
 import YoutubeVideo from './distributor/YoutubeVideo';
-import Log from './distributor/Log';
+import Log from './log/Log';
 import Member from './Member';
 import { bemClassConditionalModifier } from '../utils';
 import { DEFAULT_MEMBERS } from '../utils/constants';

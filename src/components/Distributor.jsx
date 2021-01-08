@@ -31,18 +31,15 @@ function Distributor() {
 
   const playVideo = () => {
     playerRef?.current?.internalPlayer?.playVideo();
-    // setIsPlaying(true);
   };
 
   const pauseVideo = () => {
     playerRef?.current?.internalPlayer?.pauseVideo();
-    // setIsPlaying(false);
   };
 
   const seekAndPlay = (timestamp) => {
     playerRef?.current?.internalPlayer?.seekTo(timestamp);
     playerRef?.current?.internalPlayer?.playVideo();
-    // setIsPlaying(true);
   };
 
   return (
@@ -58,7 +55,7 @@ function Distributor() {
             <LyricsAndSections />
           </Panel>
           <Panel header="Capture Parts" key="2">
-            {Boolean(videoId) ? (
+            {Boolean(videoId) && step === 2 ? (
               <TimeAndSync
                 playerRef={playerRef}
                 playVideo={playVideo}
@@ -70,7 +67,7 @@ function Distributor() {
             )}
           </Panel>
           <Panel header="Preview" key="3">
-            {Boolean(videoId) ? (
+            {Boolean(videoId) && step === 3 ? (
               <Preview
                 playerRef={playerRef}
                 playVideo={playVideo}

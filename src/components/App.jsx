@@ -13,6 +13,7 @@ import { auth } from '../services/firebase';
 // Pages
 import Admin from './Admin';
 import Creator from './Creator';
+import Distribute from './Distribute';
 import Distributor from './Distributor';
 import Groups from './Groups';
 import Home from './Home';
@@ -70,10 +71,11 @@ function App() {
         ) : (
           <Switch>
             <Route exact path="/" component={Home}></Route>
+            <PrivateRoute path="/admin" authenticated={isAuthenticated} component={Admin} />
             <PrivateRoute path="/creator" authenticated={isAuthenticated} component={Creator} />
+            <PrivateRoute path="/distribute" authenticated={isAuthenticated} component={Distribute} />
             <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
             <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} />
-            <PrivateRoute path="/admin" authenticated={isAuthenticated} component={Admin} />
 
             <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
           </Switch>

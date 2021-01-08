@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Layout, Card, Spin, Descriptions, Tabs } from 'antd';
+import { Button, Layout, Card, Spin, Descriptions, Tabs, Tag } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 // Store
@@ -10,10 +11,14 @@ import store from '../services/store';
 import { serializeKey } from '../utils/distributor';
 // Components
 import Avatar from './Avatar';
+import Member from './Member';
 const { TabPane } = Tabs;
 
 function Groups() {
+  const history = useHistory();
   const [isLoading] = useGlobalState('isLoading');
+  const [, setActiveGroup] = useGlobalState('activeGroup');
+
   const [groups, setGroups] = useState([]);
   const [members, setMembers] = useState({});
 
@@ -24,6 +29,14 @@ function Groups() {
     }
     loadContent();
   }, []);
+
+  const activateGroup = useCallback(
+    (group) => {
+      setActiveGroup(group);
+      history.push('/distribute');
+    },
+    [history, setActiveGroup]
+  );
 
   return (
     <Layout.Content className="container">
@@ -36,18 +49,16 @@ function Groups() {
         ) : (
           <ul className="group-card-containers">
             {groups.map((group) => (
-              <Group key={group.id} group={group} members={members} />
+              <Group key={group.id} group={group} members={members} activateGroup={activateGroup} />
             ))}
           </ul>
         )}
-
-        <section className="section">Content comes here</section>
       </main>
     </Layout.Content>
   );
 }
 
-function Group({ group, members }) {
+function Group({ group, members, activateGroup }) {
   return (
     <Card title={group.name} size="small" extra={<Button type="primary">Edit</Button>} className="group-card">
       <Descriptions size="small">
@@ -63,7 +74,15 @@ function Group({ group, members }) {
             {group.membersIds &&
               group.membersIds.map((memberId) => {
                 const member = members[serializeKey('member', memberId)] ?? {};
-                return <Member key={member.id} member={member} />;
+                return (
+                  <Member
+                    key={member.id}
+                    member={member}
+                    showName
+                    showPosition
+                    className="group-card__member"
+                  />
+                );
               })}
           </ul>
         </TabPane>
@@ -71,19 +90,12 @@ function Group({ group, members }) {
           TBD
         </TabPane>
         <TabPane tab="Distributions" key="3">
-          <Button type="primary">Create a Distribution for this group</Button>
+          <Button type="primary" onClick={() => activateGroup(group)}>
+            Create a Distribution for this group
+          </Button>
         </TabPane>
       </Tabs>
     </Card>
-  );
-}
-
-function Member({ member }) {
-  return (
-    <div className="group-card__member">
-      <Avatar name={member.name} className="group-card__member-avatar" />
-      <span className="group-card__member-name">{member.name}</span>
-    </div>
   );
 }
 

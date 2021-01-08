@@ -18,6 +18,7 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
   const [, setParts] = useDistributorState('parts');
   const [, setSections] = useDistributorState('sections');
   const [, setVideoId] = useDistributorState('videoId');
+  const [, setIsFullyLoaded] = useDistributorState('isFullyLoaded');
 
   const [data, setData] = useState([]);
   const [selectedSongId, setSelectedSongId] = useState(null);
@@ -38,6 +39,8 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
 
   const onLoadSong = useCallback(() => {
     async function fetchSongData() {
+      setIsFullyLoaded(false);
+
       const song = await store.getRecord('song', selectedSongId);
       const songData = await store.getRecord('song-data', selectedSongId);
 
@@ -68,6 +71,7 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
       setSong(newSong);
       setVideoId(newSong.videoId);
       setStep(newSong.isComplete ? 3 : 2);
+      setIsFullyLoaded(true);
 
       setLoadSongModalVisibility(false);
     }
@@ -82,6 +86,7 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
     setSong,
     setStep,
     setVideoId,
+    setIsFullyLoaded,
   ]);
 
   const columns = [

@@ -17,6 +17,7 @@ import {
 } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
+import useGlobalState from '../../states/useGlobalState';
 // Engine and utilities
 import {
   Line,
@@ -27,7 +28,13 @@ import {
 } from '../../utils/distributor';
 import { bemClass, bemClassConditionalModifier, getBemModifier } from '../../utils';
 
-function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
+function Log({
+  seekAndPlay,
+  className = '',
+  defaultCompactSetting = true,
+  locked = false,
+  assignMembers = () => {},
+}) {
   const [song] = useDistributorState('song');
   const [sections] = useDistributorState('sections');
   const [lines] = useDistributorState('lines');
@@ -115,14 +122,16 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
 
   return (
     <div className={`${bemClassConditionalModifier('log', 'compact', isCompact)} ${className}`}>
-      <div className="log__editing-actions">
-        <Button type="link" size="small" onClick={handleEditAll} disabled={!Boolean(selection?.length)}>
-          Edit All Selected Instances
-        </Button>
-        <div>
-          Compact View <Switch defaultChecked={isCompact} onChange={onSwitchLogView} size="small" />
+      {!locked && (
+        <div className="log__editing-actions">
+          <Button type="link" size="small" onClick={handleEditAll} disabled={!Boolean(selection?.length)}>
+            Edit All Selected Instances
+          </Button>
+          <div>
+            Compact View <Switch defaultChecked={isCompact} onChange={onSwitchLogView} size="small" />
+          </div>
         </div>
-      </div>
+      )}
 
       <ul className={bemClassConditionalModifier('log__sections', 'compact', isCompact)}>
         {song?.sectionsIds?.map((sectionId) => {
@@ -136,6 +145,8 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
               onShowModal={onShowModal}
               seekAndPlay={seekAndPlay}
               isCompact={isCompact}
+              isLocked={locked}
+              assignMembers={assignMembers}
             />
           );
         })}
@@ -144,7 +155,15 @@ function Log({ seekAndPlay, className = '', defaultCompactSetting = true }) {
   );
 }
 
-function LogSection({ section, onCheckboxChange, onShowModal, seekAndPlay, isCompact }) {
+function LogSection({
+  section,
+  onCheckboxChange,
+  onShowModal,
+  seekAndPlay,
+  isCompact,
+  isLocked,
+  assignMembers,
+}) {
   const [lines] = useDistributorState('lines');
   const [selection] = useDistributorState('selection');
 
@@ -227,6 +246,8 @@ function LogSection({ section, onCheckboxChange, onShowModal, seekAndPlay, isCom
               onCheckboxChange={onCheckboxChange}
               onShowModal={onShowModal}
               isCompact={isCompact}
+              isLocked={isLocked}
+              assignMembers={assignMembers}
             />
           );
         })}
@@ -235,7 +256,7 @@ function LogSection({ section, onCheckboxChange, onShowModal, seekAndPlay, isCom
   );
 }
 
-function LogLine({ line, section, onCheckboxChange, onShowModal, isCompact }) {
+function LogLine({ line, section, onCheckboxChange, onShowModal, isCompact, isLocked, assignMembers }) {
   const [parts] = useDistributorState('parts');
   const [selection] = useDistributorState('selection');
 
@@ -359,6 +380,8 @@ function LogLine({ line, section, onCheckboxChange, onShowModal, isCompact }) {
               part={part}
               onCheckboxChange={onCheckboxChange}
               onShowModal={onShowModal}
+              isLocked={isLocked}
+              assignMembers={assignMembers}
             />
           );
         })}
@@ -367,14 +390,14 @@ function LogLine({ line, section, onCheckboxChange, onShowModal, isCompact }) {
   );
 }
 
-function LogPart({ part, onCheckboxChange, onShowModal }) {
+function LogPart({ part, onCheckboxChange, onShowModal, isLocked, assignMembers }) {
   const [selectedTimestamps, setSelectedTimestamps] = useDistributorState('selectedTimestamps');
   const [unassignedTimestamps, setUnassignedTimestamps] = useDistributorState('unassignedTimestamps');
   const [selection] = useDistributorState('selection');
 
   // CSS Classes
   const baseClass = 'preview-part';
-  const assigneeClass = `assignee-background--${part.assignee}`;
+  const assigneeClass = isLocked ? 'assignee-background--none' : `assignee-background--${part.assignee}`;
 
   const attachTimestamp = useCallback(() => {
     const selectedTimestampsCopy = [...selectedTimestamps];
@@ -392,10 +415,21 @@ function LogPart({ part, onCheckboxChange, onShowModal }) {
 
   return (
     <li className={`${baseClass} ${assigneeClass}`}>
-      <Checkbox id={part.key} name="part" onChange={onCheckboxChange} checked={checkedIndex !== -1} />
+      {!isLocked && (
+        <Checkbox id={part.key} name="part" onChange={onCheckboxChange} checked={checkedIndex !== -1} />
+      )}
+
       <Button
         type="text"
-        icon={part.isComplete ? <CheckCircleOutlined className="icon--green" /> : <NotificationFilled />}
+        icon={
+          !isLocked ? (
+            part.isComplete ? (
+              <CheckCircleOutlined className="icon--green" />
+            ) : (
+              <NotificationFilled />
+            )
+          ) : null
+        }
         onClick={() => onShowModal(part)}
         size="small"
       >
@@ -414,7 +448,47 @@ function LogPart({ part, onCheckboxChange, onShowModal }) {
           onClick={attachTimestamp}
         />
       )}
+      {isLocked && (
+        <Button
+          shape="circle"
+          type="default"
+          size="small"
+          icon={isLocked ? <LogAssignees partId={part.id} /> : <ApiOutlined />}
+          className="preview-part__connect-icon"
+          onClick={() => assignMembers(part.id)}
+        />
+      )}
     </li>
+  );
+}
+
+function LogAssignees({ partId }) {
+  const [lineDistribution] = useGlobalState('lineDistribution');
+  const [activeMembers] = useGlobalState('activeMembers');
+
+  if (!Boolean(lineDistribution?.[partId])) {
+    return <ApiOutlined />;
+  }
+
+  const distributionAssignees = lineDistribution?.[partId] ?? {};
+  const assignedMembers = Object.keys(distributionAssignees).map((memberId) => {
+    return activeMembers[memberId];
+  });
+
+  return (
+    <span className="assigned-members__list">
+      {assignedMembers.map((member) => {
+        return (
+          <span
+            key={`${partId}-${member.id}`}
+            className="assigned-members__item"
+            style={{ backgroundColor: member?.color }}
+          >
+            {member?.name?.[0]}
+          </span>
+        );
+      })}
+    </span>
   );
 }
 

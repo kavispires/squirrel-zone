@@ -30,7 +30,9 @@ const deserializer = {
     return {
       ...data,
       id: id ?? data.id,
-      positions: data.positions.sort((a, b) => POSITIONS_WEIGHT[b] - POSITIONS_WEIGHT[a]),
+      positions: data.positions.sort((a, b) =>
+        POSITIONS_WEIGHT[b] > POSITIONS_WEIGHT[a] ? -1 : POSITIONS_WEIGHT[b] < POSITIONS_WEIGHT[a] ? 1 : 0
+      ),
     };
   },
   song: (data, id) => {

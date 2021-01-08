@@ -1,3 +1,4 @@
+import { parseColor } from '../utils';
 import { DATA_TYPE } from '../utils/constants';
 import { serializeKey } from '../utils/distributor';
 
@@ -35,7 +36,7 @@ const serializer = {
       key: serializeKey(data.type, id ?? data.id),
       name: data.name,
       age: data.age,
-      color: data.color ?? '',
+      color: data.color ? parseColor(data.color) : '',
       colorName: data.colorName ?? '',
       codename: data.codename ?? '',
       tagline: data.tagline ?? '',

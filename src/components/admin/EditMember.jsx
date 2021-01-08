@@ -10,7 +10,7 @@ import API from '../../api';
 import { POSITIONS } from '../../utils/constants';
 import { bemClass } from '../../utils';
 // Components
-import LoadMemberModal from './LoadMemberModal';
+import LoadMemberModal from '../modals/LoadMemberModal';
 
 function EditMember() {
   const [isLoading] = useGlobalState('isLoading');

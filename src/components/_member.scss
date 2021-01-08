@@ -1,0 +1,35 @@
+.member {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: get-unit(1);
+
+  &__separator {
+    margin: get-unit(0 1);
+  }
+}
+
+.member-info {
+  flex-grow: 1;
+  display: flex;
+  overflow-y: hidden;
+}
+
+.member-name {
+  margin: get-unit(0 1);
+}
+
+.member-progress {
+  width: 50%;
+  background: get-color(grey, 2);
+  height: 10px;
+  border-radius: get-unit(1);
+  display: flex;
+}
+
+.member-progress-bar {
+  background: get-color(grey, 4);
+  height: 10px;
+  border-radius: get-unit(1);
+  transition: width 500ms;
+}

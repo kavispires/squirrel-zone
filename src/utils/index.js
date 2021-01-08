@@ -39,10 +39,11 @@ export const getBemModifier = (condition, modifier) => {
 };
 
 /**
- * Output base class with modifier if condition is positive
+ * Output base class with modifier if condition is positive, otherwise, just base class
  * @param {string} baseClass
  * @param {string} modifier
  * @param {boolean} condition
+ * @returns {string}
  */
 export const bemClassConditionalModifier = (baseClass, modifier, condition) => {
   return bemClass(baseClass, getBemModifier(condition, modifier));
@@ -50,7 +51,8 @@ export const bemClassConditionalModifier = (baseClass, modifier, condition) => {
 
 /**
  * Calculate the duration of a timestamp object.
- * @param {{ endTime: number, startTime: number}} param0
+ * @param {{ endTime: number, startTime: number}} timestamps
+ * @returns {number}
  */
 export const getTimestampDuration = ({ endTime, startTime }) => endTime - startTime;
 
@@ -58,6 +60,7 @@ export const getTimestampDuration = ({ endTime, startTime }) => endTime - startT
  * Convert a timestamp into a frame based on the framerate.
  * @param {number} timestamp
  * @param {number} framerate
+ * @returns {number}
  */
 export const getFrameFromTimestamp = (timestamp, framerate) => {
   return Math.floor(timestamp / (1000 / framerate));
@@ -67,6 +70,7 @@ export const getFrameFromTimestamp = (timestamp, framerate) => {
  * Convert a frame int a timestamp based on the framerate
  * @param {number} frame
  * @param {number} framerate
+ * @returns {number}
  */
 export const getTimestampFromFrame = (frame, framerate) => {
   return frame * (1000 / framerate);
@@ -75,7 +79,7 @@ export const getTimestampFromFrame = (frame, framerate) => {
 /**
  * Creates an mock distribution with random assignees
  * @param {Part{}} partsIds
- * @return {}
+ * @return {object}
  */
 export const buildMockDistribution = (parts) => {
   const data = Object.values(parts).reduce((acc, part) => {
@@ -106,4 +110,13 @@ export const injectSongIdToSections = (includedData, songId) => {
     }
     return instance;
   });
+};
+
+/**
+ * Adds # to the beginning of a hex color if it doesn't exist
+ * @param {string} hexColor
+ * @returns {strings}
+ */
+export const parseColor = (hexColor) => {
+  return hexColor.startsWith('#') ? hexColor : `#${hexColor}`;
 };

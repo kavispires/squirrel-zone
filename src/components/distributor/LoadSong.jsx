@@ -8,7 +8,7 @@ import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
 import { Song } from '../../utils/distributor';
 // Components
-import LoadSongModal from './LoadSongModal';
+import LoadSongModal from '../modals/LoadSongModal';
 
 function LoadSong() {
   const [, setSong] = useDistributorState('song');

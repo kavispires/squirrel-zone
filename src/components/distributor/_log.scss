@@ -120,3 +120,19 @@
     margin-left: get-unit(1);
   }
 }
+
+.assigned-members {
+  &__list {
+    display: flex !important;
+    background: get-color(gray, 2);
+    width: auto;
+  }
+
+  &__item {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    display: block;
+    border-radius: 50%;
+  }
+}

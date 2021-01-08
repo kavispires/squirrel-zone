@@ -7,6 +7,9 @@ const initialState = {
     description: null,
   },
   isLoading: false,
+  activeGroup: null,
+  activeMembers: null,
+  lineDistribution: {},
 };
 
 const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState(initialState);

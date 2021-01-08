@@ -62,6 +62,10 @@ body {
   &--I {
     background: $assignee-color-i;
   }
+
+  &--none {
+    background: get-color(gray, 2);
+  }
 }
 
 .assignees-radio-group {

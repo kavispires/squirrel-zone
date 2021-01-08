@@ -16,6 +16,8 @@ const initialState = {
   selectedTimestamps: [],
   isPlaying: false,
 
+  isFullyLoaded: false,
+
   currentLine: null,
   currentSection: null,
   timestamp: 0,

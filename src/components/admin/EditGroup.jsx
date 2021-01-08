@@ -9,7 +9,7 @@ import API from '../../api';
 // Utilities
 import { bemClass } from '../../utils';
 // Components
-import LoadGroupModal from './LoadGroupModal';
+import LoadGroupModal from '../modals/LoadGroupModal';
 // Store
 import store from '../../services/store';
 

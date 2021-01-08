@@ -59,15 +59,15 @@ export const POSITIONS = {
 };
 
 export const POSITIONS_WEIGHT = {
-  LEADER: 0,
-  MAIN_VOCALIST: 1,
-  MAIN_RAPPER: 2,
-  MAIN_DANCER: 3,
+  MAIN_VOCALIST: 0,
+  MAIN_RAPPER: 1,
+  MAIN_DANCER: 2,
+  VISUAL: 3,
   CENTER: 4,
-  LEAD_VOCALIST: 5,
-  LEAD_RAPPER: 6,
-  LEAD_DANCER: 7,
-  VISUAL: 8,
+  LEADER: 5,
+  LEAD_VOCALIST: 6,
+  LEAD_RAPPER: 7,
+  LEAD_DANCER: 8,
   VOCALIST: 9,
   RAPPER: 10,
   DANCER: 11,
@@ -94,3 +94,22 @@ export const ROMAN_NUMBER = {
 };
 
 export const SEPARATOR = '::';
+
+export const DEFAULT_MEMBERS = {
+  'member::ALL': {
+    id: 'ALL',
+    type: 'member',
+    key: 'member::ALL',
+    name: 'All',
+    color: '#4c5c68',
+    positions: ['ALL'],
+  },
+  'member::NONE': {
+    id: 'NONE',
+    type: 'member',
+    key: 'member::NONE',
+    name: 'None',
+    color: '#899ba9',
+    positions: ['NONE'],
+  },
+};

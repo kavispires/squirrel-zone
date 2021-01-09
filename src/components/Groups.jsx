@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Layout, Card, Spin, Descriptions, Tabs } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
+import useDistributorState from '../states/useDistributorState';
 // Store
 import store from '../services/store';
 // Utilities
@@ -17,6 +18,9 @@ function Groups() {
   const history = useHistory();
   const [isLoading] = useGlobalState('isLoading');
   const [, setActiveGroup] = useGlobalState('activeGroup');
+  const [, setActiveMembers] = useGlobalState('activeMembers');
+  const [, setLineDistribution] = useGlobalState('lineDistribution');
+  const [, setIsFullyLoaded] = useDistributorState('isFullyLoaded');
 
   const [groups, setGroups] = useState([]);
   const [members, setMembers] = useState({});
@@ -31,10 +35,14 @@ function Groups() {
 
   const activateGroup = useCallback(
     (group) => {
+      setActiveMembers(null);
+      setLineDistribution({});
+      setIsFullyLoaded(false);
       setActiveGroup(group);
+
       history.push('/distribute');
     },
-    [history, setActiveGroup]
+    [history, setActiveGroup, setActiveMembers, setLineDistribution, setIsFullyLoaded]
   );
 
   return (

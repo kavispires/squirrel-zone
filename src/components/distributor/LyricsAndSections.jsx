@@ -119,7 +119,8 @@ function LyricsAndSections() {
           placeholder="Insert lyrics here"
           className="lyrics-and-sections__textarea"
           onChange={onTextareaChange}
-          defaultValue={textarea} // TODO: REMOVE
+          defaultValue={textarea}
+          disabled={song?.id}
         />
         <Log className="lyrics-and-sections__log" defaultCompactSetting={false} />
       </div>

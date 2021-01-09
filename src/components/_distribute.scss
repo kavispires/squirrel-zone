@@ -4,17 +4,28 @@
     justify-content: center;
     margin: get-unit(3 0);
   }
+
   &__container {
     display: flex;
     margin-top: get-unit(5);
   }
+
   &__mini-controls {
-    padding: get-unit(2 4);
+    padding: get-unit(3 5 0 5);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__line-distribution-completion {
+    background: get-color(gray, 2);
+    padding: get-unit(2);
+    border-radius: get-unit(1);
   }
 }
 
 .distribute-options {
   width: 50%;
+  margin-right: 16px;
 
   &__video {
     display: flex;
@@ -33,7 +44,7 @@
 
 .members-selection {
   @include reset-list;
-  margin: get-unit(6 0);
+  margin: get-unit(6 1 6 0);
   width: 100%;
 }
 

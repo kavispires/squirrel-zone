@@ -55,7 +55,7 @@ function Distributor() {
             <LyricsAndSections />
           </Panel>
           <Panel header="Capture Parts" key="2">
-            {Boolean(videoId) && step === 2 ? (
+            {Boolean(videoId) && step === '2' ? (
               <TimeAndSync
                 playerRef={playerRef}
                 playVideo={playVideo}
@@ -67,7 +67,7 @@ function Distributor() {
             )}
           </Panel>
           <Panel header="Preview" key="3">
-            {Boolean(videoId) && step === 3 ? (
+            {Boolean(videoId) && step === '3' ? (
               <Preview
                 playerRef={playerRef}
                 playVideo={playVideo}
@@ -79,7 +79,7 @@ function Distributor() {
             )}
           </Panel>
           <Panel header="Song Metadata" key="4">
-            {song ? <SongMetadata /> : <p>You can't see this step without a loaded song.</p>}
+            {song && step === '4' ? <SongMetadata /> : <p>You can't see this step without a loaded song.</p>}
           </Panel>
           <Panel header="Save" key="5">
             {song ? <SaveSong /> : <p>You can't see this step without a loaded song.</p>}

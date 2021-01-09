@@ -29,7 +29,7 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
   const onLoadSong = useCallback(() => {
     async function loadMember() {
       setLoadedData(await store.getRecord('member', selectedId));
-
+      setSelectedId(null);
       setModalVisibility(false);
     }
 

@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Layout, Spin, Switch } from 'antd';
+import { Button, Divider, Layout, Progress, Spin, Switch } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
@@ -25,6 +25,8 @@ function Distribute() {
   const [activeMembers, setActiveMembers] = useGlobalState('activeMembers');
   const [song] = useDistributorState('song');
   const [isFullyLoaded] = useDistributorState('isFullyLoaded');
+  const [lineDistribution, setLineDistribution] = useGlobalState('lineDistribution');
+  const [parts] = useDistributorState('parts');
 
   const [isLoadSongModalVisible, setModalVisibility] = useState(false);
 
@@ -46,11 +48,13 @@ function Distribute() {
     return <Spin size="large" />;
   }
 
-  const resetScrolling = () => {
-    // Note: Modal.onCancel has a weird bug that forces overflow hidden on the body.
-    // Note2: Do not use useCallback in this.
-    document.body.style.overflow = 'auto';
+  const resetDistribution = () => {
+    setLineDistribution({});
   };
+
+  const distributionCompletion = Math.round(
+    (100 * Object.keys(lineDistribution ?? {}).length) / Object.keys(parts ?? {}).length
+  );
 
   return (
     <Layout.Content className="container">
@@ -60,36 +64,38 @@ function Distribute() {
           <Button type="primary" onClick={() => setModalVisibility(true)} disabled={isLoading}>
             {isLoading ? <Spin size="small" /> : 'Load Song'}
           </Button>
-          <Button type="link" onClick={resetScrolling}>
-            Reset Scrolling
-          </Button>
         </div>
         {isLoading ? (
           <div className="loading-container">
             <Spin size="large" />
           </div>
         ) : (
-          isFullyLoaded && <DistributeWidget members={activeMembers} />
+          isFullyLoaded && (
+            <DistributeWidget members={activeMembers} distributionCompletion={distributionCompletion} />
+          )
         )}
 
-        <div className="distribute__actions">
-          <Button type="primary" onClick={() => {}} disabled={isLoading}>
-            Save Distribution
-          </Button>
-        </div>
+        {isFullyLoaded && (
+          <div className="distribute__actions">
+            <Button type="primary" onClick={() => {}} disabled={isLoading || distributionCompletion < 100}>
+              Save Distribution
+            </Button>
+          </div>
+        )}
       </main>
 
       {isLoadSongModalVisible && (
         <LoadSongModal
           isLoadSongModalVisible={isLoadSongModalVisible}
           setLoadSongModalVisibility={setModalVisibility}
+          onBeforeLoad={resetDistribution}
         />
       )}
     </Layout.Content>
   );
 }
 
-function DistributeWidget({ members }) {
+function DistributeWidget({ members, distributionCompletion }) {
   const [activeGroup] = useGlobalState('activeGroup');
   const [lineDistribution, setLineDistribution] = useGlobalState('lineDistribution');
   const [parts] = useDistributorState('parts');
@@ -165,12 +171,14 @@ function DistributeWidget({ members }) {
       <div className="distribute-options">
         <YoutubeVideo playerRef={playerRef} width="320" height="180" className="distribute-options__video" />
         <div className="distribute__mini-controls">
-          Absolute Progress{' '}
-          <Switch
-            defaultChecked={isAbsoluteProgress}
-            onChange={(checked) => setAbsoluteProgress(checked)}
-            size="small"
-          />
+          <div>
+            Absolute Progress{' '}
+            <Switch
+              defaultChecked={isAbsoluteProgress}
+              onChange={(checked) => setAbsoluteProgress(checked)}
+              size="small"
+            />
+          </div>
         </div>
         <ul className="members-selection">
           {Object.values(DEFAULT_MEMBERS).map((member) => {
@@ -179,6 +187,7 @@ function DistributeWidget({ members }) {
               : stats?.[member.key]?.relativeProgress;
             return (
               <MemberSelection
+                key={`member-selection-${member.key}`}
                 member={member}
                 selectedMember={selectedMember}
                 toggleMember={toggleMember}
@@ -196,7 +205,7 @@ function DistributeWidget({ members }) {
                 : stats?.[member.key]?.relativeProgress;
               return (
                 <MemberSelection
-                  key={member.key}
+                  key={`member-selection-${member.key}`}
                   member={member}
                   selectedMember={selectedMember}
                   toggleMember={toggleMember}
@@ -206,6 +215,8 @@ function DistributeWidget({ members }) {
               );
             })}
         </ul>
+        <Divider />
+        <Progress percent={distributionCompletion} className="distribute__line-distribution-completion" />
       </div>
       <Log
         seekAndPlay={seekAndPlay}

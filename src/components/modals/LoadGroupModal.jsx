@@ -7,7 +7,7 @@ import useGlobalState from '../../states/useGlobalState';
 // Store
 import store from '../../services/store';
 
-function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData }) {
+function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onLoad = () => {} }) {
   const [isLoading] = useGlobalState('isLoading');
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
@@ -29,7 +29,7 @@ function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData }) {
   const onLoadSong = useCallback(() => {
     async function loadGroup() {
       setLoadedData(await store.getRecord('group', selectedId));
-
+      setSelectedId(null);
       setModalVisibility(false);
     }
 

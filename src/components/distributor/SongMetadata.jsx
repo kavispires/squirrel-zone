@@ -23,7 +23,7 @@ function SongMetadata() {
       <Form
         layout="vertical"
         name="song-metadata"
-        initialValues={song.data}
+        initialValues={{ ...song.data, tempo: song.data.tempo || 120 }}
         onValuesChange={onValuesChange}
         className="song-metadata-form"
         autoComplete="off"

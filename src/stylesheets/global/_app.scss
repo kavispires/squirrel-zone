@@ -11,7 +11,8 @@ body {
 
 .container {
   padding: get-unit(3) 50px;
-  flex: 1;
+  height: calc(100vh - 64px);
+  overflow: auto;
 }
 
 .content {

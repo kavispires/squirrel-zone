@@ -9,7 +9,12 @@ import useDistributorState from '../../states/useDistributorState';
 import store from '../../services/store';
 import { Line, Part, Section, Song } from '../../utils/distributor';
 
-function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
+function LoadSongModal({
+  isLoadSongModalVisible,
+  setLoadSongModalVisibility,
+  onBeforeLoad = () => {},
+  onAfterLoad = () => {},
+}) {
   const [isLoading] = useGlobalState('isLoading');
 
   const [, setSong] = useDistributorState('song');
@@ -39,6 +44,7 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
 
   const onLoadSong = useCallback(() => {
     async function fetchSongData() {
+      onBeforeLoad();
       setIsFullyLoaded(false);
 
       const song = await store.getRecord('song', selectedSongId);
@@ -72,8 +78,9 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
       setVideoId(newSong.videoId);
       setStep(newSong.isComplete ? 3 : 2);
       setIsFullyLoaded(true);
-
+      setSelectedSongId(null);
       setLoadSongModalVisibility(false);
+      onAfterLoad();
     }
 
     fetchSongData();
@@ -87,6 +94,8 @@ function LoadSongModal({ isLoadSongModalVisible, setLoadSongModalVisibility }) {
     setStep,
     setVideoId,
     setIsFullyLoaded,
+    onBeforeLoad,
+    onAfterLoad,
   ]);
 
   const columns = [

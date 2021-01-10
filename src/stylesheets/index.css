@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import url(~antd/dist/antd.css);
 /*
@@ -336,6 +337,54 @@ body {
 }
 .group-card__member-name {
   margin: 0 8px;
+}
+
+.group-distributions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-bottom: 8px;
+  font-size: 90%;
+}
+
+.group-distribution {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 4px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #d6d7d8;
+}
+.group-distribution__title {
+  width: 30%;
+}
+.group-distribution__version {
+  width: 15%;
+}
+.group-distribution__edit-button {
+  margin: 0 8px;
+}
+
+.group-distribution-snippet {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  width: 100%;
+  background: #d6d7d8;
+  border-radius: 4px;
+  font-size: 80%;
+  height: 16px;
+  margin: 8px 0;
+}
+.group-distribution-snippet span {
+  text-align: center;
+}
+.group-distribution-snippet span:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.group-distribution-snippet span:last-child {
+  border-radius: 0 4px 4px 0;
 }
 
 .distribute__actions {
@@ -1154,6 +1203,11 @@ body {
 }
 .log__parts--compact {
   margin-left: 0;
+}
+.log__parts--incomplete:before {
+  content: '›';
+  padding-right: 4px;
+  color: #d14949;
 }
 .log__part {
   margin-left: 4px;

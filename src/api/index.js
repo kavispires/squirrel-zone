@@ -80,6 +80,7 @@ const fetchDistributions = async (groupId) => {
       .once('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           const { key } = childSnapshot;
+          console.log(childSnapshot.val());
           store.setRecord(serialize(childSnapshot.val()), key);
         });
       });
@@ -110,6 +111,8 @@ const fetchDistributionData = async (distributionId) => {
       .child(distributionId)
       .once('value', function (snapshot) {
         const { key } = snapshot;
+        const serializedData = serialize(snapshot.val());
+        console.log({ serializedData });
         store.setRecord(serialize(snapshot.val()), key);
       });
   } catch (error) {

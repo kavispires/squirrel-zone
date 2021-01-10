@@ -244,6 +244,12 @@ function DistributeWidget({ members, distributionCompletion, resetDistribution }
       } else {
         part[selectedMember] = true;
       }
+
+      if (!Object.keys(part).length) {
+        const result = { ...state };
+        delete result[partId];
+        return result;
+      }
       return { ...state, [partId]: part };
     });
   };

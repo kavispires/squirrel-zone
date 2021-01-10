@@ -56,23 +56,35 @@ export class Store {
    * @param {boolean} [asObject] return result as object
    * @returns {object[]}
    */
-  async getCollection(type, asObject = false, set = null) {
+  async getCollection(type, asObject = false, extra = null) {
+    // debugger;
+
     if (!type) throw Error('A type is required to access the store');
 
-    if (this._collections[type] && Object.values(this._collections[type]).length) {
+    if (this._collections[type] && Object.values(this._collections[type]).length && !extra) {
       if (asObject) {
         return this._collections[type];
       }
       return Object.values(this._collections[type]).sort(collectionSorting);
     }
 
-    const { filterKey, id } = Object.entries(set ?? {})?.[0] ?? {};
+    const [filterKey, id] = Object.entries(extra ?? {})?.[0] ?? [];
+    console.log({ extra, filterKey, id });
+
+    if (filterKey && id && this._collections[type] && Object.values(this._collections[type]).length) {
+      const result = Object.values(this._collections[type])
+        .filter((entry) => entry[filterKey] === id)
+        .sort(collectionSorting);
+
+      if (result.length > 0) {
+        return result;
+      }
+    }
 
     switch (type) {
       case DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION]:
         await API.fetchDistributions(id);
-        this._updateCollection(DATA_TYPE.GROUP, true);
-
+        this._updateCollection(DATA_TYPE.DISTRIBUTION, true);
         break;
       case DATA_TYPE_COLLECTION[DATA_TYPE.GROUP]:
         await API.fetchGroups();
@@ -133,6 +145,7 @@ export class Store {
       return acc;
     }, {});
 
+    console.log({ type, isAdditive, incomingData });
     if (isAdditive) {
       this._collections[DATA_TYPE_COLLECTION[type]] = {
         ...this._collections[DATA_TYPE_COLLECTION[type]],

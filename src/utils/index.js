@@ -113,10 +113,29 @@ export const injectSongIdToSections = (includedData, songId) => {
 };
 
 /**
- * Adds # to the beginning of a hex color if it doesn't exist
+ * Adds # to the beginning of a hex color if it doesn't exist.
  * @param {string} hexColor
  * @returns {strings}
  */
 export const parseColor = (hexColor) => {
   return hexColor.startsWith('#') ? hexColor : `#${hexColor}`;
+};
+
+/**
+ * Makes a deep copy of given data.
+ * @param {*} data
+ * @return {*}
+ */
+export const deepCopy = (data) => JSON.parse(JSON.stringify(data));
+
+/**
+ * Removes unnecessary data (lines) from stats object
+ * @param {object} stats
+ */
+export const cleanupStats = (stats) => {
+  const data = deepCopy(stats);
+  Object.values(data).forEach((entry) => {
+    delete entry.lines;
+  });
+  return data;
 };

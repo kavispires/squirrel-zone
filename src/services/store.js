@@ -29,6 +29,9 @@ export class Store {
     }
 
     switch (type) {
+      case DATA_TYPE.DISTRIBUTION_DATA:
+        await API.fetchDistributionData(id);
+        break;
       case DATA_TYPE.MEMBER_DATA:
         await API.fetchMember(id);
         break;
@@ -53,7 +56,7 @@ export class Store {
    * @param {boolean} [asObject] return result as object
    * @returns {object[]}
    */
-  async getCollection(type, asObject = false) {
+  async getCollection(type, asObject = false, set = null) {
     if (!type) throw Error('A type is required to access the store');
 
     if (this._collections[type] && Object.values(this._collections[type]).length) {
@@ -63,7 +66,14 @@ export class Store {
       return Object.values(this._collections[type]).sort(collectionSorting);
     }
 
+    const { filterKey, id } = Object.entries(set ?? {})?.[0] ?? {};
+
     switch (type) {
+      case DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION]:
+        await API.fetchDistributions(id);
+        this._updateCollection(DATA_TYPE.GROUP, true);
+
+        break;
       case DATA_TYPE_COLLECTION[DATA_TYPE.GROUP]:
         await API.fetchGroups();
         this._updateCollection(DATA_TYPE.GROUP);
@@ -83,6 +93,12 @@ export class Store {
 
     if (asObject) {
       return this._collections[type];
+    }
+
+    if (filterKey && id) {
+      return Object.values(this._collections[type])
+        .filter((entry) => entry[filterKey] === id)
+        .sort(collectionSorting);
     }
 
     return Object.values(this._collections[type]).sort(collectionSorting);
@@ -107,17 +123,24 @@ export class Store {
   /**
    * Builds a dictionary with all the
    * @param {string} type
+   * @param {boolean} [isAdditive] - indicates if the incoming data should just be added to the existing one
    */
-  _updateCollection(type) {
-    this._collections[DATA_TYPE_COLLECTION[type]] = Object.entries(this._records).reduce(
-      (acc, [recordKey, record]) => {
-        if (record.type === type) {
-          acc[recordKey] = record;
-        }
-        return acc;
-      },
-      {}
-    );
+  _updateCollection(type, isAdditive = false) {
+    const incomingData = Object.entries(this._records).reduce((acc, [recordKey, record]) => {
+      if (record.type === type) {
+        acc[recordKey] = record;
+      }
+      return acc;
+    }, {});
+
+    if (isAdditive) {
+      this._collections[DATA_TYPE_COLLECTION[type]] = {
+        ...this._collections[DATA_TYPE_COLLECTION[type]],
+        ...incomingData,
+      };
+    } else {
+      this._collections[DATA_TYPE_COLLECTION[type]] = incomingData;
+    }
   }
 }
 

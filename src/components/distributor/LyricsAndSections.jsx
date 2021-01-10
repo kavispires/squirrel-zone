@@ -146,7 +146,7 @@ function LyricsAndSections() {
 
       {isBuiltOnce && (
         <div className="lyrics-and-sections__action">
-          <Button type="primary" onClick={() => setStep(2)}>
+          <Button type="primary" onClick={() => setStep('2')}>
             Next Step: Time & Sync
           </Button>
         </div>

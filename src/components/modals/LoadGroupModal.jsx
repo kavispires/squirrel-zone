@@ -21,9 +21,6 @@ function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onL
 
   const onCancelModal = () => {
     setModalVisibility(false);
-    // Note: Modal.onCancel has a weird bug that forces overflow hidden on the body.
-    // Note2: Do not use useCallback in this.
-    document.body.style.overflow = 'auto';
   };
 
   const onLoadSong = useCallback(() => {

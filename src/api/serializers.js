@@ -4,6 +4,10 @@ import { serializeKey } from '../utils/distributor';
 
 const serialize = (data, id) => {
   switch (data.type) {
+    case DATA_TYPE.DISTRIBUTION:
+      return serializer.distribution(data, id);
+    case DATA_TYPE.DISTRIBUTION_DATA:
+      return serializer.distributionData(data, id);
     case DATA_TYPE.GROUP:
       return serializer.group(data, id);
     case DATA_TYPE.MEMBER:
@@ -18,6 +22,27 @@ const serialize = (data, id) => {
 };
 
 const serializer = {
+  distribution: (data, id) => {
+    return {
+      id: id ?? data.id,
+      type: data.type,
+      key: serializeKey(data.type, id ?? data.id),
+      name: data.name,
+      songId: data.songId,
+      songTitle: data.songTitle,
+      groupId: data.groupId,
+      stats: JSON.parse(data.stats ?? '') || {},
+    };
+  },
+  distributionData: (data, id) => {
+    return {
+      id: id ?? data.id,
+      type: data.type,
+      key: serializeKey(data.type, id ?? data.id),
+      groupId: data.groupId,
+      assignedParts: JSON.parse(data.assignedParts ?? '') || {},
+    };
+  },
   group: (data, id) => {
     return {
       id: id ?? data.id,
@@ -71,8 +96,8 @@ const serializer = {
       id: id ?? data.id,
       type: data.type,
       key: serializeKey(data.type, id ?? data.id),
-      sectionsIds: JSON.parse(data.sectionsIds ?? '') ?? [],
-      included: JSON.parse(data.included ?? '') ?? [],
+      sectionsIds: JSON.parse(data.sectionsIds ?? '') || [],
+      included: JSON.parse(data.included ?? '') || [],
     };
   },
 };

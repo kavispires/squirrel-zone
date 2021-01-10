@@ -88,7 +88,7 @@ function SongMetadata() {
         </Tooltip>
         <Divider />
         <div className="song-metadata__action">
-          <Button type="primary" disabled={!song?.completion} onClick={() => setStep(5)}>
+          <Button type="primary" disabled={!song?.completion} onClick={() => setStep('5')}>
             Next Step: Save On Database
           </Button>
         </div>

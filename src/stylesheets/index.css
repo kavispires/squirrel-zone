@@ -344,15 +344,21 @@ body {
   margin: 12px 0;
 }
 
+.distribute__actions-input {
+  width: 200px;
+  margin: 0 16px;
+}
+
 .distribute__container {
   display: flex;
   margin-top: 20px;
 }
 
-.distribute__mini-controls {
+.distribute__controls {
   padding: 12px 20px 0 20px;
   display: flex;
-  justify-content: flex-end;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .distribute__line-distribution-completion {

@@ -40,7 +40,7 @@ function Preview({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
         Visualize how this songs plays. For sampling purposes, Assignee E is considered ALL.
       </Paragraph>
 
-      {step === 3 && (
+      {step === '3' && (
         <LineDistribution
           playerRef={playerRef}
           playVideo={playVideo}
@@ -53,7 +53,7 @@ function Preview({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
       <Divider />
 
       <div className="lyrics-and-sections__action">
-        <Button type="primary" onClick={() => setStep(4)}>
+        <Button type="primary" onClick={() => setStep('4')}>
           Next Step: Song Metadata
         </Button>
       </div>

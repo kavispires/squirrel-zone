@@ -1,4 +1,4 @@
-import { injectSongIdToSections } from '../utils';
+import { cleanupStats, injectSongIdToSections } from '../utils';
 import { DATA_TYPE, POSITIONS_WEIGHT } from '../utils/constants';
 import { cleanupObject } from '../utils/distributor';
 
@@ -6,6 +6,8 @@ const deserialize = (data, id) => {
   const cleanData = cleanupObject(data);
 
   switch (data.type) {
+    case DATA_TYPE.DISTRIBUTION:
+      return deserializer.distribution(data, id);
     case DATA_TYPE.GROUP:
       return deserializer.group(cleanData, id);
     case DATA_TYPE.MEMBER:
@@ -20,6 +22,26 @@ const deserialize = (data, id) => {
 };
 
 const deserializer = {
+  distribution: (data, id) => {
+    console.log({ data });
+    return {
+      distribution: {
+        id: id ?? data.id,
+        type: 'distribution',
+        name: data.name,
+        songId: data.songId,
+        songTitle: data.songTitle,
+        groupId: data.groupId,
+        stats: JSON.stringify(cleanupStats(data.stats)),
+      },
+      data: {
+        id: id ?? data.id,
+        type: 'distribution-data',
+        groupId: data.groupId,
+        assignedParts: JSON.stringify(data.assignedParts),
+      },
+    };
+  },
   group: (data, id) => {
     return {
       ...data,

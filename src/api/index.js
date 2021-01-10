@@ -15,7 +15,7 @@ const errorNotification = (message, error) => {
   setGlobalState('notification', {
     type: 'error',
     message: message || 'Fail to do something in the API',
-    description: error?.message ?? 'Unknown error',
+    description: error?.message ?? error ?? 'Unknown error',
   });
   console.error(error);
 };
@@ -61,17 +61,22 @@ const fetchAlbums = async () => {
 };
 
 /**
- * Query `/distributions`
+ * Query `/distributions/<group_id>`
  */
-const fetchDistributions = async () => {
+const fetchDistributions = async (groupId) => {
   setGlobalState('isLoading', true);
 
   const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION];
 
   try {
+    if (!groupId) {
+      throw Error('A group ID is required to query distributions');
+    }
+
     await db
       .ref()
       .child(collectionName)
+      .child(groupId)
       .once('value', function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           const { key } = childSnapshot;
@@ -79,10 +84,83 @@ const fetchDistributions = async () => {
         });
       });
   } catch (error) {
-    errorNotification(`Failed to load ${collectionName}`, error);
+    errorNotification(`Failed to load ${collectionName} for group ${groupId}`, error);
   } finally {
     setGlobalState('isLoading', false);
   }
+};
+
+/**
+ * Query GET `/distributions-data/<id>`
+ */
+const fetchDistributionData = async (distributionId) => {
+  setGlobalState('isLoading', true);
+
+  const typeName = DATA_TYPE.DISTRIBUTION_DATA;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
+  try {
+    if (!distributionId) {
+      throw Error('A distribution ID is required');
+    }
+
+    await db
+      .ref()
+      .child(collectionName)
+      .child(distributionId)
+      .once('value', function (snapshot) {
+        const { key } = snapshot;
+        store.setRecord(serialize(snapshot.val()), key);
+      });
+  } catch (error) {
+    errorNotification(`Failed to load ${typeName} ${distributionId}`, error);
+  } finally {
+    setGlobalState('isLoading', false);
+  }
+};
+
+/**
+ * Query POST `/groups/<id>`
+ */
+const saveDistribution = async (data) => {
+  setGlobalState('isLoading', true);
+
+  let response;
+
+  const typeName = DATA_TYPE.DISTRIBUTION;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
+  try {
+    // Create new key if it is a new instance
+    const key = data.id || db.ref().child(collectionName).push().key;
+    const deserializedData = deserialize({ ...data, type: typeName }, key);
+
+    const { groupId, songId } = deserializedData.distribution;
+
+    if (!groupId) {
+      throw Error('Distribution must include a group ID');
+    }
+
+    if (!songId) {
+      throw Error('Distribution must include a song ID');
+    }
+
+    const distributionDataCollectionName = DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION_DATA];
+
+    await db.ref(`/${collectionName}/${groupId}/${key}`).set(deserializedData.distribution);
+    await db.ref(`/${distributionDataCollectionName}/${key}`).set(deserializedData.data);
+
+    store.setRecord(serialize(deserializedData.distribution));
+    store.setRecord(serialize(deserializedData.data));
+
+    successNotification('Distribution saved successfully', `id: ${key}`);
+  } catch (error) {
+    errorNotification(`Failed to save ${typeName}`, error);
+  } finally {
+    setGlobalState('isLoading', false);
+  }
+
+  return response;
 };
 
 /**
@@ -174,6 +252,10 @@ const fetchMember = async (memberId) => {
   const collectionName = DATA_TYPE_COLLECTION[typeName];
 
   try {
+    if (!memberId) {
+      throw Error('A member ID is required');
+    }
+
     await db
       .ref()
       .child(collectionName)
@@ -253,6 +335,10 @@ const fetchSong = async (songId) => {
   const collectionName = DATA_TYPE_COLLECTION[typeName];
 
   try {
+    if (!songId) {
+      throw Error('A song ID is required');
+    }
+
     await db
       .ref()
       .child(collectionName)
@@ -329,12 +415,14 @@ const saveSong = async (data) => {
 const API = {
   fetchAlbums,
   fetchDistributions,
+  fetchDistributionData,
   fetchGroups,
   fetchMembers,
   fetchMember,
   fetchSongs,
   fetchSong,
   fetchSongData,
+  saveDistribution,
   saveGroup,
   saveMember,
   saveSong,

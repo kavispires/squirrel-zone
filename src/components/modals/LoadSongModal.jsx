@@ -37,9 +37,6 @@ function LoadSongModal({
 
   const onCancelModal = () => {
     setLoadSongModalVisibility(false);
-    // Note: Modal.onCancel has a weird bug that forces overflow hidden on the body.
-    // Note2: Do not use useCallback in this.
-    document.body.style.overflow = 'auto';
   };
 
   const onLoadSong = useCallback(() => {
@@ -76,7 +73,7 @@ function LoadSongModal({
       setSections(newSections);
       setSong(newSong);
       setVideoId(newSong.videoId);
-      setStep(newSong.isComplete ? 3 : 2);
+      setStep(newSong.isComplete ? '3' : '2');
       setIsFullyLoaded(true);
       setSelectedSongId(null);
       setLoadSongModalVisibility(false);

@@ -22,7 +22,7 @@ function LoadSong() {
       const { value } = event.target;
       setVideoId(value);
       setSong(new Song({ videoId: value }));
-      setStep(1);
+      setStep('1');
     },
     [setSong, setStep, setVideoId]
   );

@@ -1,6 +1,7 @@
 export const DATA_TYPE = {
   ALBUM: 'album',
   DISTRIBUTION: 'distribution',
+  DISTRIBUTION_DATA: 'distributions-data',
   GROUP: 'group',
   MEMBER: 'member',
   MEMBER_DATA: 'member-data',
@@ -11,6 +12,7 @@ export const DATA_TYPE = {
 export const DATA_TYPE_COLLECTION = {
   [DATA_TYPE.ALBUM]: 'albums',
   [DATA_TYPE.DISTRIBUTION]: 'distributions',
+  [DATA_TYPE.DISTRIBUTION_DATA]: 'distributions-data',
   [DATA_TYPE.GROUP]: 'groups',
   [DATA_TYPE.MEMBER]: 'members',
   [DATA_TYPE.MEMBER_DATA]: 'members-data',

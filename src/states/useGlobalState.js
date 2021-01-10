@@ -10,6 +10,7 @@ const initialState = {
   activeGroup: null,
   activeMembers: null,
   lineDistribution: {},
+  stats: {},
 };
 
 const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState(initialState);

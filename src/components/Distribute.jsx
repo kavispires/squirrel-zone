@@ -2,21 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Divider, Layout, Progress, Spin, Switch } from 'antd';
+import { Button, Divider, Layout, Progress, Spin, Switch, Select, Input } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
 // Store
 import store from '../services/store';
+// API
+import API from '../api';
 // Utilities
 import { serializeKey } from '../utils/distributor';
+import { bemClassConditionalModifier } from '../utils';
+import { DEFAULT_MEMBERS } from '../utils/constants';
 // Components
 import LoadSongModal from './modals/LoadSongModal';
 import YoutubeVideo from './distributor/YoutubeVideo';
 import Log from './log/Log';
 import Member from './Member';
-import { bemClassConditionalModifier } from '../utils';
-import { DEFAULT_MEMBERS } from '../utils/constants';
 
 function Distribute() {
   const history = useHistory();
@@ -27,8 +29,10 @@ function Distribute() {
   const [isFullyLoaded] = useDistributorState('isFullyLoaded');
   const [lineDistribution, setLineDistribution] = useGlobalState('lineDistribution');
   const [parts] = useDistributorState('parts');
+  const [stats, setStats] = useGlobalState('stats');
 
   const [isLoadSongModalVisible, setModalVisibility] = useState(false);
+  const [distributionName, setDistributionName] = useState('');
 
   useEffect(() => {
     if (!activeGroup) {
@@ -50,9 +54,30 @@ function Distribute() {
 
   const resetDistribution = () => {
     setLineDistribution({});
+    setStats({});
+    setDistributionName('');
   };
 
-  const distributionCompletion = Math.round(
+  const updateName = (event) => {
+    setDistributionName(event.target.name);
+  };
+
+  const saveDistribution = async (values) => {
+    try {
+      await API.saveDistribution({
+        id: null,
+        type: 'distribution',
+        name: distributionName || 'original',
+        songId: song.id,
+        songTitle: song.title,
+        groupId: activeGroup.id,
+        assignedParts: lineDistribution,
+        stats,
+      });
+    } catch (_) {}
+  };
+
+  const distributionCompletion = Math.floor(
     (100 * Object.keys(lineDistribution ?? {}).length) / Object.keys(parts ?? {}).length
   );
 
@@ -71,13 +96,27 @@ function Distribute() {
           </div>
         ) : (
           isFullyLoaded && (
-            <DistributeWidget members={activeMembers} distributionCompletion={distributionCompletion} />
+            <DistributeWidget
+              members={activeMembers}
+              distributionCompletion={distributionCompletion}
+              resetDistribution={resetDistribution}
+            />
           )
         )}
 
         {isFullyLoaded && (
           <div className="distribute__actions">
-            <Button type="primary" onClick={() => {}} disabled={isLoading || distributionCompletion < 100}>
+            <Input
+              placeholder="original"
+              disabled={isLoading || distributionCompletion < 100}
+              onChange={updateName}
+              className="distribute__actions-input"
+            />
+            <Button
+              type="primary"
+              onClick={saveDistribution}
+              disabled={isLoading || distributionCompletion < 100}
+            >
               Save Distribution
             </Button>
           </div>
@@ -95,33 +134,58 @@ function Distribute() {
   );
 }
 
-function DistributeWidget({ members, distributionCompletion }) {
+function DistributeWidget({ members, distributionCompletion, resetDistribution }) {
+  const [isLoading] = useGlobalState('isLoading');
   const [activeGroup] = useGlobalState('activeGroup');
   const [lineDistribution, setLineDistribution] = useGlobalState('lineDistribution');
   const [parts] = useDistributorState('parts');
+  const [stats, setStats] = useGlobalState('stats');
 
   const [selectedMember, setSelectedMember] = useState({});
-  const [stats, setStats] = useState({});
   const [isAbsoluteProgress, setAbsoluteProgress] = useState(false);
+  const [progressType, setProgressType] = useState('');
 
   const playerRef = useRef();
 
   useEffect(() => {
     let total = 0;
+    let totalAll = 0;
+    let totalAllNone = 0;
     let max = 0;
+    let maxAll = 0;
+    let maxAllNone = 0;
     const newStats = {};
     // Calculate progress, max, counts
     Object.entries(lineDistribution).forEach(([partId, memberKeysObj]) => {
       const part = parts[partId];
-      total += part.duration ?? 0;
+      const partDuration = part.duration ?? 0;
+      const membersKeys = Object.keys(memberKeysObj);
+
+      if (membersKeys.length === 1 && memberKeysObj['member::NONE']) {
+        totalAllNone += partDuration;
+      } else if (membersKeys.length === 1 && memberKeysObj['member::ALL']) {
+        totalAllNone += partDuration;
+        totalAll += partDuration;
+      } else {
+        totalAllNone += partDuration;
+        totalAll += partDuration;
+        total += partDuration;
+      }
+
       // Calculate progress and count
-      Object.keys(memberKeysObj).forEach((memberKey) => {
+      membersKeys.forEach((memberKey) => {
         if (newStats[memberKey] === undefined) {
           newStats[memberKey] = {
             count: 0,
             total: 0,
+            totalAll: 0,
+            totalAllNone: 0,
             relativeProgress: 0,
+            relativeProgressAll: 0,
+            relativeProgressAllNone: 0,
             absoluteProgress: 0,
+            absoluteProgressAll: 0,
+            absoluteProgressAllNone: 0,
             lines: [],
           };
         }
@@ -131,19 +195,37 @@ function DistributeWidget({ members, distributionCompletion }) {
           newStats[memberKey].lines.push(part.lineId);
         }
         // Add member total
-        newStats[memberKey].total += part.duration ?? 0;
+        newStats[memberKey].total += partDuration;
+        newStats[memberKey].totalAll += partDuration;
+        newStats[memberKey].totalAllNone += partDuration;
         // Recalculate max
-        max = newStats[memberKey].total > max ? newStats[memberKey].total : max;
+        if (memberKey === 'member::NONE') {
+          maxAllNone =
+            newStats[memberKey].totalAllNone > maxAllNone ? newStats[memberKey].totalAllNone : maxAllNone;
+        } else if (memberKey === 'member::ALL') {
+          maxAllNone =
+            newStats[memberKey].totalAllNone > maxAllNone ? newStats[memberKey].totalAllNone : maxAllNone;
+          maxAll = newStats[memberKey].totalAll > maxAll ? newStats[memberKey].totalAll : maxAll;
+        } else {
+          maxAllNone =
+            newStats[memberKey].totalAllNone > maxAllNone ? newStats[memberKey].totalAllNone : maxAllNone;
+          maxAll = newStats[memberKey].totalAll > maxAll ? newStats[memberKey].totalAll : maxAll;
+          max = newStats[memberKey].total > max ? newStats[memberKey].total : max;
+        }
       });
     });
     // Calculate member progress
-    Object.entries(newStats).forEach(([key, value]) => {
+    Object.keys(newStats).forEach((key) => {
       newStats[key].relativeProgress = Math.round((100 * newStats[key].total) / max);
+      newStats[key].relativeProgressAll = Math.round((100 * newStats[key].totalAll) / maxAll);
+      newStats[key].relativeProgressAllNone = Math.round((100 * newStats[key].totalAllNone) / maxAllNone);
       newStats[key].absoluteProgress = Math.round((100 * newStats[key].total) / total);
+      newStats[key].absoluteProgressAll = Math.round((100 * newStats[key].totalAll) / totalAll);
+      newStats[key].absoluteProgressAllNone = Math.round((100 * newStats[key].totalAllNone) / totalAllNone);
     });
 
     setStats(newStats);
-  }, [lineDistribution, parts]);
+  }, [lineDistribution, parts, setStats]);
 
   const seekAndPlay = (timestamp) => {
     playerRef?.current?.internalPlayer?.seekTo(timestamp);
@@ -166,11 +248,23 @@ function DistributeWidget({ members, distributionCompletion }) {
     });
   };
 
+  const onProgressTypeChange = (key) => {
+    setProgressType(key);
+  };
+
   return (
     <div className="distribute__container">
       <div className="distribute-options">
         <YoutubeVideo playerRef={playerRef} width="320" height="180" className="distribute-options__video" />
-        <div className="distribute__mini-controls">
+        <div className="distribute__controls">
+          <div>
+            Progress Bar Type{' '}
+            <Select defaultValue="" onChange={onProgressTypeChange}>
+              <Select.Option value="">Members only</Select.Option>
+              <Select.Option value="All">Include ALL lines</Select.Option>
+              <Select.Option value="AllNone">Include All and None lines</Select.Option>
+            </Select>
+          </div>
           <div>
             Absolute Progress{' '}
             <Switch
@@ -182,9 +276,10 @@ function DistributeWidget({ members, distributionCompletion }) {
         </div>
         <ul className="members-selection">
           {Object.values(DEFAULT_MEMBERS).map((member) => {
+            const memberStats = stats?.[member.key] ?? {};
             const progress = isAbsoluteProgress
-              ? stats?.[member.key]?.absoluteProgress
-              : stats?.[member.key]?.relativeProgress;
+              ? memberStats?.[`absoluteProgress${progressType}`]
+              : memberStats?.[`relativeProgress${progressType}`];
             return (
               <MemberSelection
                 key={`member-selection-${member.key}`}
@@ -195,14 +290,15 @@ function DistributeWidget({ members, distributionCompletion }) {
               />
             );
           })}
-
+          <Divider />
           {activeGroup.membersIds &&
             members &&
             activeGroup.membersIds.map((memberId) => {
               const member = members[serializeKey('member', memberId)] ?? {};
+              const memberStats = stats?.[member.key] ?? {};
               const progress = isAbsoluteProgress
-                ? stats?.[member.key]?.absoluteProgress
-                : stats?.[member.key]?.relativeProgress;
+                ? memberStats?.[`absoluteProgress${progressType}`]
+                : memberStats?.[`relativeProgress${progressType}`];
               return (
                 <MemberSelection
                   key={`member-selection-${member.key}`}
@@ -217,6 +313,11 @@ function DistributeWidget({ members, distributionCompletion }) {
         </ul>
         <Divider />
         <Progress percent={distributionCompletion} className="distribute__line-distribution-completion" />
+        <div className="distribute__controls">
+          <Button type="default" onClick={resetDistribution} disabled={isLoading}>
+            Reset Distribution
+          </Button>
+        </div>
       </div>
       <Log
         seekAndPlay={seekAndPlay}

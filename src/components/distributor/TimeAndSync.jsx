@@ -21,7 +21,7 @@ function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
     <section className="distributor-grid time-and-sync">
       {isRecording && <KeyCapture.Keyboard playerRef={playerRef} isPlaying={isPlaying} />}
 
-      {step === 2 && (
+      {step === '2' && (
         <YoutubeVideo
           playerRef={playerRef}
           width="320"
@@ -43,7 +43,7 @@ function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
         </Tooltip>
         <Divider />
         <div className="time-and-sync__action">
-          <Button type="primary" onClick={() => setStep(3)}>
+          <Button type="primary" onClick={() => setStep('3')}>
             Next Step: Preview
           </Button>
         </div>

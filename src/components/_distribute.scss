@@ -5,15 +5,21 @@
     margin: get-unit(3 0);
   }
 
+  &__actions-input {
+    width: 200px;
+    margin: get-unit(0 4);
+  }
+
   &__container {
     display: flex;
     margin-top: get-unit(5);
   }
 
-  &__mini-controls {
+  &__controls {
     padding: get-unit(3 5 0 5);
     display: flex;
-    justify-content: flex-end;
+    width: 100%;
+    justify-content: space-between;
   }
 
   &__line-distribution-completion {

@@ -90,7 +90,7 @@ function Group({ group, members, activateGroup }) {
       title={`${group.name} • ${group.debutYear} — ${group.disbandmentYear}`}
       size="small"
       extra={
-        <Button type="default" icon={<EditOutlined />}>
+        <Button type="default" size="small" icon={<EditOutlined />}>
           Edit
         </Button>
       }
@@ -152,7 +152,11 @@ function GroupDistributions({ group, groupMembers }) {
       {groupDistributions?.length ? (
         <ul className="group-distributions">
           {groupDistributions.map((groupDistribution) => (
-            <GroupDistribution distribution={groupDistribution} groupMembers={groupMembers} />
+            <GroupDistribution
+              key={groupDistribution.id}
+              distribution={groupDistribution}
+              groupMembers={groupMembers}
+            />
           ))}
         </ul>
       ) : (
@@ -168,10 +172,15 @@ function GroupDistribution({ distribution, groupMembers }) {
       <span className="group-distribution__title">{distribution.songTitle}</span>
       <span className="group-distribution__version">{distribution.name}</span>
       <GroupDistributionSnippet distribution={distribution} groupMembers={groupMembers} />
-      <Button type="default" icon={<EditOutlined />} className="group-distribution__edit-button">
+      <Button type="default" size="small" icon={<EditOutlined />} className="group-distribution__edit-button">
         Edit
       </Button>
-      <Button type="primary" icon={<YoutubeOutlined />} className="group-distribution__view-button">
+      <Button
+        type="primary"
+        size="small"
+        icon={<YoutubeOutlined />}
+        className="group-distribution__view-button"
+      >
         View
       </Button>
     </li>
@@ -184,7 +193,10 @@ function GroupDistributionSnippet({ distribution, groupMembers }) {
       {Object.entries(groupMembers).map(([memberKey, memberData]) => {
         const progress = distribution?.stats[memberKey]?.absoluteProgress ?? 0;
         return (
-          <span style={{ width: `${progress}%`, backgroundColor: memberData.color }}>
+          <span
+            key={`${distribution.id}${memberKey}`}
+            style={{ width: `${progress}%`, backgroundColor: memberData.color }}
+          >
             {progress > 10 ? progress : ''}
           </span>
         );

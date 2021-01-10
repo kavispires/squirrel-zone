@@ -5,6 +5,7 @@ import { Button, Checkbox, Tooltip } from 'antd';
 import { MessageFilled, CheckCircleOutlined, PlusOutlined, ColumnWidthOutlined } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
+import useGlobalState from '../../states/useGlobalState';
 // Engine and utilities
 import { Part } from '../../utils/distributor';
 import { bemClass, getBemModifier } from '../../utils';
@@ -106,10 +107,14 @@ function LogLineCompact({ line, onCheckboxChange, seekAndPlay }) {
 
 function LogLineDistribute({ line, assignMembers }) {
   const [parts] = useDistributorState('parts');
+  const [lineDistribution] = useGlobalState('lineDistribution');
+
+  const isComplete = line?.partsIds?.every((partId) => Boolean(lineDistribution[partId]));
+  const incompleteClass = isComplete ? '' : 'incomplete';
 
   return (
     <li className={bemClass('log-line', 'compact')}>
-      <ul className={bemClass('log__parts', 'compact')}>
+      <ul className={bemClass('log__parts', 'compact', incompleteClass)}>
         {line?.partsIds?.map((partId) => {
           const part = parts[partId];
           return <LogPart.Distribute key={part.key} part={part} assignMembers={assignMembers} />;

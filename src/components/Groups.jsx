@@ -16,12 +16,7 @@ import Member from './Member';
 const { TabPane } = Tabs;
 
 function Groups() {
-  const history = useHistory();
   const [isLoading] = useGlobalState('isLoading');
-  const [, setActiveGroup] = useGlobalState('activeGroup');
-  const [, setActiveMembers] = useGlobalState('activeMembers');
-  const [, setLineDistribution] = useGlobalState('lineDistribution');
-  const [, setIsFullyLoaded] = useDistributorState('isFullyLoaded');
 
   const [groups, setGroups] = useState([]);
   const [members, setMembers] = useState({});
@@ -34,18 +29,6 @@ function Groups() {
     loadContent();
   }, []);
 
-  const activateGroup = useCallback(
-    (group) => {
-      setActiveMembers(null);
-      setLineDistribution({});
-      setIsFullyLoaded(false);
-      setActiveGroup(group);
-
-      history.push('/distribute');
-    },
-    [history, setActiveGroup, setActiveMembers, setLineDistribution, setIsFullyLoaded]
-  );
-
   return (
     <Layout.Content className="container">
       <main className="main groups">
@@ -57,7 +40,7 @@ function Groups() {
         ) : (
           <ul className="group-card-containers">
             {groups.map((group) => (
-              <Group key={group.id} group={group} members={members} activateGroup={activateGroup} />
+              <Group key={group.id} group={group} members={members} />
             ))}
           </ul>
         )}
@@ -66,9 +49,47 @@ function Groups() {
   );
 }
 
-function Group({ group, members, activateGroup }) {
+function Group({ group, members }) {
+  const history = useHistory();
+  const [, setActiveGroup] = useGlobalState('activeGroup');
+  const [, setActiveMembers] = useGlobalState('activeMembers');
+  const [, setLineDistribution] = useGlobalState('lineDistribution');
+  const [, setLoadedLineDistribution] = useGlobalState('loadedLineDistribution');
+  const [, setIsFullyLoaded] = useDistributorState('isFullyLoaded');
+
   const [tab, setTab] = useState('1');
   const [groupMembers, setGroupMembers] = useState({});
+
+  const activateDistribution = useCallback(
+    async (distribution) => {
+      console.log({ distribution });
+      setIsFullyLoaded(false);
+      setActiveMembers(null);
+      setActiveGroup(group);
+
+      if (distribution) {
+        const distributionData = await store.getRecord('distribution-data', distribution.id);
+        console.log({ distributionData });
+        setLoadedLineDistribution(distribution);
+        setLineDistribution(distributionData.assignedParts);
+        history.push(`/distribute/${distribution.id}`);
+        return;
+      }
+
+      setLoadedLineDistribution({});
+      setLineDistribution({});
+      history.push(`/distribute/new`);
+    },
+    [
+      history,
+      setActiveGroup,
+      setActiveMembers,
+      setLineDistribution,
+      setIsFullyLoaded,
+      setLoadedLineDistribution,
+      group,
+    ]
+  );
 
   useEffect(() => {
     setGroupMembers(
@@ -116,8 +137,14 @@ function Group({ group, members, activateGroup }) {
           Albums will come here.
         </TabPane>
         <TabPane tab="Distributions" key="3">
-          {tab === '3' && <GroupDistributions group={group} groupMembers={groupMembers} />}
-          <Button type="default" icon={<FileAddOutlined />} onClick={() => activateGroup(group)}>
+          {tab === '3' && (
+            <GroupDistributions
+              group={group}
+              groupMembers={groupMembers}
+              activateDistribution={activateDistribution}
+            />
+          )}
+          <Button type="default" icon={<FileAddOutlined />} onClick={() => activateDistribution()}>
             Create a Distribution for this group
           </Button>
         </TabPane>
@@ -126,7 +153,7 @@ function Group({ group, members, activateGroup }) {
   );
 }
 
-function GroupDistributions({ group, groupMembers }) {
+function GroupDistributions({ group, groupMembers, activateDistribution }) {
   const [groupDistributions, setGroupDistributions] = useState(null);
 
   useEffect(() => {
@@ -156,6 +183,7 @@ function GroupDistributions({ group, groupMembers }) {
               key={groupDistribution.id}
               distribution={groupDistribution}
               groupMembers={groupMembers}
+              activateDistribution={activateDistribution}
             />
           ))}
         </ul>
@@ -166,13 +194,21 @@ function GroupDistributions({ group, groupMembers }) {
   );
 }
 
-function GroupDistribution({ distribution, groupMembers }) {
+function GroupDistribution({ distribution, groupMembers, activateDistribution }) {
+  const history = useHistory();
+
   return (
     <li className="group-distribution">
       <span className="group-distribution__title">{distribution.songTitle}</span>
       <span className="group-distribution__version">{distribution.name}</span>
       <GroupDistributionSnippet distribution={distribution} groupMembers={groupMembers} />
-      <Button type="default" size="small" icon={<EditOutlined />} className="group-distribution__edit-button">
+      <Button
+        type="default"
+        size="small"
+        icon={<EditOutlined />}
+        className="group-distribution__edit-button"
+        onClick={() => activateDistribution(distribution)}
+      >
         Edit
       </Button>
       <Button

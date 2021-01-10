@@ -8,6 +8,7 @@ import useDistributorState from '../../states/useDistributorState';
 // Store
 import store from '../../services/store';
 import { Line, Part, Section, Song } from '../../utils/distributor';
+import { loadSongState } from '../../states/functions';
 
 function LoadSongModal({
   isLoadSongModalVisible,
@@ -16,14 +17,6 @@ function LoadSongModal({
   onAfterLoad = () => {},
 }) {
   const [isLoading] = useGlobalState('isLoading');
-
-  const [, setSong] = useDistributorState('song');
-  const [, setStep] = useDistributorState('step');
-  const [, setLines] = useDistributorState('lines');
-  const [, setParts] = useDistributorState('parts');
-  const [, setSections] = useDistributorState('sections');
-  const [, setVideoId] = useDistributorState('videoId');
-  const [, setIsFullyLoaded] = useDistributorState('isFullyLoaded');
 
   const [data, setData] = useState([]);
   const [selectedSongId, setSelectedSongId] = useState(null);
@@ -42,58 +35,16 @@ function LoadSongModal({
   const onLoadSong = useCallback(() => {
     async function fetchSongData() {
       onBeforeLoad();
-      setIsFullyLoaded(false);
 
-      const song = await store.getRecord('song', selectedSongId);
-      const songData = await store.getRecord('song-data', selectedSongId);
+      await loadSongState(selectedSongId);
 
-      const newSong = new Song({ ...song, sectionsIds: songData.sectionsIds });
-
-      // Created instances looping through included data
-      const newSections = {};
-      const newLines = {};
-      const newParts = {};
-      songData.included.forEach((entry) => {
-        if (entry.type === 'section') {
-          const newInstance = new Section(entry);
-          return (newSections[newInstance.id] = newInstance);
-        }
-        if (entry.type === 'line') {
-          const newInstance = new Line(entry);
-          return (newLines[newInstance.id] = newInstance);
-        }
-        if (entry.type === 'part') {
-          const newInstance = new Part(entry);
-          return (newParts[newInstance.id] = newInstance);
-        }
-      });
-
-      setParts(newParts);
-      setLines(newLines);
-      setSections(newSections);
-      setSong(newSong);
-      setVideoId(newSong.videoId);
-      setStep(newSong.isComplete ? '3' : '2');
-      setIsFullyLoaded(true);
       setSelectedSongId(null);
       setLoadSongModalVisibility(false);
       onAfterLoad();
     }
 
     fetchSongData();
-  }, [
-    selectedSongId,
-    setLines,
-    setLoadSongModalVisibility,
-    setParts,
-    setSections,
-    setSong,
-    setStep,
-    setVideoId,
-    setIsFullyLoaded,
-    onBeforeLoad,
-    onAfterLoad,
-  ]);
+  }, [selectedSongId, setLoadSongModalVisibility, onBeforeLoad, onAfterLoad]);
 
   const columns = [
     {

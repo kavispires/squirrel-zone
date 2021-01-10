@@ -9,6 +9,7 @@ const initialState = {
   isLoading: false,
   activeGroup: null,
   activeMembers: null,
+  loadedLineDistribution: {},
   lineDistribution: {},
   stats: {},
 };

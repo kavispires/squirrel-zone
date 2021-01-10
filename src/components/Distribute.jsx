@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Design Resources
 import { Button, Divider, Layout, Progress, Spin, Switch, Select, Input } from 'antd';
@@ -19,34 +19,49 @@ import LoadSongModal from './modals/LoadSongModal';
 import YoutubeVideo from './distributor/YoutubeVideo';
 import Log from './log/Log';
 import Member from './Member';
+import { loadSongState } from '../states/functions';
 
 function Distribute() {
   const history = useHistory();
+  const location = useLocation();
   const [isLoading] = useGlobalState('isLoading');
   const [activeGroup] = useGlobalState('activeGroup');
   const [activeMembers, setActiveMembers] = useGlobalState('activeMembers');
   const [song] = useDistributorState('song');
   const [isFullyLoaded] = useDistributorState('isFullyLoaded');
+  const [loadedLineDistribution] = useGlobalState('loadedLineDistribution');
   const [lineDistribution, setLineDistribution] = useGlobalState('lineDistribution');
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
 
   const [isLoadSongModalVisible, setModalVisibility] = useState(false);
-  const [distributionName, setDistributionName] = useState('');
+  const [distributionName, setDistributionName] = useState(loadedLineDistribution?.name || '');
 
+  // Run on mount
   useEffect(() => {
+    // Redirect if there is no active group
     if (!activeGroup) {
       history.push('/groups');
     }
-  }, []);
 
-  useEffect(() => {
-    async function loadContent() {
+    // Load members
+    async function loadMembers() {
       const members = await store.getCollection('members', true);
       setActiveMembers({ ...members, ...DEFAULT_MEMBERS });
     }
-    loadContent();
+    loadMembers();
   }, []);
+
+  // Load line distribution if one exists
+  useEffect(() => {
+    async function loadContent() {
+      await loadSongState(loadedLineDistribution.songId);
+    }
+
+    if (loadedLineDistribution.id) {
+      loadContent();
+    }
+  }, [loadedLineDistribution.id, loadedLineDistribution.songId]);
 
   if (!activeGroup) {
     return <Spin size="large" />;

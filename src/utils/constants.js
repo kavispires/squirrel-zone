@@ -1,7 +1,7 @@
 export const DATA_TYPE = {
   ALBUM: 'album',
   DISTRIBUTION: 'distribution',
-  DISTRIBUTION_DATA: 'distributions-data',
+  DISTRIBUTION_DATA: 'distribution-data',
   GROUP: 'group',
   MEMBER: 'member',
   MEMBER_DATA: 'member-data',

@@ -103,7 +103,7 @@ function LoadSongModal({
     {
       title: 'Version',
       dataIndex: 'version',
-      render: (text) => `(${text})`,
+      render: (text) => (text ? `(${text})` : ''),
     },
     {
       title: 'Genre',
@@ -114,9 +114,8 @@ function LoadSongModal({
       dataIndex: 'style',
     },
     {
-      title: 'Tempo',
-      dataIndex: 'tempo',
-      render: (text) => `${text}bpm`,
+      title: 'Duration',
+      dataIndex: 'duration',
     },
   ];
 

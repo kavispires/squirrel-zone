@@ -331,7 +331,7 @@ const fetchSongs = async () => {
 const fetchSong = async (songId) => {
   setGlobalState('isLoading', true);
 
-  const typeName = DATA_TYPE[DATA_TYPE.SONG_DATA];
+  const typeName = DATA_TYPE.SONG;
   const collectionName = DATA_TYPE_COLLECTION[typeName];
 
   try {

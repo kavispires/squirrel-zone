@@ -195,8 +195,6 @@ function GroupDistributions({ group, groupMembers, activateDistribution }) {
 }
 
 function GroupDistribution({ distribution, groupMembers, activateDistribution }) {
-  const history = useHistory();
-
   return (
     <li className="group-distribution">
       <span className="group-distribution__title">{distribution.songTitle}</span>

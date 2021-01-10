@@ -6,7 +6,15 @@ import { Badge, Tag, Tooltip } from 'antd';
 // Components
 import Avatar from './Avatar';
 
-function Member({ member, className = '', showName = false, showPosition = false, progress, count }) {
+function Member({
+  member,
+  className = '',
+  showName = false,
+  showPosition = false,
+  progress,
+  count,
+  showProgressNumber = false,
+}) {
   return (
     <li className={`member ${className}`}>
       <Badge count={count}>
@@ -35,6 +43,7 @@ function Member({ member, className = '', showName = false, showPosition = false
           </span>
         </Tooltip>
       )}
+      {showProgressNumber && <span className="member-progress-number">{progress || 0}%</span>}
     </li>
   );
 }

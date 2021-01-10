@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // Design Resources
 import { Button, Divider, Layout, Progress, Spin, Switch, Select, Input } from 'antd';
@@ -23,7 +23,6 @@ import { loadSongState } from '../states/functions';
 
 function Distribute() {
   const history = useHistory();
-  const location = useLocation();
   const [isLoading] = useGlobalState('isLoading');
   const [activeGroup] = useGlobalState('activeGroup');
   const [activeMembers, setActiveMembers] = useGlobalState('activeMembers');
@@ -371,6 +370,7 @@ function MemberSelection({ member, selectedMember, toggleMember, progress = 0, c
         progress={progress}
         count={count}
         className="member-component"
+        showProgressNumber
       />
     </Button>
   );

@@ -38,10 +38,11 @@ function PrivateRoute({ component: Component, authenticated, ...rest }) {
 }
 
 function PublicRoute({ component: Component, authenticated, ...rest }) {
+  const fromPath = rest?.location?.state?.from?.pathname ?? '/';
   return (
     <Route
       {...rest}
-      render={(props) => (authenticated === false ? <Component {...props} /> : <Redirect to="/" />)}
+      render={(props) => (authenticated === false ? <Component {...props} /> : <Redirect to={fromPath} />)}
     />
   );
 }

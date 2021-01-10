@@ -59,7 +59,7 @@ function Distribute() {
   };
 
   const updateName = (event) => {
-    setDistributionName(event.target.name);
+    setDistributionName(event.target.value);
   };
 
   const saveDistribution = async (values) => {
@@ -108,7 +108,7 @@ function Distribute() {
           <div className="distribute__actions">
             <Input
               placeholder="original"
-              disabled={isLoading || distributionCompletion < 100}
+              disabled={isLoading}
               onChange={updateName}
               className="distribute__actions-input"
             />

@@ -23,7 +23,6 @@ const deserialize = (data, id) => {
 
 const deserializer = {
   distribution: (data, id) => {
-    console.log({ data });
     return {
       distribution: {
         id: id ?? data.id,

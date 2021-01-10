@@ -69,7 +69,6 @@ export class Store {
     }
 
     const [filterKey, id] = Object.entries(extra ?? {})?.[0] ?? [];
-    console.log({ extra, filterKey, id });
 
     if (filterKey && id && this._collections[type] && Object.values(this._collections[type]).length) {
       const result = Object.values(this._collections[type])
@@ -145,7 +144,6 @@ export class Store {
       return acc;
     }, {});
 
-    console.log({ type, isAdditive, incomingData });
     if (isAdditive) {
       this._collections[DATA_TYPE_COLLECTION[type]] = {
         ...this._collections[DATA_TYPE_COLLECTION[type]],

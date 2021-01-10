@@ -2,7 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Layout, Card, Spin, Descriptions, Tabs } from 'antd';
+import { Button, Layout, Card, Spin, Tabs } from 'antd';
+import { EditOutlined, FileAddOutlined, YoutubeOutlined } from '@ant-design/icons';
 // State
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
@@ -75,7 +76,6 @@ function Group({ group, members, activateGroup }) {
         const key = serializeKey('member', memberId);
         const member = members[key] ?? {};
         acc[key] = member;
-        console.log(acc);
         return acc;
       }, {})
     );
@@ -86,14 +86,16 @@ function Group({ group, members, activateGroup }) {
   };
 
   return (
-    <Card title={group.name} size="small" extra={<Button type="primary">Edit</Button>} className="group-card">
-      <Descriptions size="small">
-        <Descriptions.Item label="Years Active">
-          {group.disbandmentYear - group.debutYear + 1}
-        </Descriptions.Item>
-        <Descriptions.Item label="Debut Year">{group.debutYear}</Descriptions.Item>
-        <Descriptions.Item label="Disbandment Year">{group.disbandmentYear}</Descriptions.Item>
-      </Descriptions>
+    <Card
+      title={`${group.name} • ${group.debutYear} — ${group.disbandmentYear}`}
+      size="small"
+      extra={
+        <Button type="default" icon={<EditOutlined />}>
+          Edit
+        </Button>
+      }
+      className="group-card"
+    >
       <Tabs defaultActiveKey="1" size="small" className="group-card__tabs" onChange={onChangeTab}>
         <TabPane tab="Members" key="1">
           <ul className="group-card__members">
@@ -115,7 +117,7 @@ function Group({ group, members, activateGroup }) {
         </TabPane>
         <TabPane tab="Distributions" key="3">
           {tab === '3' && <GroupDistributions group={group} groupMembers={groupMembers} />}
-          <Button type="primary" onClick={() => activateGroup(group)}>
+          <Button type="default" icon={<FileAddOutlined />} onClick={() => activateGroup(group)}>
             Create a Distribution for this group
           </Button>
         </TabPane>
@@ -129,7 +131,6 @@ function GroupDistributions({ group, groupMembers }) {
 
   useEffect(() => {
     async function loadContent() {
-      console.log('GETTING COLLECTION FOR', group.id);
       setGroupDistributions(await store.getCollection('distributions', null, { groupId: group.id }));
     }
 
@@ -167,10 +168,10 @@ function GroupDistribution({ distribution, groupMembers }) {
       <span className="group-distribution__title">{distribution.songTitle}</span>
       <span className="group-distribution__version">{distribution.name}</span>
       <GroupDistributionSnippet distribution={distribution} groupMembers={groupMembers} />
-      <Button type="default" className="group-distribution__edit-button">
+      <Button type="default" icon={<EditOutlined />} className="group-distribution__edit-button">
         Edit
       </Button>
-      <Button type="primary" className="group-distribution__view-button">
+      <Button type="primary" icon={<YoutubeOutlined />} className="group-distribution__view-button">
         View
       </Button>
     </li>
@@ -181,8 +182,6 @@ function GroupDistributionSnippet({ distribution, groupMembers }) {
   return (
     <ul className="group-distribution-snippet">
       {Object.entries(groupMembers).map(([memberKey, memberData]) => {
-        console.log({ distribution });
-        console.log({ memberData });
         const progress = distribution?.stats[memberKey]?.absoluteProgress ?? 0;
         return (
           <span style={{ width: `${progress}%`, backgroundColor: memberData.color }}>

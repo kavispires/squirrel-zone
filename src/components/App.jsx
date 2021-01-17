@@ -18,6 +18,7 @@ import Distributor from './Distributor';
 import Groups from './Groups';
 import Home from './Home';
 import Login from './Login';
+import Distribution from './Distribution';
 // Other Components
 import Loading from './global/Loading';
 import Notification from './global/Notification';
@@ -75,6 +76,7 @@ function App() {
             <PrivateRoute path="/admin" authenticated={isAuthenticated} component={Admin} />
             <PrivateRoute path="/creator" authenticated={isAuthenticated} component={Creator} />
             <PrivateRoute path="/distribute" authenticated={isAuthenticated} component={Distribute} />
+            <PrivateRoute path="/distribution" authenticated={isAuthenticated} component={Distribution} />
             <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
             <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} />
 

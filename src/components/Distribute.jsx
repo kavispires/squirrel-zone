@@ -28,7 +28,7 @@ function Distribute() {
   const [activeMembers, setActiveMembers] = useGlobalState('activeMembers');
   const [song] = useDistributorState('song');
   const [isFullyLoaded] = useDistributorState('isFullyLoaded');
-  const [loadedLineDistribution] = useGlobalState('loadedLineDistribution');
+  const [loadedLineDistribution, setLoadedDistribution] = useGlobalState('loadedLineDistribution');
   const [lineDistribution, setLineDistribution] = useGlobalState('lineDistribution');
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
@@ -57,10 +57,10 @@ function Distribute() {
       await loadSongState(loadedLineDistribution.songId);
     }
 
-    if (loadedLineDistribution.id) {
+    if (loadedLineDistribution?.id) {
       loadContent();
     }
-  }, [loadedLineDistribution.id, loadedLineDistribution.songId]);
+  }, [loadedLineDistribution?.id, loadedLineDistribution?.songId]);
 
   if (!activeGroup) {
     return <Spin size="large" />;
@@ -78,16 +78,18 @@ function Distribute() {
 
   const saveDistribution = async (values) => {
     try {
-      await API.saveDistribution({
-        id: null,
+      const response = await API.saveDistribution({
+        id: loadedLineDistribution?.id ?? null,
         type: 'distribution',
-        name: distributionName || 'original',
+        name: distributionName || loadedLineDistribution.name || 'original',
         songId: song.id,
         songTitle: song.title,
         groupId: activeGroup.id,
         assignedParts: lineDistribution,
         stats,
       });
+
+      setLoadedDistribution(response);
     } catch (_) {}
   };
 
@@ -131,7 +133,7 @@ function Distribute() {
               onClick={saveDistribution}
               disabled={isLoading || distributionCompletion < 100}
             >
-              Save Distribution
+              {loadedLineDistribution?.id ? 'Update' : 'Save'} Distribution
             </Button>
           </div>
         )}

@@ -1,6 +1,7 @@
 // Global State
 import { getFrameFromTimestamp, getTimestampFromFrame } from '..';
-import {} from './utilities';
+
+const ALL_NONE_MEMBERS = ['ALL', 'NONE', 'member::ALL', 'member::NONE'];
 
 class DistributedPart {
   constructor(part, membersIds) {
@@ -20,8 +21,8 @@ class DistributedPart {
 }
 
 class ChartEntry {
-  constructor({ id, name, color }) {
-    this.id = id;
+  constructor({ id, name, color, key }) {
+    this.id = key ?? id;
     this.label = name;
     this.value = 0;
     this.color = color;
@@ -35,7 +36,7 @@ class ChartEntry {
  */
 export class Previewer {
   /**
-   * Create a Line.
+   * Create a Previewer.
    * @constructor
    * @param {object} data - An object with the necessary data to be loaded in this instance
    */
@@ -62,10 +63,14 @@ export class Previewer {
     this.distributedParts = song.allPartsIds
       .map((partId) => {
         const part = parts[partId];
-        return new DistributedPart(part, distribution[partId]);
+        const distributedPart = distribution[partId];
+        const distributedAssignees = Array.isArray(distributedPart)
+          ? distributedPart
+          : Object.keys(distributedPart);
+
+        return new DistributedPart(part, distributedAssignees);
       })
       .sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
-
     // Calculate max
     this._calculateMax();
   }
@@ -82,7 +87,7 @@ export class Previewer {
           }
           acc.cache[assignee] += part.duration;
 
-          if (!['ALL', 'NONE'].includes(assignee) && acc.cache[assignee] > acc.winningDuration) {
+          if (!ALL_NONE_MEMBERS.includes(assignee) && acc.cache[assignee] > acc.winningDuration) {
             acc.winningDuration = acc.cache[assignee];
             acc.winnerId = assignee;
           }
@@ -106,7 +111,7 @@ export class Previewer {
 
   buildMembersIndexing() {
     this.membersIndices = Object.keys(this.members).reduce((acc, memberId, index) => {
-      if (!['ALL', 'NONE'].includes(memberId)) {
+      if (!ALL_NONE_MEMBERS.includes(memberId)) {
         acc[memberId] = index;
       }
 
@@ -136,6 +141,7 @@ export class Previewer {
 
     this.buildMembersIndexing();
     this.buildMembersLineBarChartData();
+    console.log(this.membersChartData);
 
     const temp = [[...JSON.parse(JSON.stringify(this.membersChartData))]];
 
@@ -148,8 +154,11 @@ export class Previewer {
           temp[i] = [...JSON.parse(JSON.stringify(this.membersChartData))];
         }
         dPart.assignees.forEach((assignee) => {
-          if (!['ALL', 'NONE'].includes(assignee)) {
+          if (!ALL_NONE_MEMBERS.includes(assignee)) {
             const assigneeIndex = this.membersIndices[assignee];
+            if (!temp[i][assigneeIndex]) {
+              debugger;
+            }
             temp[i][assigneeIndex].on = i !== endIndex;
           }
         });
@@ -158,7 +167,6 @@ export class Previewer {
 
     // Add the initial state
     const result = [temp[0]];
-
     // Calculate value and percentage for each entry (undefined indexes will remain undefined)
     for (let i = 1; i < temp.length; i++) {
       const entry = temp[i];
@@ -168,6 +176,7 @@ export class Previewer {
           if (chartEntry.on) {
             this.membersCountCache[chartEntry.id] += 1;
           }
+
           // Update value and percentage
           chartEntry.value = getTimestampFromFrame(this.membersCountCache[chartEntry.id], this.framerate);
           chartEntry.percentage = Math.ceil((100 * chartEntry.value) / this.winningDuration);

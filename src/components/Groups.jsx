@@ -61,7 +61,7 @@ function Group({ group, members }) {
   const [groupMembers, setGroupMembers] = useState({});
 
   const activateDistribution = useCallback(
-    async (distribution) => {
+    async (distribution, isEdit = false) => {
       console.log({ distribution });
       setIsFullyLoaded(false);
       setActiveMembers(null);
@@ -72,7 +72,9 @@ function Group({ group, members }) {
         console.log({ distributionData });
         setLoadedLineDistribution(distribution);
         setLineDistribution(distributionData.assignedParts);
-        history.push(`/distribute/${distribution.id}`);
+
+        const route = isEdit ? 'distribute' : 'distribution';
+        history.push(`/${route}/${distribution.id}`);
         return;
       }
 
@@ -205,7 +207,7 @@ function GroupDistribution({ distribution, groupMembers, activateDistribution })
         size="small"
         icon={<EditOutlined />}
         className="group-distribution__edit-button"
-        onClick={() => activateDistribution(distribution)}
+        onClick={() => activateDistribution(distribution, true)}
       >
         Edit
       </Button>
@@ -214,6 +216,7 @@ function GroupDistribution({ distribution, groupMembers, activateDistribution })
         size="small"
         icon={<YoutubeOutlined />}
         className="group-distribution__view-button"
+        onClick={() => activateDistribution(distribution)}
       >
         View
       </Button>
@@ -231,7 +234,7 @@ function GroupDistributionSnippet({ distribution, groupMembers }) {
             key={`${distribution.id}${memberKey}`}
             style={{ width: `${progress}%`, backgroundColor: memberData.color }}
           >
-            {progress > 10 ? progress : ''}
+            {progress > 5 ? progress : ''}%
           </span>
         );
       })}

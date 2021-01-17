@@ -3,15 +3,9 @@ import React, { useEffect, useState } from 'react';
 // Components
 import YoutubeVideo from './YoutubeVideo';
 import { bemClass, getBemModifier, getFrameFromTimestamp } from '../../utils';
+import Avatar from '../Avatar';
 
-function LineDistribution({
-  playerRef,
-  playVideo,
-  pauseVideo,
-  seekAndPlay,
-  lineDistributionData,
-  framerate = 30,
-}) {
+function LineDistribution({ playerRef, lineDistributionData, framerate = 30 }) {
   const [intervalId, setIntervalId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentRank, setCurrentRank] = useState(lineDistributionData[0]);
@@ -44,9 +38,7 @@ function LineDistribution({
     }
 
     if (lineDistributionData[frameIndex]) {
-      const sortedRank = lineDistributionData[frameIndex].sort((a, b) =>
-        a.value < b.value ? 1 : a.label > b.label ? 1 : -1
-      );
+      const sortedRank = lineDistributionData[frameIndex].sort((a, b) => (a.value <= b.value ? 1 : -1));
       const sortedPositionOrder = sortedRank.reduce((acc, entry, index) => {
         acc[entry.id] = entry.value > 0 ? index : 30;
         return acc;
@@ -82,7 +74,11 @@ function RankEntry({ entry, positionOrder }) {
 
   return (
     <li className={bemClass('rank-entry', onClass)} style={{ order: positionOrder[entry.id] ?? 30 }}>
-      <div className={'rank-entry__avatar'}>{entry.label[0]}</div>
+      <Avatar
+        name={entry.label}
+        className="rank-entry__avatar"
+        style={{ borderColor: entry.color ?? 'black' }}
+      />
       <div className="rank-entry__name">{entry.label}</div>
       <div className="rank-entry__progress">
         <span

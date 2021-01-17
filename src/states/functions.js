@@ -1,9 +1,11 @@
 import store from '../services/store';
-import { Line, Part, Section, Song } from '../utils/distributor';
-import { setGlobalState } from './useDistributorState';
+import { DEFAULT_MEMBERS } from '../utils/constants';
+import { Line, Part, Section, serializeKey, Song } from '../utils/distributor';
+import { setGlobalState as setDistributorGlobalState } from './useDistributorState';
+import { setGlobalState } from './useGlobalState';
 
 export const loadSongState = async (songId) => {
-  setGlobalState('isFullyLoaded', false);
+  setDistributorGlobalState('isFullyLoaded', false);
 
   const song = await store.getRecord('song', songId);
   const songData = await store.getRecord('song-data', songId);
@@ -29,11 +31,31 @@ export const loadSongState = async (songId) => {
     }
   });
 
-  setGlobalState('parts', newParts);
-  setGlobalState('lines', newLines);
-  setGlobalState('sections', newSections);
-  setGlobalState('song', newSong);
-  setGlobalState('videoId', newSong.videoId);
-  setGlobalState('step', newSong.isComplete ? '3' : '2');
-  setGlobalState('isFullyLoaded', true);
+  setDistributorGlobalState('parts', newParts);
+  setDistributorGlobalState('lines', newLines);
+  setDistributorGlobalState('sections', newSections);
+  setDistributorGlobalState('song', newSong);
+  setDistributorGlobalState('videoId', newSong.videoId);
+  setDistributorGlobalState('step', newSong.isComplete ? '3' : '2');
+  setDistributorGlobalState('isFullyLoaded', true);
+};
+
+export const loadActiveMembers = async (group, includeDefault = false) => {
+  const members = await store.getCollection('members', true);
+
+  console.log({ members });
+
+  console.log({ group });
+  const activeMembers = group.membersIds.reduce((acc, memberId) => {
+    const key = serializeKey('member', memberId);
+    acc[key] = { ...members[key] };
+    return acc;
+  }, {});
+
+  if (includeDefault) {
+    setGlobalState('activeMembers', { ...activeMembers, ...DEFAULT_MEMBERS });
+    return;
+  }
+
+  setGlobalState('activeMembers', { ...activeMembers });
 };

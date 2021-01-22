@@ -2,6 +2,7 @@ import { db } from '../services/firebase';
 
 import store from '../services/store';
 import { setGlobalState } from '../states/useGlobalState';
+import { setLoading } from '../states/useLoadingState';
 import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
 import deserialize from './deserializers';
 import serialize from './serializers';
@@ -39,7 +40,7 @@ const successNotification = (message, description) => {
  * Query GET `/albums`
  */
 const fetchAlbums = async () => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.ALBUM, payload: true });
 
   const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.ALBUM];
 
@@ -56,7 +57,7 @@ const fetchAlbums = async () => {
   } catch (error) {
     errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.ALBUM, payload: false });
   }
 };
 
@@ -64,7 +65,7 @@ const fetchAlbums = async () => {
  * Query `/distributions/<group_id>`
  */
 const fetchDistributions = async (groupId) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.DISTRIBUTION, payload: true });
 
   const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION];
 
@@ -86,7 +87,7 @@ const fetchDistributions = async (groupId) => {
   } catch (error) {
     errorNotification(`Failed to load ${collectionName} for group ${groupId}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.DISTRIBUTION, payload: false });
   }
 };
 
@@ -94,7 +95,7 @@ const fetchDistributions = async (groupId) => {
  * Query GET `/distributions-data/<id>`
  */
 const fetchDistributionData = async (distributionId) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.DISTRIBUTION_DATA, payload: true });
 
   const typeName = DATA_TYPE.DISTRIBUTION_DATA;
   const collectionName = DATA_TYPE_COLLECTION[typeName];
@@ -115,15 +116,15 @@ const fetchDistributionData = async (distributionId) => {
   } catch (error) {
     errorNotification(`Failed to load ${typeName} ${distributionId}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.DISTRIBUTION_DATA, payload: false });
   }
 };
 
 /**
- * Query POST `/groups/<id>`
+ * Query POST `/distribution/<id>`
  */
 const saveDistribution = async (data) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.DISTRIBUTION, payload: true });
 
   let response;
 
@@ -157,7 +158,7 @@ const saveDistribution = async (data) => {
   } catch (error) {
     errorNotification(`Failed to save ${typeName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.DISTRIBUTION, payload: false });
   }
 
   return response;
@@ -167,7 +168,7 @@ const saveDistribution = async (data) => {
  * Query GET `/groups`
  */
 const fetchGroups = async () => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.GROUP, payload: true });
 
   const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.GROUP];
 
@@ -184,7 +185,7 @@ const fetchGroups = async () => {
   } catch (error) {
     errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.GROUP, payload: false });
   }
 };
 
@@ -192,7 +193,7 @@ const fetchGroups = async () => {
  * Query POST `/groups/<id>`
  */
 const saveGroup = async (data) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.GROUP, payload: true });
 
   let response;
 
@@ -211,7 +212,7 @@ const saveGroup = async (data) => {
   } catch (error) {
     errorNotification(`Failed to save ${typeName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.GROUP, payload: false });
   }
 
   return response;
@@ -221,7 +222,7 @@ const saveGroup = async (data) => {
  * Query GET `/members`
  */
 const fetchMembers = async () => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.MEMBER, payload: true });
 
   const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.MEMBER];
 
@@ -238,7 +239,7 @@ const fetchMembers = async () => {
   } catch (error) {
     errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.MEMBER, payload: false });
   }
 };
 
@@ -246,7 +247,7 @@ const fetchMembers = async () => {
  * Query GET `/members/<id>`
  */
 const fetchMember = async (memberId) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.MEMBER, payload: true });
 
   const typeName = DATA_TYPE.MEMBER;
   const collectionName = DATA_TYPE_COLLECTION[typeName];
@@ -267,7 +268,7 @@ const fetchMember = async (memberId) => {
   } catch (error) {
     errorNotification(`Failed to load ${typeName} ${memberId}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.MEMBER, payload: false });
   }
 };
 
@@ -275,7 +276,7 @@ const fetchMember = async (memberId) => {
  * Query POST `/members/<id>`
  */
 const saveMember = async (data) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.MEMBER, payload: true });
 
   let response;
 
@@ -294,7 +295,7 @@ const saveMember = async (data) => {
   } catch (error) {
     errorNotification(`Failed to save ${typeName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.MEMBER, payload: false });
   }
 
   return response;
@@ -304,7 +305,7 @@ const saveMember = async (data) => {
  * Query GET `/songs`
  */
 const fetchSongs = async () => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.SONG, payload: true });
 
   const collectionName = DATA_TYPE_COLLECTION[DATA_TYPE.SONG];
 
@@ -321,7 +322,7 @@ const fetchSongs = async () => {
   } catch (error) {
     errorNotification(`Failed to load ${collectionName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.SONG, payload: false });
   }
 };
 
@@ -329,7 +330,7 @@ const fetchSongs = async () => {
  * Query GET `/songs/<id>`
  */
 const fetchSong = async (songId) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.SONG, payload: true });
 
   const typeName = DATA_TYPE.SONG;
   const collectionName = DATA_TYPE_COLLECTION[typeName];
@@ -350,7 +351,7 @@ const fetchSong = async (songId) => {
   } catch (error) {
     errorNotification(`Failed to load ${typeName} ${songId}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.SONG, payload: false });
   }
 };
 
@@ -358,7 +359,7 @@ const fetchSong = async (songId) => {
  * Query GET `/songs-data/<id>`
  */
 const fetchSongData = async (songId) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.SONG_DATA, payload: true });
 
   const typeName = DATA_TYPE.SONG_DATA;
   const collectionName = DATA_TYPE_COLLECTION[typeName];
@@ -375,7 +376,7 @@ const fetchSongData = async (songId) => {
   } catch (error) {
     errorNotification(`Failed to load ${typeName} ${songId}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.SONG_DATA, payload: false });
   }
 };
 
@@ -383,7 +384,7 @@ const fetchSongData = async (songId) => {
  * Query POST `/songs/<id>`
  */
 const saveSong = async (data) => {
-  setGlobalState('isLoading', true);
+  setLoading({ type: DATA_TYPE.SONG, payload: true });
 
   let response;
   const typeName = DATA_TYPE.SONG;
@@ -406,7 +407,7 @@ const saveSong = async (data) => {
   } catch (error) {
     errorNotification(`Failed to save ${typeName}`, error);
   } finally {
-    setGlobalState('isLoading', false);
+    setLoading({ type: DATA_TYPE.SONG, payload: false });
   }
 
   return response;

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Divider, Layout, Progress, Spin, Switch, Select, Input } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
+import useLoadingState from '../states/useLoadingState';
 import useDistributorState from '../states/useDistributorState';
 import { loadSongState } from '../states/functions';
 // Store
@@ -24,7 +25,7 @@ import Member from './Member';
 
 function Distribute() {
   const history = useHistory();
-  const [isLoading] = useGlobalState('isLoading');
+  const [isLoading] = useLoadingState('isLoading');
   const [activeGroup] = useGlobalState('activeGroup');
   const [activeMembers, setActiveMembers] = useGlobalState('activeMembers');
   const [song] = useDistributorState('song');
@@ -107,7 +108,7 @@ function Distribute() {
             {isLoading ? <Spin size="small" /> : 'Load Song'}
           </Button>
         </div>
-        <LoadingContainer waitFor={isFullyLoaded}>
+        <LoadingContainer forceLoading={!isFullyLoaded}>
           <DistributeWidget
             members={activeMembers}
             distributionCompletion={distributionCompletion}
@@ -146,7 +147,7 @@ function Distribute() {
 }
 
 function DistributeWidget({ members, distributionCompletion, resetDistribution }) {
-  const [isLoading] = useGlobalState('isLoading');
+  const [isLoading] = useLoadingState('isLoading');
   const [activeGroup] = useGlobalState('activeGroup');
   const [lineDistribution, setLineDistribution] = useGlobalState('lineDistribution');
   const [parts] = useDistributorState('parts');

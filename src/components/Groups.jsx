@@ -33,7 +33,7 @@ function Groups() {
     <Layout.Content className="container">
       <main className="main groups">
         <h1>Groups</h1>
-        <LoadingContainer waitFor={groups.length}>
+        <LoadingContainer waitFor="group" noResults={!groups.length}>
           <div className="groups-page">
             <ul className="group-card-containers">
               {groups.map((group, i) => (

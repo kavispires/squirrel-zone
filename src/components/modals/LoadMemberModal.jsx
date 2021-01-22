@@ -3,14 +3,14 @@ import React, { useState, useCallback, useEffect } from 'react';
 // Design Resources
 import { Modal, Table } from 'antd';
 // State
-import useGlobalState from '../../states/useGlobalState';
+import useLoadingState from '../../states/useLoadingState';
 // Store
 import store from '../../services/store';
 // Components
 import LoadingContainer from '../global/LoadingContainer';
 
 function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) {
-  const [isLoading] = useGlobalState('isLoading');
+  const [isMemberLoading] = useLoadingState('isMemberLoading');
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -65,9 +65,9 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
       onOk={onLoadSong}
       okText="Load Member"
       onCancel={onCancelModal}
-      okButtonProps={{ disabled: isLoading || Boolean(!setSelectedId) }}
+      okButtonProps={{ disabled: isMemberLoading || Boolean(!setSelectedId) }}
     >
-      <LoadingContainer>
+      <LoadingContainer waitFor="member">
         <Table
           rowSelection={{
             type: 'radio',

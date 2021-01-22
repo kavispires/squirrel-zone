@@ -3,14 +3,14 @@ import React, { useState, useCallback, useEffect } from 'react';
 // Design Resources
 import { Modal, Table } from 'antd';
 // State
-import useGlobalState from '../../states/useGlobalState';
+import useLoadingState from '../../states/useLoadingState';
 // Store
 import store from '../../services/store';
 // Components
 import LoadingContainer from '../global/LoadingContainer';
 
 function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onLoad = () => {} }) {
-  const [isLoading] = useGlobalState('isLoading');
+  const [isGroupLoading] = useLoadingState('isGroupLoading');
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -65,9 +65,9 @@ function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onL
       onOk={onLoadSong}
       okText="Load Group"
       onCancel={onCancelModal}
-      okButtonProps={{ disabled: isLoading || Boolean(!setSelectedId) }}
+      okButtonProps={{ disabled: isGroupLoading || Boolean(!setSelectedId) }}
     >
-      <LoadingContainer>
+      <LoadingContainer waitFor="group">
         <Table
           rowSelection={{
             type: 'radio',

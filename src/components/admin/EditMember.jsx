@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // Design Resources
 import { Button, InputNumber, Form, Input, Checkbox, Select, Spin, Divider } from 'antd';
 // State
-import useGlobalState from '../../states/useGlobalState';
+import useLoadingState from '../../states/useLoadingState';
 // API
 import API from '../../api';
 // Utilities
@@ -13,7 +13,7 @@ import { bemClass } from '../../utils';
 import LoadMemberModal from '../modals/LoadMemberModal';
 
 function EditMember() {
-  const [isLoading] = useGlobalState('isLoading');
+  const [isMemberLoading] = useLoadingState('isMemberLoading');
   const [isModalVisible, setModalVisibility] = useState(false);
   const [loadedData, setLoadedData] = useState(false);
   const [form] = Form.useForm();
@@ -39,8 +39,8 @@ function EditMember() {
     <section className="admin__form-container">
       <h3>Create/Edit Member</h3>
       <div className={bemClass('admin-button-container', 'center')}>
-        <Button type="primary" onClick={() => setModalVisibility(true)} disabled={isLoading}>
-          {isLoading ? <Spin size="small" /> : 'Load Member'}
+        <Button type="primary" onClick={() => setModalVisibility(true)} disabled={isMemberLoading}>
+          {isMemberLoading ? <Spin size="small" /> : 'Load Member'}
         </Button>
       </div>
 

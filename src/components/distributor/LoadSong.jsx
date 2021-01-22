@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 // Design Resources
 import { Input, Button, Spin } from 'antd';
 // State
-import useGlobalState from '../../states/useGlobalState';
+import useLoadingState from '../../states/useLoadingState';
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
 import { Song } from '../../utils/distributor';
@@ -14,7 +14,7 @@ function LoadSong() {
   const [, setSong] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
   const [videoId, setVideoId] = useDistributorState('videoId');
-  const [isLoading] = useGlobalState('isLoading');
+  const [isSongLoading] = useLoadingState('isSongLoading');
   const [isLoadSongModalVisible, setLoadSongModalVisibility] = useState(false);
 
   const onAddVideoId = useCallback(
@@ -37,8 +37,8 @@ function LoadSong() {
         placeholder="Insert Youtube video id"
       />
       <span className="load-song__separator">or</span>
-      <Button type="primary" onClick={() => setLoadSongModalVisibility(true)} disabled={isLoading}>
-        {isLoading ? <Spin size="small" /> : 'Load Song'}
+      <Button type="primary" onClick={() => setLoadSongModalVisibility(true)} disabled={isSongLoading}>
+        {isSongLoading ? <Spin size="small" /> : 'Load Song'}
       </Button>
 
       <LoadSongModal

@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 // Design Resources
 import { Modal, Table } from 'antd';
 // State
-import useGlobalState from '../../states/useGlobalState';
+import useLoadingState from '../../states/useLoadingState';
 import { loadSongState } from '../../states/functions';
 // Store
 import store from '../../services/store';
@@ -16,7 +16,7 @@ function LoadSongModal({
   onBeforeLoad = () => {},
   onAfterLoad = () => {},
 }) {
-  const [isLoading] = useGlobalState('isLoading');
+  const [isSongLoading] = useLoadingState('isSongLoading');
 
   const [data, setData] = useState([]);
   const [selectedSongId, setSelectedSongId] = useState(null);
@@ -83,9 +83,9 @@ function LoadSongModal({
       onOk={onLoadSong}
       okText="Load Song"
       onCancel={onCancelModal}
-      okButtonProps={{ disabled: isLoading || Boolean(!selectedSongId) }}
+      okButtonProps={{ disabled: isSongLoading || Boolean(!selectedSongId) }}
     >
-      <LoadingContainer>
+      <LoadingContainer waitFor="song">
         <Table
           rowSelection={{
             type: 'radio',

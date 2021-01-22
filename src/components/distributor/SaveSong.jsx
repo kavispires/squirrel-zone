@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // Design Resources
 import { Button, Divider, Tooltip, Progress } from 'antd';
 // State
-import useGlobalState from '../../states/useGlobalState';
+import useLoadingState from '../../states/useLoadingState';
 import useDistributorState from '../../states/useDistributorState';
 // API
 import API from '../../api';
@@ -11,7 +11,7 @@ import API from '../../api';
 function SaveSong() {
   const [song] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
-  const [isLoading] = useGlobalState('isLoading');
+  const [isSongLoading] = useLoadingState('isSongLoading');
 
   const [success, setSuccess] = useState(false);
 
@@ -34,7 +34,7 @@ function SaveSong() {
         </Tooltip>
         <Divider />
         <div className="song-metadata__action">
-          <Button type="primary" disabled={isLoading ?? success} onClick={onSave}>
+          <Button type="primary" disabled={isSongLoading ?? success} onClick={onSave}>
             Save On Database
           </Button>
         </div>

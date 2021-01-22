@@ -62,7 +62,7 @@ function Distribution() {
   const playerRef = useRef();
 
   return (
-    <LoadingContainer waitFor={previewBars.length}>
+    <LoadingContainer forceLoading={!previewBars.length}>
       <Layout.Content className="container">
         <main className="main distribution">
           <h1>Line Distribution{song ? `: ${song.title}` : ''}</h1>

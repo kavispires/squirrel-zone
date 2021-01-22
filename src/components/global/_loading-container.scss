@@ -1,0 +1,13 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  padding: get-unit(6);
+  color: get-color(gray);
+
+  &__message {
+    text-align: center;
+    font-style: italic;
+  }
+}

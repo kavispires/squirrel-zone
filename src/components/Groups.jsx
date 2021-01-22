@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Layout, Card, Spin, Tabs } from 'antd';
+import { Button, Layout, Card, Tabs } from 'antd';
 import { EditOutlined, FileAddOutlined, YoutubeOutlined } from '@ant-design/icons';
 // State
 import useGlobalState from '../states/useGlobalState';
@@ -13,11 +13,10 @@ import store from '../services/store';
 import { serializeKey } from '../utils/distributor';
 // Components
 import Member from './Member';
+import LoadingContainer from './global/LoadingContainer';
 const { TabPane } = Tabs;
 
 function Groups() {
-  const [isLoading] = useGlobalState('isLoading');
-
   const [groups, setGroups] = useState([]);
   const [members, setMembers] = useState({});
 
@@ -33,17 +32,13 @@ function Groups() {
     <Layout.Content className="container">
       <main className="main groups">
         <h1>Groups</h1>
-        {isLoading && !groups.length ? (
-          <div className="loading-container">
-            <Spin size="large" />
-          </div>
-        ) : (
+        <LoadingContainer waitFor={groups.length}>
           <ul className="group-card-containers">
             {groups.map((group) => (
               <Group key={group.id} group={group} members={members} />
             ))}
           </ul>
-        )}
+        </LoadingContainer>
       </main>
     </Layout.Content>
   );
@@ -62,14 +57,12 @@ function Group({ group, members }) {
 
   const activateDistribution = useCallback(
     async (distribution, isEdit = false) => {
-      console.log({ distribution });
       setIsFullyLoaded(false);
       setActiveMembers(null);
       setActiveGroup(group);
 
       if (distribution) {
         const distributionData = await store.getRecord('distribution-data', distribution.id);
-        console.log({ distributionData });
         setLoadedLineDistribution(distribution);
         setLineDistribution(distributionData.assignedParts);
 

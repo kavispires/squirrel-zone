@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Layout, Spin } from 'antd';
+import { Layout } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
@@ -11,6 +11,7 @@ import Previewer from '../utils/distribution/previewer';
 import { loadActiveMembers, loadSongState } from '../states/functions';
 // Components
 import LineDistribution from './distributor/LineDistribution';
+import LoadingContainer from './global/LoadingContainer';
 
 function Distribution() {
   const history = useHistory();
@@ -60,26 +61,20 @@ function Distribution() {
 
   const playerRef = useRef();
 
-  if (!previewBars.length) {
-    return (
-      <div className="loading-container">
-        <Spin size="large" />
-      </div>
-    );
-  }
-
   return (
-    <Layout.Content className="container">
-      <main className="main distribution">
-        <h1>Line Distribution{song ? `: ${song.title}` : ''}</h1>
-        <LineDistribution
-          playerRef={playerRef}
-          members={previewMembers}
-          bars={previewBars}
-          lyrics={previewLyrics}
-        />
-      </main>
-    </Layout.Content>
+    <LoadingContainer waitFor={previewBars.length}>
+      <Layout.Content className="container">
+        <main className="main distribution">
+          <h1>Line Distribution{song ? `: ${song.title}` : ''}</h1>
+          <LineDistribution
+            playerRef={playerRef}
+            members={previewMembers}
+            bars={previewBars}
+            lyrics={previewLyrics}
+          />
+        </main>
+      </Layout.Content>
+    </LoadingContainer>
   );
 }
 

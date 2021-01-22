@@ -6,6 +6,7 @@ import { Button, Divider, Layout, Progress, Spin, Switch, Select, Input } from '
 // State
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
+import { loadSongState } from '../states/functions';
 // Store
 import store from '../services/store';
 // API
@@ -15,11 +16,11 @@ import { serializeKey } from '../utils/distributor';
 import { bemClassConditionalModifier } from '../utils';
 import { DEFAULT_MEMBERS } from '../utils/constants';
 // Components
+import LoadingContainer from './global/LoadingContainer';
 import LoadSongModal from './modals/LoadSongModal';
 import YoutubeVideo from './distributor/YoutubeVideo';
 import Log from './log/Log';
 import Member from './Member';
-import { loadSongState } from '../states/functions';
 
 function Distribute() {
   const history = useHistory();
@@ -106,19 +107,13 @@ function Distribute() {
             {isLoading ? <Spin size="small" /> : 'Load Song'}
           </Button>
         </div>
-        {isLoading ? (
-          <div className="loading-container">
-            <Spin size="large" />
-          </div>
-        ) : (
-          isFullyLoaded && (
-            <DistributeWidget
-              members={activeMembers}
-              distributionCompletion={distributionCompletion}
-              resetDistribution={resetDistribution}
-            />
-          )
-        )}
+        <LoadingContainer waitFor={isFullyLoaded}>
+          <DistributeWidget
+            members={activeMembers}
+            distributionCompletion={distributionCompletion}
+            resetDistribution={resetDistribution}
+          />
+        </LoadingContainer>
 
         {isFullyLoaded && (
           <div className="distribute__actions">

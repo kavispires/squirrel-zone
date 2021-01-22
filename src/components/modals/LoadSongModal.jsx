@@ -1,12 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
 // Design Resources
-import { Modal, Spin, Table } from 'antd';
+import { Modal, Table } from 'antd';
 // State
 import useGlobalState from '../../states/useGlobalState';
+import { loadSongState } from '../../states/functions';
 // Store
 import store from '../../services/store';
-import { loadSongState } from '../../states/functions';
+// Components
+import LoadingContainer from '../global/LoadingContainer';
 
 function LoadSongModal({
   isLoadSongModalVisible,
@@ -83,11 +85,7 @@ function LoadSongModal({
       onCancel={onCancelModal}
       okButtonProps={{ disabled: isLoading || Boolean(!selectedSongId) }}
     >
-      {isLoading ? (
-        <div className="loading-container">
-          <Spin size="large" />
-        </div>
-      ) : (
+      <LoadingContainer>
         <Table
           rowSelection={{
             type: 'radio',
@@ -96,7 +94,7 @@ function LoadSongModal({
           columns={columns}
           dataSource={data ?? []}
         />
-      )}
+      </LoadingContainer>
     </Modal>
   );
 }

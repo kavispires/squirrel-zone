@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 
 // Design Resources
-import { Modal, Spin, Table } from 'antd';
+import { Modal, Table } from 'antd';
 // State
 import useGlobalState from '../../states/useGlobalState';
 // Store
 import store from '../../services/store';
+// Components
+import LoadingContainer from '../global/LoadingContainer';
 
 function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onLoad = () => {} }) {
   const [isLoading] = useGlobalState('isLoading');
@@ -65,11 +67,7 @@ function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onL
       onCancel={onCancelModal}
       okButtonProps={{ disabled: isLoading || Boolean(!setSelectedId) }}
     >
-      {isLoading ? (
-        <div className="loading-container">
-          <Spin size="large" />
-        </div>
-      ) : (
+      <LoadingContainer>
         <Table
           rowSelection={{
             type: 'radio',
@@ -78,7 +76,7 @@ function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onL
           columns={columns}
           dataSource={data ?? []}
         />
-      )}
+      </LoadingContainer>
     </Modal>
   );
 }

@@ -1,5 +1,15 @@
+.groups-page {
+  display: flex;
+}
+
+.group-quick-links {
+  @include reset-list;
+  margin-left: get-unit(3);
+}
+
 .group-card-containers {
   @include reset-list;
+  width: 100%;
 }
 
 .group-card {

@@ -316,10 +316,22 @@ body {
   justify-content: flex-end;
 }
 
+.groups-page {
+  display: flex;
+}
+
+.group-quick-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: 12px;
+}
+
 .group-card-containers {
   margin: 0;
   padding: 0;
   list-style: none;
+  width: 100%;
 }
 
 .group-card {

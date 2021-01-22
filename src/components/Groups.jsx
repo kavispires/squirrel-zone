@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Layout, Card, Tabs } from 'antd';
+import { Button, Layout, Card, Tabs, Affix } from 'antd';
 import { EditOutlined, FileAddOutlined, YoutubeOutlined } from '@ant-design/icons';
 // State
 import useGlobalState from '../states/useGlobalState';
@@ -19,6 +19,7 @@ const { TabPane } = Tabs;
 function Groups() {
   const [groups, setGroups] = useState([]);
   const [members, setMembers] = useState({});
+  const groupsRefs = useRef([]);
 
   useEffect(() => {
     async function loadContent() {
@@ -33,11 +34,32 @@ function Groups() {
       <main className="main groups">
         <h1>Groups</h1>
         <LoadingContainer waitFor={groups.length}>
-          <ul className="group-card-containers">
-            {groups.map((group) => (
-              <Group key={group.id} group={group} members={members} />
-            ))}
-          </ul>
+          <div className="groups-page">
+            <ul className="group-card-containers">
+              {groups.map((group, i) => (
+                <li key={group.id} ref={(el) => (groupsRefs.current[i] = el)}>
+                  <Group group={group} members={members} />
+                </li>
+              ))}
+            </ul>
+            <aside>
+              <Affix offsetTop={120}>
+                <ul className="group-quick-links">
+                  {groups.map((group, i) => (
+                    <li key={`quick-link-${group.id}`} className="group-quick-links__link">
+                      <Button
+                        type="link"
+                        size="small"
+                        onClick={() => groupsRefs.current[i].scrollIntoView({ behavior: 'smooth' })}
+                      >
+                        {group.name}
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </Affix>
+            </aside>
+          </div>
         </LoadingContainer>
       </main>
     </Layout.Content>

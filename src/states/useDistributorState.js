@@ -25,6 +25,6 @@ const initialState = {
 
 const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState(initialState);
 
-export { setGlobalState, getGlobalState };
+export { setGlobalState as setDistributorGlobalState, getGlobalState as getDistributorGlobalState };
 
 export default useGlobalState;

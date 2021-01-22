@@ -1,3 +1,6 @@
+// Global State
+import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
+// Engine and utilities
 import { ASSIGNEE } from './enum';
 import {
   cleanupObject,
@@ -8,7 +11,6 @@ import {
   nullifyDefault,
   serializeKey,
 } from './utilities';
-import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
 
 /**
  * Class representing a Part - the smallest part of the lyrics, it composes a line.
@@ -42,7 +44,7 @@ export class Part {
    */
   _save() {
     console.log('%cSaving part...', 'color:yellow');
-    setGlobalState('parts', (state) => {
+    setDistributorGlobalState('parts', (state) => {
       return { ...state, [this.id]: this };
     });
   }
@@ -159,7 +161,7 @@ export class Part {
    * @param {string} lineId
    */
   connectSection(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (!line) throw Error(`Line ${lineId} does not exist in the state`);
@@ -176,7 +178,7 @@ export class Part {
    * @param {string} lineId
    */
   disconnectSection(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (line) {

@@ -1,5 +1,5 @@
 // Global State
-import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
 import Section from './section';
 import {
@@ -55,7 +55,7 @@ export class Song {
   _save() {
     console.log('%cSaving song...', 'color:purple');
     this.updatedAt = Date.now();
-    setGlobalState('song', this);
+    setDistributorGlobalState('song', this);
   }
 
   /**
@@ -98,7 +98,7 @@ export class Song {
    * @type {Part[]}
    */
   get sections() {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const sections = this.sectionsIds.map((sectionId) => library[sectionId]);
     if (!this._isSorted) {
       return this.sort(sections);
@@ -297,7 +297,7 @@ export class Song {
    * @param {string} sectionId
    */
   connectSection(sectionId) {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const section = library[sectionId] ?? null;
 
     if (!section) throw Error(`Section ${sectionId} does not exist in the state`);
@@ -314,7 +314,7 @@ export class Song {
    * @param {string} sectionId
    */
   disconnectSection(sectionId) {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const section = library[sectionId] ?? null;
 
     if (section) {
@@ -363,9 +363,9 @@ export class Song {
   serialize() {
     // Gather included relationships
     const included = [];
-    const sectionsLibrary = getGlobalState('sections') ?? {};
-    const linesLibrary = getGlobalState('lines') ?? {};
-    const partsLibrary = getGlobalState('parts') ?? {};
+    const sectionsLibrary = getDistributorGlobalState('sections') ?? {};
+    const linesLibrary = getDistributorGlobalState('lines') ?? {};
+    const partsLibrary = getDistributorGlobalState('parts') ?? {};
     this.sectionsIds.forEach((sectionId) => {
       const section = sectionsLibrary[sectionId];
       // Add section serialized data to included

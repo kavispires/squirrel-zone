@@ -1,7 +1,7 @@
 import store from '../services/store';
 import { DEFAULT_MEMBERS } from '../utils/constants';
 import { Line, Part, Section, serializeKey, Song } from '../utils/distributor';
-import { setGlobalState as setDistributorGlobalState } from './useDistributorState';
+import { setDistributorGlobalState } from './useDistributorState';
 import { setGlobalState } from './useGlobalState';
 
 export const loadSongState = async (songId) => {

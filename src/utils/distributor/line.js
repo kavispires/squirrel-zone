@@ -1,5 +1,5 @@
 // Global State
-import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
 import Part from './part';
 import { SKILL, SKILL_LEVEL, SKILL_TYPE } from './enum';
@@ -51,7 +51,7 @@ export class Line {
    */
   _save() {
     console.log('%cSaving line...', 'color:orange');
-    setGlobalState('lines', (state) => {
+    setDistributorGlobalState('lines', (state) => {
       return { ...state, [this.id]: this };
     });
   }
@@ -97,7 +97,7 @@ export class Line {
    * @type {Part[]}
    */
   get parts() {
-    const library = getGlobalState('parts') ?? {};
+    const library = getDistributorGlobalState('parts') ?? {};
     const parts = this.partsIds.map((partId) => library[partId]);
     if (!this._isSorted) {
       return this.sort(parts);
@@ -110,7 +110,7 @@ export class Line {
    * @type {Song|null}
    */
   get section() {
-    const sections = getGlobalState('sections') ?? {};
+    const sections = getDistributorGlobalState('sections') ?? {};
     return sections[this.id] ?? null;
   }
 
@@ -344,7 +344,7 @@ export class Line {
    * @param {string} sectionId
    */
   connectSection(sectionId) {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const section = library[sectionId] ?? null;
 
     if (!section) throw Error(`Section ${sectionId} does not exist in the state`);
@@ -361,7 +361,7 @@ export class Line {
    * @param {string} sectionId
    */
   disconnectSection(sectionId) {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const section = library[sectionId] ?? null;
 
     if (section) {
@@ -378,7 +378,7 @@ export class Line {
    * @param {string} partId
    */
   connectLine(partId) {
-    const library = getGlobalState('parts') ?? {};
+    const library = getDistributorGlobalState('parts') ?? {};
     const part = library[partId] ?? null;
 
     if (!part) throw Error(`Part ${partId} does not exist in the state`);
@@ -395,7 +395,7 @@ export class Line {
    * @param {string} partId
    */
   disconnectLine(partId) {
-    const library = getGlobalState('parts') ?? {};
+    const library = getDistributorGlobalState('parts') ?? {};
     const part = library[partId] ?? null;
 
     if (part) {

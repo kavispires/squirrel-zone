@@ -1,5 +1,5 @@
 // Global State
-import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
 import Line from './line';
 import { NULL, SECTION } from './enum';
@@ -49,7 +49,7 @@ export class Section {
    */
   _save() {
     console.log('%cSaving section...', 'color:red');
-    setGlobalState('sections', (state) => {
+    setDistributorGlobalState('sections', (state) => {
       return { ...state, [this.id]: this };
     });
   }
@@ -93,7 +93,7 @@ export class Section {
    * @type {Line[]}
    */
   get lines() {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const lines = this.linesIds.map((lineId) => library[lineId]);
     if (!this._isSorted) {
       return this.sort(lines);
@@ -106,7 +106,7 @@ export class Section {
    * @type {Song|null}
    */
   get song() {
-    const song = getGlobalState('song') ?? {};
+    const song = getDistributorGlobalState('song') ?? {};
     return song.id === this.songId ? song : null;
   }
 
@@ -310,7 +310,7 @@ export class Section {
    * @param {string} songId
    */
   connectSong(songId) {
-    const library = getGlobalState('song') ?? {};
+    const library = getDistributorGlobalState('song') ?? {};
     const song = library.id === songId ? library : null;
 
     if (!song) throw Error(`Song ${songId} does not exist in the state`);
@@ -327,7 +327,7 @@ export class Section {
    * @param {string} songId
    */
   disconnectSong(songId) {
-    const library = getGlobalState('song') ?? {};
+    const library = getDistributorGlobalState('song') ?? {};
     const song = library.id === songId ? library : null;
 
     if (song) {
@@ -344,7 +344,7 @@ export class Section {
    * @param {string} lineId
    */
   connectLine(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (!line) throw Error(`Section ${lineId} does not exist in the state`);
@@ -361,7 +361,7 @@ export class Section {
    * @param {string} lineId
    */
   disconnectLine(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (line) {

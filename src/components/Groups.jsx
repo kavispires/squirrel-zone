@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Layout, Card, Tabs, Affix } from 'antd';
+import { Button, Layout, Card, Tabs, Affix, Table } from 'antd';
 import { EditOutlined, FileAddOutlined, YoutubeOutlined } from '@ant-design/icons';
 // State
 import useGlobalState from '../states/useGlobalState';
@@ -140,7 +140,7 @@ function Group({ group, members }) {
             {Object.values(groupMembers).map((member) => {
               return (
                 <Member
-                  key={member.id}
+                  key={member.key}
                   member={member}
                   showName
                   showPosition
@@ -191,51 +191,59 @@ function GroupDistributions({ group, groupMembers, activateDistribution }) {
     );
   }
 
-  return (
-    <div>
-      {groupDistributions?.length ? (
-        <ul className="group-distributions">
-          {groupDistributions.map((groupDistribution) => (
-            <GroupDistribution
-              key={groupDistribution.id}
-              distribution={groupDistribution}
-              groupMembers={groupMembers}
-              activateDistribution={activateDistribution}
-            />
-          ))}
-        </ul>
-      ) : (
-        <p>This group has no distributions yet.</p>
-      )}
-    </div>
-  );
-}
+  const columns = [
+    {
+      title: 'Title',
+      dataIndex: 'songTitle',
+      className: 'group-distribution-table__title',
+      render: (title, data) => (data.name !== 'original' ? `${title} (${data.name})` : title),
+    },
+    {
+      title: 'Snippet',
+      dataIndex: 'id',
+      className: 'group-distribution-table__snippet',
+      render: (_, data) => <GroupDistributionSnippet distribution={data} groupMembers={groupMembers} />,
+    },
+    {
+      title: 'Edit',
+      dataIndex: 'id',
+      className: 'group-distribution-table__button',
+      render: (_, data) => (
+        <Button
+          type="default"
+          size="small"
+          icon={<EditOutlined />}
+          onClick={() => activateDistribution(data, true)}
+        >
+          Edit
+        </Button>
+      ),
+    },
+    {
+      title: 'View',
+      dataIndex: 'id',
+      className: 'group-distribution-table__button',
+      render: (_, data) => (
+        <Button
+          type="primary"
+          size="small"
+          icon={<YoutubeOutlined />}
+          onClick={() => activateDistribution(data)}
+        >
+          View
+        </Button>
+      ),
+    },
+  ];
 
-function GroupDistribution({ distribution, groupMembers, activateDistribution }) {
   return (
-    <li className="group-distribution">
-      <span className="group-distribution__title">{distribution.songTitle}</span>
-      <span className="group-distribution__version">{distribution.name}</span>
-      <GroupDistributionSnippet distribution={distribution} groupMembers={groupMembers} />
-      <Button
-        type="default"
-        size="small"
-        icon={<EditOutlined />}
-        className="group-distribution__edit-button"
-        onClick={() => activateDistribution(distribution, true)}
-      >
-        Edit
-      </Button>
-      <Button
-        type="primary"
-        size="small"
-        icon={<YoutubeOutlined />}
-        className="group-distribution__view-button"
-        onClick={() => activateDistribution(distribution)}
-      >
-        View
-      </Button>
-    </li>
+    <Table
+      dataSource={groupDistributions}
+      columns={columns}
+      showHeader={false}
+      size="small"
+      tableLayout="auto"
+    />
   );
 }
 
@@ -249,7 +257,7 @@ function GroupDistributionSnippet({ distribution, groupMembers }) {
             key={`${distribution.id}${memberKey}`}
             style={{ width: `${progress}%`, backgroundColor: memberData.color }}
           >
-            {progress > 5 ? progress : ''}%
+            {progress > 5 ? `${progress}%` : ''}
           </span>
         );
       })}

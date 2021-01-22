@@ -36,25 +36,13 @@
   font-size: 90%;
 }
 
-.group-distribution {
-  display: flex;
-  width: 100%;
-  align-items: center;
-
-  padding: get-unit(1);
-  margin-bottom: get-unit(1);
-  border-bottom: 1px solid get-color(gray, 2);
-
+.group-distribution-table {
   &__title {
     width: 30%;
   }
 
-  &__version {
-    width: 15%;
-  }
-
-  &__edit-button {
-    margin: get-unit(0 2);
+  &__snippet {
+    width: 50%;
   }
 }
 

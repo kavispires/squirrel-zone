@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 // Design Resources
 import { Badge, Tag, Tooltip } from 'antd';
@@ -33,17 +33,19 @@ function Member({
           </span>
         )}
       </span>
-      {progress !== undefined && (
-        <Tooltip title={`${progress}%`}>
-          <span className="member-progress">
-            <span
-              className="member-progress-bar"
-              style={{ width: `${progress}%`, backgroundColor: member.color ?? 'white' }}
-            ></span>
-          </span>
-        </Tooltip>
+      {progress !== undefined && progress !== null && (
+        <Fragment>
+          <Tooltip title={`${progress}%`}>
+            <span className="member-progress">
+              <span
+                className="member-progress-bar"
+                style={{ width: `${progress}%`, backgroundColor: member.color ?? 'white' }}
+              ></span>
+            </span>
+          </Tooltip>
+          {showProgressNumber && <span className="member-progress-number">{progress || 0}%</span>}
+        </Fragment>
       )}
-      {showProgressNumber && <span className="member-progress-number">{progress || 0}%</span>}
     </li>
   );
 }

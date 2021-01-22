@@ -359,22 +359,12 @@ body {
   font-size: 90%;
 }
 
-.group-distribution {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  padding: 4px;
-  margin-bottom: 4px;
-  border-bottom: 1px solid #d6d7d8;
-}
-.group-distribution__title {
+.group-distribution-table__title {
   width: 30%;
 }
-.group-distribution__version {
-  width: 15%;
-}
-.group-distribution__edit-button {
-  margin: 0 8px;
+
+.group-distribution-table__snippet {
+  width: 50%;
 }
 
 .group-distribution-snippet {

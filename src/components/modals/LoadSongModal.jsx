@@ -68,11 +68,7 @@ function SongModal({ isModalVisible, setIsModalVisible, onBeforeLoad = () => {},
     {
       title: 'Title',
       dataIndex: 'title',
-    },
-    {
-      title: 'Version',
-      dataIndex: 'version',
-      render: (text) => (text ? `(${text})` : ''),
+      render: (title, data) => (data.version ? `${title} (${data.version})` : title),
     },
     {
       title: 'Genre',

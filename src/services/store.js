@@ -1,5 +1,5 @@
 import API from '../api';
-import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
+import { DATA_TYPE, DATA_TYPE_COLLECTION, DEFAULT_MEMBERS } from '../utils/constants';
 import { serializeKey } from '../utils/distributor';
 
 export class Store {
@@ -57,15 +57,13 @@ export class Store {
    * @returns {object[]}
    */
   async getCollection(type, asObject = false, extra = null) {
-    // debugger;
-
     if (!type) throw Error('A type is required to access the store');
 
     if (this._collections[type] && Object.values(this._collections[type]).length && !extra) {
       if (asObject) {
         return this._collections[type];
       }
-      return Object.values(this._collections[type]).sort(collectionSorting);
+      return Object.values(this._collections[type]).sort(collectionSorting[type]);
     }
 
     const [filterKey, id] = Object.entries(extra ?? {})?.[0] ?? [];
@@ -73,7 +71,7 @@ export class Store {
     if (filterKey && id && this._collections[type] && Object.values(this._collections[type]).length) {
       const result = Object.values(this._collections[type])
         .filter((entry) => entry[filterKey] === id)
-        .sort(collectionSorting);
+        .sort(collectionSorting[type]);
 
       if (result.length > 0) {
         return result;
@@ -109,10 +107,10 @@ export class Store {
     if (filterKey && id) {
       return Object.values(this._collections[type])
         .filter((entry) => entry[filterKey] === id)
-        .sort(collectionSorting);
+        .sort(collectionSorting[type]);
     }
 
-    return Object.values(this._collections[type]).sort(collectionSorting);
+    return Object.values(this._collections[type]).sort(collectionSorting[type]);
   }
 
   /**
@@ -155,12 +153,43 @@ export class Store {
   }
 }
 
+const DEFAULT_SORTING = (a, b) => {
+  const x = a.id;
+  const y = b.id;
+  return x < y ? -1 : x > y ? 1 : 0;
+};
+
+const collectionSorting = {
+  [DATA_TYPE_COLLECTION[DATA_TYPE.ALBUM]]: (a, b) => {
+    const x = a?.title ?? a.id;
+    const y = b?.title ?? b.id;
+    return x < y ? -1 : x > y ? 1 : 0;
+  },
+  [DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION]]: (a, b) => {
+    const x = a?.songTitle ?? a?.name ?? a.id;
+    const y = b?.songTitle ?? b?.name ?? b.id;
+    return x < y ? -1 : x > y ? 1 : 0;
+  },
+  [DATA_TYPE_COLLECTION[DATA_TYPE.DISTRIBUTION_DATA]]: DEFAULT_SORTING,
+  [DATA_TYPE_COLLECTION[DATA_TYPE.GROUP]]: (a, b) => {
+    const x = a?.debutYear ?? a?.name ?? a.id;
+    const y = b?.debutYear ?? b?.name ?? b.id;
+    return x < y ? -1 : x > y ? 1 : 0;
+  },
+  [DATA_TYPE_COLLECTION[DATA_TYPE.MEMBER]]: (a, b) => {
+    const x = a?.age ?? a?.name ?? a.id;
+    const y = b?.age ?? b?.name ?? b.id;
+    return x < y ? -1 : x > y ? 1 : 0;
+  },
+  [DATA_TYPE_COLLECTION[DATA_TYPE.MEMBER_DATA]]: DEFAULT_SORTING,
+  [DATA_TYPE_COLLECTION[DATA_TYPE.SONG]]: (a, b) => {
+    const x = a?.title ?? a?.version ?? a.id;
+    const y = b?.title ?? b?.version ?? b.id;
+    return x < y ? -1 : x > y ? 1 : 0;
+  },
+  [DATA_TYPE_COLLECTION[DATA_TYPE.SONG_DATA]]: DEFAULT_SORTING,
+};
+
 const store = new Store();
 
 export default store;
-
-const collectionSorting = (a, b) => {
-  const x = a?.name ?? a?.title ?? a.id;
-  const y = b?.name ?? b?.title ?? b.id;
-  return x < y ? -1 : x > y ? 1 : 0;
-};

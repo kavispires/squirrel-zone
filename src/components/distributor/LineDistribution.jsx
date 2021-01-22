@@ -5,15 +5,14 @@ import YoutubeVideo from './YoutubeVideo';
 import { bemClass, getBemModifier, getFrameFromTimestamp } from '../../utils';
 import Avatar from '../Avatar';
 
-function LineDistribution({ playerRef, lineDistributionData, framerate = 30 }) {
+function LineDistribution({ playerRef, members, bars, lyrics, framerate = 30 }) {
   const [intervalId, setIntervalId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
-  const [currentRank, setCurrentRank] = useState(lineDistributionData[0]);
-  const [positionOrder, setPositionOrder] = useState({});
+  const [currentRank, setCurrentRank] = useState(bars[0]);
 
   useEffect(() => {
-    setCurrentTime(lineDistributionData[0]);
-  }, [lineDistributionData]);
+    setCurrentRank(bars[0]);
+  }, [bars]);
 
   const onStateChange = (e) => {
     if (e.data === 1) {
@@ -33,22 +32,14 @@ function LineDistribution({ playerRef, lineDistributionData, framerate = 30 }) {
     // Every time change update current ranking if id exists according to framerate
     const frameIndex = getFrameFromTimestamp(currentTime * 1000, framerate);
 
-    if (!currentRank) {
-      setCurrentRank(lineDistributionData[0]);
+    if (currentTime < 0.5 || !currentRank) {
+      setCurrentRank(bars[0]);
     }
 
-    if (lineDistributionData[frameIndex]) {
-      const sortedRank = lineDistributionData[frameIndex].sort((a, b) => (a.value <= b.value ? 1 : -1));
-      const sortedPositionOrder = sortedRank.reduce((acc, entry, index) => {
-        acc[entry.id] = entry.value > 0 ? index : 30;
-        return acc;
-      }, {});
-      setPositionOrder(sortedPositionOrder);
-      // Sort positions
-
-      setCurrentRank(lineDistributionData[frameIndex]);
+    if (bars[frameIndex]) {
+      setCurrentRank(bars[frameIndex]);
     }
-  }, [currentRank, currentTime, lineDistributionData, framerate]);
+  }, [currentRank, currentTime, bars, framerate]);
 
   return (
     <section className="line-distribution__container">
@@ -59,35 +50,51 @@ function LineDistribution({ playerRef, lineDistributionData, framerate = 30 }) {
         className="line-distribution__video"
         onStateChange={onStateChange}
       />
-      <ul className="line-distribution__live-ranking">
-        {currentRank?.map((entry) => (
-          <RankEntry key={entry.id} entry={entry} positionOrder={positionOrder} />
-        ))}
-      </ul>
-      <div className="line-distribution__live-lyrics">Lyrics will come here.</div>
+      <RankingBars members={members} currentRank={currentRank} />
+      <LyricsScroller currentTime={currentTime} lyrics={lyrics} />
     </section>
   );
 }
 
-function RankEntry({ entry, positionOrder }) {
-  const onClass = getBemModifier(entry.on, 'active');
+function RankingBars({ members, currentRank }) {
+  return (
+    <ul className="line-distribution__live-ranking">
+      {members?.map((member) => (
+        <RankEntry key={`rank-entry-${member.key}`} member={member} rank={currentRank[member.key]} />
+      ))}
+    </ul>
+  );
+}
+
+function RankEntry({ member, rank }) {
+  const onClass = getBemModifier(rank.on, 'active');
 
   return (
-    <li className={bemClass('rank-entry', onClass)} style={{ order: positionOrder[entry.id] ?? 30 }}>
+    <li className={bemClass('rank-entry', onClass, rank.position)}>
       <Avatar
-        name={entry.label}
+        name={member.name}
         className="rank-entry__avatar"
-        style={{ borderColor: entry.color ?? 'black' }}
+        style={{ borderColor: member.color ?? 'black' }}
       />
-      <div className="rank-entry__name">{entry.label}</div>
+      <div className="rank-entry__name">{member.name}</div>
       <div className="rank-entry__progress">
         <span
           className="rank-entry__progress-bar"
-          style={{ width: `${entry.percentage}%`, backgroundColor: entry.on ? entry.color : 'white' }}
+          style={{ width: `${rank.percentage}%`, backgroundColor: rank.on ? member.color : 'white' }}
         />
       </div>
-      <div className="rank-entry__timestamp">{Number(entry.value / 1000).toFixed(1)}s</div>
+      <div className="rank-entry__timestamp">{rank.value}s</div>
     </li>
+  );
+}
+
+function LyricsScroller({ currentTime, lyrics }) {
+  // console.log({ currentTime });
+  // console.log({ lyrics });
+  return (
+    <div className="line-distribution__live-lyrics">
+      <p>Lyrics will come here.</p>
+    </div>
   );
 }
 

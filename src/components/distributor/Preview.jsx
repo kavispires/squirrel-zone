@@ -7,46 +7,49 @@ import useDistributorState from '../../states/useDistributorState';
 // Temp
 import sampleGroupJson from '../../utils/mock/sampleGroup.json';
 // Engine and utilities
-import { Previewer } from '../../utils/distributor';
+import Previewer from '../../utils/distribution/previewer';
 // Components
 import LineDistribution from './LineDistribution';
 import { buildMockDistribution } from '../../utils';
+
 const { Paragraph } = Typography;
 
-function Preview({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
+function Preview({ playerRef }) {
   const [song] = useDistributorState('song');
   const [parts] = useDistributorState('parts');
   const [step, setStep] = useDistributorState('step');
-  const [previewData, setPreviewData] = useState([]);
+
   const [sampleGroup] = useState(sampleGroupJson);
+  const [previewMembers, setPreviewMembers] = useState([]);
+  const [previewBars, setPreviewBars] = useState([]);
+  const [previewLyrics, setPreviewLyrics] = useState({});
 
   useEffect(() => {
-    if (step === 3) {
+    if (step === '3') {
       const preview = new Previewer({
-        song,
+        songTitle: song.title ?? 'Untitled',
+        allPartsIds: song.allPartsIds,
         parts,
         members: sampleGroup.members,
         distribution: buildMockDistribution(parts).data,
-        framerate: 30,
       });
-      setPreviewData(preview.build());
+      setPreviewMembers(preview.members());
+      setPreviewBars(preview.bars());
+      setPreviewLyrics(preview.lyrics());
     }
   }, [step, parts, song, sampleGroup.members]);
 
   return (
     <section className="preview">
       <h2 className="preview__title">Preview</h2>
-      <Paragraph>
-        Visualize how this songs plays. For sampling purposes, Assignee E is considered ALL.
-      </Paragraph>
+      <Paragraph>Visualize how this songs plays.</Paragraph>
 
-      {step === '3' && (
+      {step === '3' && previewBars.length && (
         <LineDistribution
           playerRef={playerRef}
-          playVideo={playVideo}
-          pauseVideo={pauseVideo}
-          seekAndPlay={seekAndPlay}
-          lineDistributionData={previewData}
+          members={previewMembers}
+          bars={previewBars}
+          lyrics={previewLyrics}
         />
       )}
 

@@ -5,5 +5,3 @@ export * from './part';
 
 export * from './enum';
 export * from './utilities';
-
-export * from './preview';

@@ -1326,6 +1326,7 @@ body {
 .line-distribution__live-ranking {
   grid-column: start / middle;
   grid-row: middle / end;
+  position: relative;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1346,12 +1347,13 @@ body {
 }
 
 .rank-entry {
-  width: 100%;
+  width: 95%;
   height: 35px;
   margin-bottom: 4px;
+  position: absolute;
   display: grid;
   opacity: 30%;
-  transition: opacity 500ms;
+  transition: opacity 500ms, transform 1s;
   grid-template-columns: [start] 30px [first] auto [second] 40px [end];
   grid-template-rows: [start] 16px [middle] auto [end];
   gap: 4px;
@@ -1389,13 +1391,43 @@ body {
 .rank-entry__progress-bar {
   height: 8px;
   border-radius: 4px;
-  transition: width 500ms;
+  transition: width 500ms, background-color 1s;
 }
 .rank-entry__timestamp {
   grid-column: second / end;
   grid-row: start / end;
   justify-self: center;
   color: white;
+}
+.rank-entry--0 {
+  transform: translateY(0px);
+}
+.rank-entry--1 {
+  transform: translateY(39px);
+}
+.rank-entry--2 {
+  transform: translateY(78px);
+}
+.rank-entry--3 {
+  transform: translateY(117px);
+}
+.rank-entry--4 {
+  transform: translateY(156px);
+}
+.rank-entry--5 {
+  transform: translateY(195px);
+}
+.rank-entry--6 {
+  transform: translateY(234px);
+}
+.rank-entry--7 {
+  transform: translateY(273px);
+}
+.rank-entry--8 {
+  transform: translateY(312px);
+}
+.rank-entry--9 {
+  transform: translateY(351px);
 }
 
 .song-metadata__title {

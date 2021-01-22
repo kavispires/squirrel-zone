@@ -1,3 +1,5 @@
+import { serializeKey } from './distributor';
+
 const wasPrinted = {};
 export function printProps(props, name = 'PROP') {
   if (wasPrinted[name] !== undefined) return;
@@ -83,7 +85,7 @@ export const getTimestampFromFrame = (frame, framerate) => {
  */
 export const buildMockDistribution = (parts) => {
   const data = Object.values(parts).reduce((acc, part) => {
-    acc[part.id] = [part.assignee];
+    acc[part.id] = { [serializeKey('member', part.assignee)]: true };
     return acc;
   }, {});
 

@@ -272,6 +272,7 @@ export class Line {
       text: this.text,
       placeholder: this.placeholder,
       // Attributes
+      isDismissible: this.isDismissible,
       skill: this.skill,
       skillType: this.skillType,
       skillLevel: this.skillLevel,

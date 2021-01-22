@@ -7,10 +7,9 @@ import { Layout, Spin } from 'antd';
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
 // Utilities
-import { Previewer } from '../utils/distributor';
+import Previewer from '../utils/distribution/previewer';
 import { loadActiveMembers, loadSongState } from '../states/functions';
 // Components
-
 import LineDistribution from './distributor/LineDistribution';
 
 function Distribution() {
@@ -22,9 +21,10 @@ function Distribution() {
   const [loadedLineDistribution] = useGlobalState('loadedLineDistribution');
   const [lineDistribution] = useGlobalState('lineDistribution');
   const [parts] = useDistributorState('parts');
-  // const [stats, setStats] = useGlobalState('stats');
 
-  const [previewData, setPreviewData] = useState([]);
+  const [previewMembers, setPreviewMembers] = useState([]);
+  const [previewBars, setPreviewBars] = useState([]);
+  const [previewLyrics, setPreviewLyrics] = useState({});
 
   // Run on mount
   useEffect(() => {
@@ -36,31 +36,31 @@ function Distribution() {
 
     // Load members
     async function loadContent() {
-      console.log('loading song state');
       await loadSongState(loadedLineDistribution.songId);
-      console.log('loading members state');
       await loadActiveMembers(activeGroup);
     }
     loadContent();
   }, []);
 
   useEffect(() => {
-    console.log('building previewer', isFullyLoaded);
     if (isFullyLoaded && song && activeMembers && parts && Object.keys(parts).length && lineDistribution) {
       const preview = new Previewer({
-        song,
+        songTitle: song.title,
+        allPartsIds: song.allPartsIds,
         parts,
         members: activeMembers,
         distribution: lineDistribution,
         framerate: 30,
       });
-      setPreviewData(preview.build());
+      setPreviewMembers(preview.members());
+      setPreviewBars(preview.bars());
+      setPreviewLyrics(preview.lyrics());
     }
   }, [isFullyLoaded, parts, song, activeMembers, lineDistribution]);
 
   const playerRef = useRef();
 
-  if (!previewData.length) {
+  if (!previewBars.length) {
     return (
       <div className="loading-container">
         <Spin size="large" />
@@ -72,7 +72,12 @@ function Distribution() {
     <Layout.Content className="container">
       <main className="main distribution">
         <h1>Line Distribution{song ? `: ${song.title}` : ''}</h1>
-        <LineDistribution playerRef={playerRef} lineDistributionData={previewData} />
+        <LineDistribution
+          playerRef={playerRef}
+          members={previewMembers}
+          bars={previewBars}
+          lyrics={previewLyrics}
+        />
       </main>
     </Layout.Content>
   );

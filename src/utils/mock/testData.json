@@ -1,0 +1,75 @@
+{
+  "song": {
+    "-so1": {
+      "albumId": "N/A",
+      "completion": 28,
+      "createdAt": 1610997374607,
+      "duration": "00:00",
+      "genre": "",
+      "id": "-so1",
+      "isComplete": false,
+      "style": "",
+      "title": "Song Test",
+      "type": "song",
+      "updatedAt": 1610997977391,
+      "version": "",
+      "videoId": "gUI1A-03Wb4"
+    }
+  },
+  "song-data": {
+    "-so1": {
+      "id": "-so1",
+      "included": "[{\"id\":\"_se1\",\"type\":\"section\",\"linesIds\":[\"_li1\",\"_li2\",\"_li3\",\"_li4\",\"_li5\",\"_li6\",\"_li7\",\"_li8\",\"_li9\",\"_li10\",\"_li11\",\"_li12\"],\"songId\":\"-so1\"},{\"id\":\"_li1\",\"type\":\"line\",\"partsIds\":[\"_pa1\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa1\",\"type\":\"part\",\"endTime\":5240,\"startTime\":4572,\"text\":\"Singer A\",\"lineId\":\"_li1\"},{\"id\":\"_li2\",\"type\":\"line\",\"partsIds\":[\"_pa2\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa2\",\"type\":\"part\",\"assignee\":\"B\",\"endTime\":6520,\"startTime\":5873,\"text\":\"Singer B\",\"lineId\":\"_li2\"},{\"id\":\"_li3\",\"type\":\"line\",\"partsIds\":[\"_pa3\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa3\",\"type\":\"part\",\"assignee\":\"C\",\"endTime\":7665,\"startTime\":6906,\"text\":\"Singer A+B\",\"lineId\":\"_li3\"},{\"id\":\"_li4\",\"type\":\"line\",\"partsIds\":[\"_pa4\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa4\",\"type\":\"part\",\"assignee\":\"D\",\"endTime\":8801,\"startTime\":8113,\"text\":\"Singer A+B+C\",\"lineId\":\"_li4\"},{\"id\":\"_li5\",\"type\":\"line\",\"partsIds\":[\"_pa5\",\"_pa6\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa5\",\"type\":\"part\",\"assignee\":\"E\",\"endTime\":9810,\"startTime\":9066,\"text\":\"Singer A Part A\",\"lineId\":\"_li5\"},{\"id\":\"_pa6\",\"type\":\"part\",\"endTime\":10770,\"startTime\":10185,\"text\":\"Singer A Part B\",\"lineId\":\"_li5\"},{\"id\":\"_li6\",\"type\":\"line\",\"partsIds\":[\"_pa7\",\"_pa8\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa7\",\"type\":\"part\",\"assignee\":\"B\",\"endTime\":11739,\"startTime\":11114,\"text\":\"Singer A Part A\",\"lineId\":\"_li6\"},{\"id\":\"_pa8\",\"type\":\"part\",\"assignee\":\"C\",\"endTime\":12714,\"startTime\":12010,\"text\":\"Singer B Part B\",\"lineId\":\"_li6\"},{\"id\":\"_li7\",\"type\":\"line\",\"partsIds\":[\"_pa9\",\"_pa10\",\"_pa11\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa9\",\"type\":\"part\",\"assignee\":\"D\",\"endTime\":13602,\"startTime\":12889,\"text\":\"Singer A Part A\",\"lineId\":\"_li7\"},{\"id\":\"_pa10\",\"type\":\"part\",\"assignee\":\"E\",\"endTime\":14418,\"startTime\":13842,\"text\":\"Singer B Part B\",\"lineId\":\"_li7\"},{\"id\":\"_pa11\",\"type\":\"part\",\"endTime\":15324,\"startTime\":14659,\"text\":\"Singer C Part C\",\"lineId\":\"_li7\"},{\"id\":\"_li8\",\"type\":\"line\",\"isDismissible\":true,\"partsIds\":[\"_pa12\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa12\",\"type\":\"part\",\"assignee\":\"B\",\"endTime\":16176,\"startTime\":15507,\"text\":\"Singer A Dismissible\",\"lineId\":\"_li8\"},{\"id\":\"_li9\",\"type\":\"line\",\"partsIds\":[\"_pa13\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa13\",\"type\":\"part\",\"assignee\":\"C\",\"endTime\":17010,\"startTime\":16370,\"text\":\"All Line\",\"lineId\":\"_li9\"},{\"id\":\"_li10\",\"type\":\"line\",\"partsIds\":[\"_pa14\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa14\",\"type\":\"part\",\"assignee\":\"D\",\"endTime\":17793,\"startTime\":17163,\"text\":\"All Line with Singer A\",\"lineId\":\"_li10\"},{\"id\":\"_li11\",\"type\":\"line\",\"partsIds\":[\"_pa15\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa15\",\"type\":\"part\",\"assignee\":\"E\",\"endTime\":18434,\"startTime\":17978,\"text\":\"None Line\",\"lineId\":\"_li11\"},{\"id\":\"_li12\",\"type\":\"line\",\"partsIds\":[\"_pa16\"],\"sectionId\":\"_se1\"},{\"id\":\"_pa16\",\"type\":\"part\",\"assignee\":\"F\",\"endTime\":22112,\"startTime\":21681,\"text\":\"None Line with Singer A\",\"lineId\":\"_li12\"}]",
+      "sectionsIds": "[\"_se1\"]",
+      "type": "song-data"
+    }
+  },
+  "distribution": {
+    "-di1": {
+      "groupId": "-gr1",
+      "id": "-di1",
+      "name": "test",
+      "songId": "-so1",
+      "songTitle": "Song Test",
+      "stats": "{\"member::-me1\":{\"count\":9,\"total\":6512,\"totalAll\":6512,\"totalAllNone\":6512,\"relativeProgress\":100,\"relativeProgressAll\":100,\"relativeProgressAllNone\":100,\"absoluteProgress\":72,\"absoluteProgressAll\":67,\"absoluteProgressAllNone\":64},\"member::-me2\":{\"count\":5,\"total\":3374,\"totalAll\":3374,\"totalAllNone\":3374,\"relativeProgress\":52,\"relativeProgressAll\":52,\"relativeProgressAllNone\":52,\"absoluteProgress\":37,\"absoluteProgressAll\":35,\"absoluteProgressAllNone\":33},\"member::-me3\":{\"count\":2,\"total\":1353,\"totalAll\":1353,\"totalAllNone\":1353,\"relativeProgress\":21,\"relativeProgressAll\":21,\"relativeProgressAllNone\":21,\"absoluteProgress\":15,\"absoluteProgressAll\":14,\"absoluteProgressAllNone\":13},\"member::NONE\":{\"count\":2,\"total\":887,\"totalAll\":887,\"totalAllNone\":887,\"relativeProgress\":14,\"relativeProgressAll\":14,\"relativeProgressAllNone\":14,\"absoluteProgress\":10,\"absoluteProgressAll\":9,\"absoluteProgressAllNone\":9},\"member::ALL\":{\"count\":2,\"total\":1270,\"totalAll\":1270,\"totalAllNone\":1270,\"relativeProgress\":20,\"relativeProgressAll\":20,\"relativeProgressAllNone\":20,\"absoluteProgress\":14,\"absoluteProgressAll\":13,\"absoluteProgressAllNone\":12}}",
+      "type": "distribution"
+    }
+  },
+  "distribution-data": {
+    "-di1": {
+      "assignedParts": "{\"_pa1\":{\"member::-me1\":true},\"_pa2\":{\"member::-me2\":true},\"_pa3\":{\"member::-me1\":true,\"member::-me2\":true},\"_pa4\":{\"member::-me1\":true,\"member::-me2\":true,\"member::-me3\":true},\"_pa5\":{\"member::-me1\":true},\"_pa7\":{\"member::-me1\":true},\"_pa9\":{\"member::-me1\":true},\"_pa12\":{\"member::-me1\":true},\"_pa15\":{\"member::NONE\":true},\"_pa16\":{\"member::NONE\":true,\"member::-me1\":true},\"_pa13\":{\"member::ALL\":true},\"_pa14\":{\"member::ALL\":true,\"member::-me1\":true},\"_pa8\":{\"member::-me2\":true},\"_pa10\":{\"member::-me2\":true},\"_pa6\":{\"member::-me1\":true},\"_pa11\":{\"member::-me3\":true}}",
+      "groupId": "-gr1",
+      "id": "-di1",
+      "type": "distribution-data"
+    }
+  },
+  "members": {
+    "-me1": {
+      "color": "f6803c",
+      "id": "-me1",
+      "name": "Vocalist",
+      "type": "member"
+    },
+    "-me2": {
+      "color": "2769b9",
+      "id": "-me2",
+      "name": "Rapper",
+      "type": "member"
+    },
+    "-me3": {
+      "color": "00cc99",
+      "id": "-me3",
+      "name": "Dancer",
+      "type": "member"
+    }
+  },
+  "group": {
+    "-gr1": {
+      "debutYear": 1998,
+      "id": "-gr1",
+      "membersIds": ["-me1", "-me2", "-me3"],
+      "name": "Test Group",
+      "type": "group"
+    }
+  }
+}

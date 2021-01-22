@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Select, Spin, Divider } from 'antd';
-// State
-import useLoadingState from '../../states/useLoadingState';
+import { Button, InputNumber, Form, Input, Select, Divider } from 'antd';
 // API
 import API from '../../api';
 // Utilities
@@ -14,8 +12,6 @@ import LoadGroupModal from '../modals/LoadGroupModal';
 import store from '../../services/store';
 
 function EditGroup() {
-  const [isGroupLoading] = useLoadingState('isGroupLoading');
-  const [isModalVisible, setModalVisibility] = useState(false);
   const [loadedData, setLoadedData] = useState(false);
   const [membersOptions, setMembersOptions] = useState(false);
   const [form] = Form.useForm();
@@ -48,9 +44,7 @@ function EditGroup() {
     <section className="admin__form-container">
       <h3>Create/Edit Group</h3>
       <div className={bemClass('admin-button-container', 'center')}>
-        <Button type="primary" onClick={() => setModalVisibility(true)} disabled={isGroupLoading}>
-          {isGroupLoading ? <Spin size="small" /> : 'Load Group'}
-        </Button>
+        <LoadGroupModal setLoadedData={setLoadedData} />
       </div>
 
       <Divider />
@@ -104,14 +98,6 @@ function EditGroup() {
           </div>
         </Form.Item>
       </Form>
-
-      {isModalVisible && (
-        <LoadGroupModal
-          isModalVisible={isModalVisible}
-          setModalVisibility={setModalVisibility}
-          setLoadedData={setLoadedData}
-        />
-      )}
     </section>
   );
 }

@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, Fragment } from 'react';
 
 // Design Resources
-import { Modal, Table } from 'antd';
+import { Button, Modal, Spin, Table } from 'antd';
 // State
 import useLoadingState from '../../states/useLoadingState';
 // Store
@@ -9,8 +9,38 @@ import store from '../../services/store';
 // Components
 import LoadingContainer from '../global/LoadingContainer';
 
-function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onLoad = () => {} }) {
+function LoadGroupModal({
+  setLoadedData,
+  buttonLabel = 'Load Member',
+  onBeforeLoad = () => {},
+  onAfterLoad = () => {},
+}) {
+  const [isMemberLoading] = useLoadingState('isMemberLoading');
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  return (
+    <Fragment>
+      <Button type="primary" onClick={() => setIsModalVisible(true)} disabled={isMemberLoading}>
+        {isMemberLoading ? <Spin size="small" /> : buttonLabel}
+      </Button>
+
+      {isModalVisible && (
+        <GroupModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          onBeforeLoad={onBeforeLoad}
+          setLoadedData={setLoadedData}
+          onAfterLoad={onAfterLoad}
+        />
+      )}
+    </Fragment>
+  );
+}
+
+function GroupModal({ isModalVisible, setIsModalVisible, onBeforeLoad, setLoadedData, onAfterLoad }) {
   const [isGroupLoading] = useLoadingState('isGroupLoading');
+
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -22,18 +52,20 @@ function LoadGroupModal({ isModalVisible, setModalVisibility, setLoadedData, onL
   }, []);
 
   const onCancelModal = () => {
-    setModalVisibility(false);
+    setIsModalVisible(false);
   };
-
   const onLoadSong = useCallback(() => {
     async function loadGroup() {
-      setLoadedData(await store.getRecord('group', selectedId));
-      setSelectedId(null);
-      setModalVisibility(false);
-    }
+      onBeforeLoad();
 
+      setLoadedData(await store.getRecord('group', selectedId));
+
+      setSelectedId(null);
+      onAfterLoad();
+      setIsModalVisible(false);
+    }
     loadGroup();
-  }, [selectedId, setLoadedData, setModalVisibility]);
+  }, [selectedId, setLoadedData, onBeforeLoad, onAfterLoad, setIsModalVisible]);
 
   const columns = [
     {

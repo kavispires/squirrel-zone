@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, Fragment } from 'react';
 
 // Design Resources
-import { Modal, Table } from 'antd';
+import { Button, Modal, Spin, Table } from 'antd';
 // State
 import useLoadingState from '../../states/useLoadingState';
 // Store
@@ -9,8 +9,38 @@ import store from '../../services/store';
 // Components
 import LoadingContainer from '../global/LoadingContainer';
 
-function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) {
+function LoadMemberModal({
+  setLoadedData,
+  buttonLabel = 'Load Member',
+  onBeforeLoad = () => {},
+  onAfterLoad = () => {},
+}) {
   const [isMemberLoading] = useLoadingState('isMemberLoading');
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  return (
+    <Fragment>
+      <Button type="primary" onClick={() => setIsModalVisible(true)} disabled={isMemberLoading}>
+        {isMemberLoading ? <Spin size="small" /> : buttonLabel}
+      </Button>
+
+      {isModalVisible && (
+        <MemberModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          onBeforeLoad={onBeforeLoad}
+          setLoadedData={setLoadedData}
+          onAfterLoad={onAfterLoad}
+        />
+      )}
+    </Fragment>
+  );
+}
+
+function MemberModal({ isModalVisible, setIsModalVisible, onBeforeLoad, setLoadedData, onAfterLoad }) {
+  const [isMemberLoading] = useLoadingState('isMemberLoading');
+
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
@@ -22,18 +52,22 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
   }, []);
 
   const onCancelModal = () => {
-    setModalVisibility(false);
+    setIsModalVisible(false);
   };
 
-  const onLoadSong = useCallback(() => {
-    async function loadMember() {
+  const onLoadMember = useCallback(() => {
+    async function fetchData() {
+      onBeforeLoad();
+
       setLoadedData(await store.getRecord('member', selectedId));
+
       setSelectedId(null);
-      setModalVisibility(false);
+      onAfterLoad();
+      setIsModalVisible(false);
     }
 
-    loadMember();
-  }, [selectedId, setLoadedData, setModalVisibility]);
+    fetchData();
+  }, [selectedId, setLoadedData, onBeforeLoad, onAfterLoad, setIsModalVisible]);
 
   const columns = [
     {
@@ -62,7 +96,7 @@ function LoadMemberModal({ isModalVisible, setModalVisibility, setLoadedData }) 
     <Modal
       title="Members"
       visible={isModalVisible}
-      onOk={onLoadSong}
+      onOk={onLoadMember}
       okText="Load Member"
       onCancel={onCancelModal}
       okButtonProps={{ disabled: isMemberLoading || Boolean(!setSelectedId) }}

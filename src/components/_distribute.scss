@@ -49,7 +49,6 @@
 }
 
 .members-selection {
-  @include reset-list;
   margin: get-unit(6 1 6 0);
   width: 100%;
 }

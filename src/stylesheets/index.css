@@ -24,6 +24,12 @@
   }
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -328,16 +334,10 @@ body {
 }
 
 .group-quick-links {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   margin-left: 12px;
 }
 
 .group-card-containers {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   width: 100%;
 }
 
@@ -347,9 +347,6 @@ body {
 .group-card__members {
   display: flex;
   flex-direction: column;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 .group-card__member {
   margin-bottom: 4px;
@@ -359,9 +356,6 @@ body {
 }
 
 .group-distributions {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   margin-bottom: 8px;
   font-size: 90%;
 }
@@ -375,9 +369,6 @@ body {
 }
 
 .group-distribution-snippet {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   display: flex;
   width: 100%;
   background: #d6d7d8;
@@ -444,9 +435,6 @@ body {
 }
 
 .members-selection {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   margin: 24px 4px 24px 0;
   width: 100%;
 }
@@ -1115,9 +1103,6 @@ body {
 }
 
 .timestamps-bank__list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 12px;
@@ -1188,24 +1173,11 @@ body {
   top: 0;
   z-index: 100;
 }
-.log__sections {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 .log__sections--compact {
   border: 1px solid #d6d7d8;
   border-radius: 2px;
 }
-.log__lines {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 .log__parts {
-  margin: 0;
-  padding: 0;
-  list-style: none;
   display: flex;
   flex-wrap: wrap;
   margin-left: 12px;
@@ -1336,9 +1308,6 @@ body {
   grid-column: start / middle;
   grid-row: middle / end;
   position: relative;
-  margin: 0;
-  padding: 0;
-  list-style: none;
   padding: 12px;
   display: flex;
   flex-direction: column;

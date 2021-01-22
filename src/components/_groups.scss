@@ -3,12 +3,10 @@
 }
 
 .group-quick-links {
-  @include reset-list;
   margin-left: get-unit(3);
 }
 
 .group-card-containers {
-  @include reset-list;
   width: 100%;
 }
 
@@ -18,7 +16,6 @@
   &__members {
     display: flex;
     flex-direction: column;
-    @include reset-list;
   }
 
   &__member {
@@ -31,7 +28,6 @@
 }
 
 .group-distributions {
-  @include reset-list;
   margin-bottom: get-unit(2);
   font-size: 90%;
 }
@@ -47,7 +43,6 @@
 }
 
 .group-distribution-snippet {
-  @include reset-list;
   display: flex;
   width: 100%;
   background: get-color(gray, 2);

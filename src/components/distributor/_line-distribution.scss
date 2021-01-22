@@ -25,7 +25,6 @@
     grid-row: middle / end;
     position: relative;
 
-    @include reset-list;
     padding: get-unit(3);
     display: flex;
     flex-direction: column;

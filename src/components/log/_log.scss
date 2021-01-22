@@ -15,19 +15,12 @@
   }
 
   &__sections {
-    @include reset-list;
-
     &--compact {
       @include light-gray-border;
     }
   }
 
-  &__lines {
-    @include reset-list;
-  }
-
   &__parts {
-    @include reset-list;
     display: flex;
     flex-wrap: wrap;
     margin-left: get-unit(3);

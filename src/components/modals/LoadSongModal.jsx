@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, Fragment } from 'react';
 
 // Design Resources
-import { Modal, Table } from 'antd';
+import { Button, Modal, Spin, Table } from 'antd';
 // State
 import useLoadingState from '../../states/useLoadingState';
 import { loadSongState } from '../../states/functions';
@@ -10,16 +10,34 @@ import store from '../../services/store';
 // Components
 import LoadingContainer from '../global/LoadingContainer';
 
-function LoadSongModal({
-  isLoadSongModalVisible,
-  setLoadSongModalVisibility,
-  onBeforeLoad = () => {},
-  onAfterLoad = () => {},
-}) {
+function LoadSongModal({ buttonLabel = 'Load Song', onBeforeLoad = () => {}, onAfterLoad = () => {} }) {
+  const [isSongLoading] = useLoadingState('isSongLoading');
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  return (
+    <Fragment>
+      <Button type="primary" onClick={() => setIsModalVisible(true)} disabled={isSongLoading}>
+        {isSongLoading ? <Spin size="small" /> : buttonLabel}
+      </Button>
+
+      {isModalVisible && (
+        <SongModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          onBeforeLoad={onBeforeLoad}
+          onAfterLoad={onAfterLoad}
+        />
+      )}
+    </Fragment>
+  );
+}
+
+function SongModal({ isModalVisible, setIsModalVisible, onBeforeLoad = () => {}, onAfterLoad = () => {} }) {
   const [isSongLoading] = useLoadingState('isSongLoading');
 
   const [data, setData] = useState([]);
-  const [selectedSongId, setSelectedSongId] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     async function fetchSongs() {
@@ -29,22 +47,22 @@ function LoadSongModal({
   }, []);
 
   const onCancelModal = () => {
-    setLoadSongModalVisibility(false);
+    setIsModalVisible(false);
   };
 
   const onLoadSong = useCallback(() => {
     async function fetchSongData() {
       onBeforeLoad();
 
-      await loadSongState(selectedSongId);
+      await loadSongState(selectedId);
 
-      setSelectedSongId(null);
-      setLoadSongModalVisibility(false);
+      setSelectedId(null);
       onAfterLoad();
+      setIsModalVisible(false);
     }
 
     fetchSongData();
-  }, [selectedSongId, setLoadSongModalVisibility, onBeforeLoad, onAfterLoad]);
+  }, [selectedId, setIsModalVisible, onBeforeLoad, onAfterLoad]);
 
   const columns = [
     {
@@ -72,18 +90,18 @@ function LoadSongModal({
 
   const rowSelection = {
     onChange: (_, selectedRows) => {
-      setSelectedSongId(selectedRows[0].id);
+      setSelectedId(selectedRows[0].id);
     },
   };
 
   return (
     <Modal
       title="Load Song"
-      visible={isLoadSongModalVisible}
+      visible={isModalVisible}
       onOk={onLoadSong}
       okText="Load Song"
       onCancel={onCancelModal}
-      okButtonProps={{ disabled: isSongLoading || Boolean(!selectedSongId) }}
+      okButtonProps={{ disabled: isSongLoading || Boolean(!selectedId) }}
     >
       <LoadingContainer waitFor="song">
         <Table

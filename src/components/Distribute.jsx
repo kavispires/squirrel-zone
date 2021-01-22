@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
@@ -17,7 +17,6 @@ import { serializeKey } from '../utils/distributor';
 import { bemClassConditionalModifier } from '../utils';
 import { DEFAULT_MEMBERS } from '../utils/constants';
 // Components
-import LoadingContainer from './global/LoadingContainer';
 import LoadSongModal from './modals/LoadSongModal';
 import YoutubeVideo from './distributor/YoutubeVideo';
 import Log from './log/Log';
@@ -35,7 +34,6 @@ function Distribute() {
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
 
-  const [isLoadSongModalVisible, setModalVisibility] = useState(false);
   const [distributionName, setDistributionName] = useState(loadedLineDistribution?.name || '');
 
   // Run on mount
@@ -104,44 +102,35 @@ function Distribute() {
       <main className="main distribute">
         <h1>Distribute{song ? `: ${song.title}` : ''}</h1>
         <div className="distribute__actions">
-          <Button type="primary" onClick={() => setModalVisibility(true)} disabled={isLoading}>
-            {isLoading ? <Spin size="small" /> : 'Load Song'}
-          </Button>
+          <LoadSongModal onBeforeLoad={resetDistribution} />
         </div>
-        <LoadingContainer forceLoading={!isFullyLoaded}>
-          <DistributeWidget
-            members={activeMembers}
-            distributionCompletion={distributionCompletion}
-            resetDistribution={resetDistribution}
-          />
-        </LoadingContainer>
 
         {isFullyLoaded && (
-          <div className="distribute__actions">
-            <Input
-              placeholder="original"
-              disabled={isLoading}
-              onChange={updateName}
-              className="distribute__actions-input"
+          <Fragment>
+            <DistributeWidget
+              members={activeMembers}
+              distributionCompletion={distributionCompletion}
+              resetDistribution={resetDistribution}
             />
-            <Button
-              type="primary"
-              onClick={saveDistribution}
-              disabled={isLoading || distributionCompletion < 100}
-            >
-              {loadedLineDistribution?.id ? 'Update' : 'Save'} Distribution
-            </Button>
-          </div>
+
+            <div className="distribute__actions">
+              <Input
+                placeholder="original"
+                disabled={isLoading}
+                onChange={updateName}
+                className="distribute__actions-input"
+              />
+              <Button
+                type="primary"
+                onClick={saveDistribution}
+                disabled={isLoading || distributionCompletion < 100}
+              >
+                {loadedLineDistribution?.id ? 'Update' : 'Save'} Distribution
+              </Button>
+            </div>
+          </Fragment>
         )}
       </main>
-
-      {isLoadSongModalVisible && (
-        <LoadSongModal
-          isLoadSongModalVisible={isLoadSongModalVisible}
-          setLoadSongModalVisibility={setModalVisibility}
-          onBeforeLoad={resetDistribution}
-        />
-      )}
     </Layout.Content>
   );
 }

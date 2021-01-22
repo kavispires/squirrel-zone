@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 // Design Resources
 import { Spin } from 'antd';
-import { FrownFilled } from '@ant-design/icons';
+import { BorderOutlined } from '@ant-design/icons';
 // State
 import { reducerTypeMapping, useLoadingState } from '../../states/useLoadingState';
 
@@ -20,8 +20,8 @@ function LoadingContainer({ children, waitFor, noResults = false, forceLoading =
   if (noResults) {
     return (
       <div className="loading-container">
-        <FrownFilled size={size} />
-        <p className="loading-container__message">Something wrong is not right.</p>
+        <BorderOutlined />
+        <p className="loading-container__message">No data to display</p>
       </div>
     );
   }

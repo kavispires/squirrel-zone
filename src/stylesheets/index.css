@@ -1377,6 +1377,10 @@ body {
   justify-self: center;
   color: white;
 }
+.rank-entry---1 {
+  transform: translateY(351px);
+  opacity: 0;
+}
 .rank-entry--0 {
   transform: translateY(0px);
 }

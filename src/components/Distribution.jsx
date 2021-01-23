@@ -47,8 +47,7 @@ function Distribution() {
     if (isFullyLoaded && song && activeMembers && parts && Object.keys(parts).length && lineDistribution) {
       const preview = new Previewer({
         songTitle: song.title,
-        allPartsIds: song.allPartsIds,
-        parts,
+        allParts: song.allPartsIds.map((partId) => parts[partId].data),
         members: activeMembers,
         distribution: lineDistribution,
         framerate: 30,

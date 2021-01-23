@@ -28,8 +28,7 @@ function Preview({ playerRef }) {
     if (step === '3') {
       const preview = new Previewer({
         songTitle: song.title ?? 'Untitled',
-        allPartsIds: song.allPartsIds,
-        parts,
+        allParts: song.allPartsIds.map((partId) => parts[partId].data),
         members: sampleGroup.members,
         distribution: buildMockDistribution(parts).data,
       });

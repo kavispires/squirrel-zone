@@ -3,43 +3,56 @@ import Previewer from './previewer';
 
 const SECOND = 1000;
 
+const parts = {
+  p1: {
+    id: 'p1',
+    text: 'Hello',
+    startTime: 1 * SECOND,
+    endTime: 2 * SECOND,
+    duration: 1 * SECOND,
+    assignee: ['A'],
+    lineId: 'l1',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  p2: {
+    id: 'p2',
+    text: 'World',
+    startTime: 4 * SECOND,
+    endTime: 6 * SECOND,
+    duration: 2 * SECOND,
+    assignee: ['A'],
+    lineId: 'l1',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  p3: {
+    id: 'p3',
+    text: 'Hi',
+    startTime: 8 * SECOND,
+    endTime: 12 * SECOND,
+    duration: 4 * SECOND,
+    assignee: ['A'],
+    lineId: 'l2',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  p4: {
+    id: 'p4',
+    text: 'Planet',
+    startTime: 9 * SECOND,
+    endTime: 15 * SECOND,
+    duration: 6 * SECOND,
+    assignee: ['A'],
+    lineId: 'l2',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+};
+
 const sampleData = {
   songTitle: 'Test Title',
-  allPartsIds: ['p1'],
-  parts: {
-    p1: {
-      id: 'p1',
-      text: 'Hello',
-      startTime: 1 * SECOND,
-      endTime: 2 * SECOND,
-      duration: 1 * SECOND,
-      assignee: ['A'],
-    },
-    p2: {
-      id: 'p2',
-      text: 'World',
-      startTime: 4 * SECOND,
-      endTime: 6 * SECOND,
-      duration: 2 * SECOND,
-      assignee: ['A'],
-    },
-    p3: {
-      id: 'p3',
-      text: 'Hi',
-      startTime: 8 * SECOND,
-      endTime: 12 * SECOND,
-      duration: 4 * SECOND,
-      assignee: ['A'],
-    },
-    p4: {
-      id: 'p4',
-      text: 'Planet',
-      startTime: 9 * SECOND,
-      endTime: 15 * SECOND,
-      duration: 6 * SECOND,
-      assignee: ['A'],
-    },
-  },
+  allParts: Object.values(parts),
   members: {
     'member::m1': {
       key: 'member::m1',
@@ -88,66 +101,66 @@ describe('Previewer', function () {
 
   describe('bars()', function () {
     it('builds bars correctly', function () {
-      const previewer = new Previewer({ ...sampleData });
+      const previewer = new Previewer({ ...sampleData, allParts: [parts.p1] });
       const bars = previewer.bars();
 
       expect(bars.length).toEqual(4);
       expect(bars).toEqual([
         {
-          'member::m1': { key: 'member::m1', on: false, percentage: 0, position: 1, value: 0 },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: 0 },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 0, value: 0 },
+          'member::m1': { key: 'member::m1', on: false, percentage: 0, position: -1, value: 0 },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: 0 },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: 0 },
         },
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 100, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: false, percentage: 100, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 100, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: true, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: true, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: true, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: true, percentage: 0, position: -1, value: '0.0' },
         },
       ]);
     });
 
     it('adds/removes array elements depending on framerate', function () {
-      const previewer = new Previewer({ ...sampleData, framerate: 2 });
+      const previewer = new Previewer({ ...sampleData, allParts: [parts.p1], framerate: 2 });
       const bars = previewer.bars();
 
       expect(bars.length).toEqual(6);
       expect(bars[1]).toEqual(undefined);
       expect(bars).toEqual([
         {
-          'member::m1': { key: 'member::m1', on: false, percentage: 0, position: 1, value: 0 },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: 0 },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 0, value: 0 },
+          'member::m1': { key: 'member::m1', on: false, percentage: 0, position: -1, value: 0 },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: 0 },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: 0 },
         },
         undefined,
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 50, position: 0, value: '0.5' },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 100, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: false, percentage: 100, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 100, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: true, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: true, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: true, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: true, percentage: 0, position: -1, value: '0.0' },
         },
       ]);
     });
@@ -155,48 +168,48 @@ describe('Previewer', function () {
     it('calculate position correctly', function () {
       const previewer = new Previewer({
         ...sampleData,
-        allPartsIds: ['p1', 'p2', 'p3', 'p4'],
+        allParts: [parts.p1, parts.p2, parts.p3, parts.p4],
       });
 
       const bars = previewer.bars();
 
       expect(bars).toEqual([
         {
-          'member::m1': { key: 'member::m1', on: false, percentage: 0, position: 1, value: 0 },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: 0 },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 0, value: 0 },
+          'member::m1': { key: 'member::m1', on: false, percentage: 0, position: -1, value: 0 },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: 0 },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: 0 },
         },
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 17, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: false, percentage: 17, position: 0, value: '1.0' },
-          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: 2, value: '0.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 1, value: '0.0' },
+          'member::m2': { key: 'member::m2', on: false, percentage: 0, position: -1, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         undefined,
         {
           'member::m1': { key: 'member::m1', on: false, percentage: 17, position: 1, value: '1.0' },
           'member::m2': { key: 'member::m2', on: true, percentage: 17, position: 0, value: '1.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 2, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: false, percentage: 17, position: 1, value: '1.0' },
           'member::m2': { key: 'member::m2', on: true, percentage: 34, position: 0, value: '2.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 2, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: false, percentage: 17, position: 1, value: '1.0' },
           'member::m2': { key: 'member::m2', on: false, percentage: 34, position: 0, value: '2.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 2, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         undefined,
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 34, position: 1, value: '2.0' },
           'member::m2': { key: 'member::m2', on: false, percentage: 34, position: 0, value: '2.0' },
-          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: 2, value: '0.0' },
+          'member::m3': { key: 'member::m3', on: false, percentage: 0, position: -1, value: '0.0' },
         },
         {
           'member::m1': { key: 'member::m1', on: true, percentage: 50, position: 0, value: '3.0' },
@@ -242,23 +255,47 @@ describe('Previewer', function () {
     });
   });
 
-  // describe('lyrics()', function () {
-  //   it('builds bars correctly', function () {
-  //     const previewer = new Previewer(sampleData);
-  //     console.log(previewer);
-  //     expect(previewer.bars()).toEqual({});
-  //   });
-  // });
+  describe('lyrics()', function () {
+    const previewer = new Previewer({
+      ...sampleData,
+      allParts: [parts.p1, parts.p2, parts.p3, parts.p4],
+    });
+    const lyrics = previewer.lyrics();
 
-  // describe('Lyrics', function () {
-  //   it('builds lyrics for single line and single single assignee', function () {
-  //     const previewer = new Previewer({
-  //       ...sampleData,
-  //     });
+    xit('builds single part/single assignee correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
 
-  //     expect(previewer.bars()).toEqual([
+    xit('builds multiple parts/single assignee correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
 
-  //     ]);
-  //   });
-  // });
+    xit('builds multiple lines/single assignee correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
+
+    xit('builds single part/multiple assignees correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
+
+    xit('builds multiple parts/multiple assignees correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
+
+    xit('builds multiple lines/multiple assignees correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
+
+    xit('builds single part/ALL correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
+
+    xit('builds single part/ALL+assignee correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
+
+    xit('builds multiple parts/ALL+ multiple assignees correctly', function () {
+      expect(lyrics['0']).toEqual({});
+    });
+  });
 });

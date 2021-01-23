@@ -6,13 +6,12 @@ import MemberEntry from './memberEntry';
 const ALL_NONE_MEMBERS = ['ALL', 'NONE', 'member::ALL', 'member::NONE'];
 
 /**
- * Class to generate a Line Distribution preview
+ * Class to generate a Line Distribution preview.
  */
 export class Previewer {
-  constructor({ songTitle, allPartsIds, parts, members, distribution, framerate = 30 }) {
+  constructor({ songTitle, allParts, members, distribution, framerate = 30 }) {
     this._songTitle = songTitle;
-    this._allPartsIds = allPartsIds;
-    this._parts = parts;
+    this._allParts = allParts;
     this._distribution = distribution;
     this._framerate = framerate;
 
@@ -41,18 +40,15 @@ export class Previewer {
    * @returns {DistributedPart[]}
    */
   _buildDistributionParts() {
-    return this._allPartsIds
-      .map((partId) => {
-        const part = this._parts[partId];
-        const distributedPart = this._distribution[partId];
+    return this._allParts
+      .map((part) => {
+        const distributedPart = this._distribution[part.id];
         const distributedAssignees = Array.isArray(distributedPart)
           ? distributedPart
           : Object.keys(distributedPart);
 
         return new DistributedPart({
           ...part,
-          id: part.id,
-          duration: part.duration,
           membersIds: distributedAssignees,
         });
       })
@@ -110,7 +106,7 @@ export class Previewer {
     this._membersCountCache = {};
     return Object.keys(this._members).reduce((acc, key) => {
       this._membersCountCache[key] = 0;
-      acc[key] = new ChartEntry({ key, position: this._priorityPosition[key] });
+      acc[key] = new ChartEntry({ key, position: -1 });
       return acc;
     }, {});
   }
@@ -166,7 +162,8 @@ export class Previewer {
         // Reposition
         const sortedEntry = Object.values(entry).sort((a, b) => (b.value > a.value ? 1 : -1));
         Object.values(entry).forEach((chartEntry) => {
-          chartEntry.position = sortedEntry.findIndex((e) => e.key === chartEntry.key);
+          chartEntry.position =
+            chartEntry.value > 0 ? sortedEntry.findIndex((e) => e.key === chartEntry.key) : -1;
           // Fix value
           chartEntry.value = Number(chartEntry.value / 1000).toFixed(1);
         });
@@ -187,6 +184,8 @@ export class Previewer {
   }
 
   lyrics() {
+    // Iterate through distributedParts
+
     return {};
   }
 }

@@ -115,6 +115,11 @@
 
   $bar-entry-height: 35px + 4px;
 
+  &---1 {
+    transform: translateY((10 - 1) * $bar-entry-height);
+    opacity: 0;
+  }
+
   @for $i from 1 through 10 {
     &--#{$i - 1} {
       transform: translateY(($i - 1) * $bar-entry-height);

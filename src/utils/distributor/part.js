@@ -117,6 +117,9 @@ export class Part {
    * @type {object}
    */
   get data() {
+    const library = getDistributorGlobalState('lines') ?? {};
+    const line = library[this.lineId] ?? null;
+
     const data = {
       id: this._id,
       type: this.type,
@@ -130,6 +133,9 @@ export class Part {
       text: this.text,
       // Relationships
       lineId: this.lineId,
+      // Extra data
+      isDismissible: line.isDismissible,
+      sectionId: line.sectionId,
     };
 
     Object.freeze(data);

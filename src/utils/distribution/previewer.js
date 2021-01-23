@@ -1,6 +1,8 @@
 import { deepCopy, getFrameFromTimestamp, getTimestampFromFrame } from '..';
 import ChartEntry from './chartEntry';
 import DistributedPart from './distributedPart';
+import LineEntry from './lineEntry';
+import LyricEntry from './lyricEntry';
 import MemberEntry from './memberEntry';
 
 const ALL_NONE_MEMBERS = ['ALL', 'NONE', 'member::ALL', 'member::NONE'];
@@ -119,6 +121,10 @@ export class Previewer {
     return Object.values(this._members).sort((a, b) => (b.age > a.age ? 1 : -1));
   }
 
+  /**
+   * Build distribution bars
+   * @param {boolean} force - flag indicating if bars should be rebuilt
+   */
   bars(force = false) {
     if (this._bars && !force) return this._bars;
 
@@ -183,10 +189,72 @@ export class Previewer {
     return this._bars;
   }
 
-  lyrics() {
-    // Iterate through distributedParts
+  /**
+   *
+   * @param {*} force
+   */
+  lyrics(force = false) {
+    if (this._lyrics && !force) return this._lyrics;
 
-    return {};
+    const lineEntries = {};
+
+    // Iterate through distributedParts building lyricLine
+    this._distributedParts.forEach((dPart) => {
+      // Ignore dismissible parts
+      if (dPart.isDismissible) return;
+      // Ignore parts with None
+      if (dPart.assignees.includes('member::NONE')) return;
+      // Create line entry where there is none for given lineId
+      if (lineEntries[dPart.lineId] === undefined) {
+        lineEntries[dPart.lineId] = new LineEntry(dPart);
+      }
+
+      lineEntries[dPart.lineId].add(dPart);
+    });
+
+    const lyricsEntries = {};
+
+    // Grouping
+    // Rules if different sectionId, new lyricEntry
+    const sortedLineEntries = Object.values(lineEntries).sort((a, b) =>
+      a.startTime >= b.startTime ? 1 : -1
+    );
+
+    let latestEntry = null;
+
+    sortedLineEntries.forEach((entry) => {
+      // Cleanup entry
+      entry.cleanup();
+
+      // If is the same sectionId and same assignees of previous entry, use it
+      if (latestEntry?.sectionId === entry.sectionId && latestEntry.assignees === entry.assignees) {
+        latestEntry.add(entry);
+        return;
+      }
+
+      // Consume latestEntry
+      if (latestEntry) {
+        if (lyricsEntries[latestEntry?.startTime]) {
+          lyricsEntries[latestEntry.startTime + 0.1] = latestEntry;
+        } else {
+          lyricsEntries[latestEntry.startTime] = latestEntry;
+        }
+        latestEntry = null;
+      }
+
+      // Create new entry
+      latestEntry = new LyricEntry(entry);
+    });
+
+    // Cleanup
+    Object.entries(lyricsEntries).forEach(([key, entry]) => {
+      lyricsEntries[key] = entry.data(this._members, this._framerate);
+    });
+
+    // console.log({ lyricsEntries });
+
+    this._lyrics = Object.values(lyricsEntries);
+    return this._lyrics;
   }
 }
 

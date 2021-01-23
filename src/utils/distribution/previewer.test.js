@@ -50,6 +50,96 @@ const parts = {
   },
 };
 
+const sequentialTiming = (base = 0) => {
+  const startTime = (1 + base) * SECOND;
+  const endTime = (2 + base) * SECOND;
+  return {
+    startTime,
+    endTime,
+    duration: endTime - startTime,
+  };
+};
+
+const lyricsPartSample = [
+  {
+    id: 'p1',
+    text: 'None example',
+    startTime: sequentialTiming(1).startTime,
+    endTime: sequentialTiming(1).startTime,
+    duration: sequentialTiming(1).startTime,
+    assignee: ['A'],
+    lineId: 'l1',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  {
+    id: 'p2',
+    text: 'Dismissible example',
+    startTime: sequentialTiming(2).startTime,
+    endTime: sequentialTiming(2).startTime,
+    duration: sequentialTiming(2).startTime,
+    assignee: ['A'],
+    lineId: 'l1',
+    sectionId: 's1',
+    isDismissible: true,
+  },
+  {
+    id: 'p3',
+    text: 'Hello',
+    startTime: sequentialTiming(3).startTime,
+    endTime: sequentialTiming(3).startTime,
+    duration: sequentialTiming(3).startTime,
+    assignee: ['A'],
+    lineId: 'l1',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  {
+    id: 'p4',
+    text: 'Hello',
+    startTime: sequentialTiming(4).startTime,
+    endTime: sequentialTiming(4).startTime,
+    duration: sequentialTiming(4).startTime,
+    assignee: ['A'],
+    lineId: 'l2',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  {
+    id: 'p5',
+    text: 'World',
+    startTime: sequentialTiming(5).startTime,
+    endTime: sequentialTiming(5).startTime,
+    duration: sequentialTiming(5).startTime,
+    assignee: ['A'],
+    lineId: 'l2',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  {
+    id: 'p6',
+    text: 'World',
+    startTime: sequentialTiming(6).startTime,
+    endTime: sequentialTiming(6).startTime,
+    duration: sequentialTiming(6).startTime,
+    assignee: ['A'],
+    lineId: 'l3',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+  {
+    id: 'p7',
+    text: 'World',
+    startTime: sequentialTiming(7).startTime,
+    endTime: sequentialTiming(7).startTime,
+    duration: sequentialTiming(7).startTime,
+    assignee: ['A'],
+    lineId: 'l4',
+    sectionId: 's1',
+    isDismissible: false,
+  },
+];
+
 const sampleData = {
   songTitle: 'Test Title',
   allParts: Object.values(parts),
@@ -85,7 +175,7 @@ const sampleData = {
 describe('Previewer', function () {
   describe('members()', function () {
     it('builds members correctly', function () {
-      const previewer = new Previewer({ ...sampleData });
+      const previewer = new Previewer({ ...sampleData, allParts: [parts.p1] });
       const result = previewer.members();
       expect(result).toEqual([
         { age: 20, color: '0000FF', duration: 0, key: 'member::m3', name: 'Dancer', percentage: 0 },
@@ -258,12 +348,26 @@ describe('Previewer', function () {
   describe('lyrics()', function () {
     const previewer = new Previewer({
       ...sampleData,
-      allParts: [parts.p1, parts.p2, parts.p3, parts.p4],
+      allParts: lyricsPartSample,
+      distribution: {
+        p1: { 'member::NONE': true }, // with none
+        p2: { 'member::m1': true }, // dismissible
+        p3: { 'member::m1': true }, // 1 part, 1 line
+        p4: { 'member::m1': true }, // 2 parts, 1 line A
+        p5: { 'member::m1': true }, // 2 parts, 1 line B
+        p6: { 'member::m1': true, 'member::m2': true }, // 1 part, 1 line, 2 members
+        p7: { 'member::m1': true, 'member::m3': true, 'member::m2': true }, // 1 part, 1 line, 3 members
+      },
     });
     const lyrics = previewer.lyrics();
 
-    xit('builds single part/single assignee correctly', function () {
-      expect(lyrics['0']).toEqual({});
+    it('builds single part/single assignee correctly', function () {
+      expect(lyrics[1]).toEqual({
+        colors: ['FF0000', '00FF00'],
+        frame: 7,
+        lines: ['World'],
+        names: ['Vocalist', 'Rapper'],
+      });
     });
 
     xit('builds multiple parts/single assignee correctly', function () {

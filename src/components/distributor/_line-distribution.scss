@@ -1,3 +1,5 @@
+$avatar-size: 30px;
+
 .line-distribution {
   &__container {
     display: grid;
@@ -37,10 +39,12 @@
     grid-column: middle / end;
     grid-row: start / end;
     background: linear-gradient(to bottom, #c7d3db, #5f6e79);
+    // padding: get-unit(2);
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-y: auto;
   }
 }
 
@@ -60,7 +64,6 @@
     opacity: 100%;
   }
 
-  $avatar-size: 30px;
   $progress-bar-size: 8px;
 
   grid-template-columns: [start] $avatar-size [first] auto [second] 40px [end];
@@ -124,5 +127,61 @@
     &--#{$i - 1} {
       transform: translateY(($i - 1) * $bar-entry-height);
     }
+  }
+}
+
+.lyrics-entry {
+  display: grid;
+  grid-template-columns: [start] $avatar-size [middle] auto [end];
+  grid-template-rows: [start] 28px [middle] auto [end];
+  // gap: get-unit(1);
+  // background: pink;
+  width: 450px;
+  margin: 16px auto;
+
+  &__avatars {
+    // background: green;
+    grid-column: start / middle;
+    grid-row: start / end;
+
+    padding: get-unit(2);
+    margin-left: get-unit(4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__avatar {
+    &--all {
+      opacity: 70%;
+    }
+  }
+
+  &__names {
+    grid-column: middle / end;
+    grid-row: start / middle;
+
+    background: #f3f3f3;
+    border-radius: get-unit(3 3 0 0);
+    padding: get-unit(1 1 1 4);
+  }
+
+  &__name {
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-right: get-unit(2);
+  }
+
+  &__lines {
+    grid-column: middle / end;
+    grid-row: middle / end;
+
+    background: white;
+    border-radius: get-unit(0 0 3 3);
+    padding: get-unit(1 1 1 4);
+  }
+
+  &__line {
+    display: block;
   }
 }

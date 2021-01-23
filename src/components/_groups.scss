@@ -53,6 +53,7 @@
 
   & span {
     text-align: center;
+    color: get-color(white);
 
     &:first-child {
       border-radius: get-unit(1 0 0 1);

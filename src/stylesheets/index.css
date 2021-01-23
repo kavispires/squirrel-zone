@@ -379,6 +379,7 @@ body {
 }
 .group-distribution-snippet span {
   text-align: center;
+  color: white;
 }
 .group-distribution-snippet span:first-child {
   border-radius: 4px 0 0 4px;

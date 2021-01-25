@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/squirrel-zone/static/css/main.7dab6044.chunk.css",
-    "main.js": "/squirrel-zone/static/js/main.564649bf.chunk.js",
-    "main.js.map": "/squirrel-zone/static/js/main.564649bf.chunk.js.map",
+    "main.js": "/squirrel-zone/static/js/main.a8ecad8a.chunk.js",
+    "main.js.map": "/squirrel-zone/static/js/main.a8ecad8a.chunk.js.map",
     "runtime-main.js": "/squirrel-zone/static/js/runtime-main.87db46de.js",
     "runtime-main.js.map": "/squirrel-zone/static/js/runtime-main.87db46de.js.map",
     "static/css/2.6dbccb46.chunk.css": "/squirrel-zone/static/css/2.6dbccb46.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.6dbccb46.chunk.css",
     "static/js/2.5b6d3f91.chunk.js",
     "static/css/main.7dab6044.chunk.css",
-    "static/js/main.564649bf.chunk.js"
+    "static/js/main.a8ecad8a.chunk.js"
   ]
 }

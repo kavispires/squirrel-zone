@@ -82,6 +82,7 @@ const serializer = {
       idealGroupSize: data.idealGroupSize ?? 5,
       isComplete: data.isComplete,
       isSingle: Boolean(data.isSingle),
+      scale: data.scale ?? 'UNKNOWN',
       style: data.style ?? '',
       tempo: data.tempo ?? 0,
       title: data.title ?? 'Untitled',

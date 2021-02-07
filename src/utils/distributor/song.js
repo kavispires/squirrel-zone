@@ -36,6 +36,7 @@ export class Song {
     this.duration = moment(0, 'mm:ss');
     this.tempo = 0;
     this.genre = '';
+    this.scale = 'UNKNOWN';
     this.style = '';
     // Relationships
     this.sectionsIds = [];
@@ -90,6 +91,7 @@ export class Song {
       isSingle: false,
       idealGroupSize: 5,
       tempo: 0,
+      scale: 'UNKNOWN',
     };
   }
 
@@ -169,6 +171,7 @@ export class Song {
       Boolean(this.duration), // has a duration
       Boolean(this.tempo), // has a tempo
       Boolean(this.genre), // has a genre
+      Boolean(this.scale && this.scale !== 'UNKNOWN'), // has a scale
       Boolean(this.style), // has a style
       Boolean(this.sectionsIds.length), // has at last one child section
     ];
@@ -217,6 +220,7 @@ export class Song {
       duration: this.duration,
       tempo: this.tempo,
       genre: this.genre,
+      scale: this.scale,
       style: this.style,
       // Relationships
       albumId: this.albumId,
@@ -346,6 +350,7 @@ export class Song {
     }
     this.tempo = getDefault(this, data, 'tempo', '');
     this.genre = getDefault(this, data, 'genre', '');
+    this.scale = getDefault(this, data, 'scale', '');
     this.style = getDefault(this, data, 'style', '');
     // Relationships
     this.albumId = getNullDefault(this, data, 'albumId', null);
@@ -399,6 +404,7 @@ export class Song {
         isComplete: this.isComplete,
         isSingle: nullifyDefault(this, 'isSingle', this.defaultValues),
         idealGroupSize: nullifyDefault(this, 'idealGroupSize', this.defaultValues),
+        scale: nullifyDefault(this, 'scale', this.defaultValues),
         style: nullifyDefault(this, 'style', this.defaultValues),
         tempo: nullifyDefault(this, 'tempo', this.defaultValues),
         title: nullifyDefault(this, 'title', this.defaultValues),

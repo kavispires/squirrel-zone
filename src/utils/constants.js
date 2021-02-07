@@ -115,3 +115,28 @@ export const DEFAULT_MEMBERS = {
     positions: ['NONE'],
   },
 };
+
+function buildScaleOptions() {
+  const chords = [
+    'C',
+    'C#',
+    'Db',
+    'D',
+    'D#',
+    'Eb',
+    'E',
+    'F',
+    'F#',
+    'Gb',
+    'G',
+    'G#',
+    'Ab',
+    'A',
+    'A#',
+    'Bb',
+    'B',
+  ];
+  return chords.map((chord) => [`${chord} Major`, `${chord} Minor`]).flat();
+}
+
+export const MUSIC_SCALE = buildScaleOptions();

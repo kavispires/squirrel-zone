@@ -96,6 +96,10 @@
   &__title-text {
     font-style: italic;
     color: get-color(gray, 2);
+
+    &--dismissed {
+      text-decoration: line-through;
+    }
   }
 
   &__actions {

@@ -37,7 +37,11 @@ function LogLineEdit({ line, onCheckboxChange, onShowModal }) {
             className="log-line__line-button"
             onClick={() => onShowModal(line)}
           >
-            <span className="log-line__title-text">{line.text}</span>
+            <span
+              className={bemClass('log-line__title-text', getBemModifier(line.isDismissible, 'dismissed'))}
+            >
+              {line.text}
+            </span>
           </Button>
         </Tooltip>
         <div className="log-line__actions">

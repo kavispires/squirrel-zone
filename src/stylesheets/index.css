@@ -1245,6 +1245,9 @@ body {
   font-style: italic;
   color: #d6d7d8;
 }
+.log-line__title-text--dismissed {
+  text-decoration: line-through;
+}
 .log-line__actions {
   display: flex;
   justify-content: flex-end;

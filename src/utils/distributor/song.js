@@ -1,5 +1,5 @@
 // Global State
-import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
 import Section from './section';
 import {
@@ -7,8 +7,10 @@ import {
   getDefault,
   getNullDefault,
   getRelationshipsDefault,
+  nullifyDefault,
   serializeKey,
 } from './utilities';
+import moment from 'moment';
 
 /**
  * Class representing a Song - a collection of sections.
@@ -20,7 +22,7 @@ export class Song {
    * @param {object} data - An object with the necessary data to be loaded in this instance
    */
   constructor(data) {
-    this._id = data.id || generateUniqueId();
+    this._id = data.id || 0; // Set to 0 so firebase can know to create a new key for it
     this._type = 'song';
     // Attributes
     this.videoId = '';
@@ -31,7 +33,7 @@ export class Song {
 
     this.isSingle = false;
     this.idealGroupSize = 5;
-    this.duration = 0;
+    this.duration = moment(0, 'mm:ss');
     this.tempo = 0;
     this.genre = '';
     this.style = '';
@@ -53,7 +55,7 @@ export class Song {
   _save() {
     console.log('%cSaving song...', 'color:purple');
     this.updatedAt = Date.now();
-    setGlobalState('song', this);
+    setDistributorGlobalState('song', this);
   }
 
   /**
@@ -81,11 +83,22 @@ export class Song {
   }
 
   /**
+   * Dictionary of default values for this instance.
+   */
+  get defaultValues() {
+    return {
+      isSingle: false,
+      idealGroupSize: 5,
+      tempo: 0,
+    };
+  }
+
+  /**
    * List of sections.
    * @type {Part[]}
    */
   get sections() {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const sections = this.sectionsIds.map((sectionId) => library[sectionId]);
     if (!this._isSorted) {
       return this.sort(sections);
@@ -126,7 +139,7 @@ export class Song {
   }
 
   /**
-   * Get a list of all ids of all parts in the song
+   * Get a list of all ids of all parts in the song.
    * @type {string[]}
    */
   get allPartsIds() {
@@ -135,6 +148,14 @@ export class Song {
       .flat()
       .map((line) => line.partsIds)
       .flat();
+  }
+
+  /**
+   * Total number of parts on the song.
+   * @type {type}
+   */
+  get partsCount() {
+    return this.allPartsIds.length;
   }
 
   /**
@@ -184,6 +205,7 @@ export class Song {
       type: this._type,
       // Getters
       text: this.text,
+      partsCount: this.partsCount,
       // Attributes
       videoId: this.videoId,
       title: this.title,
@@ -209,25 +231,21 @@ export class Song {
    * @returns {object[]}
    */
   sort(sections = this.sections) {
-    const cache = Object.values(sections).reduce((res, section) => {
-      if (section && section instanceof Section) {
-        if (res[section.startTime]) {
-          res[section.startTime].push(section);
-        } else {
-          res[section.startTime] = [section];
-        }
+    const sortedSections = sections.sort((a, b) => (a.startTime > b.startTime ? 1 : -1));
+
+    // Renumber the parts. e.g. VERSE 1, VERSE 2, etc...
+    const sectionsNumbers = {};
+    sortedSections.forEach((section) => {
+      if (sectionsNumbers[section.kind]) {
+        sectionsNumbers[section.kind] += 1;
+        section.deserialize({ number: sectionsNumbers[section.kind] });
+      } else {
+        sectionsNumbers[section.kind] = 1;
       }
-      return res;
-    }, {});
-
-    const sortedTimes = Object.keys(cache).map(Number).sort();
-
-    const sortedSections = sortedTimes.reduce((acc, key) => {
-      acc = [...acc, ...cache[key]];
-      return acc;
-    }, []);
+    });
 
     this.sectionsIds = sortedSections.map((entry) => entry.id);
+
     this._isSorted = true;
     return sortedSections;
   }
@@ -279,7 +297,7 @@ export class Song {
    * @param {string} sectionId
    */
   connectSection(sectionId) {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const section = library[sectionId] ?? null;
 
     if (!section) throw Error(`Section ${sectionId} does not exist in the state`);
@@ -296,7 +314,7 @@ export class Song {
    * @param {string} sectionId
    */
   disconnectSection(sectionId) {
-    const library = getGlobalState('sections') ?? {};
+    const library = getDistributorGlobalState('sections') ?? {};
     const section = library[sectionId] ?? null;
 
     if (section) {
@@ -322,7 +340,10 @@ export class Song {
     this.updatedAt = getDefault(this, data, 'updatedAt', Date.now());
     this.isSingle = getDefault(this, data, 'isSingle', false);
     this.idealGroupSize = getDefault(this, data, 'idealGroupSize', 5);
-    this.duration = getDefault(this, data, 'duration', false);
+    const duration = getDefault(this, data, 'duration', 0);
+    if (duration) {
+      this.duration = moment(duration, 'mm:ss');
+    }
     this.tempo = getDefault(this, data, 'tempo', '');
     this.genre = getDefault(this, data, 'genre', '');
     this.style = getDefault(this, data, 'style', '');
@@ -340,11 +361,11 @@ export class Song {
    * @returns {object}
    */
   serialize() {
-    const included = [];
     // Gather included relationships
-    const sectionsLibrary = getGlobalState('sections') ?? {};
-    const linesLibrary = getGlobalState('lines') ?? {};
-    const partsLibrary = getGlobalState('parts') ?? {};
+    const included = [];
+    const sectionsLibrary = getDistributorGlobalState('sections') ?? {};
+    const linesLibrary = getDistributorGlobalState('lines') ?? {};
+    const partsLibrary = getDistributorGlobalState('parts') ?? {};
     this.sectionsIds.forEach((sectionId) => {
       const section = sectionsLibrary[sectionId];
       // Add section serialized data to included
@@ -364,30 +385,33 @@ export class Song {
     });
 
     return {
-      data: {
+      id: this.id,
+      type: this.type,
+
+      song: {
         id: this.id,
         type: this.type,
-        // Attributes
-        videoId: this.videoId,
-        title: this.title,
-        version: this.version,
-        createdAt: this.createdAt,
-        updatedAt: this.updatedAt,
-        isSingle: this.isSingle,
-        idealGroupSize: this.idealGroupSize,
-        duration: this.duration,
-        tempo: this.tempo,
-        genre: this.genre,
-        style: this.style,
-        // Relationships
-        albumId: this.albumId,
-        sectionsIds: this.sectionsIds,
-      },
-      included,
-      meta: {
+        albumId: nullifyDefault(this, 'albumId', this.defaultValues),
         completion: this.completion,
+        createdAt: nullifyDefault(this, 'createdAt', this.defaultValues),
+        duration: this.duration.format('mm:ss'),
+        genre: nullifyDefault(this, 'genre', this.defaultValues),
         isComplete: this.isComplete,
-        compiledAt: Date.now(),
+        isSingle: nullifyDefault(this, 'isSingle', this.defaultValues),
+        idealGroupSize: nullifyDefault(this, 'idealGroupSize', this.defaultValues),
+        style: nullifyDefault(this, 'style', this.defaultValues),
+        tempo: nullifyDefault(this, 'tempo', this.defaultValues),
+        title: nullifyDefault(this, 'title', this.defaultValues),
+        version: nullifyDefault(this, 'version', this.defaultValues),
+        videoId: nullifyDefault(this, 'videoId', this.defaultValues),
+        updatedAt: Date.now(),
+      },
+      data: {
+        id: this.id,
+        type: 'song-data',
+
+        sectionsIds: this.sectionsIds,
+        included,
       },
     };
   }

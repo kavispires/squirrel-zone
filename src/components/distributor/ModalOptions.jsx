@@ -12,9 +12,6 @@ function ModalOptions({ activeInstance, setActiveInstance }) {
 
   const onCancelModal = () => {
     setActiveInstance(null);
-    // Note: Modal.onCancel has a weird bug that forces overflow hidden on the body.
-    // Note2: Do not use useCallback in this.
-    document.body.style.overflow = 'auto';
   };
 
   const onSaveModal = useCallback(() => {

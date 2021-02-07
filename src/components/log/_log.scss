@@ -8,28 +8,31 @@
     padding: get-unit(2 0);
     margin-bottom: get-unit(3);
     border-bottom: 1px solid get-color(gray, 1);
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
   &__sections {
-    @include reset-list;
-
     &--compact {
       @include light-gray-border;
     }
   }
 
-  &__lines {
-    @include reset-list;
-  }
-
   &__parts {
-    @include reset-list;
     display: flex;
     flex-wrap: wrap;
     margin-left: get-unit(3);
 
     &--compact {
       margin-left: 0;
+    }
+
+    &--incomplete:before {
+      content: '›';
+      padding-right: get-unit(1);
+      color: get-color(red);
     }
   }
 
@@ -42,7 +45,7 @@
   width: 100%;
 }
 
-.preview-section {
+.log-section {
   @include light-gray-border;
   padding: get-unit(2);
   margin-bottom: get-unit(1);
@@ -74,7 +77,7 @@
   }
 }
 
-.preview-line {
+.log-line {
   margin-left: get-unit(3);
 
   &--compact {
@@ -106,7 +109,7 @@
   }
 }
 
-.preview-part {
+.log-part {
   margin: get-unit(0 1);
   padding: get-unit(0 1);
   border-radius: get-unit(0.5);
@@ -114,5 +117,27 @@
   &__button-index {
     transform: scale(0.7);
     margin-left: get-unit(1);
+  }
+
+  &__distribute {
+    display: flex;
+  }
+}
+
+.log-assignees {
+  &__list {
+    transform: scale(0.8) translateY(-1px);
+    display: flex !important;
+    background: get-color(gray, 2);
+    width: auto;
+  }
+
+  &__item {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    display: block;
+    border-radius: 50%;
+    margin: 0 1px;
   }
 }

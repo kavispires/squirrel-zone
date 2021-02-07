@@ -7,9 +7,9 @@ import { PlayCircleOutlined } from '@ant-design/icons';
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
 import KeyCapture from './KeyCapture';
-import { ASSIGNEE } from '../../utils/distributor';
+import { ASSIGNEE, ASSIGNEE_LABEL } from '../../utils/distributor';
 
-const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: i }));
+const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: ASSIGNEE_LABEL[i] }));
 
 function Controls({ playerRef, playVideo, pauseVideo, isPlaying }) {
   const [isRecording, setIsRecording] = useDistributorState('isRecording');
@@ -65,7 +65,11 @@ function Controls({ playerRef, playVideo, pauseVideo, isPlaying }) {
           Click and hold to record. It allows multiple clicks at the same time. You may also use the number
           keys on your keyboard.
         </p>
-        <KeyCapture.MouseButtons />
+        <KeyCapture.MouseButtons playerRef={playerRef} isPlaying={isPlaying} />
+        <p className="distributor-controls__description">
+          Keep it semantic! Use A and B for vocals, C and D for raps, E and F for Ad-libs, G for All, and H
+          for None.
+        </p>
       </div>
     </div>
   );

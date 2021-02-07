@@ -5,7 +5,7 @@ import { Button } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
-import { ASSIGNEE, convertStoMS, generateTempId } from '../../utils/distributor';
+import { ASSIGNEE, ASSIGNEE_LABEL, convertStoMS, generateTempId } from '../../utils/distributor';
 import { useKeyDown, useKeyUp } from '../../utils/useKeypress';
 import { KEYS, KEY_ASSIGNEE } from '../../utils/constants';
 
@@ -17,7 +17,7 @@ const temp = {
   part: {},
 };
 
-async function handleActionDown(key, videoRef, assignee) {
+async function handleActionDown(key, playerRef, assignee) {
   // Don't run if video is not playing
   if (!playing) return;
   // Don't run if this key is being captured
@@ -29,7 +29,7 @@ async function handleActionDown(key, videoRef, assignee) {
 
   temp.keyPressing[key] = true;
   const newTimestamp = {
-    startTime: convertStoMS(await videoRef.current.internalPlayer.getCurrentTime()),
+    startTime: convertStoMS(await playerRef.current.internalPlayer.getCurrentTime()),
     assignee: key === ' ' ? assignee : KEY_ASSIGNEE[key],
     partId: null,
     id: generateTempId(),
@@ -38,7 +38,7 @@ async function handleActionDown(key, videoRef, assignee) {
   temp.part[key] = newTimestamp;
 }
 
-async function handleActionUp(key, videoRef) {
+async function handleActionUp(key, playerRef) {
   // Don't run if video is not playing
   if (!playing) return;
   // Don't run if key is not being captured
@@ -48,7 +48,7 @@ async function handleActionUp(key, videoRef) {
   // Not allowed key
   if (!KEY_ASSIGNEE[key]) return;
 
-  temp.part[key].endTime = convertStoMS(await videoRef.current.internalPlayer.getCurrentTime());
+  temp.part[key].endTime = convertStoMS(await playerRef.current.internalPlayer.getCurrentTime());
 
   const copy = { ...temp.part[key] };
   temp.part[key] = null;
@@ -56,9 +56,9 @@ async function handleActionUp(key, videoRef) {
   return copy;
 }
 
-const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: i }));
+const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE ?? {}).map((i) => ({ value: i, label: ASSIGNEE_LABEL[i] }));
 
-function MouseButtons({ videoRef, isPlaying }) {
+function MouseButtons({ playerRef, isPlaying }) {
   const [assignee] = useDistributorState('assignee');
   const [, setUnassignedTimestamps] = useDistributorState('unassignedTimestamps');
 
@@ -69,11 +69,11 @@ function MouseButtons({ videoRef, isPlaying }) {
 
   // Capture Button Down
   const onCaptureButtonDown = async (key) => {
-    await handleActionDown(key, videoRef, assignee);
+    await handleActionDown(key, playerRef, assignee);
   };
 
   const onCaptureButtonUp = async (key) => {
-    const result = await handleActionUp(key, videoRef);
+    const result = await handleActionUp(key, playerRef);
 
     if (result?.endTime) {
       setUnassignedTimestamps((state) => {
@@ -100,7 +100,7 @@ function MouseButtons({ videoRef, isPlaying }) {
   );
 }
 
-function Keyboard({ videoRef, isPlaying }) {
+function Keyboard({ playerRef, isPlaying }) {
   const [assignee] = useDistributorState('assignee');
   const [, setUnassignedTimestamps] = useDistributorState('unassignedTimestamps');
 
@@ -111,12 +111,12 @@ function Keyboard({ videoRef, isPlaying }) {
 
   // Capture SPACE key down
   useKeyDown(KEYS, async (key) => {
-    await handleActionDown(key, videoRef, assignee);
+    await handleActionDown(key, playerRef, assignee);
   });
 
   // Capture SPACE key up
   useKeyUp(KEYS, async (key) => {
-    const result = await handleActionUp(key, videoRef);
+    const result = await handleActionUp(key, playerRef);
 
     if (result?.endTime) {
       setUnassignedTimestamps((state) => {

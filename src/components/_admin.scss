@@ -1,0 +1,59 @@
+.admin {
+  &__form-container {
+    width: 50%;
+    @include light-gray-border;
+    padding: get-unit(3);
+  }
+}
+
+.admin-form {
+  $self: &;
+
+  &__item {
+    margin-bottom: get-unit(3);
+  }
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+
+    &--2 {
+      & #{$self}__item {
+        width: 48%;
+      }
+    }
+
+    &--3 {
+      & #{$self}__item {
+        width: 30%;
+      }
+    }
+
+    &--4 {
+      & #{$self}__item {
+        width: 24%;
+
+        &--double {
+          width: 48%;
+        }
+      }
+    }
+  }
+}
+
+.admin-button-container {
+  width: 100%;
+  display: flex;
+
+  & > * {
+    margin: get-unit(1 2);
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+}

@@ -11,7 +11,8 @@ body {
 
 .container {
   padding: get-unit(3) 50px;
-  flex: 1;
+  height: calc(100vh - 64px);
+  overflow: auto;
 }
 
 .content {
@@ -46,14 +47,37 @@ body {
   &--E {
     background: $assignee-color-e;
   }
+
+  &--F {
+    background: $assignee-color-f;
+  }
+
+  &--G {
+    background: $assignee-color-g;
+  }
+
+  &--H {
+    background: $assignee-color-h;
+  }
+
+  &--I {
+    background: $assignee-color-i;
+  }
+
+  &--none {
+    background: get-color(gray, 2);
+  }
 }
 
 .assignees-radio-group {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: get-unit(2);
 
   & > label {
-    width: 20%;
+    width: 25%;
     text-align: center;
 
     &:nth-child(1) {
@@ -74,6 +98,22 @@ body {
 
     &:nth-child(5) {
       background: $assignee-color-e;
+    }
+
+    &:nth-child(6) {
+      background: $assignee-color-f;
+    }
+
+    &:nth-child(7) {
+      background: $assignee-color-g;
+    }
+
+    &:nth-child(8) {
+      background: $assignee-color-h;
+    }
+
+    &:nth-child(9) {
+      background: $assignee-color-i;
     }
   }
 }

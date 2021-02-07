@@ -1,4 +1,80 @@
-export const SEPARATOR = '::';
+export const DATA_TYPE = {
+  ALBUM: 'album',
+  DISTRIBUTION: 'distribution',
+  DISTRIBUTION_DATA: 'distribution-data',
+  GROUP: 'group',
+  MEMBER: 'member',
+  MEMBER_DATA: 'member-data',
+  SONG: 'song',
+  SONG_DATA: 'song-data',
+};
+
+export const DATA_TYPE_COLLECTION = {
+  [DATA_TYPE.ALBUM]: 'albums',
+  [DATA_TYPE.DISTRIBUTION]: 'distributions',
+  [DATA_TYPE.DISTRIBUTION_DATA]: 'distributions-data',
+  [DATA_TYPE.GROUP]: 'groups',
+  [DATA_TYPE.MEMBER]: 'members',
+  [DATA_TYPE.MEMBER_DATA]: 'members-data',
+  [DATA_TYPE.SONG]: 'songs',
+  [DATA_TYPE.SONG_DATA]: 'songs-data',
+};
+
+export const KEYS = [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+export const KEY_ASSIGNEE = {
+  ' ': 'S',
+  1: 'A',
+  2: 'B',
+  3: 'C',
+  4: 'D',
+  5: 'E',
+  6: 'F',
+  7: 'G',
+  8: 'H',
+  9: 'I',
+  A: 'A',
+  B: 'B',
+  C: 'C',
+  D: 'D',
+  E: 'E',
+  F: '',
+  G: 'G',
+  H: 'H',
+  I: 'I',
+};
+
+export const POSITIONS = {
+  LEADER: 'LEADER',
+  MAIN_VOCALIST: 'MAIN_VOCALIST',
+  LEAD_VOCALIST: 'LEAD_VOCALIST',
+  VOCALIST: 'VOCALIST',
+  SUB_VOCALIST: 'SUB_VOCALIST',
+  MAIN_RAPPER: 'MAIN_RAPPER',
+  LEAD_RAPPER: 'LEAD_RAPPER',
+  RAPPER: 'RAPPER',
+  MAIN_DANCER: 'MAIN_DANCER',
+  LEAD_DANCER: 'LEAD_DANCER',
+  DANCER: 'DANCER',
+  VISUAL: 'VISUAL',
+  CENTER: 'CENTER',
+};
+
+export const POSITIONS_WEIGHT = {
+  MAIN_VOCALIST: 0,
+  MAIN_RAPPER: 1,
+  MAIN_DANCER: 2,
+  VISUAL: 3,
+  CENTER: 4,
+  LEADER: 5,
+  LEAD_VOCALIST: 6,
+  LEAD_RAPPER: 7,
+  LEAD_DANCER: 8,
+  VOCALIST: 9,
+  RAPPER: 10,
+  DANCER: 11,
+  SUB_VOCALIST: 12,
+};
 
 export const ROMAN_NUMBER = {
   0: '?',
@@ -19,18 +95,23 @@ export const ROMAN_NUMBER = {
   15: 'XV',
 };
 
-export const KEYS = [' ', '1', '2', '3', '4', '5'];
+export const SEPARATOR = '::';
 
-export const KEY_ASSIGNEE = {
-  ' ': 'S',
-  1: 'A',
-  2: 'B',
-  3: 'C',
-  4: 'D',
-  5: 'E',
-  A: 'A',
-  B: 'B',
-  C: 'C',
-  D: 'D',
-  E: 'E',
+export const DEFAULT_MEMBERS = {
+  'member::ALL': {
+    id: 'ALL',
+    type: 'member',
+    key: 'member::ALL',
+    name: 'All',
+    color: '#4c5c68',
+    positions: ['ALL'],
+  },
+  'member::NONE': {
+    id: 'NONE',
+    type: 'member',
+    key: 'member::NONE',
+    name: 'None',
+    color: '#899ba9',
+    positions: ['NONE'],
+  },
 };

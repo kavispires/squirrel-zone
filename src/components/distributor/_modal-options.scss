@@ -2,30 +2,42 @@ $assignee-border-size: get-unit(4);
 
 .modal-options-form {
   $self: &;
+  padding: get-unit(2 0);
 
   &--assignee-A {
     border-top: $assignee-border-size solid $assignee-color-a;
-    padding: get-unit(2 0);
   }
 
   &--assignee-B {
     border-top: $assignee-border-size solid $assignee-color-b;
-    padding: get-unit(2 0);
   }
 
   &--assignee-C {
     border-top: $assignee-border-size solid $assignee-color-c;
-    padding: get-unit(2 0);
   }
 
   &--assignee-D {
     border-top: $assignee-border-size solid $assignee-color-d;
-    padding: get-unit(2 0);
   }
 
   &--assignee-E {
     border-top: $assignee-border-size solid $assignee-color-e;
-    padding: get-unit(2 0);
+  }
+
+  &--assignee-F {
+    border-top: $assignee-border-size solid $assignee-color-f;
+  }
+
+  &--assignee-G {
+    border-top: $assignee-border-size solid $assignee-color-g;
+  }
+
+  &--assignee-H {
+    border-top: $assignee-border-size solid $assignee-color-h;
+  }
+
+  &--assignee-I {
+    border-top: $assignee-border-size solid $assignee-color-i;
   }
 
   &__item {

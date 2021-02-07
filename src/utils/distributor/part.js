@@ -1,6 +1,16 @@
+// Global State
+import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
+// Engine and utilities
 import { ASSIGNEE } from './enum';
-import { generateUniqueId, getDefault, getEnumDefault, getNullDefault, serializeKey } from './utilities';
-import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+import {
+  cleanupObject,
+  generateUniqueId,
+  getDefault,
+  getEnumDefault,
+  getNullDefault,
+  nullifyDefault,
+  serializeKey,
+} from './utilities';
 
 /**
  * Class representing a Part - the smallest part of the lyrics, it composes a line.
@@ -34,7 +44,7 @@ export class Part {
    */
   _save() {
     console.log('%cSaving part...', 'color:yellow');
-    setGlobalState('parts', (state) => {
+    setDistributorGlobalState('parts', (state) => {
       return { ...state, [this.id]: this };
     });
   }
@@ -61,6 +71,15 @@ export class Part {
    */
   get key() {
     return serializeKey(this.type, this.id);
+  }
+
+  /**
+   * Dictionary of default values for this instance.
+   */
+  get defaultValues() {
+    return {
+      assignee: ASSIGNEE.A,
+    };
   }
 
   /**
@@ -98,6 +117,9 @@ export class Part {
    * @type {object}
    */
   get data() {
+    const library = getDistributorGlobalState('lines') ?? {};
+    const line = library[this.lineId] ?? null;
+
     const data = {
       id: this._id,
       type: this.type,
@@ -111,6 +133,9 @@ export class Part {
       text: this.text,
       // Relationships
       lineId: this.lineId,
+      // Extra data
+      isDismissible: line.isDismissible,
+      sectionId: line.sectionId,
     };
 
     Object.freeze(data);
@@ -142,7 +167,7 @@ export class Part {
    * @param {string} lineId
    */
   connectSection(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (!line) throw Error(`Line ${lineId} does not exist in the state`);
@@ -159,7 +184,7 @@ export class Part {
    * @param {string} lineId
    */
   disconnectSection(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (line) {
@@ -178,10 +203,13 @@ export class Part {
   deserialize(data) {
     this._id = data.id || this._id || generateUniqueId();
     // Attributes
-    this.assignee = getEnumDefault(this, data, 'assignee', ASSIGNEE, ASSIGNEE.A);
+    this.assignee = getEnumDefault(this, data, 'assignee', ASSIGNEE, this.defaultValues.assignee);
     this.endTime = getDefault(this, data, 'endTime', null);
     this.startTime = getDefault(this, data, 'startTime', null);
     this.text = getDefault(this, data, 'text', null);
+    if (this.text) {
+      this.text = this.text.trim();
+    }
     // Relationships
     this.lineId = getNullDefault(this, data, 'lineId', null);
 
@@ -195,17 +223,17 @@ export class Part {
    * @returns {object}
    */
   serialize() {
-    return {
+    return cleanupObject({
       id: this.id,
       type: this.type,
       // Attributes
-      assignee: this.assignee,
+      assignee: nullifyDefault(this, 'assignee', this.defaultValues),
       endTime: this.endTime,
       startTime: this.startTime,
-      text: this.text,
+      text: this.text ? this.text.trim() : this.text,
       // Relationships
       lineId: this.lineId,
-    };
+    });
   }
 }
 

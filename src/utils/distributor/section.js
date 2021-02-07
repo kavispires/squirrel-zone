@@ -1,5 +1,5 @@
 // Global State
-import { getGlobalState, setGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
 import Line from './line';
 import { NULL, SECTION } from './enum';
@@ -10,6 +10,8 @@ import {
   getEnumDefault,
   serializeKey,
   getNullDefault,
+  nullifyDefault,
+  cleanupObject,
 } from './utilities';
 import { ROMAN_NUMBER } from '../constants';
 
@@ -47,7 +49,7 @@ export class Section {
    */
   _save() {
     console.log('%cSaving section...', 'color:red');
-    setGlobalState('sections', (state) => {
+    setDistributorGlobalState('sections', (state) => {
       return { ...state, [this.id]: this };
     });
   }
@@ -77,11 +79,21 @@ export class Section {
   }
 
   /**
+   * Dictionary of default values for this instance.
+   */
+  get defaultValues() {
+    return {
+      kind: NULL,
+      number: 1,
+    };
+  }
+
+  /**
    * List of lines.
    * @type {Line[]}
    */
   get lines() {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const lines = this.linesIds.map((lineId) => library[lineId]);
     if (!this._isSorted) {
       return this.sort(lines);
@@ -94,7 +106,7 @@ export class Section {
    * @type {Song|null}
    */
   get song() {
-    const song = getGlobalState('song') ?? {};
+    const song = getDistributorGlobalState('song') ?? {};
     return song.id === this.songId ? song : null;
   }
 
@@ -244,23 +256,7 @@ export class Section {
    * @returns {object[]}
    */
   sort(lines = this.lines) {
-    const cache = Object.values(lines).reduce((res, line) => {
-      if (line && line instanceof Line) {
-        if (res[line.startTime]) {
-          res[line.startTime].push(line);
-        } else {
-          res[line.startTime] = [line];
-        }
-      }
-      return res;
-    }, {});
-
-    const sortedTimes = Object.keys(cache).map(Number).sort();
-
-    const sortedLines = sortedTimes.reduce((acc, key) => {
-      acc = [...acc, ...cache[key]];
-      return acc;
-    }, []);
+    const sortedLines = lines.sort((a, b) => (a.startTime >= b.startTime ? 1 : -1));
 
     this.linesIds = sortedLines.map((entry) => entry.id);
     this._isSorted = true;
@@ -314,7 +310,7 @@ export class Section {
    * @param {string} songId
    */
   connectSong(songId) {
-    const library = getGlobalState('song') ?? {};
+    const library = getDistributorGlobalState('song') ?? {};
     const song = library.id === songId ? library : null;
 
     if (!song) throw Error(`Song ${songId} does not exist in the state`);
@@ -331,7 +327,7 @@ export class Section {
    * @param {string} songId
    */
   disconnectSong(songId) {
-    const library = getGlobalState('song') ?? {};
+    const library = getDistributorGlobalState('song') ?? {};
     const song = library.id === songId ? library : null;
 
     if (song) {
@@ -348,7 +344,7 @@ export class Section {
    * @param {string} lineId
    */
   connectLine(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (!line) throw Error(`Section ${lineId} does not exist in the state`);
@@ -365,7 +361,7 @@ export class Section {
    * @param {string} lineId
    */
   disconnectLine(lineId) {
-    const library = getGlobalState('lines') ?? {};
+    const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
     if (line) {
@@ -385,7 +381,7 @@ export class Section {
     this._id = data.id ?? this._id ?? generateUniqueId();
     // Attributes
     this.kind = getEnumDefault(this, data, 'kind', SECTION, SECTION.VERSE);
-    this.number = getDefault(this, data, 'number', 1);
+    this.number = getDefault(this, data, 'number', this.defaultValues.number);
     this.placeholder = getDefault(this, data, 'placeholder', '');
     // Relationships
     this.songId = getNullDefault(this, data, 'songId', null);
@@ -401,16 +397,16 @@ export class Section {
    * @returns {object}
    */
   serialize() {
-    return {
+    return cleanupObject({
       id: this.id,
       type: this.type,
       // Attributes
-      kind: this.kind,
-      number: this.number,
+      kind: nullifyDefault(this, 'kind', this.defaultValues),
+      number: nullifyDefault(this, 'number', this.defaultValues),
       // Relationships
       linesIds: this.linesIds,
       songId: this.songId,
-    };
+    });
   }
 }
 

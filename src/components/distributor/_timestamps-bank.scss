@@ -1,6 +1,5 @@
 .timestamps-bank {
   &__list {
-    @include reset-list;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: get-unit(3);

@@ -1,9 +1,8 @@
 import { createGlobalState } from 'react-hooks-global-state';
 
 const initialState = {
-  // videoId: null, // _1dZKhxrSoA
   step: '0',
-  videoId: '_1dZKhxrSoA',
+  videoId: null,
   isRecording: false,
   song: null,
   sections: {},
@@ -15,6 +14,9 @@ const initialState = {
   assignee: 'A',
 
   selectedTimestamps: [],
+  isPlaying: false,
+
+  isFullyLoaded: false,
 
   currentLine: null,
   currentSection: null,
@@ -23,6 +25,6 @@ const initialState = {
 
 const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState(initialState);
 
-export { setGlobalState, getGlobalState };
+export { setGlobalState as setDistributorGlobalState, getGlobalState as getDistributorGlobalState };
 
 export default useGlobalState;

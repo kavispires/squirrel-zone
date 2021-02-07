@@ -1,0 +1,66 @@
+.groups-page {
+  display: flex;
+}
+
+.group-quick-links {
+  margin-left: get-unit(3);
+}
+
+.group-card-containers {
+  width: 100%;
+}
+
+.group-card {
+  margin-bottom: get-unit(3);
+
+  &__members {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__member {
+    margin-bottom: get-unit(1);
+  }
+
+  &__member-name {
+    margin: get-unit(0 2);
+  }
+}
+
+.group-distributions {
+  margin-bottom: get-unit(2);
+  font-size: 90%;
+}
+
+.group-distribution-table {
+  &__title {
+    width: 30%;
+  }
+
+  &__snippet {
+    width: 50%;
+  }
+}
+
+.group-distribution-snippet {
+  display: flex;
+  width: 100%;
+  background: get-color(gray, 2);
+  border-radius: get-unit(1);
+  font-size: 80%;
+  height: 16px;
+  margin: get-unit(2 0);
+
+  & span {
+    text-align: center;
+    color: get-color(white);
+
+    &:first-child {
+      border-radius: get-unit(1 0 0 1);
+    }
+
+    &:last-child {
+      border-radius: get-unit(0 1 1 0);
+    }
+  }
+}

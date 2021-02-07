@@ -1,0 +1,43 @@
+.song-metadata {
+  &__title {
+    text-align: center;
+  }
+
+  &__action {
+    text-align: center;
+    margin: get-unit(1);
+  }
+}
+
+.song-metadata-form {
+  width: 50%;
+  margin: 0 auto;
+  $self: &;
+
+  &__item {
+    margin-bottom: get-unit(3);
+  }
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+
+    &--2 {
+      & #{$self}__item {
+        width: 48%;
+      }
+    }
+
+    &--3 {
+      & #{$self}__item {
+        width: 30%;
+      }
+    }
+
+    &--4 {
+      & #{$self}__item {
+        width: 24%;
+      }
+    }
+  }
+}

@@ -12,11 +12,17 @@
 @import './global/reset';
 @import './global/app';
 
-// Creator
-@import './header';
+// Global components
+@import '../components/global/header';
+@import '../components/global/loading';
+@import '../components/global/loading-container';
 
 // Pages
-@import './distributor';
+@import '../components/login';
+@import '../components/distributor';
+@import '../components/admin';
+@import '../components/groups';
+@import '../components/distribute';
 @import './character-colors';
 @import './character';
 @import './svg';
@@ -31,4 +37,9 @@
 @import '../components/distributor/key-capture';
 @import '../components/distributor/controls';
 @import '../components/distributor/timestamps-bank';
-@import '../components/distributor/log';
+@import '../components/log/log';
+@import '../components/distributor/preview';
+@import '../components/distributor/line-distribution';
+@import '../components/distributor/song-metadata';
+@import '../components/distributor/save-song';
+@import '../components/member';

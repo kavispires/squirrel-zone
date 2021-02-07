@@ -1,0 +1,78 @@
+{
+  "id": "sample-group-id",
+  "type": "group",
+  "members": {
+    "member::A": {
+      "id": "A",
+      "type": "member",
+      "key": "member::A",
+      "name": "Vocalist 1",
+      "age": 12,
+      "color": "#fec891"
+    },
+    "member::B": {
+      "id": "B",
+      "type": "member",
+      "key": "member::B",
+      "name": "Vocalist 2",
+      "age": 11,
+      "color": "#ffef99"
+    },
+    "member::C": {
+      "id": "C",
+      "type": "member",
+      "key": "member::C",
+      "name": "Rapper 1",
+      "age": 10,
+      "color": "#c3f0c7"
+    },
+    "member::D": {
+      "id": "D",
+      "type": "member",
+      "key": "member::D",
+      "name": "Rapper 2",
+      "age": 9,
+      "color": "#99e0d8"
+    },
+    "member::E": {
+      "id": "E",
+      "type": "member",
+      "key": "member::E",
+      "name": "Ad Lib Regular",
+      "age": 8,
+      "color": "#a5c2fe"
+    },
+    "member::F": {
+      "id": "F",
+      "type": "member",
+      "key": "member::F",
+      "name": "Ad Lib Belt",
+      "age": 7,
+      "color": "#e08686"
+    },
+    "member::G": {
+      "id": "G",
+      "type": "member",
+      "key": "member::G",
+      "name": "All",
+      "age": 6,
+      "color": "#d8d2f9"
+    },
+    "member::H": {
+      "id": "H",
+      "type": "member",
+      "key": "member::H",
+      "name": "None",
+      "age": 5,
+      "color": "#a2a2a2"
+    },
+    "member::I": {
+      "id": "I",
+      "type": "member",
+      "key": "member::I",
+      "name": "Center",
+      "age": 4,
+      "color": "##ec89bf"
+    }
+  }
+}

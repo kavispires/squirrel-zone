@@ -89,6 +89,16 @@ export const getRelationshipsDefault = (context, data, propertyName, instance) =
 };
 
 /**
+ * Fallback to null if value of property is the same as the default value
+ * @param {*} data
+ * @param {*} propertyName
+ * @param {*} defaultValues
+ */
+export const nullifyDefault = (data, propertyName, defaultValues) => {
+  return data[propertyName] === defaultValues[propertyName] ? null : data[propertyName];
+};
+
+/**
  * Compare the entries of given list of ids/keys and return all equal values.
  * @param {*} dict
  * @param {*} list
@@ -111,9 +121,36 @@ export const getDuplicatedData = (dict, list, isKey = false) => {
   }, entries[0]);
 };
 
-export const batchDeserializeInstancesSameData = (dict, list, data, isKey = false) => {
-  list.forEach((entry) => {
+/**
+ * Call deserialize in every instance in the ids list with given data
+ * @param {object} library - the library with given instances (parts, lines, sections)
+ * @param {string[]} ids - the list of keys or ids
+ * @param {object} data - the data that needs to be deserialized
+ * @param {boolean} isKey - flag indicating if the items in ids are keys
+ */
+export const batchDeserializeInstancesSameData = (library, ids, data, isKey = false) => {
+  ids.forEach((entry) => {
     const id = isKey ? deserializeKey(entry)[1] : entry;
-    return dict[id].deserialize(data);
+    return library[id].deserialize(data);
   });
 };
+
+/**
+ * Removes any object key that is undefined or null
+ * @param {object} obj
+ * @returns {object}
+ */
+export const cleanupObject = (obj) => {
+  return Object.keys(obj)
+    .filter((k) => obj[k] != null && obj[k] !== undefined)
+    .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
+};
+
+/**
+ * Check if two arrays are similar (have the same elements, even if in different order)
+ * Note: it won't work with arrays with non primitive elements
+ * @param {array} a
+ * @param {array} b
+ * @return {boolean}
+ */
+export const areArraysSimilar = (a, b) => JSON.stringify(a.sort()) === JSON.stringify(b.sort());

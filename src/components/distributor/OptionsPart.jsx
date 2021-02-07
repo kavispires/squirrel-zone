@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { Button, InputNumber, Form, Input, Divider, Radio } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 // Engine and utilities
-import { ASSIGNEE } from '../../utils/distributor';
+import { ASSIGNEE, ASSIGNEE_LABEL } from '../../utils/distributor';
 
-const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE).map((i) => ({ value: i, label: i }));
+const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE).map((i) => ({ value: i, label: ASSIGNEE_LABEL[i] }));
 
 function OptionsPart({ part, onValuesChange }) {
   const [tempAssignee, setTempAssignee] = useState(part.assignee);
@@ -35,7 +35,8 @@ function OptionsPart({ part, onValuesChange }) {
         label="Assignee"
         name="assignee"
         className="modal-options-form__item"
-        hint="This is just a reference if the next part could or should be sung by a different person"
+        help="This is just a reference if the next part could or should be sung by a different person. Keep it semantic! Use A and B for vocals, C and D for raps, E and F for Ad-libs, G for All, and H
+        for None."
       >
         <Radio.Group
           options={ASSIGNEE_OPTIONS}

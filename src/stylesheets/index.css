@@ -1101,6 +1101,7 @@ body {
   min-height: 50px;
   border-radius: 8px;
   margin: 0 4px 8px 0;
+  flex-grow: 1;
 }
 
 .timestamps-bank__list {

@@ -31,7 +31,6 @@ function LineDistribution({ playerRef, members, bars, lyrics, framerate = 30 }) 
   useEffect(() => {
     // Every time change update current ranking if id exists according to framerate
     const frameIndex = getFrameFromTimestamp(currentTime * 1000, framerate);
-
     if (currentTime < 0.5 || !currentRank) {
       setCurrentRank(bars[0]);
     }
@@ -51,7 +50,7 @@ function LineDistribution({ playerRef, members, bars, lyrics, framerate = 30 }) 
         onStateChange={onStateChange}
       />
       <RankingBars members={members} currentRank={currentRank} />
-      <LyricsScroller currentTime={currentTime} lyrics={lyrics} framerate={framerate} />
+      <LyricsScroller currentTime={currentTime} lyrics={lyrics} />
     </section>
   );
 }
@@ -67,7 +66,7 @@ function RankingBars({ members, currentRank }) {
 }
 
 function RankEntry({ member, rank }) {
-  const onClass = getBemModifier(rank.on, 'active');
+  const onClass = getBemModifier(rank.on, 'on');
 
   return (
     <li className={bemClass('rank-entry', onClass, rank.position)}>
@@ -84,30 +83,33 @@ function RankEntry({ member, rank }) {
   );
 }
 
-function LyricsScroller({ currentTime, lyrics, framerate }) {
+function LyricsScroller({ currentTime, lyrics }) {
   const lyricsRef = useRef([]);
-  // console.log(lyrics);
+  const [latestIndex, setLatestIndex] = useState(-1);
 
-  // useEffect(() => {
-  //   // Every time change update current ranking if id exists according to framerate
-  //   const frame = getFrameFromTimestamp(currentTime * 1000, framerate);
-
-  //   const lyricIndex = lyrics.findIndex((lyric) => lyric.frame === frame);
-  //   // console.log('trying', frame, lyricIndex);
-  //   if (lyricIndex > -1) {
-  //     console.log('SCROLLING');
-  //     lyricsRef.current[lyricIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-  //   }
-  // }, [currentTime, lyrics, lyricsRef]);
+  // If the next line is gonna start within 500ms, center it
+  useEffect(() => {
+    if (lyrics[latestIndex + 1].startTime <= Math.trunc(currentTime * 1000) + 100) {
+      lyricsRef.current[latestIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setLatestIndex(latestIndex + 1);
+    }
+  }, [currentTime, lyrics, lyricsRef, latestIndex]);
 
   return (
     <div className="line-distribution__live-lyrics">
       <ul className="lyrics-entries-container">
-        {lyrics.map((lyric, index) => (
-          <li key={`lyrics-${index}`} ref={(el) => (lyricsRef.current[index] = el)}>
-            <Lyric lyric={lyric} number={index} />
-          </li>
-        ))}
+        {lyrics.map((lyric, index) => {
+          const paddingClass = getBemModifier(index > latestIndex, 'padded');
+          return (
+            <li
+              key={`lyrics-${index}`}
+              ref={(el) => (lyricsRef.current[index] = el)}
+              className={bemClass('lyrics-entries-li', paddingClass)}
+            >
+              <Lyric lyric={lyric} number={index} />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

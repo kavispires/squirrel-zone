@@ -226,7 +226,7 @@ export class Previewer {
       // Cleanup entry
       entry.cleanup();
 
-      // If is the same sectionId and same assignees of previous entry, use it
+      // If it has the same sectionId and assignees of previous entry, use it
       if (latestEntry?.sectionId === entry.sectionId && latestEntry.assignees === entry.assignees) {
         latestEntry.add(entry);
         return;
@@ -245,6 +245,11 @@ export class Previewer {
       // Create new entry
       latestEntry = new LyricEntry(entry);
     });
+
+    // Consume last entry
+    if (latestEntry) {
+      lyricsEntries[latestEntry.startTime] = latestEntry;
+    }
 
     // Cleanup
     Object.entries(lyricsEntries).forEach(([key, entry]) => {

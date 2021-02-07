@@ -1,5 +1,5 @@
 import API from '../api';
-import { DATA_TYPE, DATA_TYPE_COLLECTION, DEFAULT_MEMBERS } from '../utils/constants';
+import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
 import { serializeKey } from '../utils/distributor';
 
 export class Store {

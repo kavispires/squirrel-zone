@@ -364,7 +364,7 @@ describe('Previewer', function () {
     it('builds single part/single assignee correctly', function () {
       expect(lyrics[1]).toEqual({
         colors: ['FF0000', '00FF00'],
-        frame: 7,
+        startTime: 7000,
         lines: ['World'],
         names: ['Vocalist', 'Rapper'],
       });

@@ -1329,14 +1329,11 @@ body {
   margin-bottom: 4px;
   position: absolute;
   display: grid;
-  opacity: 30%;
+  opacity: 0.3;
   transition: opacity 500ms, transform 1s;
   grid-template-columns: [start] 30px [first] auto [second] 40px [end];
   grid-template-rows: [start] 16px [middle] auto [end];
   gap: 4px;
-}
-.rank-entry--active {
-  opacity: 100%;
 }
 .rank-entry__avatar {
   grid-column: start / first;
@@ -1376,6 +1373,9 @@ body {
   justify-self: center;
   color: white;
 }
+.rank-entry--on {
+  opacity: 1;
+}
 .rank-entry---1 {
   transform: translateY(351px);
   opacity: 0;
@@ -1411,6 +1411,17 @@ body {
   transform: translateY(351px);
 }
 
+.lyrics-entries-container:first-child {
+  transform: translateY(500px);
+}
+
+.lyrics-entries-li {
+  transition: opacity 1s;
+}
+.lyrics-entries-li--padded {
+  opacity: 0.1;
+}
+
 .lyrics-entry {
   display: grid;
   grid-template-columns: [start] 30px [middle] auto [end];
@@ -1428,7 +1439,7 @@ body {
   align-items: center;
 }
 .lyrics-entry__avatar--all {
-  opacity: 70%;
+  opacity: 0.7;
 }
 .lyrics-entry__names {
   grid-column: middle / end;

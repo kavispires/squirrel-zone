@@ -1,5 +1,3 @@
-import { getFrameFromTimestamp } from '..';
-
 class LyricEntry {
   constructor(entry) {
     this.startTime = entry.startTime;
@@ -16,7 +14,7 @@ class LyricEntry {
     const assignees = [...new Set(this.assignees.split('+++'))].map((key) => members[key]);
 
     return {
-      frame: getFrameFromTimestamp(this.startTime, framerate),
+      startTime: this.startTime,
       names: assignees.map((assignee) => {
         if (!assignee) {
           return 'ALL';

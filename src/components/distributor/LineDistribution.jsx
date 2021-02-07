@@ -89,6 +89,8 @@ function LyricsScroller({ currentTime, lyrics }) {
 
   // If the next line is gonna start within 500ms, center it
   useEffect(() => {
+    if (latestIndex === lyrics.length - 1) return;
+
     if (lyrics[latestIndex + 1].startTime <= Math.trunc(currentTime * 1000) + 100) {
       lyricsRef.current[latestIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
       setLatestIndex(latestIndex + 1);

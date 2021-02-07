@@ -130,6 +130,10 @@ $avatar-size: 30px;
   &:first-child {
     transform: translateY(500px);
   }
+
+  &:last-child {
+    padding-bottom: 500px;
+  }
 }
 
 .lyrics-entries-li {

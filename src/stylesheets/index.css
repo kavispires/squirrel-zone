@@ -1415,6 +1415,10 @@ body {
   transform: translateY(500px);
 }
 
+.lyrics-entries-container:last-child {
+  padding-bottom: 500px;
+}
+
 .lyrics-entries-li {
   transition: opacity 1s;
 }

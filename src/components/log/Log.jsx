@@ -11,6 +11,7 @@ import {
   deserializeKey,
   getDuplicatedData,
   batchDeserializeInstancesSameData,
+  serializeKey,
 } from '../../utils/distributor';
 import { bemClassConditionalModifier } from '../../utils';
 // Components
@@ -112,6 +113,17 @@ function Log({
     [setSelection]
   );
 
+  const onListSelection = (section) => {
+    const partKeys = (section.partsIds ?? []).map((partId) => serializeKey('part', partId));
+    setSelection((state) => {
+      if (state[0] === partKeys[0]) {
+        return [];
+      } else {
+        return partKeys;
+      }
+    });
+  };
+
   return (
     <div className={`${bemClassConditionalModifier('log', 'compact', isCompact)} ${className}`}>
       {!locked && (
@@ -149,6 +161,7 @@ function Log({
                 key={section.key}
                 section={section}
                 onCheckboxChange={onCheckboxChange}
+                onListSelection={onListSelection}
                 seekAndPlay={seekAndPlay}
               />
             );
@@ -159,6 +172,7 @@ function Log({
               key={section.key}
               section={section}
               onCheckboxChange={onCheckboxChange}
+              onListSelection={onListSelection}
               onShowModal={onShowModal}
               seekAndPlay={seekAndPlay}
             />

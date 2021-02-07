@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 // Design Resources
 import { Button, Checkbox } from 'antd';
@@ -63,6 +63,11 @@ function LogPartCompact({ part, seekAndPlay, onCheckboxChange }) {
   const [selectedTimestamps, setSelectedTimestamps] = useDistributorState('selectedTimestamps');
   const [unassignedTimestamps, setUnassignedTimestamps] = useDistributorState('unassignedTimestamps');
   const [selection] = useDistributorState('selection');
+  const [checkedIndex, setCheckedIndex] = useState(-1);
+
+  useEffect(() => {
+    setCheckedIndex(selection.indexOf(part.key));
+  }, [selection, checkedIndex, setCheckedIndex, part.key]);
 
   // CSS Classes
   const baseClass = 'log-part';
@@ -79,8 +84,6 @@ function LogPartCompact({ part, seekAndPlay, onCheckboxChange }) {
     });
     setSelectedTimestamps(selectedTimestampsCopy);
   }, [part, selectedTimestamps, setSelectedTimestamps, setUnassignedTimestamps]);
-
-  const checkedIndex = selection.indexOf(part.key);
 
   const onPlayPart = useCallback(() => {
     seekAndPlay(part.startTime / 1000);

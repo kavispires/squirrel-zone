@@ -8,6 +8,7 @@ import {
   PlusOutlined,
   ColumnWidthOutlined,
   PlayCircleOutlined,
+  OrderedListOutlined,
 } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
@@ -18,7 +19,7 @@ import { bemClass, getBemModifier } from '../../utils';
 // Components
 import LogLine from './LogLine';
 
-function LogSectionEdit({ section, onCheckboxChange, onShowModal, seekAndPlay }) {
+function LogSectionEdit({ section, onCheckboxChange, onShowModal, onListSelection, seekAndPlay }) {
   const [lines] = useDistributorState('lines');
   const [selection] = useDistributorState('selection');
 
@@ -59,6 +60,18 @@ function LogSectionEdit({ section, onCheckboxChange, onShowModal, seekAndPlay })
               icon={<PlayCircleOutlined />}
               className="log-section__icon-button"
               onClick={onPlaySection}
+            />
+          </Tooltip>
+        )}
+        {Boolean(onListSelection) && (
+          <Tooltip title="Select parts on this section in sequence">
+            <Button
+              shape="circle"
+              type="default"
+              size="small"
+              icon={<OrderedListOutlined />}
+              className="log-section__icon-button"
+              onClick={() => onListSelection(section)}
             />
           </Tooltip>
         )}
@@ -104,7 +117,7 @@ function LogSectionEdit({ section, onCheckboxChange, onShowModal, seekAndPlay })
   );
 }
 
-function LogSectionCompact({ section, onCheckboxChange, seekAndPlay }) {
+function LogSectionCompact({ section, onCheckboxChange, onListSelection, seekAndPlay }) {
   const [lines] = useDistributorState('lines');
 
   const onPlaySection = useCallback(() => {
@@ -121,6 +134,14 @@ function LogSectionCompact({ section, onCheckboxChange, seekAndPlay }) {
         className="log-section__icon-button"
         onClick={onPlaySection}
         disabled={!Boolean(section.startTime)}
+      />
+      <Button
+        shape="circle"
+        type="default"
+        size="small"
+        icon={<OrderedListOutlined />}
+        className="log-section__icon-button"
+        onClick={() => onListSelection(section)}
       />
 
       <ul className={bemClass('log__lines', 'compact')}>

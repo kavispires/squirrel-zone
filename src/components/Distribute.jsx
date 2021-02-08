@@ -148,7 +148,7 @@ function DistributeWidget({ members, distributionCompletion, resetDistribution }
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
 
-  const [selectedMember, setSelectedMember] = useState({});
+  const [selectedMember, setSelectedMember] = useState('member::ALL');
   const [isAbsoluteProgress, setAbsoluteProgress] = useState(false);
   const [progressType, setProgressType] = useState('');
 
@@ -240,7 +240,7 @@ function DistributeWidget({ members, distributionCompletion, resetDistribution }
   };
 
   const toggleMember = (memberKey) => {
-    setSelectedMember((state) => (state === memberKey ? null : memberKey));
+    setSelectedMember((state) => (state === memberKey ? 'member::ALL' : memberKey));
   };
 
   const assignMembers = (partId) => {

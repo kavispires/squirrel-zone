@@ -15,7 +15,7 @@ import API from '../api';
 // Utilities
 import { serializeKey } from '../utils/distributor';
 import { bemClassConditionalModifier } from '../utils';
-import { DEFAULT_MEMBERS } from '../utils/constants';
+import { DEFAULT_MEMBERS, DISTRIBUTION_NAME } from '../utils/constants';
 // Components
 import LoadSongModal from './modals/LoadSongModal';
 import YoutubeVideo from './distributor/YoutubeVideo';
@@ -72,8 +72,8 @@ function Distribute() {
     setDistributionName('');
   };
 
-  const updateName = (event) => {
-    setDistributionName(event.target.value);
+  const updateName = (distributionName) => {
+    setDistributionName(distributionName);
   };
 
   const saveDistribution = async (values) => {
@@ -114,12 +114,18 @@ function Distribute() {
             />
 
             <div className="distribute__actions">
-              <Input
-                placeholder="original"
-                disabled={isLoading}
+              <Select
+                defaultValue={DISTRIBUTION_NAME.ORIGINAL}
                 onChange={updateName}
+                disabled={isLoading}
                 className="distribute__actions-input"
-              />
+              >
+                {Object.entries(DISTRIBUTION_NAME).map(([distValue, distText]) => (
+                  <Select.Option key={distValue} value={distValue}>
+                    {distText}
+                  </Select.Option>
+                ))}
+              </Select>
               <Button
                 type="primary"
                 onClick={saveDistribution}

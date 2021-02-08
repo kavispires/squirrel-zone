@@ -140,3 +140,11 @@ function buildScaleOptions() {
 }
 
 export const MUSIC_SCALE = buildScaleOptions();
+
+export const DISTRIBUTION_NAME = {
+  ORIGINAL: 'ORIGINAL',
+  COVER: 'COVER',
+  SPECIAL: 'SPECIAL',
+  WHAT_IF: 'WHAT/IF',
+  REDO: 'REDO',
+};

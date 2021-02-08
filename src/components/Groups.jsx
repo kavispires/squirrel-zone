@@ -69,6 +69,7 @@ function Groups() {
 function Group({ group, members }) {
   const history = useHistory();
   const [, setActiveGroup] = useGlobalState('activeGroup');
+  const [, setActiveGroupSongs] = useGlobalState('activeGroupSongs');
   const [, setActiveMembers] = useGlobalState('activeMembers');
   const [, setLineDistribution] = useGlobalState('lineDistribution');
   const [, setLoadedLineDistribution] = useGlobalState('loadedLineDistribution');
@@ -82,6 +83,15 @@ function Group({ group, members }) {
       setIsFullyLoaded(false);
       setActiveMembers(null);
       setActiveGroup(group);
+
+      const groupDistributionsResponse = await store.getCollection('distributions', null, {
+        groupId: group.id,
+      });
+      const activeGroupSongs = groupDistributionsResponse.reduce((acc, dist) => {
+        acc[dist.songId] = true;
+        return acc;
+      }, {});
+      setActiveGroupSongs(activeGroupSongs);
 
       if (distribution) {
         const distributionData = await store.getRecord('distribution-data', distribution.id);
@@ -105,6 +115,7 @@ function Group({ group, members }) {
       setIsFullyLoaded,
       setLoadedLineDistribution,
       group,
+      setActiveGroupSongs,
     ]
   );
 
@@ -175,7 +186,11 @@ function GroupDistributions({ group, groupMembers, activateDistribution }) {
 
   useEffect(() => {
     async function loadContent() {
-      setGroupDistributions(await store.getCollection('distributions', null, { groupId: group.id }));
+      setGroupDistributions(
+        await store.getCollection('distributions', null, {
+          groupId: group.id,
+        })
+      );
     }
 
     if (!groupDistributions) {

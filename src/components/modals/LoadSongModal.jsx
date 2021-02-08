@@ -4,11 +4,13 @@ import React, { useState, useCallback, useEffect, Fragment } from 'react';
 import { Button, Modal, Spin, Table } from 'antd';
 // State
 import useLoadingState from '../../states/useLoadingState';
+import useGlobalState from '../../states/useGlobalState';
 import { loadSongState } from '../../states/functions';
 // Store
 import store from '../../services/store';
 // Components
 import LoadingContainer from '../global/LoadingContainer';
+import { CheckOutlined } from '@ant-design/icons';
 
 function LoadSongModal({ buttonLabel = 'Load Song', onBeforeLoad = () => {}, onAfterLoad = () => {} }) {
   const [isSongLoading] = useLoadingState('isSongLoading');
@@ -35,6 +37,7 @@ function LoadSongModal({ buttonLabel = 'Load Song', onBeforeLoad = () => {}, onA
 
 function SongModal({ isModalVisible, setIsModalVisible, onBeforeLoad = () => {}, onAfterLoad = () => {} }) {
   const [isSongLoading] = useLoadingState('isSongLoading');
+  const [activeGroupSongs] = useGlobalState('activeGroupSongs');
 
   const [data, setData] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
@@ -71,16 +74,18 @@ function SongModal({ isModalVisible, setIsModalVisible, onBeforeLoad = () => {},
       render: (title, data) => (data.version ? `${title} (${data.version})` : title),
     },
     {
-      title: 'Genre',
+      title: 'Genre/Style',
       dataIndex: 'genre',
-    },
-    {
-      title: 'Style',
-      dataIndex: 'style',
+      render: (genre, data) => `${genre}/${data.style}`,
     },
     {
       title: 'Duration',
       dataIndex: 'duration',
+    },
+    {
+      title: 'Done',
+      dataIndex: 'id',
+      render: (id) => (activeGroupSongs[id] ? <CheckOutlined /> : ''),
     },
   ];
 
@@ -98,6 +103,7 @@ function SongModal({ isModalVisible, setIsModalVisible, onBeforeLoad = () => {},
       okText="Load Song"
       onCancel={onCancelModal}
       okButtonProps={{ disabled: isSongLoading || Boolean(!selectedId) }}
+      width={750}
     >
       <LoadingContainer waitFor="song">
         <Table

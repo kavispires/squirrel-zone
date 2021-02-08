@@ -8,6 +8,7 @@ const initialState = {
   },
   isLoading: false,
   activeGroup: null,
+  activeGroupSongs: {},
   activeMembers: null,
   loadedLineDistribution: {},
   lineDistribution: {},

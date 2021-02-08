@@ -113,16 +113,28 @@ function Log({
     [setSelection]
   );
 
-  const onListSelection = (section) => {
-    const partKeys = (section.partsIds ?? []).map((partId) => serializeKey('part', partId));
-    setSelection((state) => {
-      if (state[0] === partKeys[0]) {
-        return [];
-      } else {
-        return partKeys;
-      }
-    });
-  };
+  const onListSelection = useCallback(
+    (section) => {
+      const partKeys = (section.partsIds ?? []).map((partId) => serializeKey('part', partId));
+      setSelection((state) => {
+        if (state[0] === partKeys[0]) {
+          return [];
+        } else {
+          return partKeys;
+        }
+      });
+    },
+    [setSelection]
+  );
+
+  const onLineSelection = useCallback(
+    (line) => {
+      line.partsIds.forEach((partId) => {
+        assignMembers(partId);
+      });
+    },
+    [assignMembers]
+  );
 
   return (
     <div className={`${bemClassConditionalModifier('log', 'compact', isCompact)} ${className}`}>
@@ -151,6 +163,7 @@ function Log({
                 section={section}
                 seekAndPlay={seekAndPlay}
                 assignMembers={assignMembers}
+                onLineSelection={onLineSelection}
               />
             );
           }

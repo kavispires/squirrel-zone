@@ -162,7 +162,7 @@ function LogSectionCompact({ section, onCheckboxChange, onListSelection, seekAnd
   );
 }
 
-function LogSectionDistribute({ section, seekAndPlay, assignMembers }) {
+function LogSectionDistribute({ section, seekAndPlay, assignMembers, onLineSelection }) {
   const [lines] = useDistributorState('lines');
 
   const onPlaySection = useCallback(() => {
@@ -183,7 +183,14 @@ function LogSectionDistribute({ section, seekAndPlay, assignMembers }) {
       <ul className={bemClass('log__lines', 'compact')}>
         {section.linesIds.map((lineId) => {
           const line = lines[lineId];
-          return <LogLine.Distribute key={line.key} line={line} assignMembers={assignMembers} />;
+          return (
+            <LogLine.Distribute
+              key={line.key}
+              line={line}
+              assignMembers={assignMembers}
+              onLineSelection={onLineSelection}
+            />
+          );
         })}
       </ul>
     </li>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Divider, Layout, Progress, Spin, Switch, Select, Input } from 'antd';
+import { Button, Divider, Layout, Progress, Spin, Switch, Select } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 import useLoadingState from '../states/useLoadingState';
@@ -34,7 +34,7 @@ function Distribute() {
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
 
-  const [distributionName, setDistributionName] = useState(loadedLineDistribution?.name || '');
+  const [distributionName, setDistributionName] = useState(loadedLineDistribution?.name || 'ORIGINAL');
 
   // Run on mount
   useEffect(() => {

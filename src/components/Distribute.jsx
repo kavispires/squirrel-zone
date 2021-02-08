@@ -90,6 +90,7 @@ function Distribute() {
       });
 
       setLoadedDistribution(response);
+      history.push('/groups');
     } catch (_) {}
   };
 
@@ -165,6 +166,10 @@ function DistributeWidget({ members, distributionCompletion, resetDistribution }
     // Calculate progress, max, counts
     Object.entries(lineDistribution).forEach(([partId, memberKeysObj]) => {
       const part = parts[partId];
+      if (!part) {
+        console.warn('Part was previously deleted from song');
+        return;
+      }
       const partDuration = part.duration ?? 0;
       const membersKeys = Object.keys(memberKeysObj);
 

@@ -126,6 +126,10 @@ export class Store {
 
     const key = serializeKey(data.type, id ?? data.id);
     this._records[key] = data;
+
+    // Force collection deletion
+    this._collections[DATA_TYPE_COLLECTION[data.type]] = null;
+
     return this._records[key];
   }
 

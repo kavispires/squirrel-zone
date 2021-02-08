@@ -166,7 +166,7 @@ export class Part {
    * @method
    * @param {string} lineId
    */
-  connectSection(lineId) {
+  connectLine(lineId) {
     const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 
@@ -183,7 +183,7 @@ export class Part {
    * @method
    * @param {string} lineId
    */
-  disconnectSection(lineId) {
+  disconnectLine(lineId) {
     const library = getDistributorGlobalState('lines') ?? {};
     const line = library[lineId] ?? null;
 

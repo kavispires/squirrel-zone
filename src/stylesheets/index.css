@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import url(~antd/dist/antd.css);
 /*
@@ -1101,6 +1100,7 @@ body {
   min-height: 50px;
   border-radius: 8px;
   margin: 0 4px 8px 0;
+  flex-grow: 1;
 }
 
 .timestamps-bank__list {
@@ -1186,11 +1186,6 @@ body {
 .log__parts--compact {
   margin-left: 0;
 }
-.log__parts--incomplete:before {
-  content: '›';
-  padding-right: 4px;
-  color: #d14949;
-}
 .log__part {
   margin-left: 4px;
 }
@@ -1230,6 +1225,9 @@ body {
 .log-line {
   margin-left: 12px;
 }
+.log-line__icon-button {
+  color: #d14949;
+}
 .log-line--compact {
   margin-left: 0;
   margin-bottom: 4px;
@@ -1244,6 +1242,9 @@ body {
 .log-line__title-text {
   font-style: italic;
   color: #d6d7d8;
+}
+.log-line__title-text--dismissed {
+  text-decoration: line-through;
 }
 .log-line__actions {
   display: flex;

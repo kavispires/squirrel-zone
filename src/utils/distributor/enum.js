@@ -13,12 +13,12 @@ export const ASSIGNEE = {
 };
 
 export const ASSIGNEE_LABEL = {
-  A: 'V1',
-  B: 'V2',
-  C: 'R1',
-  D: 'R2',
-  E: 'A1',
-  F: 'A2',
+  A: 'VOCALS 1',
+  B: 'VOCALS 2',
+  C: 'RAP 1',
+  D: 'RAP 2',
+  E: 'AD-LID 1',
+  F: 'AD-LIB 2',
   G: 'ALL',
   H: 'NONE',
   I: 'CENTER',

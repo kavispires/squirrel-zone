@@ -2,7 +2,13 @@ import React from 'react';
 
 // Design Resources
 import { Button, Checkbox, Tooltip } from 'antd';
-import { MessageFilled, CheckCircleOutlined, PlusOutlined, ColumnWidthOutlined } from '@ant-design/icons';
+import {
+  MessageFilled,
+  CheckCircleOutlined,
+  PlusOutlined,
+  ColumnWidthOutlined,
+  DoubleRightOutlined,
+} from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
 import useGlobalState from '../../states/useGlobalState';
@@ -37,7 +43,11 @@ function LogLineEdit({ line, onCheckboxChange, onShowModal }) {
             className="log-line__line-button"
             onClick={() => onShowModal(line)}
           >
-            <span className="log-line__title-text">{line.text}</span>
+            <span
+              className={bemClass('log-line__title-text', getBemModifier(line.isDismissible, 'dismissed'))}
+            >
+              {line.text}
+            </span>
           </Button>
         </Tooltip>
         <div className="log-line__actions">
@@ -105,16 +115,24 @@ function LogLineCompact({ line, onCheckboxChange, seekAndPlay }) {
   );
 }
 
-function LogLineDistribute({ line, assignMembers }) {
+function LogLineDistribute({ line, assignMembers, onLineSelection }) {
   const [parts] = useDistributorState('parts');
   const [lineDistribution] = useGlobalState('lineDistribution');
 
   const isComplete = line?.partsIds?.every((partId) => Boolean(lineDistribution[partId]));
-  const incompleteClass = isComplete ? '' : 'incomplete';
 
   return (
     <li className={bemClass('log-line', 'compact')}>
-      <ul className={bemClass('log__parts', 'compact', incompleteClass)}>
+      <ul className={bemClass('log__parts', 'compact')}>
+        {!isComplete && (
+          <Button
+            type="default"
+            size="small"
+            icon={<DoubleRightOutlined />}
+            className="log-line__icon-button"
+            onClick={() => onLineSelection(line)}
+          />
+        )}
         {line?.partsIds?.map((partId) => {
           const part = parts[partId];
           return <LogPart.Distribute key={part.key} part={part} assignMembers={assignMembers} />;

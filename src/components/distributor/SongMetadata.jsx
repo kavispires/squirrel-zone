@@ -1,9 +1,21 @@
 import React, { useCallback } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Checkbox, Divider, Tooltip, Progress, TimePicker } from 'antd';
+import {
+  Button,
+  InputNumber,
+  Form,
+  Input,
+  Checkbox,
+  Divider,
+  Tooltip,
+  Progress,
+  Select,
+  TimePicker,
+} from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
+import { MUSIC_SCALE } from '../../utils/constants';
 
 function SongMetadata() {
   const [song] = useDistributorState('song');
@@ -66,6 +78,15 @@ function SongMetadata() {
         </div>
 
         <div className="song-metadata-form__items song-metadata-form__items--4">
+          <Form.Item label="Scale" name="scale" className="song-metadata-form__item">
+            <Select defaultValue="C" showSearch>
+              {MUSIC_SCALE.map((chord) => (
+                <Select.Option key={chord} value={chord}>
+                  {chord}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item label="Genre" name="genre" className="song-metadata-form__item">
             <Input />
           </Form.Item>
@@ -73,9 +94,6 @@ function SongMetadata() {
             <Input />
           </Form.Item>
           <Form.Item label="Album ID" name="albumId" className="song-metadata-form__item">
-            <Input disabled />
-          </Form.Item>
-          <Form.Item label="Parts Count" name="partsCount" className="song-metadata-form__item">
             <Input disabled />
           </Form.Item>
         </div>

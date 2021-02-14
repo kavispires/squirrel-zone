@@ -28,12 +28,6 @@
     &--compact {
       margin-left: 0;
     }
-
-    &--incomplete:before {
-      content: '›';
-      padding-right: get-unit(1);
-      color: get-color(red);
-    }
   }
 
   &__part {
@@ -80,6 +74,10 @@
 .log-line {
   margin-left: get-unit(3);
 
+  &__icon-button {
+    color: get-color(red);
+  }
+
   &--compact {
     margin-left: 0;
     margin-bottom: get-unit(1);
@@ -96,6 +94,10 @@
   &__title-text {
     font-style: italic;
     color: get-color(gray, 2);
+
+    &--dismissed {
+      text-decoration: line-through;
+    }
   }
 
   &__actions {

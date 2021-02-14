@@ -20,7 +20,7 @@ export function printProps(props, name = 'PROP') {
 
 /**
  * Generate classes modifiers with always the base class (first argument) present
- * @param  {...any} args
+ * @param  {...any} args - The first argument is the base class
  * @returns {string}
  */
 export const bemClass = (...args) => {

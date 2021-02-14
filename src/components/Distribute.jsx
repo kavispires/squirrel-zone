@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Button, Divider, Layout, Progress, Spin, Switch, Select, Input } from 'antd';
+import { Button, Divider, Layout, Progress, Spin, Switch, Select } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 import useLoadingState from '../states/useLoadingState';
@@ -15,7 +15,7 @@ import API from '../api';
 // Utilities
 import { serializeKey } from '../utils/distributor';
 import { bemClassConditionalModifier } from '../utils';
-import { DEFAULT_MEMBERS } from '../utils/constants';
+import { DEFAULT_MEMBERS, DISTRIBUTION_NAME } from '../utils/constants';
 // Components
 import LoadSongModal from './modals/LoadSongModal';
 import YoutubeVideo from './distributor/YoutubeVideo';
@@ -34,7 +34,7 @@ function Distribute() {
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
 
-  const [distributionName, setDistributionName] = useState(loadedLineDistribution?.name || '');
+  const [distributionName, setDistributionName] = useState(loadedLineDistribution?.name || 'ORIGINAL');
 
   // Run on mount
   useEffect(() => {
@@ -72,8 +72,8 @@ function Distribute() {
     setDistributionName('');
   };
 
-  const updateName = (event) => {
-    setDistributionName(event.target.value);
+  const updateName = (distributionName) => {
+    setDistributionName(distributionName);
   };
 
   const saveDistribution = async (values) => {
@@ -90,6 +90,7 @@ function Distribute() {
       });
 
       setLoadedDistribution(response);
+      history.push('/groups');
     } catch (_) {}
   };
 
@@ -114,12 +115,18 @@ function Distribute() {
             />
 
             <div className="distribute__actions">
-              <Input
-                placeholder="original"
-                disabled={isLoading}
+              <Select
+                defaultValue={DISTRIBUTION_NAME.ORIGINAL}
                 onChange={updateName}
+                disabled={isLoading}
                 className="distribute__actions-input"
-              />
+              >
+                {Object.entries(DISTRIBUTION_NAME).map(([distValue, distText]) => (
+                  <Select.Option key={distValue} value={distValue}>
+                    {distText}
+                  </Select.Option>
+                ))}
+              </Select>
               <Button
                 type="primary"
                 onClick={saveDistribution}
@@ -142,7 +149,7 @@ function DistributeWidget({ members, distributionCompletion, resetDistribution }
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
 
-  const [selectedMember, setSelectedMember] = useState({});
+  const [selectedMember, setSelectedMember] = useState('member::ALL');
   const [isAbsoluteProgress, setAbsoluteProgress] = useState(false);
   const [progressType, setProgressType] = useState('');
 
@@ -159,6 +166,10 @@ function DistributeWidget({ members, distributionCompletion, resetDistribution }
     // Calculate progress, max, counts
     Object.entries(lineDistribution).forEach(([partId, memberKeysObj]) => {
       const part = parts[partId];
+      if (!part) {
+        console.warn('Part was previously deleted from song');
+        return;
+      }
       const partDuration = part.duration ?? 0;
       const membersKeys = Object.keys(memberKeysObj);
 
@@ -234,7 +245,7 @@ function DistributeWidget({ members, distributionCompletion, resetDistribution }
   };
 
   const toggleMember = (memberKey) => {
-    setSelectedMember((state) => (state === memberKey ? null : memberKey));
+    setSelectedMember((state) => (state === memberKey ? 'member::ALL' : memberKey));
   };
 
   const assignMembers = (partId) => {

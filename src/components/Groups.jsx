@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
@@ -14,6 +14,7 @@ import { serializeKey } from '../utils/distributor';
 // Components
 import Member from './Member';
 import LoadingContainer from './global/LoadingContainer';
+import { DISTRIBUTION_NAME } from '../utils/constants';
 const { TabPane } = Tabs;
 
 function Groups() {
@@ -69,6 +70,7 @@ function Groups() {
 function Group({ group, members }) {
   const history = useHistory();
   const [, setActiveGroup] = useGlobalState('activeGroup');
+  const [, setActiveGroupSongs] = useGlobalState('activeGroupSongs');
   const [, setActiveMembers] = useGlobalState('activeMembers');
   const [, setLineDistribution] = useGlobalState('lineDistribution');
   const [, setLoadedLineDistribution] = useGlobalState('loadedLineDistribution');
@@ -82,6 +84,15 @@ function Group({ group, members }) {
       setIsFullyLoaded(false);
       setActiveMembers(null);
       setActiveGroup(group);
+
+      const groupDistributionsResponse = await store.getCollection('distributions', null, {
+        groupId: group.id,
+      });
+      const activeGroupSongs = groupDistributionsResponse.reduce((acc, dist) => {
+        acc[dist.songId] = true;
+        return acc;
+      }, {});
+      setActiveGroupSongs(activeGroupSongs);
 
       if (distribution) {
         const distributionData = await store.getRecord('distribution-data', distribution.id);
@@ -105,6 +116,7 @@ function Group({ group, members }) {
       setIsFullyLoaded,
       setLoadedLineDistribution,
       group,
+      setActiveGroupSongs,
     ]
   );
 
@@ -154,6 +166,9 @@ function Group({ group, members }) {
           Albums will come here.
         </TabPane>
         <TabPane tab="Distributions" key="3">
+          <Button type="default" icon={<FileAddOutlined />} onClick={() => activateDistribution()}>
+            Create a Distribution for this group
+          </Button>
           {tab === '3' && (
             <GroupDistributions
               group={group}
@@ -161,9 +176,6 @@ function Group({ group, members }) {
               activateDistribution={activateDistribution}
             />
           )}
-          <Button type="default" icon={<FileAddOutlined />} onClick={() => activateDistribution()}>
-            Create a Distribution for this group
-          </Button>
         </TabPane>
       </Tabs>
     </Card>
@@ -172,16 +184,54 @@ function Group({ group, members }) {
 
 function GroupDistributions({ group, groupMembers, activateDistribution }) {
   const [groupDistributions, setGroupDistributions] = useState(null);
+  const [groupedDistributions, setGroupedDistributions] = useState([]);
 
   useEffect(() => {
     async function loadContent() {
-      setGroupDistributions(await store.getCollection('distributions', null, { groupId: group.id }));
+      setGroupDistributions(
+        await store.getCollection('distributions', null, {
+          groupId: group.id,
+        })
+      );
     }
 
     if (!groupDistributions) {
       loadContent();
     }
   }, [group.id, groupDistributions]);
+
+  useEffect(() => {
+    if (groupDistributions) {
+      const grouped = groupDistributions.reduce((acc, dist) => {
+        const groupKey = dist.name in DISTRIBUTION_NAME ? dist.name : 'UNCATEGORIZED';
+
+        if (acc[groupKey] === undefined) acc[groupKey] = [];
+
+        acc[groupKey].push(dist);
+        return acc;
+      }, {});
+
+      const groupedSections = Object.values(DISTRIBUTION_NAME).reduce((acc, name) => {
+        if (grouped[name]) {
+          acc.push({
+            sectionTitle: name,
+            distributions: grouped[name],
+          });
+        }
+
+        return acc;
+      }, []);
+
+      if (grouped.UNCATEGORIZED) {
+        groupedSections.push({
+          sectionTitle: 'UNCATEGORIZED',
+          distributions: grouped.UNCATEGORIZED,
+        });
+      }
+
+      setGroupedDistributions(groupedSections);
+    }
+  }, [groupDistributions, setGroupedDistributions]);
 
   if (!groupDistributions) {
     return (
@@ -196,7 +246,6 @@ function GroupDistributions({ group, groupMembers, activateDistribution }) {
       title: 'Title',
       dataIndex: 'songTitle',
       className: 'group-distribution-table__title',
-      render: (title, data) => (data.name !== 'original' ? `${title} (${data.name})` : title),
     },
     {
       title: 'Snippet',
@@ -237,13 +286,21 @@ function GroupDistributions({ group, groupMembers, activateDistribution }) {
   ];
 
   return (
-    <Table
-      dataSource={groupDistributions}
-      columns={columns}
-      showHeader={false}
-      size="small"
-      tableLayout="auto"
-    />
+    <Fragment>
+      {groupedDistributions &&
+        groupedDistributions?.map((gDist) => (
+          <Fragment key={`${group.id}-${gDist.sectionTitle}`}>
+            <h3>{gDist.sectionTitle}</h3>
+            <Table
+              dataSource={gDist.distributions}
+              columns={columns}
+              showHeader={false}
+              size="small"
+              tableLayout="auto"
+            />
+          </Fragment>
+        ))}
+    </Fragment>
   );
 }
 

@@ -102,6 +102,13 @@ export class Section {
   }
 
   /**
+   * List of parts ids according to this section lines
+   */
+  get partsIds() {
+    return this.lines.map((line) => line.partsIds).flat();
+  }
+
+  /**
    * Get parent song instance
    * @type {Song|null}
    */

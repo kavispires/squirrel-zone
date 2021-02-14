@@ -43,9 +43,6 @@ export const loadSongState = async (songId) => {
 export const loadActiveMembers = async (group, includeDefault = false) => {
   const members = await store.getCollection('members', true);
 
-  console.log({ members });
-
-  console.log({ group });
   const activeMembers = group.membersIds.reduce((acc, memberId) => {
     const key = serializeKey('member', memberId);
     acc[key] = { ...members[key] };

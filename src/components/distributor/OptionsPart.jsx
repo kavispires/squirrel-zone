@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // Design Resources
 import { Button, InputNumber, Form, Input, Divider, Radio } from 'antd';
@@ -8,7 +8,7 @@ import { ASSIGNEE, ASSIGNEE_LABEL } from '../../utils/distributor';
 
 const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE).map((i) => ({ value: i, label: ASSIGNEE_LABEL[i] }));
 
-function OptionsPart({ part, onValuesChange }) {
+function OptionsPart({ part, onValuesChange, onCancelModal }) {
   const [tempAssignee, setTempAssignee] = useState(part.assignee);
 
   const initialValues = {
@@ -20,6 +20,14 @@ function OptionsPart({ part, onValuesChange }) {
   };
 
   const formClass = `modal-options-form modal-options-form--assignee-${tempAssignee}`;
+
+  const deletePart = useCallback(() => {
+    const confirmation = window.confirm('Are you sure you want to delete this part?');
+    if (confirmation) {
+      part.disconnectLine(part.lineId);
+      onCancelModal();
+    }
+  }, [part, onCancelModal]);
 
   return (
     <Form
@@ -72,7 +80,7 @@ function OptionsPart({ part, onValuesChange }) {
         className="modal-options-form__action-button"
         help="Permanently delete this entire part."
       >
-        <Button type="primary" disabled onClick={() => {}} danger icon={<DeleteOutlined />}>
+        <Button type="primary" onClick={deletePart} danger icon={<DeleteOutlined />}>
           Delete This Part
         </Button>
       </Form.Item>

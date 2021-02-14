@@ -47,7 +47,9 @@ function ModalOptions({ activeInstance, setActiveInstance }) {
     >
       {type === 'section' && <OptionsSection section={activeInstance} onValuesChange={onFormChange} />}
       {type === 'line' && <OptionsLine line={activeInstance} onValuesChange={onFormChange} />}
-      {type === 'part' && <OptionsPart part={activeInstance} onValuesChange={onFormChange} />}
+      {type === 'part' && (
+        <OptionsPart part={activeInstance} onValuesChange={onFormChange} onCancelModal={onCancelModal} />
+      )}
       <Divider />
       <Progress percent={activeInstance.completion} />
     </Modal>

@@ -11,14 +11,15 @@ import Header from './global/Header';
 import { auth } from '../services/firebase';
 
 // Pages
-import Admin from './Admin';
-import Creator from './Creator';
-import Distribute from './Distribute';
-import Distributor from './Distributor';
-import Groups from './Groups';
-import Home from './Home';
-import Login from './Login';
-import Distribution from './Distribution';
+import Admin from './AdminPage';
+import Creator from './CreatorPage';
+import Distribute from './DistributePage';
+import Distribution from './DistributionPage';
+import Distributor from './DistributorPage';
+import Groups from './GroupsPage';
+import Home from './HomePage';
+import Login from './LoginPage';
+
 // Other Components
 import Loading from './global/Loading';
 import Notification from './global/Notification';

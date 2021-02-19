@@ -190,6 +190,35 @@ const fetchGroups = async () => {
 };
 
 /**
+ * Query GET `/groups/<id>`
+ */
+const fetchGroup = async (groupId) => {
+  setLoading({ type: DATA_TYPE.GROUP, payload: true });
+
+  const typeName = DATA_TYPE.GROUP;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
+  try {
+    if (!groupId) {
+      throw Error('A group ID is required');
+    }
+
+    await db
+      .ref()
+      .child(collectionName)
+      .child(groupId)
+      .once('value', function (snapshot) {
+        const { key } = snapshot;
+        store.setRecord(serialize(snapshot.val()), key);
+      });
+  } catch (error) {
+    errorNotification(`Failed to load ${typeName} ${groupId}`, error);
+  } finally {
+    setLoading({ type: DATA_TYPE.GROUP, payload: false });
+  }
+};
+
+/**
  * Query POST `/groups/<id>`
  */
 const saveGroup = async (data) => {
@@ -418,6 +447,7 @@ const API = {
   fetchDistributions,
   fetchDistributionData,
   fetchGroups,
+  fetchGroup,
   fetchMembers,
   fetchMember,
   fetchSongs,

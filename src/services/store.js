@@ -32,6 +32,9 @@ export class Store {
       case DATA_TYPE.DISTRIBUTION_DATA:
         await API.fetchDistributionData(id);
         break;
+      case DATA_TYPE.GROUP:
+        await API.fetchGroup(id);
+        break;
       case DATA_TYPE.MEMBER_DATA:
         await API.fetchMember(id);
         break;

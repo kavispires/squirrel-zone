@@ -145,6 +145,11 @@ export const DISTRIBUTION_NAME = {
   ORIGINAL: 'ORIGINAL',
   COVER: 'COVER',
   SPECIAL: 'SPECIAL',
-  WHAT_IF: 'WHAT/IF',
+  WHAT_IF: 'WHAT_IF',
   REDO: 'REDO',
+};
+
+export const IMAGE_URL = {
+  AVATAR: `${process.env.PUBLIC_URL}/images/members/`,
+  GROUP: `${process.env.PUBLIC_URL}/images/groups/`,
 };

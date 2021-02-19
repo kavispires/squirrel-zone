@@ -16,6 +16,7 @@ import Creator from './CreatorPage';
 import Distribute from './DistributePage';
 import Distribution from './DistributionPage';
 import Distributor from './DistributorPage';
+import Group from './GroupPage';
 import Groups from './GroupsPage';
 import Home from './HomePage';
 import Login from './LoginPage';
@@ -79,7 +80,8 @@ function App() {
             <PrivateRoute path="/distribute" authenticated={isAuthenticated} component={Distribute} />
             <PrivateRoute path="/distribution" authenticated={isAuthenticated} component={Distribution} />
             <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
-            <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} />
+            <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} exact />
+            <PrivateRoute path="/groups/:id" authenticated={isAuthenticated} component={Group} />
 
             <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
           </Switch>

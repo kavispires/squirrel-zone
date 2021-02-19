@@ -340,51 +340,20 @@ body {
   width: 100%;
 }
 
+.groups-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.groups-cards__card {
+  margin-right: 8px;
+}
+
 .group-card {
   margin-bottom: 12px;
 }
-.group-card__members {
-  display: flex;
-  flex-direction: column;
-}
-.group-card__member {
-  margin-bottom: 4px;
-}
-.group-card__member-name {
-  margin: 0 8px;
-}
-
-.group-distributions {
-  margin-bottom: 8px;
-  font-size: 90%;
-}
-
-.group-distribution-table__title {
-  width: 30%;
-}
-
-.group-distribution-table__snippet {
-  width: 50%;
-}
-
-.group-distribution-snippet {
-  display: flex;
+.group-card__action {
   width: 100%;
-  background: #d6d7d8;
-  border-radius: 4px;
-  font-size: 80%;
-  height: 16px;
-  margin: 8px 0;
-}
-.group-distribution-snippet span {
-  text-align: center;
-  color: white;
-}
-.group-distribution-snippet span:first-child {
-  border-radius: 4px 0 0 4px;
-}
-.group-distribution-snippet span:last-child {
-  border-radius: 0 4px 4px 0;
+  display: block;
 }
 
 .distribute__actions {
@@ -1157,6 +1126,47 @@ body {
   100% {
     background-color: #fea245;
   }
+}
+
+.group-distributions {
+  margin-bottom: 8px;
+  font-size: 90%;
+}
+
+.group-distribution-table__title {
+  width: 30%;
+}
+
+.group-distribution-table__snippet {
+  width: 50%;
+}
+
+.group-distribution-snippet {
+  display: flex;
+  width: 100%;
+  background: #d6d7d8;
+  border-radius: 4px;
+  font-size: 80%;
+  height: 16px;
+  margin: 8px 0;
+}
+.group-distribution-snippet span {
+  text-align: center;
+  color: white;
+}
+.group-distribution-snippet span:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.group-distribution-snippet span:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.group-members {
+  display: flex;
+  flex-direction: column;
+}
+.group-members__member {
+  margin-bottom: 4px;
 }
 
 .log {

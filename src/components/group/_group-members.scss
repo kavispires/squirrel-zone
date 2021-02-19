@@ -1,0 +1,8 @@
+.group-members {
+  display: flex;
+  flex-direction: column;
+
+  &__member {
+    margin-bottom: get-unit(1);
+  }
+}

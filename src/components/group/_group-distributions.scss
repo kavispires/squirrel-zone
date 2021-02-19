@@ -1,6 +1,5 @@
 .group-distributions {
   margin-bottom: get-unit(2);
-  font-size: 90%;
 }
 
 .group-distribution-table {
@@ -33,5 +32,23 @@
     &:last-child {
       border-radius: get-unit(0 1 1 0);
     }
+  }
+}
+
+.group-distribution-overall {
+  background: get-color(gray, 1);
+  padding: get-unit(1 2);
+  border-radius: get-unit(1);
+  align-items: center;
+
+  display: flex;
+
+  &__title {
+    width: 30%;
+    font-weight: bold;
+  }
+
+  &__snippet {
+    width: 49%;
   }
 }

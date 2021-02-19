@@ -1174,6 +1174,21 @@ body {
   border-radius: 0 4px 4px 0;
 }
 
+.group-distribution-overall {
+  background: #f0f1f1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  align-items: center;
+  display: flex;
+}
+.group-distribution-overall__title {
+  width: 30%;
+  font-weight: bold;
+}
+.group-distribution-overall__snippet {
+  width: 49%;
+}
+
 .group-members {
   display: flex;
   flex-direction: column;

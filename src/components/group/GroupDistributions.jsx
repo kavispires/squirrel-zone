@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Design Resources
 import { Button, Table } from 'antd';
@@ -7,6 +7,8 @@ import { EditOutlined, FileAddOutlined, FileTextOutlined, YoutubeOutlined } from
 import store from '../../services/store';
 // Utilities
 import { DISTRIBUTION_NAME } from '../../utils/constants';
+// Components
+import ButtonContainer from '../ButtonContainer';
 
 function GroupDistributions({ group, members, activateDistribution, activateLyrics }) {
   const [groupDistributions, setGroupDistributions] = useState(null);
@@ -99,7 +101,13 @@ function GroupDistributions({ group, members, activateDistribution, activateLyri
       dataIndex: 'id',
       className: 'group-distribution-table__button',
       render: (_, data) => (
-        <Button type="primary" size="small" icon={<FileTextOutlined />} onClick={() => activateLyrics(data)}>
+        <Button
+          type="primary"
+          size="small"
+          icon={<FileTextOutlined />}
+          onClick={() => activateLyrics(data)}
+          disabled
+        >
           Lyrics
         </Button>
       ),
@@ -122,16 +130,19 @@ function GroupDistributions({ group, members, activateDistribution, activateLyri
   ];
 
   return (
-    <Fragment>
-      <Button type="default" icon={<FileAddOutlined />} onClick={() => activateDistribution()}>
-        Create a Distribution for this group
-      </Button>
+    <div className="group-distributions">
+      <ButtonContainer center fullWidth>
+        <Button type="default" icon={<FileAddOutlined />} onClick={() => activateDistribution()}>
+          Create a Distribution for this group
+        </Button>
+      </ButtonContainer>
       {groupedDistributions &&
         groupedDistributions?.map((gDist) => (
-          <Fragment key={`${group.id}-${gDist.sectionTitle}`}>
+          <div key={`${group.id}-${gDist.sectionTitle}`}>
             <h3>
               {gDist.sectionTitle} ({gDist.distributions.length} songs)
             </h3>
+            <OverallDistribution distributions={gDist.distributions} members={members} />
             <Table
               dataSource={gDist.distributions}
               columns={columns}
@@ -139,15 +150,53 @@ function GroupDistributions({ group, members, activateDistribution, activateLyri
               size="small"
               tableLayout="auto"
             />
-          </Fragment>
+          </div>
         ))}
-    </Fragment>
+    </div>
   );
 }
 
-function GroupDistributionSnippet({ distribution, members }) {
+function OverallDistribution({ distributions, members }) {
+  const overallTotal = distributions.length * 100;
+
+  const overallDistribution = distributions.reduce(
+    (acc, dist) => {
+      Object.keys(members).forEach((memberKey) => {
+        if (acc.stats[memberKey] === undefined) {
+          acc.stats[memberKey] = {
+            absoluteProgress: 0,
+            overallTotal: 0,
+          };
+        }
+        acc.stats[memberKey].overallTotal += dist?.stats[memberKey]?.absoluteProgress ?? 0;
+
+        acc.stats[memberKey].absoluteProgress = Math.round(
+          (acc.stats[memberKey].overallTotal * 100) / overallTotal
+        );
+      });
+      return acc;
+    },
+    {
+      id: 'overall',
+      stats: {},
+    }
+  );
+
   return (
-    <ul className="group-distribution-snippet">
+    <div className="group-distribution-overall">
+      <span className="group-distribution-overall__title">Overall</span>
+      <GroupDistributionSnippet
+        distribution={overallDistribution}
+        members={members}
+        className="group-distribution-overall__snippet"
+      />
+    </div>
+  );
+}
+
+function GroupDistributionSnippet({ distribution, members, className = '' }) {
+  return (
+    <ul className={`group-distribution-snippet ${className}`}>
       {Object.entries(members).map(([memberKey, memberData]) => {
         const progress = distribution?.stats[memberKey]?.absoluteProgress ?? 0;
         return (

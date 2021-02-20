@@ -17,6 +17,7 @@ function SaveSong() {
 
   const onSave = async () => {
     try {
+      song.sort();
       await API.saveSong(song.serialize());
       setSuccess(true);
       setStep(0);

@@ -1251,6 +1251,10 @@ body {
 .log-section__title-button {
   margin: 0 8px;
 }
+.log-section__title-compact {
+  margin-left: 8px;
+  color: #bcbebf;
+}
 .log-section__actions {
   display: flex;
   justify-content: flex-end;

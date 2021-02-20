@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // Design Resources
-import { Input } from 'antd';
+import { Button, Input } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
@@ -13,15 +13,22 @@ function LoadSong() {
   const [, setSong] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
   const [videoId, setVideoId] = useDistributorState('videoId');
+  const [tempVideoId, setTempVideoId] = useState(videoId);
 
   const onAddVideoId = useCallback(
     (event) => {
-      const { value } = event.target;
+      const value = event?.target?.value ?? tempVideoId;
+
+      if (!value) {
+        alert('Invalid video id');
+        return;
+      }
+
       setVideoId(value);
       setSong(new Song({ videoId: value }));
       setStep('1');
     },
-    [setSong, setStep, setVideoId]
+    [setSong, setStep, setVideoId, tempVideoId]
   );
 
   return (
@@ -32,7 +39,11 @@ function LoadSong() {
         defaultValue={videoId}
         onPressEnter={onAddVideoId}
         placeholder="Insert Youtube video id"
+        onChange={(e) => setTempVideoId(e.target.value)}
       />
+      <Button onClick={onAddVideoId} disabled={!tempVideoId} type="primary">
+        Start
+      </Button>
       <span className="load-song__separator">or</span>
       <LoadSongModal />
     </div>

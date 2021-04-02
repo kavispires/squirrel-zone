@@ -143,6 +143,7 @@ function LogSectionCompact({ section, onCheckboxChange, onListSelection, seekAnd
         className="log-section__icon-button"
         onClick={() => onListSelection(section)}
       />
+      <span className="log-section__title-compact">{section.name}</span>
 
       <ul className={bemClass('log__lines', 'compact')}>
         {section.linesIds.map((lineId) => {

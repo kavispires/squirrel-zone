@@ -1,16 +1,16 @@
 import React from 'react';
 import { Avatar as AntAvatar, Image } from 'antd';
+import { IMAGE_URL } from '../utils/constants';
 
 function Avatar({ name, className, color, size = 'default' }) {
-  const urlPrefix = `${process.env.PUBLIC_URL}/images/members/`;
   return (
     <AntAvatar
       size={size}
       style={color && { border: `2px solid ${color}` }}
       src={
         <Image
-          src={`${urlPrefix}${name.toLowerCase()}.jpg`}
-          fallback={`${urlPrefix}none.jpg`}
+          src={`${IMAGE_URL.AVATAR}${name.toLowerCase()}.jpg`}
+          fallback={`${IMAGE_URL.AVATAR}none.jpg`}
           alt={name}
           className={className}
         />

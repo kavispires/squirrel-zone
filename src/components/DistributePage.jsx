@@ -34,7 +34,9 @@ function Distribute() {
   const [parts] = useDistributorState('parts');
   const [stats, setStats] = useGlobalState('stats');
 
-  const [distributionName, setDistributionName] = useState(loadedLineDistribution?.name || 'ORIGINAL');
+  const [distributionName, setDistributionName] = useState(
+    loadedLineDistribution?.name || DISTRIBUTION_NAME.ORIGINAL
+  );
 
   // Run on mount
   useEffect(() => {
@@ -81,7 +83,7 @@ function Distribute() {
       const response = await API.saveDistribution({
         id: loadedLineDistribution?.id ?? null,
         type: 'distribution',
-        name: distributionName || loadedLineDistribution.name || 'original',
+        name: distributionName || loadedLineDistribution.name || DISTRIBUTION_NAME.ORIGINAL,
         songId: song.id,
         songTitle: song.title,
         groupId: activeGroup.id,

@@ -78,6 +78,48 @@ function Log({
     setSelection([]);
   };
 
+  const handleMergeAll = () => {
+    const [type, id] = deserializeKey(selection[0]);
+
+    if (type === 'part') {
+      alert('Parts can not be merged!');
+      return;
+    }
+
+    const confirmation = window.confirm(`Are you sure you want to merge these ${type}s?`);
+    if (confirmation) {
+      if (type === 'section') {
+        // Gather lines from index 1 forward, disconnecting the lines from the section
+        selection.reduce((keeper, sectionKey, index) => {
+          if (index === 0) return keeper;
+          const [, id] = deserializeKey(sectionKey);
+          const currentSection = sections[id];
+          // Disconnect song
+          currentSection.disconnectSong(currentSection.songId);
+          // Connect all lines to keeper section0
+          currentSection.lines.forEach((line) => line.connectSection(keeper.id));
+
+          return keeper;
+        }, sections[id]);
+      } else if (type === 'line') {
+        // Gather lines from index 1 forward, disconnecting the lines from the section
+        selection.reduce((keeper, lineKey, index) => {
+          if (index === 0) return keeper;
+          const [, id] = deserializeKey(lineKey);
+          const currentLine = lines[id];
+          // Disconnect section
+          currentLine.disconnectSection(currentLine.sectionId);
+          // Connect all parts to keeper line0
+          currentLine.parts.forEach((part) => part.connectLine(keeper.id));
+
+          return keeper;
+        }, lines[id]);
+      }
+
+      setSelection([]);
+    }
+  };
+
   const onShowModal = useCallback(
     (instance) => {
       setActiveInstance(instance);
@@ -136,16 +178,33 @@ function Log({
     [assignMembers]
   );
 
+  const [selectionType] = selection?.[0] ? deserializeKey(selection[0]) : '';
+
+  const actionSentence =
+    selection?.length > 1
+      ? `${selection.length} selected ${selectionType}s`
+      : `selected ${selectionType || 'instance'}`;
+
   return (
     <div className={`${bemClassConditionalModifier('log', 'compact', isCompact)} ${className}`}>
       {!locked && (
         <div className="log__editing-actions">
           <Button type="link" size="small" onClick={handleEditAll} disabled={!Boolean(selection?.length)}>
-            Edit Selected Instances
+            Edit {actionSentence}
           </Button>
           <Button type="link" size="small" onClick={handleDeselectAll} disabled={!Boolean(selection?.length)}>
-            Deselect Selected Instances
+            Deselect {actionSentence}
           </Button>
+          {!isCompact && (
+            <Button
+              type="link"
+              size="small"
+              onClick={handleMergeAll}
+              disabled={selection?.length < 2 || selectionType === 'part'}
+            >
+              Merge {selectionType}s
+            </Button>
+          )}
           <div>
             Compact View <Switch defaultChecked={isCompact} onChange={onSwitchLogView} size="small" />
           </div>

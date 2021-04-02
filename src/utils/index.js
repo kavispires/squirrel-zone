@@ -141,3 +141,26 @@ export const cleanupStats = (stats) => {
   });
   return data;
 };
+
+/**
+ * Replace spaces and underscores with dash/hyphen
+ * @param {string} str
+ * @returns {string}
+ */
+export const dasherize = (str = '') => {
+  return str.toLowerCase().replace(/(_|\s)+/g, '-');
+};
+
+/**
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+export const humanize = (str = '') => {
+  return str
+    .toLowerCase()
+    .replace(/(_|-)+/g, ' ')
+    .split(' ')
+    .map((s) => `${s[0].toUpperCase()}${s.substring(1)}`)
+    .join(' ');
+};

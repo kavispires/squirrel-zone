@@ -79,7 +79,7 @@ function SongMetadata() {
 
         <div className="song-metadata-form__items song-metadata-form__items--4">
           <Form.Item label="Scale" name="scale" className="song-metadata-form__item">
-            <Select defaultValue="C" showSearch>
+            <Select showSearch>
               {MUSIC_SCALE.map((chord) => (
                 <Select.Option key={chord} value={chord}>
                   {chord}

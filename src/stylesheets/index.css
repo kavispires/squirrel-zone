@@ -340,51 +340,20 @@ body {
   width: 100%;
 }
 
+.groups-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.groups-cards__card {
+  margin-right: 8px;
+}
+
 .group-card {
   margin-bottom: 12px;
 }
-.group-card__members {
-  display: flex;
-  flex-direction: column;
-}
-.group-card__member {
-  margin-bottom: 4px;
-}
-.group-card__member-name {
-  margin: 0 8px;
-}
-
-.group-distributions {
-  margin-bottom: 8px;
-  font-size: 90%;
-}
-
-.group-distribution-table__title {
-  width: 30%;
-}
-
-.group-distribution-table__snippet {
-  width: 50%;
-}
-
-.group-distribution-snippet {
-  display: flex;
+.group-card__action {
   width: 100%;
-  background: #d6d7d8;
-  border-radius: 4px;
-  font-size: 80%;
-  height: 16px;
-  margin: 8px 0;
-}
-.group-distribution-snippet span {
-  text-align: center;
-  color: white;
-}
-.group-distribution-snippet span:first-child {
-  border-radius: 4px 0 0 4px;
-}
-.group-distribution-snippet span:last-child {
-  border-radius: 0 4px 4px 0;
+  display: block;
 }
 
 .distribute__actions {
@@ -863,6 +832,20 @@ body {
   margin: 0 0 8px 16px;
 }
 
+.button-container {
+  display: flex;
+  margin: 8px 0;
+}
+.button-container > * {
+  margin: 0 8px;
+}
+.button-container--full-width {
+  width: 100%;
+}
+.button-container--centered {
+  justify-content: center;
+}
+
 .modal-options-form {
   padding: 8px 0;
 }
@@ -1159,6 +1142,61 @@ body {
   }
 }
 
+.group-distributions {
+  margin-bottom: 8px;
+}
+
+.group-distribution-table__title {
+  width: 30%;
+}
+
+.group-distribution-table__snippet {
+  width: 50%;
+}
+
+.group-distribution-snippet {
+  display: flex;
+  width: 100%;
+  background: #d6d7d8;
+  border-radius: 4px;
+  font-size: 80%;
+  height: 16px;
+  margin: 8px 0;
+}
+.group-distribution-snippet span {
+  text-align: center;
+  color: white;
+}
+.group-distribution-snippet span:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.group-distribution-snippet span:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.group-distribution-overall {
+  background: #f0f1f1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  align-items: center;
+  display: flex;
+}
+.group-distribution-overall__title {
+  width: 30%;
+  font-weight: bold;
+}
+.group-distribution-overall__snippet {
+  width: 49%;
+}
+
+.group-members {
+  display: flex;
+  flex-direction: column;
+}
+.group-members__member {
+  margin-bottom: 4px;
+}
+
 .log {
   list-style: none;
   padding: 4px 8px;
@@ -1212,6 +1250,10 @@ body {
 }
 .log-section__title-button {
   margin: 0 8px;
+}
+.log-section__title-compact {
+  margin-left: 8px;
+  color: #bcbebf;
 }
 .log-section__actions {
   display: flex;

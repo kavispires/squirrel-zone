@@ -1,0 +1,54 @@
+.group-distributions {
+  margin-bottom: get-unit(2);
+}
+
+.group-distribution-table {
+  &__title {
+    width: 30%;
+  }
+
+  &__snippet {
+    width: 50%;
+  }
+}
+
+.group-distribution-snippet {
+  display: flex;
+  width: 100%;
+  background: get-color(gray, 2);
+  border-radius: get-unit(1);
+  font-size: 80%;
+  height: 16px;
+  margin: get-unit(2 0);
+
+  & span {
+    text-align: center;
+    color: get-color(white);
+
+    &:first-child {
+      border-radius: get-unit(1 0 0 1);
+    }
+
+    &:last-child {
+      border-radius: get-unit(0 1 1 0);
+    }
+  }
+}
+
+.group-distribution-overall {
+  background: get-color(gray, 1);
+  padding: get-unit(1 2);
+  border-radius: get-unit(1);
+  align-items: center;
+
+  display: flex;
+
+  &__title {
+    width: 30%;
+    font-weight: bold;
+  }
+
+  &__snippet {
+    width: 49%;
+  }
+}

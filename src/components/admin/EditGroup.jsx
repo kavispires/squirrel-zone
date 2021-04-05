@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // Design Resources
 import { Button, InputNumber, Form, Input, Select, Divider } from 'antd';
 // API
-import API from '../../api';
+import API from '../../adapters';
 // Utilities
 import { bemClass } from '../../utils';
 // Components

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Layout, Button, Form, Input, Alert } from 'antd';
 
 // API
-import { signIn } from '../api/auth';
+import { signIn } from '../adapters/auth';
 
 const layout = {
   labelCol: { span: 8 },

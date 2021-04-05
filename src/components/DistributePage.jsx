@@ -11,7 +11,7 @@ import { loadSongState } from '../states/functions';
 // Store
 import store from '../services/store';
 // API
-import API from '../api';
+import API from '../adapters';
 // Utilities
 import { serializeKey } from '../utils/distributor';
 import { bemClassConditionalModifier } from '../utils';

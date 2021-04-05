@@ -6,7 +6,7 @@ import { Button, Divider, Tooltip, Progress } from 'antd';
 import useLoadingState from '../../states/useLoadingState';
 import useDistributorState from '../../states/useDistributorState';
 // API
-import API from '../../api';
+import API from '../../adapters';
 
 function SaveSong() {
   const [song] = useDistributorState('song');

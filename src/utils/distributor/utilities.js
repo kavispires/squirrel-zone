@@ -32,8 +32,19 @@ export const convertStoMS = (seconds) => {
   return Math.round(seconds * 1000);
 };
 
+/**
+ * Create a key based of type and id of the instance
+ * @param {string} type
+ * @param {string} id
+ * @returns {string} <type>::<id>
+ */
 export const serializeKey = (type, id) => `${type}${SEPARATOR}${id}`;
 
+/**
+ * Split a key by the common separator into an array of type, id
+ * @param {string} key
+ * @returns {[string, string]} type and id
+ */
 export const deserializeKey = (key) => key.split(SEPARATOR);
 
 /**

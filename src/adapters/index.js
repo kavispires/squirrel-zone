@@ -5,7 +5,7 @@ import { setGlobalState } from '../states/useGlobalState';
 import { setLoading } from '../states/useLoadingState';
 import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
 import deserialize from './deserializers';
-import serialize from './serializers';
+import serialize from './serializers/';
 
 /**
  * Sets a global error notification.

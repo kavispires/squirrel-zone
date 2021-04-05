@@ -4,7 +4,7 @@ import store from '../services/store';
 import { setGlobalState } from '../states/useGlobalState';
 import { setLoading } from '../states/useLoadingState';
 import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
-import deserialize from './deserializers';
+import deserialize from './deserializers/';
 import serialize from './serializers/';
 
 /**

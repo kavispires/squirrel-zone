@@ -147,13 +147,13 @@ export const batchDeserializeInstancesSameData = (library, ids, data, isKey = fa
 };
 
 /**
- * Removes any object key that is undefined or null
+ * Removes any object key that value is undefined or null or an empty string
  * @param {object} obj
  * @returns {object}
  */
 export const cleanupObject = (obj) => {
   return Object.keys(obj)
-    .filter((k) => obj[k] != null && obj[k] !== undefined)
+    .filter((k) => obj[k] != null && obj[k] !== undefined && obj[k] !== '')
     .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
 };
 

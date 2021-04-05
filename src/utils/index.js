@@ -1,3 +1,4 @@
+import { POSITIONS_WEIGHT } from './constants';
 import { serializeKey } from './distributor';
 
 const wasPrinted = {};
@@ -152,7 +153,7 @@ export const dasherize = (str = '') => {
 };
 
 /**
- *
+ * Humanize a string by removing underscores and hyphens replacing them by spaces and capitalizing their first words
  * @param {string} str
  * @returns {string}
  */
@@ -163,4 +164,15 @@ export const humanize = (str = '') => {
     .split(' ')
     .map((s) => `${s[0].toUpperCase()}${s.substring(1)}`)
     .join(' ');
+};
+
+/**
+ * Sort list of positions by their importance weight.
+ * @param {string[]} positions
+ * @returns {string[]}
+ */
+export const sortPositions = (positions) => {
+  return positions.sort((a, b) =>
+    POSITIONS_WEIGHT[b] > POSITIONS_WEIGHT[a] ? -1 : POSITIONS_WEIGHT[b] < POSITIONS_WEIGHT[a] ? 1 : 0
+  );
 };

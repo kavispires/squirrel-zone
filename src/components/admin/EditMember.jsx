@@ -26,6 +26,7 @@ function EditMember() {
   };
 
   const onReset = () => {
+    setLoadedData(false);
     form.resetFields();
   };
 

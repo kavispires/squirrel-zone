@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Design Resources
 import { Card, Image } from 'antd';
 // Utilities
-import { IMAGE_URL } from '../utils/constants';
-import { dasherize } from '../utils';
+import { IMAGE_URL } from '../../utils/constants';
+import { dasherize } from '../../utils';
+import GroupCardActions from './GroupCardActions';
 
 function GroupsCards({ groups, goToGroupPage }) {
   return (
@@ -17,7 +19,7 @@ function GroupsCards({ groups, goToGroupPage }) {
               cover={
                 <Image
                   alt={group.name}
-                  src={`${IMAGE_URL.GROUP}${dasherize(group.name)}`}
+                  src={`${IMAGE_URL.GROUP}${dasherize(group.name)}.jpg`}
                   fallback={`${IMAGE_URL.GROUP}no-group-photo.jpg`}
                 />
               }
@@ -34,15 +36,9 @@ function GroupsCards({ groups, goToGroupPage }) {
   );
 }
 
-function GroupCardActions(group, goToGroupPage) {
-  return [
-    <span className="group-cards__card-action" onClick={(e) => goToGroupPage(e, group, 'members')}>
-      Members
-    </span>,
-    <span className="group-cards__card-action" onClick={(e) => goToGroupPage(e, group, 'distributions')}>
-      Distributions
-    </span>,
-  ];
-}
+GroupsCards.propTypes = {
+  groups: PropTypes.array,
+  goToGroupPage: PropTypes.func,
+};
 
 export default GroupsCards;

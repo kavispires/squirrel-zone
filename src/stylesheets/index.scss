@@ -30,7 +30,8 @@
 @import './creator';
 
 // Components
-@import '../components/groups-cards';
+@import '../components/group/groups-cards';
+@import '../components/group/group-card';
 @import '../components/button-container';
 @import '../components/distributor/modal-options';
 @import '../components/distributor/stepper-progress';

@@ -883,6 +883,21 @@ body {
   display: block;
 }
 
+.group-card {
+  width: 100%;
+}
+.group-card__cover {
+  width: 100%;
+}
+.group-card__cover > div {
+  width: 100%;
+}
+.group-card__cover-image {
+  object-fit: cover;
+  object-position: center;
+  height: 100px;
+}
+
 .button-container {
   display: flex;
   margin: 8px 0;

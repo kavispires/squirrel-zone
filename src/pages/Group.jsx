@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Layout, Card } from 'antd';
+import { Layout, Typography } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
@@ -11,10 +11,8 @@ import store from '../services/store';
 // Utilities
 import { serializeKey } from '../utils/distributor';
 // Components
-import GroupDistributions from './group/GroupDistributions';
-import GroupInfo from './group/GroupInfo';
-import GroupMembers from './group/GroupMembers';
-import LoadingContainer from './global/LoadingContainer';
+import LoadingContainer from '../components/global/LoadingContainer';
+import GroupCard from '../components/group/GroupCard';
 
 function Group() {
   const history = useHistory();
@@ -111,21 +109,6 @@ function Group() {
 
   const activateLyrics = useCallback(() => {}, []);
 
-  const tabList = [
-    {
-      key: 'info',
-      tab: 'Info',
-    },
-    {
-      key: 'members',
-      tab: 'Members',
-    },
-    {
-      key: 'distributions',
-      tab: 'Distributions',
-    },
-  ];
-
   const onTabChange = useCallback(
     (key) => {
       const route = key === 'info' ? `/groups/${groupId}` : `/groups/${groupId}/${key}`;
@@ -140,26 +123,16 @@ function Group() {
   return (
     <Layout.Content className="container">
       <main className="main group">
-        <h1>{activeGroup?.id ? activeGroup.name : 'Group'}</h1>
+        <Typography.Title>{activeGroup?.id ? activeGroup.name : 'Unknown Group'}</Typography.Title>
         <LoadingContainer waitFor="group" noResults={!Boolean(activeGroup?.id)}>
-          <Card
-            style={{ width: '100%' }}
-            title={activeGroup?.name ?? 'Group'}
-            tabList={tabList}
-            activeTabKey={tab}
+          <GroupCard
+            tab={tab}
             onTabChange={onTabChange}
-          >
-            {tab === 'info' && <GroupInfo group={activeGroup} />}
-            {tab === 'members' && <GroupMembers members={groupMembers} />}
-            {tab === 'distributions' && (
-              <GroupDistributions
-                group={activeGroup}
-                members={groupMembers}
-                activateDistribution={activateDistribution}
-                activateLyrics={activateLyrics}
-              />
-            )}
-          </Card>
+            activeGroup={activeGroup}
+            groupMembers={groupMembers}
+            activateDistribution={activateDistribution}
+            activateLyrics={activateLyrics}
+          />
         </LoadingContainer>
       </main>
     </Layout.Content>

@@ -7,7 +7,7 @@ import { Layout, Typography } from 'antd';
 import store from '../services/store';
 // Components
 import LoadingContainer from '../components/global/LoadingContainer';
-import GroupsCards from '../components/GroupsCards';
+import GroupsCards from '../components/group/GroupsCards';
 
 function Groups() {
   const history = useHistory();

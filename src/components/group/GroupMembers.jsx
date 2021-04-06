@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import Member from '../Member';
@@ -14,5 +15,9 @@ function GroupMembers({ members }) {
     </ul>
   );
 }
+
+GroupMembers.propTypes = {
+  members: PropTypes.object,
+};
 
 export default GroupMembers;

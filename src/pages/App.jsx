@@ -16,7 +16,7 @@ import Creator from '../components/CreatorPage';
 import Distribute from '../components/DistributePage';
 import Distribution from '../components/DistributionPage';
 import Distributor from '../components/DistributorPage';
-import Group from '../components/GroupPage';
+import Group from './Group';
 import Groups from './Groups';
 import Home from '../pages/Home';
 import Login from '../components/LoginPage';

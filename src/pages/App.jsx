@@ -17,7 +17,7 @@ import Distribute from '../components/DistributePage';
 import Distribution from '../components/DistributionPage';
 import Distributor from '../components/DistributorPage';
 import Group from '../components/GroupPage';
-import Groups from '../components/GroupsPage';
+import Groups from './Groups';
 import Home from '../pages/Home';
 import Login from '../components/LoginPage';
 

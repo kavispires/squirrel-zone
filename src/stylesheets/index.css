@@ -390,34 +390,6 @@ body {
   justify-content: flex-end;
 }
 
-.groups-page {
-  display: flex;
-}
-
-.group-quick-links {
-  margin-left: 12px;
-}
-
-.group-card-containers {
-  width: 100%;
-}
-
-.groups-cards {
-  display: flex;
-  flex-wrap: wrap;
-}
-.groups-cards__card {
-  margin-right: 8px;
-}
-
-.group-card {
-  margin-bottom: 12px;
-}
-.group-card__action {
-  width: 100%;
-  display: block;
-}
-
 .distribute__actions {
   display: flex;
   justify-content: center;
@@ -892,6 +864,23 @@ body {
 
 .options {
   margin: 0 0 8px 16px;
+}
+
+.groups-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.groups-cards__item {
+  width: 35%;
+  max-width: 360px;
+  flex-grow: 1;
+}
+.groups-cards__card {
+  margin: 0 12px 12px 0;
+}
+.groups-cards__card-action {
+  width: 100%;
+  display: block;
 }
 
 .button-container {

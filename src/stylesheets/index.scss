@@ -23,7 +23,6 @@
 @import '../components/login';
 @import '../components/distributor';
 @import '../components/admin';
-@import '../components/groups';
 @import '../components/distribute';
 @import './character-colors';
 @import './character';
@@ -31,6 +30,7 @@
 @import './creator';
 
 // Components
+@import '../components/groups-cards';
 @import '../components/button-container';
 @import '../components/distributor/modal-options';
 @import '../components/distributor/stepper-progress';

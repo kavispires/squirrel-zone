@@ -19,7 +19,7 @@ import Distributor from '../components/DistributorPage';
 import Group from './Group';
 import Groups from './Groups';
 import Home from '../pages/Home';
-import Login from '../components/LoginPage';
+import Login from './Login';
 
 // Other Components
 import Loading from '../components/global/Loading';

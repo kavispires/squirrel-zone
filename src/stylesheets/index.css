@@ -35,11 +35,6 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-.app {
-  width: 100%;
-  min-height: 100vh !important;
-}
-
 .container {
   padding: 12px 50px;
   height: calc(100vh - 64px);
@@ -254,6 +249,73 @@ body {
 .loading-container__message {
   text-align: center;
   font-style: italic;
+}
+
+.app {
+  width: 100%;
+  min-height: 100vh !important;
+  background-color: #ecfafe;
+}
+.app--animated {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #1890ff, #23d5ab, #ffffff);
+  background-size: 600% 600%;
+  animation: gradient 120s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.home__logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.home__logo {
+  width: auto;
+  height: 40vh;
+  display: block;
+  animation: rotate 30s ease infinite;
+}
+.home__name {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 300%;
+  margin-bottom: 0;
+}
+.home__tagline {
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  90% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  95% {
+    transform: rotate3d(0, 1, 0, 360deg);
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
 }
 
 .login__title {

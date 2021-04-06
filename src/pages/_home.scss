@@ -1,0 +1,47 @@
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  &__logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__logo {
+    width: auto;
+    height: 40vh;
+    display: block;
+    animation: rotate 30s ease infinite;
+  }
+
+  &__name {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 300%;
+    margin-bottom: 0;
+  }
+
+  &__tagline {
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  90% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+  95% {
+    transform: rotate3d(0, 1, 0, 360deg);
+  }
+  100% {
+    transform: rotate3d(0, 1, 0, 0deg);
+  }
+}

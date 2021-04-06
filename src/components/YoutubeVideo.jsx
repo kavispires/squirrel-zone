@@ -2,7 +2,7 @@ import React from 'react';
 import YouTube from 'react-youtube';
 
 // State
-import useDistributorState from '../../states/useDistributorState';
+import useDistributorState from '../states/useDistributorState';
 
 function YoutubeVideo({
   playerRef,
@@ -10,10 +10,13 @@ function YoutubeVideo({
   width = '320',
   className = '',
   onStateChange = () => {},
+  videoId,
 }) {
-  const [videoId] = useDistributorState('videoId');
+  const [videoIdFromState] = useDistributorState('videoId');
   const [, setIsRecording] = useDistributorState('isRecording');
   const [, setIsPlaying] = useDistributorState('isPlaying');
+
+  const youtubeId = videoId ?? videoIdFromState;
 
   const videoOptions = {
     height: height ?? '180',
@@ -50,9 +53,9 @@ function YoutubeVideo({
 
   return (
     <YouTube
-      videoId={videoId}
-      id={videoId}
-      key={videoId}
+      videoId={youtubeId}
+      id={youtubeId}
+      key={youtubeId}
       className="video"
       containerClassName={className}
       opts={videoOptions}

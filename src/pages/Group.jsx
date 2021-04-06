@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { Layout, Typography } from 'antd';
 // State
 import useGlobalState from '../states/useGlobalState';
-import useDistributorState from '../states/useDistributorState';
 // Store
 import store from '../services/store';
 // Utilities
@@ -17,11 +16,6 @@ import GroupCard from '../components/group/GroupCard';
 function Group() {
   const history = useHistory();
   const [activeGroup, setActiveGroup] = useGlobalState('activeGroup');
-  const [, setActiveGroupSongs] = useGlobalState('activeGroupSongs');
-  const [, setActiveMembers] = useGlobalState('activeMembers');
-  const [, setLineDistribution] = useGlobalState('lineDistribution');
-  const [, setLoadedLineDistribution] = useGlobalState('loadedLineDistribution');
-  const [, setIsFullyLoaded] = useDistributorState('isFullyLoaded');
 
   // Local State
   const [groupId, setGroupId] = useState(null);
@@ -30,9 +24,7 @@ function Group() {
 
   // Set Group Id or bounce!
   useEffect(() => {
-    const path = history?.location?.pathname?.split('/');
-    const currentId = path?.[2];
-    const subRoute = path?.[3];
+    const [, , currentId, subRoute] = (history?.location?.pathname ?? '').split('/');
 
     if (!currentId) {
       history.push('/groups');
@@ -68,46 +60,13 @@ function Group() {
     }
   }, [groupId, setActiveGroup]);
 
-  const activateDistribution = useCallback(
-    async (distribution, isEdit = false) => {
-      setIsFullyLoaded(false);
-      setActiveMembers(null);
-
-      const groupDistributionsResponse = await store.getCollection('distributions', null, {
-        groupId: groupId,
-      });
-      const activeGroupSongs = groupDistributionsResponse.reduce((acc, dist) => {
-        acc[dist.songId] = true;
-        return acc;
-      }, {});
-      setActiveGroupSongs(activeGroupSongs);
-
-      if (distribution) {
-        const distributionData = await store.getRecord('distribution-data', distribution.id);
-        setLoadedLineDistribution(distribution);
-        setLineDistribution(distributionData.assignedParts);
-
-        const route = isEdit ? 'distribute' : 'distribution';
-        history.push(`/${route}/${distribution.id}`);
-        return;
-      }
-
-      setLoadedLineDistribution({});
-      setLineDistribution({});
-      history.push(`/distribute/new`);
+  const goToDistribution = useCallback(
+    (id, mode = 'view') => {
+      // Modes can be `view`, `edit`, `lyrics`, `new` (in case of new a songId is sent instead of a distributionID)
+      history.push(`/distribution/${id}/${mode}`);
     },
-    [
-      history,
-      setActiveMembers,
-      setLineDistribution,
-      setIsFullyLoaded,
-      setLoadedLineDistribution,
-      groupId,
-      setActiveGroupSongs,
-    ]
+    [history]
   );
-
-  const activateLyrics = useCallback(() => {}, []);
 
   const onTabChange = useCallback(
     (key) => {
@@ -130,8 +89,7 @@ function Group() {
             onTabChange={onTabChange}
             activeGroup={activeGroup}
             groupMembers={groupMembers}
-            activateDistribution={activateDistribution}
-            activateLyrics={activateLyrics}
+            goToDistribution={goToDistribution}
           />
         </LoadingContainer>
       </main>

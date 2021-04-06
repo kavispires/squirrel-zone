@@ -7,12 +7,12 @@ import { FileAddOutlined } from '@ant-design/icons';
 // Store
 import store from '../../services/store';
 // Utilities
-import { DISTRIBUTION_NAME } from '../../utils/constants';
+import { DISTRIBUTION_NAME, NEW_INSTANCE_ID } from '../../utils/constants';
 // Components
 import ButtonContainer from '../ButtonContainer';
 import GroupDistributionTables from './GroupDistributionTables';
 
-function GroupDistributions({ group, members, activateDistribution, activateLyrics }) {
+function GroupDistributions({ group, members, goToDistribution }) {
   const [groupDistributions, setGroupDistributions] = useState(null);
   const [groupedDistributions, setGroupedDistributions] = useState([]);
 
@@ -74,15 +74,18 @@ function GroupDistributions({ group, members, activateDistribution, activateLyri
   return (
     <div className="group-distributions">
       <ButtonContainer center fullWidth>
-        <Button type="default" icon={<FileAddOutlined />} onClick={() => activateDistribution()}>
+        <Button
+          type="default"
+          icon={<FileAddOutlined />}
+          onClick={() => goToDistribution(NEW_INSTANCE_ID, 'edit')}
+        >
           Create a Distribution for this group
         </Button>
       </ButtonContainer>
       <GroupDistributionTables
         group={group}
         members={members}
-        activateDistribution={activateDistribution}
-        activateLyrics={activateLyrics}
+        goToDistribution={goToDistribution}
         groupedDistributions={groupedDistributions}
       />
     </div>
@@ -92,8 +95,7 @@ function GroupDistributions({ group, members, activateDistribution, activateLyri
 GroupDistributions.propTypes = {
   group: PropTypes.object,
   members: PropTypes.object,
-  activateDistribution: PropTypes.func,
-  activateLyrics: PropTypes.func,
+  goToDistribution: PropTypes.func,
 };
 
 export default GroupDistributions;

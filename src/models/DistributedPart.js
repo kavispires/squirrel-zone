@@ -4,7 +4,6 @@ export class DistributedPart {
     text,
     startTime,
     endTime,
-    duration,
     assignee,
     membersIds,
     lineId,
@@ -16,7 +15,7 @@ export class DistributedPart {
     this.text = text;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.duration = duration;
+    this.duration = endTime - startTime;
     this.lineId = lineId;
     this.sectionId = sectionId;
     this.isDismissible = isDismissible;

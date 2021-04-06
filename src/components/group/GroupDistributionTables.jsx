@@ -10,13 +10,7 @@ import { humanize } from '../../utils';
 import GroupOverallDistributionSnippet from './GroupOverallDistributionSnippet';
 import GroupDistributionSnippet from './GroupDistributionSnippet';
 
-function GroupDistributionTables({
-  group,
-  members,
-  activateDistribution,
-  activateLyrics,
-  groupedDistributions,
-}) {
+function GroupDistributionTables({ group, members, goToDistribution, groupedDistributions }) {
   const columns = [
     {
       title: 'Title',
@@ -38,7 +32,7 @@ function GroupDistributionTables({
           type="default"
           size="small"
           icon={<EditOutlined />}
-          onClick={() => activateDistribution(data, true)}
+          onClick={() => goToDistribution(data.id, 'edit')}
         >
           Edit
         </Button>
@@ -53,7 +47,7 @@ function GroupDistributionTables({
           type="primary"
           size="small"
           icon={<FileTextOutlined />}
-          onClick={() => activateLyrics(data)}
+          onClick={() => goToDistribution(data.id, 'lyrics')}
           disabled
         >
           Lyrics
@@ -69,7 +63,7 @@ function GroupDistributionTables({
           type="primary"
           size="small"
           icon={<YoutubeOutlined />}
-          onClick={() => activateDistribution(data)}
+          onClick={() => goToDistribution(data.id, 'view')}
         >
           View
         </Button>

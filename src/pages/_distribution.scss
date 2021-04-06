@@ -1,0 +1,29 @@
+.distribution {
+  height: inherit;
+
+  &__title-song {
+    font-weight: normal;
+
+    &:before {
+      content: ' - ';
+    }
+  }
+
+  &__tabs {
+    background: white;
+  }
+
+  &__tab {
+    padding: get-unit(2);
+  }
+
+  &__tab-icon {
+    display: flex;
+    flex-direction: column;
+    min-width: 40px;
+
+    & > .anticon {
+      margin: 0;
+    }
+  }
+}

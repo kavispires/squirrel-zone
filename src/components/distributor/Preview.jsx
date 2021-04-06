@@ -9,7 +9,7 @@ import sampleGroupJson from '../../utils/mock/sampleGroup.json';
 // Engine and utilities
 import Previewer from '../../utils/distribution/previewer';
 // Components
-import LineDistribution from './LineDistribution';
+import AnimatedBars from '../distribution/AnimatedBars';
 import { buildMockDistribution } from '../../utils';
 
 const { Paragraph } = Typography;
@@ -44,7 +44,7 @@ function Preview({ playerRef }) {
       <Paragraph>Visualize how this songs plays.</Paragraph>
 
       {step === '3' && previewBars.length && (
-        <LineDistribution
+        <AnimatedBars
           playerRef={playerRef}
           members={previewMembers}
           bars={previewBars}

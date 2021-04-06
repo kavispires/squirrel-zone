@@ -24,6 +24,7 @@
 @import '../pages/app';
 @import '../pages/home';
 @import '../pages/login';
+@import '../pages/distribution';
 @import '../components/distributor';
 @import '../components/admin';
 @import '../components/distribute';
@@ -35,6 +36,7 @@
 // Components
 @import '../components/group/groups-cards';
 @import '../components/group/group-card';
+@import '../components/distribution/line-distribution';
 @import '../components/button-container';
 @import '../components/distributor/modal-options';
 @import '../components/distributor/stepper-progress';
@@ -48,7 +50,6 @@
 @import '../components/group/group-members';
 @import '../components/log/log';
 @import '../components/distributor/preview';
-@import '../components/distributor/line-distribution';
 @import '../components/distributor/song-metadata';
 @import '../components/distributor/save-song';
 @import '../components/member';

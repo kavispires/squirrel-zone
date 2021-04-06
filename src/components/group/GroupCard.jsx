@@ -10,7 +10,7 @@ import GroupMembers from './GroupMembers';
 import { IMAGE_URL } from '../../utils/constants';
 import { dasherize } from '../../utils';
 
-function GroupCard({ tab, onTabChange, activeGroup, groupMembers, activateDistribution, activateLyrics }) {
+function GroupCard({ tab, onTabChange, activeGroup, groupMembers, goToDistribution }) {
   const tabList = [
     {
       key: 'info',
@@ -45,8 +45,7 @@ function GroupCard({ tab, onTabChange, activeGroup, groupMembers, activateDistri
           <GroupDistributions
             group={activeGroup}
             members={groupMembers}
-            activateDistribution={activateDistribution}
-            activateLyrics={activateLyrics}
+            goToDistribution={goToDistribution}
           />
         )}
       </Card>
@@ -59,8 +58,7 @@ GroupCard.propTypes = {
   onTabChange: PropTypes.func,
   activeGroup: PropTypes.object,
   groupMembers: PropTypes.object,
-  activateDistribution: PropTypes.func,
-  activateLyrics: PropTypes.func,
+  goToDistribution: PropTypes.func,
 };
 
 GroupCard.defaultTypes = {

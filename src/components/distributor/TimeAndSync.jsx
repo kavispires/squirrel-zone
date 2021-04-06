@@ -9,7 +9,7 @@ import KeyCapture from './KeyCapture';
 import Log from '../log/Log';
 import Controls from './Controls';
 import TimestampsBank from './TimestampsBank';
-import YoutubeVideo from './YoutubeVideo';
+import YoutubeVideo from '../YoutubeVideo';
 
 function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
   const [isRecording] = useDistributorState('isRecording');

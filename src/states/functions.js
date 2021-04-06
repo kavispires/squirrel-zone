@@ -54,9 +54,47 @@ export const loadActiveMembers = async (group, includeDefault = false) => {
   }, {});
 
   if (includeDefault) {
-    setGlobalState('activeMembers', { ...activeMembers, ...DEFAULT_MEMBERS });
-    return;
+    const activeMembersNew = { ...activeMembers, ...DEFAULT_MEMBERS };
+    setGlobalState('activeMembers', activeMembersNew);
+    return activeMembersNew;
   }
 
-  setGlobalState('activeMembers', { ...activeMembers });
+  const activeMembersNew = { ...activeMembers };
+  setGlobalState('activeMembers', activeMembersNew);
+
+  return activeMembersNew;
+};
+
+export const loadActiveGroupSongs = async (groupId) => {
+  const groupDistributionsResponse = await store.getCollection('distributions', null, {
+    groupId: groupId,
+  });
+  const activeGroupSongs = groupDistributionsResponse.reduce((acc, dist) => {
+    acc[dist.songId] = true;
+    return acc;
+  }, {});
+
+  setGlobalState('activeGroupSongs', activeGroupSongs);
+
+  return activeGroupSongs;
+};
+
+export const loadActiveDistribution = async (groupId, distributionId) => {
+  const distributionResponse = await store.getRecord('distribution', distributionId, groupId);
+  const distributionDataResponse = await store.getRecord('distribution-data', distributionId);
+
+  setGlobalState('activeDistribution', distributionResponse);
+  setGlobalState('activeDistributionData', distributionDataResponse);
+
+  return distributionResponse;
+};
+
+export const loadActiveSong = async (songId) => {
+  const songResponse = await store.getRecord('song', songId);
+  const songDataResponse = await store.getRecord('song-data', songId);
+
+  setGlobalState('activeSong', songResponse);
+  setGlobalState('activeSongData', songDataResponse);
+
+  return songResponse;
 };

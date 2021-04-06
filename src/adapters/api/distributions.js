@@ -39,6 +39,43 @@ export const fetchDistributions = async (groupId) => {
 };
 
 /**
+ * Request `/distributions/<group_id>/<distribution_id>`
+ * @param {string} groupId
+ */
+export const fetchDistribution = async (distributionId, groupId) => {
+  setLoading({ type: DATA_TYPE.DISTRIBUTION, payload: true });
+
+  const typeName = DATA_TYPE.DISTRIBUTION;
+  const collectionName = DATA_TYPE_COLLECTION[typeName];
+
+  try {
+    if (!groupId) {
+      throw Error('A group ID is required to query a distribution');
+    }
+
+    if (!distributionId) {
+      throw Error('A distribution ID is required to query a distribution');
+    }
+
+    await db
+      .ref()
+      .child(collectionName)
+      .child(groupId)
+      .child(distributionId)
+      .once('value', function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          const { key } = childSnapshot;
+          store.setRecord(serialize(childSnapshot.val()), key);
+        });
+      });
+  } catch (error) {
+    errorNotification(`Failed to load ${typeName} ${distributionId} for group ${groupId}`, error);
+  } finally {
+    setLoading({ type: typeName, payload: false });
+  }
+};
+
+/**
  * Request POST `/distribution/<id>`
  * @param {object} data
  * @returns

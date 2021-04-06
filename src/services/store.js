@@ -17,7 +17,7 @@ export class Store {
    * @param {string} id
    * @returns {object}
    */
-  async getRecord(type, id) {
+  async getRecord(type, id, extra) {
     if (!type) throw Error('A type is required to access the store');
 
     if (!id) throw Error('An id is required to access a store record');
@@ -29,6 +29,10 @@ export class Store {
     }
 
     switch (type) {
+      case DATA_TYPE.DISTRIBUTION:
+        // Extra for this case is the groupID
+        await API.fetchDistribution(id, extra);
+        break;
       case DATA_TYPE.DISTRIBUTION_DATA:
         await API.fetchDistributionData(id);
         break;
@@ -56,7 +60,8 @@ export class Store {
   /**
    * Retrieves collection of data from the store or fetches the API
    * @param {string} type
-   * @param {boolean} [asObject] return result as object
+   * @param {boolean} [asObject] flag indicating to return result as object
+   * @param {object} [extra] extra information need for the query
    * @returns {object[]}
    */
   async getCollection(type, asObject = false, extra = null) {

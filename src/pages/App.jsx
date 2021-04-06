@@ -13,8 +13,7 @@ import Header from '../components/chrome/Header';
 // Pages
 import Admin from '../components/AdminPage';
 import Creator from '../components/CreatorPage';
-import Distribute from '../components/DistributePage';
-import Distribution from '../components/DistributionPage';
+import Distribution from './Distribution';
 import Distributor from '../components/DistributorPage';
 import Group from './Group';
 import Groups from './Groups';
@@ -78,7 +77,6 @@ function App() {
               <Route exact path="/" component={Home}></Route>
               <PrivateRoute path="/admin" authenticated={isAuthenticated} component={Admin} />
               <PrivateRoute path="/creator" authenticated={isAuthenticated} component={Creator} />
-              <PrivateRoute path="/distribute" authenticated={isAuthenticated} component={Distribute} />
               <PrivateRoute path="/distribution" authenticated={isAuthenticated} component={Distribution} />
               <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
               <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} exact />

@@ -1,10 +1,12 @@
 $avatar-size: 30px;
+$container-height: 45vw;
+$rank-entry-height: 35px;
 
 .line-distribution {
   &__container {
     display: grid;
-    width: 80vw;
-    height: 45vw;
+    width: 100%;
+    height: $container-height;
     margin: 0 auto;
 
     grid-template-columns: [start] 25vw [middle] auto [end];
@@ -46,7 +48,7 @@ $avatar-size: 30px;
 
 .rank-entry {
   width: 95%;
-  height: 35px;
+  height: $rank-entry-height;
   margin-bottom: get-unit(1);
   position: absolute;
 
@@ -112,7 +114,7 @@ $avatar-size: 30px;
     opacity: 1;
   }
 
-  $bar-entry-height: 35px + 4px;
+  $bar-entry-height: $rank-entry-height + 4px;
 
   &---1 {
     transform: translateY((10 - 1) * $bar-entry-height);
@@ -128,11 +130,11 @@ $avatar-size: 30px;
 
 .lyrics-entries-container {
   &:first-child {
-    transform: translateY(500px);
+    transform: translateY($container-height);
   }
 
   &:last-child {
-    padding-bottom: 500px;
+    padding-bottom: $container-height;
   }
 }
 

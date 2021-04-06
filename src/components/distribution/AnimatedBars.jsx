@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// Components
-import YoutubeVideo from './YoutubeVideo';
+// Utils
 import { bemClass, getBemModifier, getFrameFromTimestamp } from '../../utils';
+
+// Components
+import YoutubeVideo from '../YoutubeVideo';
 import Avatar from '../Avatar';
 
-function LineDistribution({ playerRef, members, bars, lyrics, framerate = 30 }) {
+function AnimatedBars({ playerRef, videoId, members, bars, lyrics, framerate = 30, className = '' }) {
   const [intervalId, setIntervalId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentRank, setCurrentRank] = useState(bars[0]);
@@ -41,9 +43,10 @@ function LineDistribution({ playerRef, members, bars, lyrics, framerate = 30 }) 
   }, [currentRank, currentTime, bars, framerate]);
 
   return (
-    <section className="line-distribution__container">
+    <section className={`line-distribution__container ${className}`}>
       <YoutubeVideo
         playerRef={playerRef}
+        videoId={videoId}
         width="320"
         height="180"
         className="line-distribution__video"
@@ -153,4 +156,4 @@ function Lyric({ lyric, number }) {
   );
 }
 
-export default LineDistribution;
+export default AnimatedBars;

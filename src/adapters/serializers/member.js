@@ -1,5 +1,4 @@
-import { parseColor } from '../../utils';
-import { serializeKey } from '../../utils/distributor';
+import { parseColor, serializeKey } from '../../utils';
 
 /**
  * Serialize a member parsing fields to be consumed by the application.

@@ -13,8 +13,7 @@ import store from '../services/store';
 // API
 import API from '../adapters';
 // Utilities
-import { serializeKey } from '../utils/distributor';
-import { bemClassConditionalModifier } from '../utils';
+import { bemClassConditionalModifier, serializeKey } from '../utils';
 import { DEFAULT_MEMBERS, DISTRIBUTION_NAME } from '../utils/constants';
 // Components
 import LoadSongModal from './modals/LoadSongModal';

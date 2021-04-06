@@ -1,6 +1,7 @@
 import store from '../services/store';
 import { DEFAULT_MEMBERS } from '../utils/constants';
-import { Line, Part, Section, serializeKey, Song } from '../utils/distributor';
+import { Line, Part, Section, Song } from '../utils/distributor';
+import { serializeKey } from '../utils';
 import { setDistributorGlobalState } from './useDistributorState';
 import { setGlobalState } from './useGlobalState';
 

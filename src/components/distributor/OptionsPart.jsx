@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { Button, InputNumber, Form, Input, Divider, Radio } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 // Engine and utilities
-import { ASSIGNEE, ASSIGNEE_LABEL } from '../../utils/distributor';
+import { ASSIGNEE, ASSIGNEE_LABEL } from '../../utils/enums';
 
 const ASSIGNEE_OPTIONS = Object.values(ASSIGNEE).map((i) => ({ value: i, label: ASSIGNEE_LABEL[i] }));
 

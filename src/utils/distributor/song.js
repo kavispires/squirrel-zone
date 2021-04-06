@@ -9,7 +9,7 @@ import {
   getRelationshipsDefault,
   nullifyDefault,
   serializeKey,
-} from './utilities';
+} from '../index';
 import moment from 'moment';
 
 /**

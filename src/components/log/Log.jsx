@@ -12,8 +12,8 @@ import {
   getDuplicatedData,
   batchDeserializeInstancesSameData,
   serializeKey,
-} from '../../utils/distributor';
-import { bemClassConditionalModifier } from '../../utils';
+  bemClassConditionalModifier,
+} from '../../utils';
 // Components
 import LogSection from './LogSection';
 

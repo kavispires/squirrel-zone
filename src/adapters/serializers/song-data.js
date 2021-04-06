@@ -1,4 +1,4 @@
-import { serializeKey } from '../../utils/distributor';
+import { serializeKey } from '../../utils';
 
 /**
  * Serialize a song-data parsing fields to be consumed by the application.

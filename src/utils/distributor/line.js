@@ -2,7 +2,7 @@
 import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
 import Part from './part';
-import { SKILL, SKILL_LEVEL, SKILL_TYPE } from './enum';
+import { SKILL, SKILL_LEVEL, SKILL_TYPE } from '../enums';
 import {
   generateUniqueId,
   getDefault,
@@ -12,7 +12,7 @@ import {
   getNullDefault,
   nullifyDefault,
   cleanupObject,
-} from './utilities';
+} from '../index';
 
 /**
  * Class representing a Line - a collection of parts that will compose a section/verse.

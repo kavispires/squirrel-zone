@@ -2,7 +2,7 @@
 import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
 import Line from './line';
-import { NULL, SECTION } from './enum';
+import { NULL, SECTION } from '../enums';
 import {
   generateUniqueId,
   getDefault,
@@ -12,7 +12,7 @@ import {
   getNullDefault,
   nullifyDefault,
   cleanupObject,
-} from './utilities';
+} from '../index';
 import { ROMAN_NUMBER } from '../constants';
 
 /**

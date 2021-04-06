@@ -1,4 +1,4 @@
-import { serializeKey } from '../../utils/distributor';
+import { serializeKey } from '../../utils';
 
 /**
  * Serialize a group parsing fields to be consumed by the application.

@@ -6,7 +6,7 @@ import { deserializeSong } from './song';
 import { deserializeSongData } from './song-data';
 // Utils
 import { DATA_TYPE } from '../../utils/constants';
-import { cleanupObject } from '../../utils/distributor';
+import { cleanupObject } from '../../utils';
 
 /**
  * Triage the data to the appropriate deserializer based on its type

@@ -1,4 +1,4 @@
-import { serializeKey } from '../../utils/distributor';
+import { serializeKey } from '../../utils';
 
 /**
  * Serialize a distribution data parsing fields to be consumed by the application.

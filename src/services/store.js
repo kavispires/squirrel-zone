@@ -1,6 +1,6 @@
 import API from '../adapters';
 import { DATA_TYPE, DATA_TYPE_COLLECTION } from '../utils/constants';
-import { serializeKey } from '../utils/distributor';
+import { serializeKey } from '../utils';
 
 export class Store {
   constructor() {

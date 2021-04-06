@@ -6,7 +6,8 @@ import { DatabaseFilled, MessageFilled, NotificationFilled } from '@ant-design/i
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
-import { Section, Line, Part, generateUniqueId } from '../../utils/distributor';
+import { Section, Line, Part } from '../../utils/distributor';
+import { generateUniqueId } from '../../utils';
 // Components
 import Log from '../log/Log';
 const { Paragraph } = Typography;

@@ -9,7 +9,7 @@ import useDistributorState from '../states/useDistributorState';
 // Store
 import store from '../services/store';
 // Utilities
-import { serializeKey } from '../utils/distributor';
+import { serializeKey } from '../utils';
 // Components
 import LoadingContainer from '../components/global/LoadingContainer';
 import GroupCard from '../components/group/GroupCard';

@@ -7,7 +7,7 @@ import { serializeSong } from './song';
 import { serializeSongData } from './song-data';
 // Utils
 import { DATA_TYPE } from '../../utils/constants';
-import { serializeKey } from '../../utils/distributor';
+import { serializeKey } from '../../utils';
 
 /**
  * Triage the data to the appropriate serializer based on its type

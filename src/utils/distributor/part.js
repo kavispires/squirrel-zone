@@ -1,7 +1,7 @@
 // Global State
 import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
 // Engine and utilities
-import { ASSIGNEE } from './enum';
+import { ASSIGNEE } from '../enums';
 import {
   cleanupObject,
   generateUniqueId,
@@ -10,7 +10,7 @@ import {
   getNullDefault,
   nullifyDefault,
   serializeKey,
-} from './utilities';
+} from '../index';
 
 /**
  * Class representing a Part - the smallest part of the lyrics, it composes a line.

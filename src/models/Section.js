@@ -1,8 +1,8 @@
 // Global State
-import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../states/useDistributorState';
+// Models
+import Line from './Line';
 // Engine and utilities
-import Line from './line';
-import { NULL, SECTION } from '../enums';
 import {
   generateUniqueId,
   getDefault,
@@ -12,8 +12,9 @@ import {
   getNullDefault,
   nullifyDefault,
   cleanupObject,
-} from '../index';
-import { ROMAN_NUMBER } from '../constants';
+} from '../utils';
+import { NULL, SECTION } from '../utils/enums';
+import { ROMAN_NUMBER } from '../utils/constants';
 
 /**
  * Class representing a Section - a collection of lines that will compose a song.

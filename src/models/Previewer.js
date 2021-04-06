@@ -1,9 +1,9 @@
-import { deepCopy, getFrameFromTimestamp, getTimestampFromFrame } from '..';
-import ChartEntry from './chartEntry';
-import DistributedPart from './distributedPart';
-import LineEntry from './lineEntry';
-import LyricEntry from './lyricEntry';
-import MemberEntry from './memberEntry';
+import { deepCopy, getFrameFromTimestamp, getTimestampFromFrame } from '../utils';
+import ChartEntry from './ChartEntry';
+import DistributedPart from './DistributedPart';
+import LineEntry from './LineEntry';
+import LyricEntry from './LyricEntry';
+import MemberEntry from './MemberEntry';
 
 const ALL_NONE_MEMBERS = ['ALL', 'NONE', 'member::ALL', 'member::NONE'];
 

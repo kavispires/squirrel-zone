@@ -1,6 +1,9 @@
+// Services
 import store from '../services/store';
+// Models
+import { Line, Part, Section, Song } from '../models';
+// Utils
 import { DEFAULT_MEMBERS } from '../utils/constants';
-import { Line, Part, Section, Song } from '../utils/distributor';
 import { serializeKey } from '../utils';
 import { setDistributorGlobalState } from './useDistributorState';
 import { setGlobalState } from './useGlobalState';

@@ -1,5 +1,5 @@
-import MemberEntry from './memberEntry';
-import Previewer from './previewer';
+import MemberEntry from './MemberEntry';
+import Previewer from './Previewer';
 
 const SECOND = 1000;
 

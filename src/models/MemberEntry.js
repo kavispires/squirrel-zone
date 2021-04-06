@@ -1,4 +1,4 @@
-class MemberEntry {
+export class MemberEntry {
   constructor({ key, color, name, age }) {
     this.key = key;
     this.color = color;

@@ -1,8 +1,9 @@
 // Global State
-import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../states/useDistributorState';
+// Models
+import Part from './Part';
 // Engine and utilities
-import Part from './part';
-import { SKILL, SKILL_LEVEL, SKILL_TYPE } from '../enums';
+import { SKILL, SKILL_LEVEL, SKILL_TYPE } from '../utils/enums';
 import {
   generateUniqueId,
   getDefault,
@@ -12,7 +13,7 @@ import {
   getNullDefault,
   nullifyDefault,
   cleanupObject,
-} from '../index';
+} from '../utils';
 
 /**
  * Class representing a Line - a collection of parts that will compose a section/verse.

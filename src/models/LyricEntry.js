@@ -1,4 +1,4 @@
-class LyricEntry {
+export class LyricEntry {
   constructor(entry) {
     this.startTime = entry.startTime;
     this.sectionId = entry.sectionId;

@@ -12,9 +12,9 @@ import {
 } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
-
+// Models
+import { Line } from '../../models';
 // Engine and utilities
-import { Line } from '../../utils/distributor';
 import { bemClass, getBemModifier } from '../../utils';
 // Components
 import LogLine from './LogLine';

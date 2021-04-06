@@ -4,8 +4,8 @@ import React, { useCallback, useState } from 'react';
 import { Button, Input } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
-// Engine and utilities
-import { Song } from '../../utils/distributor';
+// Models
+import { Song } from '../../models';
 // Components
 import LoadSongModal from '../modals/LoadSongModal';
 

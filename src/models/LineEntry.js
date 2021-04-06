@@ -1,4 +1,4 @@
-class LineEntry {
+export class LineEntry {
   constructor({ lineId, startTime }) {
     this.lineId = lineId;
     this.sectionId = null;

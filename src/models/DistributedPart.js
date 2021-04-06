@@ -1,4 +1,4 @@
-class DistributedPart {
+export class DistributedPart {
   constructor({
     id,
     text,

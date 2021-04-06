@@ -1,4 +1,4 @@
-class ChartEntry {
+export class ChartEntry {
   constructor({ key, position }) {
     this.key = key;
     this.value = 0;

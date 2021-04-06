@@ -1,7 +1,8 @@
 // Global State
-import { getDistributorGlobalState, setDistributorGlobalState } from '../../states/useDistributorState';
+import { getDistributorGlobalState, setDistributorGlobalState } from '../states/useDistributorState';
+// Models
+import Section from './Section';
 // Engine and utilities
-import Section from './section';
 import {
   generateUniqueId,
   getDefault,
@@ -9,7 +10,7 @@ import {
   getRelationshipsDefault,
   nullifyDefault,
   serializeKey,
-} from '../index';
+} from '../utils';
 import moment from 'moment';
 
 /**

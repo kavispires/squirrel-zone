@@ -12,8 +12,9 @@ import {
 // State
 import useDistributorState from '../../states/useDistributorState';
 import useGlobalState from '../../states/useGlobalState';
+// Models
+import { Part } from '../../models';
 // Engine and utilities
-import { Part } from '../../utils/distributor';
 import { bemClass, getBemModifier } from '../../utils';
 // Components
 import LogPart from './LogPart';

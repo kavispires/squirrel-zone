@@ -5,8 +5,9 @@ import { Button, Divider, Input, Typography } from 'antd';
 import { DatabaseFilled, MessageFilled, NotificationFilled } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
+// Models
+import { Section, Line, Part } from '../../models';
 // Engine and utilities
-import { Section, Line, Part } from '../../utils/distributor';
 import { generateUniqueId } from '../../utils';
 // Components
 import Log from '../log/Log';

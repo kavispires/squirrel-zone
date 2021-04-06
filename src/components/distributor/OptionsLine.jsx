@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import { Button, InputNumber, Form, Input, Switch, Select, Divider } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 // Engine and utilities
-import { SKILL, SKILL_LEVEL, SKILL_TYPE } from '../../utils/distributor';
+import { SKILL, SKILL_LEVEL, SKILL_TYPE } from '../../utils/enums';
 
 function OptionsLine({ line, onValuesChange }) {
   const [skill, setSkill] = useState(line?.skill ?? SKILL.VOCAL);

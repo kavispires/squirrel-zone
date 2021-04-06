@@ -7,7 +7,7 @@ import { Layout } from 'antd';
 import useGlobalState from '../states/useGlobalState';
 import useDistributorState from '../states/useDistributorState';
 // Utilities
-import Previewer from '../utils/distribution/previewer';
+import { Previewer } from '../models';
 import { loadActiveMembers, loadSongState } from '../states/functions';
 // Components
 import LineDistribution from './distributor/LineDistribution';

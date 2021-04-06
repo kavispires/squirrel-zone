@@ -12,8 +12,11 @@
 @import './global/reset';
 @import './global/app';
 
+// Chrome
+@import '../components/chrome/header';
+@import '../components/chrome/footer';
+
 // Global components
-@import '../components/global/header';
 @import '../components/global/loading';
 @import '../components/global/loading-container';
 

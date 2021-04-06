@@ -6,6 +6,7 @@ import { Image, Layout } from 'antd';
 import { IMAGE_URL } from '../utils/constants';
 // Images
 import logo from '../images/logo-circle.svg';
+import Footer from '../components/chrome/Footer';
 
 function Home() {
   return (
@@ -22,6 +23,7 @@ function Home() {
           <h3 className="home__tagline">On the Microphone</h3>
         </div>
       </main>
+      <Footer />
     </Layout.Content>
   );
 }

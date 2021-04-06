@@ -156,6 +156,14 @@ body {
   border-bottom: 3px solid white;
 }
 
+.footer {
+  background: none;
+  height: 64px;
+  color: white;
+  text-align: center;
+  font-size: 75%;
+}
+
 .loading {
   display: flex;
   width: 100%;
@@ -301,6 +309,9 @@ body {
 .home__tagline {
   color: #ffffff;
   text-transform: uppercase;
+}
+.container .home {
+  height: calc(100vh - 152px);
 }
 
 @keyframes rotate {

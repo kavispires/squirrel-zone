@@ -25,6 +25,9 @@ function Header({ isAuthenticated }) {
               <NavLink to="/groups">Groups</NavLink>
             </li>
             <li>
+              <NavLink to="/the-search">The Search</NavLink>
+            </li>
+            <li>
               <NavLink to="/creator">Creator</NavLink>
             </li>
             <li>

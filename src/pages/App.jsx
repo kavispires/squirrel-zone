@@ -4,11 +4,11 @@ import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 // Design Resources
 import { Layout } from 'antd';
 
-// Components
-import Header from '../components/global/Header';
-
 // Firebase
 import { auth } from '../services/firebase';
+
+// Chrome
+import Header from '../components/chrome/Header';
 
 // Pages
 import Admin from '../components/AdminPage';

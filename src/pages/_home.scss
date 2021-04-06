@@ -29,6 +29,10 @@
     color: #ffffff;
     text-transform: uppercase;
   }
+
+  .container & {
+    height: calc(100vh - 152px);
+  }
 }
 
 @keyframes rotate {

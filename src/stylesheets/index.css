@@ -1684,3 +1684,16 @@ body {
   margin-left: 8px;
   width: 36px;
 }
+
+.loading-checklist {
+  max-width: 500px;
+  margin: 12px auto;
+}
+.loading-checklist__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.loading-checklist__list {
+  background: rgba(255, 255, 255, 0.3);
+}

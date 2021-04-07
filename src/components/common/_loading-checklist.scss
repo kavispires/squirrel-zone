@@ -1,0 +1,14 @@
+.loading-checklist {
+  max-width: 500px;
+  margin: get-unit(3 auto);
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__list {
+    background: rgba(white, 0.3);
+  }
+}

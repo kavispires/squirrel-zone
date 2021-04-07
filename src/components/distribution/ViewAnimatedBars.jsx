@@ -69,7 +69,7 @@ ViewAnimatedBars.propTypes = {
   className: PropTypes.string,
 };
 
-ViewAnimatedBars.defaultValues = {
+ViewAnimatedBars.defaultProps = {
   videoId: undefined,
   framerate: 30,
   className: '',

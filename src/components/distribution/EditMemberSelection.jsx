@@ -37,7 +37,7 @@ EditMemberSelection.propTypes = {
   toggleMember: PropTypes.func,
 };
 
-EditMemberSelection.defaultTypes = {
+EditMemberSelection.defaultProps = {
   count: 0,
   progress: 0,
 };

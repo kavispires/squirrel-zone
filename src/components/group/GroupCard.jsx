@@ -61,7 +61,7 @@ GroupCard.propTypes = {
   goToDistribution: PropTypes.func,
 };
 
-GroupCard.defaultTypes = {
+GroupCard.defaultProps = {
   tab: 'info',
 };
 

@@ -1646,35 +1646,34 @@ body {
   margin-bottom: 4px;
 }
 .member__separator {
-  margin: 0 4px;
+  margin: 0 8px 0 4px;
 }
-
-.member-info {
+.member__info {
   flex-grow: 1;
   display: flex;
   overflow-y: hidden;
 }
-
-.member-name {
+.member__name {
   margin: 0 4px;
 }
-
-.member-progress {
+.member__position {
+  text-transform: uppercase;
+  font-size: 80%;
+}
+.member__progress {
   width: 50%;
   background: #d6d7d8;
   height: 10px;
   border-radius: 4px;
   display: flex;
 }
-
-.member-progress-bar {
+.member__progress-bar {
   background: #959899;
   height: 10px;
   border-radius: 4px;
   transition: width 500ms;
 }
-
-.member-progress-number {
+.member__progress-number {
   margin-left: 8px;
   width: 36px;
 }

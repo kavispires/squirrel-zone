@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Utils
-import { bemClass, getBemModifier, getFrameFromTimestamp } from '../../utils';
-
+import { getFrameFromTimestamp } from '../../utils';
 // Components
 import YoutubeVideo from '../YoutubeVideo';
-import Avatar from '../Avatar';
 import RankingBars from './RankingBars';
 import LyricsScroller from './LyricsScroller';
 

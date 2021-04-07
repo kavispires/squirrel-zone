@@ -3,16 +3,24 @@ import { useHistory } from 'react-router-dom';
 
 // Design Resources
 import { Layout, Tabs, Typography } from 'antd';
-import { EyeFilled, HighlightFilled, ProfileFilled } from '@ant-design/icons';
+import { EyeFilled, FileAddOutlined, HighlightFilled, ProfileFilled } from '@ant-design/icons';
 // State
 import useGlobalState from '../states/useGlobalState';
 // Utilities
-import { loadActiveDistribution, loadActiveMembers, loadActiveSong } from '../states/functions';
+import {
+  loadActiveDistribution,
+  loadActiveGroupSongs,
+  loadActiveMembers,
+  loadActiveSong,
+  setupNewActiveDistribution,
+} from '../states/functions';
 import { NEW_INSTANCE_ID } from '../utils/constants';
 // Components
 import LoadingContainer from '../components/global/LoadingContainer';
-
 import LineDistributionView from '../components/distribution/LineDistributionView';
+import LineDistributionLyrics from '../components/distribution/LineDistributionLyrics';
+import LineDistributionEdit from '../components/distribution/LineDistributionEdit';
+import LineDistributionNew from '../components/distribution/LineDistributionNew';
 
 function Distribution() {
   const history = useHistory();
@@ -20,6 +28,7 @@ function Distribution() {
   const [activeMembers] = useGlobalState('activeMembers');
   const [activeDistribution] = useGlobalState('activeDistribution');
   const [activeSong] = useGlobalState('activeSong');
+  const [activeGroupSongs] = useGlobalState('activeGroupSongs');
 
   const [, , distributionId, mode] = (history?.location?.pathname ?? '').split('/');
 
@@ -34,13 +43,26 @@ function Distribution() {
     async function loadContent() {
       await loadActiveMembers(activeGroup);
 
+      if (mode === 'new') {
+        return await loadActiveGroupSongs(activeGroup.id);
+      }
+
       if (distributionId && distributionId !== NEW_INSTANCE_ID) {
         const { songId } = await loadActiveDistribution(activeGroup.id, distributionId);
-        await loadActiveSong(songId);
+        return await loadActiveSong(songId);
+      }
+
+      if (distributionId === NEW_INSTANCE_ID && activeSong) {
+        return await setupNewActiveDistribution({
+          groupId: activeGroup.id,
+          songId: activeSong.id,
+          songTitle: activeSong.title,
+        });
       }
     }
+
     loadContent();
-  }, [history, distributionId, activeGroup]);
+  }, [mode, history, distributionId, activeGroup, activeSong]);
 
   const onSwitchMode = useCallback(
     (newMode) => {
@@ -51,10 +73,14 @@ function Distribution() {
     [mode, history, distributionId]
   );
 
+  const onLoadNewSong = useCallback(() => {
+    history.push(`/distribution/${NEW_INSTANCE_ID}/edit`);
+  }, [history]);
+
   const playerRef = useRef();
 
   return (
-    <LoadingContainer forceLoading={!activeMembers || !activeDistribution || !activeSong}>
+    <LoadingContainer forceLoading={!activeMembers}>
       <Layout.Content className="container">
         <main className="main distribution">
           <Typography.Title>
@@ -71,7 +97,9 @@ function Distribution() {
               className="distribution__tab"
               disabled={!activeDistribution?.id}
             >
-              {mode === 'view' && <LineDistributionView playerRef={playerRef} />}
+              <LoadingContainer forceLoading={!activeMembers || !activeDistribution || !activeSong}>
+                {mode === 'view' && <LineDistributionView playerRef={playerRef} />}
+              </LoadingContainer>
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={TabIcon('lyrics')}
@@ -79,21 +107,29 @@ function Distribution() {
               className="distribution__tab"
               disabled={!activeDistribution?.id}
             >
-              {mode === 'lyrics' && (
-                <div>
-                  <p>Here comes the lyrics things</p>
-                  {console.log('lyrics Panel is rendered')}
-                </div>
-              )}
+              <LoadingContainer forceLoading={!activeMembers || !activeDistribution || !activeSong}>
+                {mode === 'lyrics' && <LineDistributionLyrics />}
+              </LoadingContainer>
             </Tabs.TabPane>
-            <Tabs.TabPane tab={TabIcon('edit')} key="edit" className="distribution__tab">
-              {mode === 'edit' && (
-                <div>
-                  <p>Here comes the edit things</p>
-                  {console.log('edit Panel is rendered')}
-                </div>
-              )}
+            <Tabs.TabPane
+              tab={TabIcon('edit')}
+              key="edit"
+              className="distribution__tab"
+              disabled={!activeDistribution}
+            >
+              <LoadingContainer forceLoading={!activeMembers || !activeDistribution || !activeSong}>
+                {mode === 'edit' && <LineDistributionEdit playerRef={playerRef} />}
+              </LoadingContainer>
             </Tabs.TabPane>
+            {mode === 'new' && (
+              <Tabs.TabPane tab={TabIcon('new')} key="new" className="distribution__tab">
+                {mode === 'new' && (
+                  <LoadingContainer forceLoading={!activeMembers || !activeGroupSongs}>
+                    <LineDistributionNew activeGroupSongs={activeGroupSongs} onLoadNewSong={onLoadNewSong} />
+                  </LoadingContainer>
+                )}
+              </Tabs.TabPane>
+            )}
           </Tabs>
         </main>
       </Layout.Content>
@@ -116,6 +152,15 @@ function TabIcon(mode) {
       <span className="distribution__tab-icon">
         <ProfileFilled />
         <span>Lyrics</span>
+      </span>
+    );
+  }
+
+  if (mode === 'new') {
+    return (
+      <span className="distribution__tab-icon">
+        <FileAddOutlined />
+        <span>New</span>
       </span>
     );
   }

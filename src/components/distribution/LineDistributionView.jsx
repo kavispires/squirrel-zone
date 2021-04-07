@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 // State
 import useGlobalState from '../../states/useGlobalState';

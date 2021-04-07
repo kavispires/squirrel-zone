@@ -1114,6 +1114,10 @@ body {
   display: block;
 }
 
+.line-distribution-new {
+  text-align: center;
+}
+
 .button-container {
   display: flex;
   margin: 8px 0;

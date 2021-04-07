@@ -85,7 +85,7 @@ export const loadActiveDistribution = async (groupId, distributionId) => {
 
   setGlobalState('activeDistribution', distributionResponse);
   setGlobalState('activeDistributionData', distributionDataResponse);
-
+  console.log({ distributionResponse, distributionDataResponse });
   return distributionResponse;
 };
 
@@ -97,4 +97,31 @@ export const loadActiveSong = async (songId) => {
   setGlobalState('activeSongData', songDataResponse);
 
   return songResponse;
+};
+
+export const resetStateForDistribution = async () => {
+  setGlobalState('activeMembers', null);
+  setGlobalState('activeGroupSongs', {});
+  setGlobalState('activeDistribution', null);
+  setGlobalState('activeDistributionData', null);
+  setGlobalState('activeSong', null);
+  setGlobalState('activeSongData', null);
+};
+
+export const setupNewActiveDistribution = async ({ groupId, songId, songTitle }) => {
+  setGlobalState('activeDistribution', {
+    id: null,
+    type: 'distribution',
+    name: '[UNKNOWN]',
+    songId,
+    songTitle,
+    groupId,
+    stats: {},
+  });
+  setGlobalState('activeDistributionData', {
+    id: null,
+    type: 'distribution-data',
+    groupId,
+    assignedParts: {},
+  });
 };

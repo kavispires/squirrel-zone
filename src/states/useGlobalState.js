@@ -16,6 +16,7 @@ const initialState = {
   activeDistribution: null,
   activeDistributionData: null,
 
+  // TODO: Probably can be removed
   loadedLineDistribution: {},
   lineDistribution: {},
   stats: {},

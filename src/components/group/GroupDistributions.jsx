@@ -77,7 +77,7 @@ function GroupDistributions({ group, members, goToDistribution }) {
         <Button
           type="default"
           icon={<FileAddOutlined />}
-          onClick={() => goToDistribution(NEW_INSTANCE_ID, 'edit')}
+          onClick={() => goToDistribution(NEW_INSTANCE_ID, 'new')}
         >
           Create a Distribution for this group
         </Button>

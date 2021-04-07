@@ -12,6 +12,7 @@ import { serializeKey } from '../utils';
 // Components
 import LoadingContainer from '../components/global/LoadingContainer';
 import GroupCard from '../components/group/GroupCard';
+import { resetStateForDistribution } from '../states/functions';
 
 function Group() {
   const history = useHistory();
@@ -62,6 +63,7 @@ function Group() {
 
   const goToDistribution = useCallback(
     (id, mode = 'view') => {
+      resetStateForDistribution();
       // Modes can be `view`, `edit`, `lyrics`, `new` (in case of new a songId is sent instead of a distributionID)
       history.push(`/distribution/${id}/${mode}`);
     },

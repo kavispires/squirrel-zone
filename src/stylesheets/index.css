@@ -1057,18 +1057,18 @@ body {
   transform: translateY(351px);
 }
 
-.lyrics-entries-container:first-child {
+.lyrics-scroller__entries-container:first-child {
   transform: translateY(45vw);
 }
 
-.lyrics-entries-container:last-child {
+.lyrics-scroller__entries-container:last-child {
   padding-bottom: 45vw;
 }
 
-.lyrics-entries-li {
+.lyrics-scroller__li {
   transition: opacity 1s;
 }
-.lyrics-entries-li--padded {
+.lyrics-scroller__li--padded {
   opacity: 0.1;
 }
 

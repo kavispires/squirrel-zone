@@ -128,21 +128,23 @@ $rank-entry-height: 35px;
   }
 }
 
-.lyrics-entries-container {
-  &:first-child {
-    transform: translateY($container-height);
+.lyrics-scroller {
+  &__entries-container {
+    &:first-child {
+      transform: translateY($container-height);
+    }
+
+    &:last-child {
+      padding-bottom: $container-height;
+    }
   }
 
-  &:last-child {
-    padding-bottom: $container-height;
-  }
-}
+  &__li {
+    transition: opacity 1s;
 
-.lyrics-entries-li {
-  transition: opacity 1s;
-
-  &--padded {
-    opacity: 0.1;
+    &--padded {
+      opacity: 0.1;
+    }
   }
 }
 

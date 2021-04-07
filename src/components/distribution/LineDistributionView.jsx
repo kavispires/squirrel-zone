@@ -45,8 +45,6 @@ function LineDistributionView({ playerRef }) {
     }
   }, [activeSong, activeDistribution, activeSongData, activeDistributionData]);
 
-  console.log({ previewMembers, previewBars, previewLyrics });
-
   if (!activeSong || !previewMembers.length || !previewBars.length || !previewLyrics.length) {
     return <Loading />;
   }

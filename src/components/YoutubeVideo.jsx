@@ -1,16 +1,17 @@
 import React from 'react';
 import YouTube from 'react-youtube';
+import PropTypes from 'prop-types';
 
 // State
 import useDistributorState from '../states/useDistributorState';
 
 function YoutubeVideo({
-  playerRef,
-  height = '180',
-  width = '320',
   className = '',
+  height = '180',
   onStateChange = () => {},
+  playerRef,
   videoId,
+  width = '320',
 }) {
   const [videoIdFromState] = useDistributorState('videoId');
   const [, setIsRecording] = useDistributorState('isRecording');
@@ -19,8 +20,8 @@ function YoutubeVideo({
   const youtubeId = videoId ?? videoIdFromState;
 
   const videoOptions = {
-    height: height ?? '180',
-    width: width ?? '320',
+    height,
+    width,
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
@@ -71,5 +72,21 @@ function YoutubeVideo({
     />
   );
 }
+
+YoutubeVideo.propTypes = {
+  className: PropTypes.string,
+  height: PropTypes.string,
+  onStateChange: PropTypes.func,
+  playerRef: PropTypes.any,
+  videoId: PropTypes.string,
+  width: PropTypes.string,
+};
+
+YoutubeVideo.defaultProps = {
+  className: '',
+  height: '180',
+  onStateChange: () => {},
+  width: '320',
+};
 
 export default YoutubeVideo;

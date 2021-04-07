@@ -117,7 +117,7 @@ function LogPartCompact({ part, seekAndPlay, onCheckboxChange }) {
   );
 }
 
-function LogPartDistribute({ part, assignMembers }) {
+function LogPartDistribute({ part, members, assignMembers, assignedParts }) {
   return (
     <li className="log-part assignee-background--none">
       <Button
@@ -127,7 +127,7 @@ function LogPartDistribute({ part, assignMembers }) {
         className="log-part__distribute"
       >
         {part.text}
-        <LogAssignees partId={part.id} />
+        <LogAssignees partId={part.id} assignedParts={assignedParts} members={members} />
       </Button>
     </li>
   );

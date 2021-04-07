@@ -14,34 +14,38 @@ export const loadSongState = async (songId) => {
   const song = await store.getRecord('song', songId);
   const songData = await store.getRecord('song-data', songId);
 
+  return loadSongStateOffline(song, songData);
+};
+
+export const loadSongStateOffline = async (song, songData) => {
+  setDistributorGlobalState('isFullyLoaded', false);
+
   const newSong = new Song({ ...song, sectionsIds: songData.sectionsIds });
 
-  // Created instances looping through included data
-  const newSections = {};
-  const newLines = {};
-  const newParts = {};
-  songData.included.forEach((entry) => {
-    if (entry.type === 'section') {
-      const newInstance = new Section(entry);
-      return (newSections[newInstance.id] = newInstance);
-    }
-    if (entry.type === 'line') {
-      const newInstance = new Line(entry);
-      return (newLines[newInstance.id] = newInstance);
-    }
-    if (entry.type === 'part') {
-      const newInstance = new Part(entry);
-      return (newParts[newInstance.id] = newInstance);
-    }
-  });
+  const newSections = Object.values(songData.included.sections).reduce((acc, section) => {
+    acc[section.id] = new Section(section);
+    return acc;
+  }, {});
+
+  const newLines = Object.values(songData.included.lines).reduce((acc, line) => {
+    acc[line.id] = new Line(line);
+    return acc;
+  }, {});
+
+  const newParts = Object.values(songData.included.parts).reduce((acc, part) => {
+    acc[part.id] = new Part(part);
+    return acc;
+  }, {});
 
   setDistributorGlobalState('parts', newParts);
   setDistributorGlobalState('lines', newLines);
   setDistributorGlobalState('sections', newSections);
   setDistributorGlobalState('song', newSong);
+
   setDistributorGlobalState('videoId', newSong.videoId);
   setDistributorGlobalState('step', newSong.isComplete ? '3' : '2');
   setDistributorGlobalState('isFullyLoaded', true);
+  return true;
 };
 
 export const loadActiveMembers = async (group, includeDefault = false) => {
@@ -85,7 +89,6 @@ export const loadActiveDistribution = async (groupId, distributionId) => {
 
   setGlobalState('activeDistribution', distributionResponse);
   setGlobalState('activeDistributionData', distributionDataResponse);
-  console.log({ distributionResponse, distributionDataResponse });
   return distributionResponse;
 };
 
@@ -112,7 +115,7 @@ export const setupNewActiveDistribution = async ({ groupId, songId, songTitle })
   setGlobalState('activeDistribution', {
     id: null,
     type: 'distribution',
-    name: '[UNKNOWN]',
+    name: null,
     songId,
     songTitle,
     groupId,

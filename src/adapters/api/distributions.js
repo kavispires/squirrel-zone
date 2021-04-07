@@ -86,6 +86,8 @@ export const saveDistribution = async (data) => {
   const typeName = DATA_TYPE.DISTRIBUTION;
   const collectionName = DATA_TYPE_COLLECTION[typeName];
 
+  let response;
+
   try {
     // Create new key if it is a new instance
     const key = data.id || db.ref().child(collectionName).push().key;
@@ -109,10 +111,14 @@ export const saveDistribution = async (data) => {
     store.setRecord(serialize(deserializedData.distribution));
     store.setRecord(serialize(deserializedData.data));
 
+    response = store.getRecord('distribution', key, groupId);
+
     successNotification('Distribution saved successfully', `id: ${key}`);
   } catch (error) {
     errorNotification(`Failed to save ${typeName}`, error);
   } finally {
     setLoading({ type: DATA_TYPE.DISTRIBUTION, payload: false });
   }
+
+  return response;
 };

@@ -257,8 +257,6 @@ export class Previewer {
       lyricsEntries[key] = entry.data(this._members, this._framerate);
     });
 
-    // console.log({ lyricsEntries });
-
     this._lyrics = Object.values(lyricsEntries);
     return this._lyrics;
   }

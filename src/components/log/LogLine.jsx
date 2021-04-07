@@ -11,7 +11,6 @@ import {
 } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
-import useGlobalState from '../../states/useGlobalState';
 // Models
 import { Part } from '../../models';
 // Engine and utilities
@@ -116,11 +115,10 @@ function LogLineCompact({ line, onCheckboxChange, seekAndPlay }) {
   );
 }
 
-function LogLineDistribute({ line, assignMembers, onLineSelection }) {
+function LogLineDistribute({ line, members, assignMembers, assignedParts, onLineSelection }) {
   const [parts] = useDistributorState('parts');
-  const [lineDistribution] = useGlobalState('lineDistribution');
 
-  const isComplete = line?.partsIds?.every((partId) => Boolean(lineDistribution[partId]));
+  const isComplete = line?.partsIds?.every((partId) => Boolean(assignedParts[partId]));
 
   return (
     <li className={bemClass('log-line', 'compact')}>
@@ -136,7 +134,15 @@ function LogLineDistribute({ line, assignMembers, onLineSelection }) {
         )}
         {line?.partsIds?.map((partId) => {
           const part = parts[partId];
-          return <LogPart.Distribute key={part.key} part={part} assignMembers={assignMembers} />;
+          return (
+            <LogPart.Distribute
+              key={part.key}
+              part={part}
+              members={members}
+              assignMembers={assignMembers}
+              assignedParts={assignedParts}
+            />
+          );
         })}
       </ul>
     </li>

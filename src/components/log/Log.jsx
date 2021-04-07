@@ -23,6 +23,8 @@ function Log({
   defaultCompactSetting = true,
   locked = false,
   assignMembers = () => {},
+  members = {},
+  assignedParts = {},
 }) {
   const [song] = useDistributorState('song');
   const [sections] = useDistributorState('sections');
@@ -221,7 +223,9 @@ function Log({
                 key={section.key}
                 section={section}
                 seekAndPlay={seekAndPlay}
+                members={members}
                 assignMembers={assignMembers}
+                assignedParts={assignedParts}
                 onLineSelection={onLineSelection}
               />
             );

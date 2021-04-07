@@ -21,13 +21,16 @@ import LineDistributionView from '../components/distribution/LineDistributionVie
 import LineDistributionLyrics from '../components/distribution/LineDistributionLyrics';
 import LineDistributionEdit from '../components/distribution/LineDistributionEdit';
 import LineDistributionNew from '../components/distribution/LineDistributionNew';
+import LoadingChecklist from '../components/common/LoadingChecklist';
 
 function Distribution() {
   const history = useHistory();
   const [activeGroup] = useGlobalState('activeGroup');
   const [activeMembers] = useGlobalState('activeMembers');
   const [activeDistribution] = useGlobalState('activeDistribution');
+  const [activeDistributionData] = useGlobalState('activeDistributionData');
   const [activeSong] = useGlobalState('activeSong');
+  const [activeSongData] = useGlobalState('activeSongData');
   const [activeGroupSongs] = useGlobalState('activeGroupSongs');
 
   const [, , distributionId, mode] = (history?.location?.pathname ?? '').split('/');
@@ -79,6 +82,19 @@ function Distribution() {
 
   const playerRef = useRef();
 
+  const viewRequirementsList = [
+    { value: activeMembers, text: 'Recruiting members...' },
+    { value: activeSong, text: 'Loading song...' },
+    { value: activeSongData, text: 'Loading beats and kicks...' },
+    { value: activeDistribution, text: 'Gathering distribution...' },
+    { value: activeDistributionData?.assignedParts, text: 'Splitting distribution...' },
+  ];
+
+  const newRequirementsList = [
+    { value: activeMembers, text: 'Recruiting members...' },
+    { value: activeGroupSongs, text: 'Checking what they already sang...' },
+  ];
+
   return (
     <LoadingContainer forceLoading={!activeMembers}>
       <Layout.Content className="container">
@@ -97,9 +113,11 @@ function Distribution() {
               className="distribution__tab"
               disabled={!activeDistribution?.id}
             >
-              <LoadingContainer forceLoading={!activeMembers || !activeDistribution || !activeSong}>
-                {mode === 'view' && <LineDistributionView playerRef={playerRef} />}
-              </LoadingContainer>
+              {mode === 'view' && (
+                <LoadingChecklist list={viewRequirementsList}>
+                  <LineDistributionView playerRef={playerRef} />
+                </LoadingChecklist>
+              )}
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={TabIcon('lyrics')}
@@ -107,9 +125,9 @@ function Distribution() {
               className="distribution__tab"
               disabled={!activeDistribution?.id}
             >
-              <LoadingContainer forceLoading={!activeMembers || !activeDistribution || !activeSong}>
+              <LoadingChecklist list={viewRequirementsList}>
                 {mode === 'lyrics' && <LineDistributionLyrics />}
-              </LoadingContainer>
+              </LoadingChecklist>
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={TabIcon('edit')}
@@ -117,17 +135,15 @@ function Distribution() {
               className="distribution__tab"
               disabled={!activeDistribution}
             >
-              <LoadingContainer forceLoading={!activeMembers || !activeDistribution || !activeSong}>
+              <LoadingChecklist list={viewRequirementsList}>
                 {mode === 'edit' && <LineDistributionEdit playerRef={playerRef} />}
-              </LoadingContainer>
+              </LoadingChecklist>
             </Tabs.TabPane>
             {mode === 'new' && (
               <Tabs.TabPane tab={TabIcon('new')} key="new" className="distribution__tab">
-                {mode === 'new' && (
-                  <LoadingContainer forceLoading={!activeMembers || !activeGroupSongs}>
-                    <LineDistributionNew activeGroupSongs={activeGroupSongs} onLoadNewSong={onLoadNewSong} />
-                  </LoadingContainer>
-                )}
+                <LoadingChecklist list={newRequirementsList}>
+                  <LineDistributionNew activeGroupSongs={activeGroupSongs} onLoadNewSong={onLoadNewSong} />
+                </LoadingChecklist>
               </Tabs.TabPane>
             )}
           </Tabs>

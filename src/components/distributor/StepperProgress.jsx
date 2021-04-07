@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Design Resources
 import { Steps } from 'antd';
@@ -7,7 +8,7 @@ const { Step } = Steps;
 
 function StepperProgress({ currentStep }) {
   return (
-    <Steps progressDot current={Number(currentStep)} className="stepper-progress">
+    <Steps current={Number(currentStep)} className="stepper-progress" size="small">
       <Step title="Load Song" />
       <Step title="Lyrics & Sections" />
       <Step title="Time & Sync" />
@@ -17,5 +18,9 @@ function StepperProgress({ currentStep }) {
     </Steps>
   );
 }
+
+StepperProgress.propTypes = {
+  currentStep: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 
 export default StepperProgress;

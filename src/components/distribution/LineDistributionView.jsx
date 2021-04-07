@@ -6,7 +6,7 @@ import usePreviewState from '../../states/usePreviewState';
 // Utilities
 import { Previewer } from '../../models';
 // Components
-import AnimatedBars from './AnimatedBars';
+import ViewAnimatedBars from './ViewAnimatedBars';
 import Loading from '../global/Loading';
 
 function LineDistributionView({ playerRef }) {
@@ -50,7 +50,7 @@ function LineDistributionView({ playerRef }) {
   }
 
   return (
-    <AnimatedBars
+    <ViewAnimatedBars
       playerRef={playerRef}
       videoId={activeSong.videoId}
       members={previewMembers}

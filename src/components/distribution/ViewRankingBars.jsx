@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import RankEntry from './RankEntry';
+import RankEntry from './ViewRankEntry';
 
-function RankingBars({ members, currentRank }) {
+function ViewRankingBars({ members, currentRank }) {
   return (
     <ul className="line-distribution__live-ranking">
       {members?.map((member) => (
@@ -14,9 +14,9 @@ function RankingBars({ members, currentRank }) {
   );
 }
 
-RankingBars.propTypes = {
+ViewRankingBars.propTypes = {
   members: PropTypes.array,
   currentRank: PropTypes.object,
 };
 
-export default RankingBars;
+export default ViewRankingBars;

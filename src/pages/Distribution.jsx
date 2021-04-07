@@ -125,9 +125,11 @@ function Distribution() {
               className="distribution__tab"
               disabled={!activeDistribution?.id}
             >
-              <LoadingChecklist list={viewRequirementsList}>
-                {mode === 'lyrics' && <LineDistributionLyrics />}
-              </LoadingChecklist>
+              {mode === 'lyrics' && (
+                <LoadingChecklist list={viewRequirementsList}>
+                  <LineDistributionLyrics />
+                </LoadingChecklist>
+              )}
             </Tabs.TabPane>
             <Tabs.TabPane
               tab={TabIcon('edit')}
@@ -135,9 +137,11 @@ function Distribution() {
               className="distribution__tab"
               disabled={!activeDistribution}
             >
-              <LoadingChecklist list={viewRequirementsList}>
-                {mode === 'edit' && <LineDistributionEdit playerRef={playerRef} />}
-              </LoadingChecklist>
+              {mode === 'edit' && (
+                <LoadingChecklist list={viewRequirementsList}>
+                  <LineDistributionEdit playerRef={playerRef} />
+                </LoadingChecklist>
+              )}
             </Tabs.TabPane>
             {mode === 'new' && (
               <Tabs.TabPane tab={TabIcon('new')} key="new" className="distribution__tab">

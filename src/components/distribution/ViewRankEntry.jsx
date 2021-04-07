@@ -7,7 +7,7 @@ import { bemClass, getBemModifier } from '../../utils';
 // Components
 import Avatar from '../Avatar';
 
-function RankEntry({ member, rank }) {
+function ViewRankEntry({ member, rank }) {
   const onClass = getBemModifier(rank.on, 'on');
 
   return (
@@ -25,9 +25,9 @@ function RankEntry({ member, rank }) {
   );
 }
 
-RankEntry.propTypes = {
+ViewRankEntry.propTypes = {
   member: PropTypes.object,
   rank: PropTypes.object,
 };
 
-export default RankEntry;
+export default ViewRankEntry;

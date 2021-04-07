@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { getFrameFromTimestamp } from '../../utils';
 // Components
 import YoutubeVideo from '../YoutubeVideo';
-import RankingBars from './RankingBars';
-import LyricsScroller from './LyricsScroller';
+import ViewRankingBars from './ViewRankingBars';
+import ViewLyricsScroller from './ViewLyricsScroller';
 
-function AnimatedBars({ playerRef, videoId, members, bars, lyrics, framerate = 30, className = '' }) {
+function ViewAnimatedBars({ playerRef, videoId, members, bars, lyrics, framerate = 30, className = '' }) {
   const [intervalId, setIntervalId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentRank, setCurrentRank] = useState(bars[0]);
@@ -53,13 +53,13 @@ function AnimatedBars({ playerRef, videoId, members, bars, lyrics, framerate = 3
         className="line-distribution__video"
         onStateChange={onStateChange}
       />
-      <RankingBars members={members} currentRank={currentRank} />
-      <LyricsScroller currentTime={currentTime} lyrics={lyrics} />
+      <ViewRankingBars members={members} currentRank={currentRank} />
+      <ViewLyricsScroller currentTime={currentTime} lyrics={lyrics} />
     </section>
   );
 }
 
-AnimatedBars.propTypes = {
+ViewAnimatedBars.propTypes = {
   playerRef: PropTypes.any,
   videoId: PropTypes.string,
   members: PropTypes.array,
@@ -69,10 +69,10 @@ AnimatedBars.propTypes = {
   className: PropTypes.string,
 };
 
-AnimatedBars.defaultValues = {
+ViewAnimatedBars.defaultValues = {
   videoId: undefined,
   framerate: 30,
   className: '',
 };
 
-export default AnimatedBars;
+export default ViewAnimatedBars;

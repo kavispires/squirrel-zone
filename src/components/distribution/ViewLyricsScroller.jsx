@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { bemClass, getBemModifier } from '../../utils';
 
 // Components
-import LyricEntry from './LyricEntry';
+import ViewLyricEntry from './ViewLyricEntry';
 
-function LyricsScroller({ currentTime, lyrics }) {
+function ViewLyricsScroller({ currentTime, lyrics }) {
   const lyricsRef = useRef([]);
   const [latestIndex, setLatestIndex] = useState(-1);
 
@@ -32,7 +32,7 @@ function LyricsScroller({ currentTime, lyrics }) {
               ref={(el) => (lyricsRef.current[index] = el)}
               className={bemClass('lyrics-scroller__li', paddingClass)}
             >
-              <LyricEntry lyric={lyric} number={index} />
+              <ViewLyricEntry lyric={lyric} number={index} />
             </li>
           );
         })}
@@ -41,9 +41,9 @@ function LyricsScroller({ currentTime, lyrics }) {
   );
 }
 
-LyricsScroller.propTypes = {
+ViewLyricsScroller.propTypes = {
   currentTime: PropTypes.number,
   lyrics: PropTypes.array,
 };
 
-export default LyricsScroller;
+export default ViewLyricsScroller;

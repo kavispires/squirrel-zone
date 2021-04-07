@@ -6,10 +6,10 @@ import { Button, Divider, Typography } from 'antd';
 import useDistributorState from '../../states/useDistributorState';
 // Temp
 import sampleGroupJson from '../../utils/mock/sampleGroup.json';
-// Engine and utilities
-import Previewer from '../../utils/distribution/previewer';
+// Models
+import { Previewer } from '../../models';
 // Components
-import AnimatedBars from '../distribution/AnimatedBars';
+import ViewAnimatedBars from '../distribution/ViewAnimatedBars';
 import { buildMockDistribution } from '../../utils';
 
 const { Paragraph } = Typography;
@@ -44,7 +44,7 @@ function Preview({ playerRef }) {
       <Paragraph>Visualize how this songs plays.</Paragraph>
 
       {step === '3' && previewBars.length && (
-        <AnimatedBars
+        <ViewAnimatedBars
           playerRef={playerRef}
           members={previewMembers}
           bars={previewBars}

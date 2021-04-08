@@ -21,7 +21,7 @@ import LineDistributionView from '../components/distribution/LineDistributionVie
 import LineDistributionLyrics from '../components/distribution/LineDistributionLyrics';
 import LineDistributionEdit from '../components/distribution/LineDistributionEdit';
 import LineDistributionNew from '../components/distribution/LineDistributionNew';
-import LoadingChecklist from '../components/common/LoadingChecklist';
+import LoadingChecklist from '../components/LoadingChecklist';
 
 function Distribution() {
   const history = useHistory();

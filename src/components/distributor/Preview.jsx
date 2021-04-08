@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 // Design Resources
-import { Button, Divider, Typography } from 'antd';
+import { Button, Typography } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
-// Temp
-import sampleGroupJson from '../../utils/mock/sampleGroup.json';
 // Models
 import { Previewer } from '../../models';
+// Utilities
+import { buildMockDistribution } from '../../utils';
+import sampleGroupJson from '../../utils/mock/sampleGroup.json';
 // Components
 import ViewAnimatedBars from '../distribution/ViewAnimatedBars';
-import { buildMockDistribution } from '../../utils';
+import StepActions from './StepActions';
+import StepTitle from './StepTitle';
 
 function Preview({ playerRef }) {
   const [song] = useDistributorState('song');
@@ -38,9 +40,7 @@ function Preview({ playerRef }) {
 
   return (
     <section className="preview">
-      <Typography.Title level={2} className="preview__title">
-        Preview
-      </Typography.Title>
+      <StepTitle>Preview</StepTitle>
 
       <Typography.Paragraph>Visualize how this songs plays.</Typography.Paragraph>
 
@@ -53,13 +53,11 @@ function Preview({ playerRef }) {
         />
       )}
 
-      <Divider />
-
-      <div className="lyrics-and-sections__action">
-        <Button type="primary" onClick={() => setStep('4')}>
-          Next Step: Song Metadata
+      <StepActions>
+        <Button type="primary" onClick={() => setStep(4)}>
+          Next Step: Adjustments
         </Button>
-      </div>
+      </StepActions>
     </section>
   );
 }

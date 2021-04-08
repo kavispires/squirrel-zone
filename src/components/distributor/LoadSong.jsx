@@ -6,9 +6,12 @@ import { Button, Input, message, Typography } from 'antd';
 import useDistributorState from '../../states/useDistributorState';
 // Models
 import { Song } from '../../models';
+// Utilities
+import { extractYoutubeIdFromUrl } from '../../utils';
 // Components
 import LoadSongModal from '../modals/LoadSongModal';
-import { extractYoutubeIdFromUrl } from '../../utils';
+import StepTitle from './StepTitle';
+import StepActions from './StepActions';
 
 function LoadSong() {
   const [song, setSong] = useDistributorState('song');
@@ -44,9 +47,8 @@ function LoadSong() {
 
   return (
     <div className="load-song">
-      <Typography.Title level={2} className="load-song__title">
-        How to Start
-      </Typography.Title>
+      <StepTitle>How to Start</StepTitle>
+
       <div className="load-song__container">
         <div className="load-song__option">
           <Typography.Title level={3} className="load-song__title">
@@ -89,6 +91,8 @@ function LoadSong() {
           className="load-song__input"
           onChange={(e) => setVideoId(e.target.value)}
         />
+      </div>
+      <StepActions>
         <Button
           onClick={startDistributorProcess}
           disabled={!videoId}
@@ -97,7 +101,7 @@ function LoadSong() {
         >
           {song?.id && videoId ? 'Continue with this Song' : videoId ? 'Create a new Song' : 'Start'}
         </Button>
-      </div>
+      </StepActions>
     </div>
   );
 }

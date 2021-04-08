@@ -1,26 +1,8 @@
-// .step {
-//   display: flex;
-
-//   &--0 {
-//     justify-content: center;
-
-//     .ant-input-group-wrapper {
-//       width: auto;
-//     }
-
-//     .separator {
-//       text-transform: uppercase;
-//       margin: get-unit(0 3);
-//       font-size: 80%;
-//       transform: translateY(6px);
-//     }
-//   }
-// }
-
 .distributor-content {
   min-height: 400px;
   background: rgba(get-color(white), 0.2);
   border-radius: get-unit(1);
+  padding: get-unit(2);
 }
 
 .distributor-nav {
@@ -38,4 +20,18 @@
   // background: red;
   position: sticky;
   bottom: get-unit(2);
+}
+
+.distributor-step-title {
+  @include centered-title;
+}
+
+.distributor-step-actions {
+  text-align: center;
+  margin: get-unit(1);
+
+  &__action {
+    text-align: center;
+    margin: get-unit(1);
+  }
 }

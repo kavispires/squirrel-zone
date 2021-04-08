@@ -1,10 +1,4 @@
 .lyrics-and-sections {
-  padding: get-unit(2);
-
-  &__title {
-    @include centered-title;
-  }
-
   &__container {
     display: flex;
     width: 100%;

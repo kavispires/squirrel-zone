@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 // Design Resources
-import { Alert, Button, Divider, Input, Typography } from 'antd';
+import { Alert, Button, Input, Typography } from 'antd';
 import { DatabaseFilled, MessageFilled, NotificationFilled } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
@@ -11,6 +11,8 @@ import { Section, Line, Part } from '../../models';
 import { generateUniqueId } from '../../utils';
 // Components
 import Log from '../log/Log';
+import StepTitle from './StepTitle';
+import StepActions from './StepActions';
 
 function LyricsAndSections() {
   const [, setLines] = useDistributorState('lines');
@@ -104,9 +106,7 @@ function LyricsAndSections() {
 
   return (
     <section className="lyrics-and-sections">
-      <Typography.Title level={2} className="lyrics-and-sections__title">
-        Add Lyrics
-      </Typography.Title>
+      <StepTitle>Add Lyrics</StepTitle>
 
       <Typography.Paragraph>
         Paste the lyrics and press enter to auto-generate the sections and lines.
@@ -147,15 +147,12 @@ function LyricsAndSections() {
           {isBuiltOnce ? 'Rebuild' : 'Build'} Sections
         </Button>
       </div>
-
-      <Divider />
-
       {isBuiltOnce && (
-        <div className="lyrics-and-sections__action">
+        <StepActions>
           <Button type="primary" onClick={() => setStep(2)}>
             Next Step: Time & Sync
           </Button>
-        </div>
+        </StepActions>
       )}
     </section>
   );

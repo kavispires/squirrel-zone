@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Design Resources
-import { Button, Divider, Progress, Tooltip } from 'antd';
+import { Button } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Components
@@ -10,10 +10,11 @@ import Log from '../log/Log';
 import Controls from './Controls';
 import TimestampsBank from './TimestampsBank';
 import YoutubeVideo from '../YoutubeVideo';
+import StepActions from './StepActions';
+import SongProgress from './SongProgress';
 
 function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
   const [isRecording] = useDistributorState('isRecording');
-  const [song] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
   const [isPlaying] = useDistributorState('isPlaying');
 
@@ -34,18 +35,13 @@ function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
 
       <Log seekAndPlay={seekAndPlay} className="distributor-grid__log log-full-width" />
 
-      <div className="distributor-grid__actions">
-        <Divider />
-        <Tooltip title="Sections Completion Rate">
-          <Progress percent={song?.relationshipsCompletion} />
-        </Tooltip>
-        <Divider />
-        <div className="time-and-sync__action">
-          <Button type="primary" onClick={() => setStep(3)}>
-            Next Step: Preview
-          </Button>
-        </div>
-      </div>
+      <SongProgress />
+
+      <StepActions className="distributor-grid__actions">
+        <Button type="primary" onClick={() => setStep(3)}>
+          Next Step: Preview
+        </Button>
+      </StepActions>
     </section>
   );
 }

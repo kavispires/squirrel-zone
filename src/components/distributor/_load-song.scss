@@ -1,10 +1,5 @@
 .load-song {
-  padding: get-unit(2);
   text-align: center;
-
-  &__title {
-    @include centered-title;
-  }
 
   &__container {
     display: flex;

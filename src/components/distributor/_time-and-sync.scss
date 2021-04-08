@@ -1,5 +1,4 @@
 .distributor-grid {
-  padding: get-unit(2);
   background: white;
 
   display: grid;
@@ -60,12 +59,5 @@
     grid-column-end: end;
     grid-row-start: fourth;
     grid-row-end: end;
-  }
-}
-
-.time-and-sync {
-  &__action {
-    text-align: center;
-    margin: get-unit(1);
   }
 }

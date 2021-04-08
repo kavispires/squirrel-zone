@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Checkbox, Select, Divider } from 'antd';
+import { Button, InputNumber, Form, Input, Checkbox, Select, Divider, Typography } from 'antd';
 // API
 import API from '../../adapters';
 // Utilities
@@ -9,6 +9,7 @@ import { POSITIONS } from '../../utils/constants';
 import { bemClass } from '../../utils';
 // Components
 import LoadMemberModal from '../modals/LoadMemberModal';
+import ButtonContainer from '../ButtonContainer';
 
 function EditMember() {
   const [loadedData, setLoadedData] = useState(false);
@@ -34,10 +35,11 @@ function EditMember() {
 
   return (
     <section className="admin__form-container">
-      <h3>Create/Edit Member</h3>
-      <div className={bemClass('admin-button-container', 'center')}>
+      <Typography.Title level={3}>Create/Edit Member</Typography.Title>
+
+      <ButtonContainer fullWidth center>
         <LoadMemberModal setLoadedData={setLoadedData} />
-      </div>
+      </ButtonContainer>
 
       <Divider />
 

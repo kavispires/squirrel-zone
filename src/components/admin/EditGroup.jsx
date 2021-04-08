@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Select, Divider } from 'antd';
+import { Button, InputNumber, Form, Input, Select, Divider, Typography } from 'antd';
 // API
 import API from '../../adapters';
+// Store
+import store from '../../services/store';
 // Utilities
 import { bemClass } from '../../utils';
 // Components
 import LoadGroupModal from '../modals/LoadGroupModal';
-// Store
-import store from '../../services/store';
+import ButtonContainer from '../ButtonContainer';
 
 function EditGroup() {
   const [loadedData, setLoadedData] = useState(false);
@@ -42,10 +43,11 @@ function EditGroup() {
 
   return (
     <section className="admin__form-container">
-      <h3>Create/Edit Group</h3>
-      <div className={bemClass('admin-button-container', 'center')}>
+      <Typography.Title level={3}>Create/Edit Group</Typography.Title>
+
+      <ButtonContainer fullWidth center>
         <LoadGroupModal setLoadedData={setLoadedData} />
-      </div>
+      </ButtonContainer>
 
       <Divider />
 

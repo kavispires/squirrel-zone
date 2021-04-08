@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 import { Layout, Tabs } from 'antd';
 
 // Components
-import EditMember from './admin/EditMember';
-import EditGroup from './admin/EditGroup';
+import EditMember from '../components/admin/EditMember';
+import EditGroup from '../components/admin/EditGroup';
 
 // Components
 const { TabPane } = Tabs;
 
 function Admin() {
-  const [tab, setTab] = useState('1');
+  const [, setTab] = useState('1');
 
   return (
     <Layout.Content className="container">

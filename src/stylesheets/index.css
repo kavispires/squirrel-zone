@@ -422,6 +422,7 @@ body {
   width: 50%;
   border: 1px solid #d6d7d8;
   border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
   padding: 12px;
 }
 
@@ -1265,6 +1266,7 @@ body {
   flex: 1;
   border: 1px solid #d6d7d8;
   border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .lyrics-and-sections__warning {
@@ -1403,6 +1405,7 @@ body {
   overflow-y: scroll;
   border: 1px solid #d6d7d8;
   border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
 }
 .distributor-grid__actions {
   grid-column-start: start;
@@ -1572,6 +1575,7 @@ body {
 .log__sections--compact {
   border: 1px solid #d6d7d8;
   border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
 }
 .log__parts {
   display: flex;
@@ -1592,6 +1596,7 @@ body {
 .log-section {
   border: 1px solid #d6d7d8;
   border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
   padding: 8px;
   margin-bottom: 4px;
 }

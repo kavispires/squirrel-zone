@@ -11,7 +11,7 @@ import { auth } from '../services/firebase';
 import Header from '../components/chrome/Header';
 
 // Pages
-import Admin from '../components/AdminPage';
+import Admin from './Admin';
 import Creator from '../components/CreatorPage';
 import Distribution from './Distribution';
 import Distributor from './Distributor';

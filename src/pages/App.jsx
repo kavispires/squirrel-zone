@@ -17,8 +17,9 @@ import Distribution from './Distribution';
 import Distributor from './Distributor';
 import Group from './Group';
 import Groups from './Groups';
-import Home from '../pages/Home';
+import Home from './Home';
 import Login from './Login';
+import NotFound from './NotFound';
 
 // Other Components
 import Loading from '../components/global/Loading';
@@ -83,6 +84,8 @@ function App() {
               <PrivateRoute path="/groups/:id" authenticated={isAuthenticated} component={Group} />
 
               <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
+
+              <Route path="*" component={NotFound} />
             </Switch>
           </Fragment>
         )}

@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 
 // Design Resources
-import { Button, InputNumber, Form, Input, Switch, Select, Divider } from 'antd';
+import { Button, Form, Input, Switch, Select, Divider, Rate } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 // Engine and utilities
-import { SKILL, SKILL_LEVEL, SKILL_TYPE } from '../../utils/enums';
+import { SKILL, SKILL_TYPE } from '../../utils/enums';
 
 function OptionsLine({ line, onValuesChange }) {
   const [skill, setSkill] = useState(line?.skill ?? SKILL.VOCAL);
@@ -66,17 +66,11 @@ function OptionsLine({ line, onValuesChange }) {
           valuePropName="checked"
           className="modal-options-form__item"
         >
-          <Select defaultValue={line.skillLevel}>
-            {Object.values(SKILL_LEVEL).map((entry) => (
-              <Select.Option key={entry} value={entry}>
-                {entry}
-              </Select.Option>
-            ))}
-          </Select>
+          <Rate count={3} defaultValue={line.skillLevel} />
         </Form.Item>
       </div>
 
-      <div className="modal-options-form__items modal-options-form__items--2">
+      <div className="modal-options-form__items">
         <Form.Item
           label="Dismissible"
           name="isDismissible"
@@ -86,17 +80,13 @@ function OptionsLine({ line, onValuesChange }) {
         >
           <Switch />
         </Form.Item>
-
-        <Form.Item label="Parts Count" name="partsTotal" className="modal-options-form__item">
-          <InputNumber disabled />
-        </Form.Item>
       </div>
 
       <Form.Item
         label="Lyrics"
         name="text"
         className="modal-options-form__item"
-        help="Collection of lyrics from all parts."
+        help={`Collection of lyrics from all parts (${line.partsIds.length}).`}
       >
         <Input disabled placeholder="No lyrics available yet" />
       </Form.Item>

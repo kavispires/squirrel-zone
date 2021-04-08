@@ -69,7 +69,14 @@ function Distributor() {
               seekAndPlay={seekAndPlay}
             />
           )}
-          {step === 3 && <LoadSong />}
+          {step === 3 && (
+            <Preview
+              playerRef={playerRef}
+              playVideo={playVideo}
+              pauseVideo={pauseVideo}
+              seekAndPlay={seekAndPlay}
+            />
+          )}
           {step === 4 && <LoadSong />}
           {step === 5 && <LoadSong />}
         </div>

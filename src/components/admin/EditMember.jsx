@@ -37,7 +37,7 @@ function EditMember() {
     <section className="admin__form-container">
       <Typography.Title level={3}>Create/Edit Member</Typography.Title>
 
-      <ButtonContainer fullWidth center>
+      <ButtonContainer alignment="center">
         <LoadMemberModal setLoadedData={setLoadedData} />
       </ButtonContainer>
 
@@ -106,14 +106,14 @@ function EditMember() {
         </div>
 
         <Form.Item className="admin-form__item">
-          <div className={bemClass('admin-button-container', 'right')}>
+          <ButtonContainer alignment="right">
             <Button htmlType="button" onClick={onReset}>
               Reset
             </Button>
             <Button type="primary" htmlType="submit">
               Save Member
             </Button>
-          </div>
+          </ButtonContainer>
         </Form.Item>
       </Form>
     </section>

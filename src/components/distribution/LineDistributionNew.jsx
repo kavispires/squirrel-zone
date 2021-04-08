@@ -12,11 +12,15 @@ function LineDistributionNew({ onLoadNewSong }) {
   return (
     <section className="line-distribution-new">
       <Typography.Title level={3}>New Distribution</Typography.Title>
-      <p>Load the song you want to use in this distribution by clicking on the button</p>
-      <ButtonContainer center fullWidth>
+      <Typography.Paragraph>
+        Load the song you want to use in this distribution by clicking on the button
+      </Typography.Paragraph>
+      <ButtonContainer alignment="center">
         <LoadSongModal onLoad={loadActiveSong} onAfterLoad={onLoadNewSong} />
       </ButtonContainer>
-      <p>After you select the song, you will be automatically redirected to the Edit tab.</p>
+      <Typography.Paragraph>
+        After you select the song, you will be automatically redirected to the Edit tab.
+      </Typography.Paragraph>
     </section>
   );
 }

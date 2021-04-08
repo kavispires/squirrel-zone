@@ -1,15 +1,50 @@
 .button-container {
   display: flex;
   margin: get-unit(2 0);
-  & > * {
+
+  // Spacing
+  &--tight > * {
     margin: get-unit(0 2);
   }
 
-  &--full-width {
+  &--wide > * {
+    margin: get-unit(0 2);
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  // Alignment
+  &--left {
+    justify-content: flex-start;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  &--full {
     width: 100%;
   }
 
-  &--centered {
-    justify-content: center;
+  &--half {
+    width: 50%;
+  }
+
+  &--third {
+    width: 33%;
+  }
+
+  &--quarter {
+    width: 25%;
   }
 }

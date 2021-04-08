@@ -1,17 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Utilities
-import { bemClass, getBemModifier } from '../utils';
+import { bemClass } from '../utils';
 
-function ButtonContainer({ center, fullWidth, customClass, children }) {
-  const centerClass = getBemModifier(center, 'centered');
-  const fullWidthClass = getBemModifier(fullWidth, 'full-width');
-
+function ButtonContainer({ alignment, children, customClass, spacing, width }) {
   return (
-    <div className={`${bemClass('button-container', fullWidthClass, centerClass)} ${customClass}`}>
+    <div className={`${bemClass('button-container', alignment, width, spacing)} ${customClass}`}>
       {children}
     </div>
   );
 }
+
+ButtonContainer.propTypes = {
+  alignment: PropTypes.oneOf(['left', 'center', 'right']),
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
+  customClass: PropTypes.string,
+  spacing: PropTypes.oneOf(['tight', 'wide']),
+  width: PropTypes.oneOf(['full', 'half', 'third', 'quarter']),
+};
+
+ButtonContainer.defaultProps = {
+  alignment: 'left',
+  customClass: '',
+  spacing: 'tight',
+  width: 'full',
+};
 
 export default ButtonContainer;

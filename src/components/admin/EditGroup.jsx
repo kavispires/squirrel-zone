@@ -45,7 +45,7 @@ function EditGroup() {
     <section className="admin__form-container">
       <Typography.Title level={3}>Create/Edit Group</Typography.Title>
 
-      <ButtonContainer fullWidth center>
+      <ButtonContainer alignment="center">
         <LoadGroupModal setLoadedData={setLoadedData} />
       </ButtonContainer>
 
@@ -90,14 +90,14 @@ function EditGroup() {
         </Form.Item>
 
         <Form.Item className="admin-form__item">
-          <div className={bemClass('admin-button-container', 'right')}>
+          <ButtonContainer alignment="right">
             <Button htmlType="button" onClick={onReset}>
               Reset
             </Button>
             <Button type="primary" htmlType="submit">
               Save Group
             </Button>
-          </div>
+          </ButtonContainer>
         </Form.Item>
       </Form>
     </section>

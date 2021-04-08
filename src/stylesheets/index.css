@@ -282,6 +282,35 @@ body {
   }
 }
 
+.admin__form-container {
+  width: 50%;
+  border: 1px solid #d6d7d8;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+}
+
+.admin-form__item {
+  margin-bottom: 12px;
+}
+
+.admin-form__items {
+  display: flex;
+  justify-content: space-between;
+}
+.admin-form__items--2 .admin-form__item {
+  width: 48%;
+}
+.admin-form__items--3 .admin-form__item {
+  width: 30%;
+}
+.admin-form__items--4 .admin-form__item {
+  width: 24%;
+}
+.admin-form__items--4 .admin-form__item--double {
+  width: 48%;
+}
+
 .home {
   display: flex;
   align-items: center;
@@ -416,49 +445,6 @@ body {
 }
 .not-found__button {
   margin: 12px;
-}
-
-.admin__form-container {
-  width: 50%;
-  border: 1px solid #d6d7d8;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 12px;
-}
-
-.admin-form__item {
-  margin-bottom: 12px;
-}
-
-.admin-form__items {
-  display: flex;
-  justify-content: space-between;
-}
-.admin-form__items--2 .admin-form__item {
-  width: 48%;
-}
-.admin-form__items--3 .admin-form__item {
-  width: 30%;
-}
-.admin-form__items--4 .admin-form__item {
-  width: 24%;
-}
-.admin-form__items--4 .admin-form__item--double {
-  width: 48%;
-}
-
-.admin-button-container {
-  width: 100%;
-  display: flex;
-}
-.admin-button-container > * {
-  margin: 4px 8px;
-}
-.admin-button-container--center {
-  justify-content: center;
-}
-.admin-button-container--right {
-  justify-content: flex-end;
 }
 
 .fur-color-bg-0 {
@@ -881,14 +867,38 @@ body {
   display: flex;
   margin: 8px 0;
 }
-.button-container > * {
+.button-container--tight > * {
   margin: 0 8px;
 }
-.button-container--full-width {
+.button-container--wide > * {
+  margin: 0 8px;
+}
+.button-container:first-child {
+  margin-left: 0;
+}
+.button-container:last-child {
+  margin-right: 0;
+}
+.button-container--left {
+  justify-content: flex-start;
+}
+.button-container--center {
+  justify-content: center;
+}
+.button-container--right {
+  justify-content: flex-end;
+}
+.button-container--full {
   width: 100%;
 }
-.button-container--centered {
-  justify-content: center;
+.button-container--half {
+  width: 50%;
+}
+.button-container--third {
+  width: 33%;
+}
+.button-container--quarter {
+  width: 25%;
 }
 
 .line-distribution__container {

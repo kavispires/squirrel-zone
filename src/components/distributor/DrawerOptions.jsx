@@ -58,7 +58,7 @@ function DrawerOptions({ activeInstance, setActiveInstance }) {
       <Divider />
       <Progress percent={activeInstance.completion} />
       <Divider />
-      <ButtonContainer fullWidth>
+      <ButtonContainer alignment="right">
         <Button type="default" onClick={onCancelDrawer}>
           Cancel/Close
         </Button>

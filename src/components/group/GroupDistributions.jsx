@@ -73,7 +73,7 @@ function GroupDistributions({ group, members, goToDistribution }) {
 
   return (
     <div className="group-distributions">
-      <ButtonContainer center fullWidth>
+      <ButtonContainer alignment="center">
         <Button
           type="default"
           icon={<FileAddOutlined />}

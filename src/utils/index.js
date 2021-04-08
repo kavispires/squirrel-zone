@@ -109,7 +109,7 @@ export const buildMockDistribution = (parts) => {
     type: 'distribution',
     groupId: 'sample-group-id',
     songId: 'sample-song-id',
-    data,
+    assignedParts: data,
   };
 };
 

@@ -12,8 +12,6 @@ import { Previewer } from '../../models';
 import ViewAnimatedBars from '../distribution/ViewAnimatedBars';
 import { buildMockDistribution } from '../../utils';
 
-const { Paragraph } = Typography;
-
 function Preview({ playerRef }) {
   const [song] = useDistributorState('song');
   const [parts] = useDistributorState('parts');
@@ -25,12 +23,12 @@ function Preview({ playerRef }) {
   const [previewLyrics, setPreviewLyrics] = useState({});
 
   useEffect(() => {
-    if (step === '3') {
+    if (step === 3) {
       const preview = new Previewer({
         songTitle: song.title ?? 'Untitled',
-        allParts: song.allPartsIds.map((partId) => parts[partId].data),
+        partsData: song.allPartsIds.map((partId) => parts[partId].data),
         members: sampleGroup.members,
-        distribution: buildMockDistribution(parts).data,
+        distribution: buildMockDistribution(parts),
       });
       setPreviewMembers(preview.members());
       setPreviewBars(preview.bars());
@@ -40,10 +38,13 @@ function Preview({ playerRef }) {
 
   return (
     <section className="preview">
-      <h2 className="preview__title">Preview</h2>
-      <Paragraph>Visualize how this songs plays.</Paragraph>
+      <Typography.Title level={2} className="preview__title">
+        Preview
+      </Typography.Title>
 
-      {step === '3' && previewBars.length && (
+      <Typography.Paragraph>Visualize how this songs plays.</Typography.Paragraph>
+
+      {Boolean(previewBars.length) && (
         <ViewAnimatedBars
           playerRef={playerRef}
           members={previewMembers}

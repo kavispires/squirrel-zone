@@ -1265,6 +1265,8 @@ body {
 }
 
 .distributor-grid {
+  padding: 8px;
+  background: white;
   display: grid;
   grid-template-columns: [start] 40% [middle] 60fr [end];
   grid-template-rows: [start] 4px [first] 180px [second] auto [third] auto [fourth] auto [end];
@@ -1305,7 +1307,8 @@ body {
   grid-column-end: end;
   grid-row-start: first;
   grid-row-end: fourth;
-  max-height: 75vh;
+  height: 75vh;
+  resize: vertical;
   overflow-y: scroll;
   border: 1px solid #d6d7d8;
   border-radius: 2px;
@@ -1628,7 +1631,11 @@ body {
   margin: 0 1px;
 }
 
+.preview {
+  padding: 8px;
+}
 .preview__title {
+  width: 100%;
   text-align: center;
 }
 

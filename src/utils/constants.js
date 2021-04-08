@@ -157,10 +157,10 @@ export const IMAGE_URL = {
 export const NEW_INSTANCE_ID = '_new';
 
 export const DISTRIBUTOR_STEPS = [
-  'Load Song',
+  'Start',
   'Lyrics & Sections',
   'Time & Sync',
   'Preview',
-  'Adjusts',
+  'Adjustments',
   'Metadata & Save',
 ];

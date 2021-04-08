@@ -11,9 +11,10 @@ const ALL_NONE_MEMBERS = ['ALL', 'NONE', 'member::ALL', 'member::NONE'];
  * Class to generate a Line Distribution preview.
  */
 export class Previewer {
-  constructor({ songTitle, songData, members, distribution, framerate = 30 }) {
+  constructor({ songTitle, songData, partsData, members, distribution, framerate = 30 }) {
     this._songTitle = songTitle;
     this._songData = songData;
+    this._partsData = partsData;
     this._distribution = distribution;
     this._framerate = framerate;
 
@@ -42,19 +43,27 @@ export class Previewer {
    * @returns {DistributedPart[]}
    */
   _buildDistributionParts() {
-    return this._songData.partsIds.map((partId) => {
-      const part = this._songData.included.parts[partId];
-      const line = this._songData.included.lines[part.lineId];
-      const section = this._songData.included.sections[line.sectionId];
-      const assignedPart = this._distribution.assignedParts[partId];
-      const distributedAssignees = Array.isArray(assignedPart) ? assignedPart : Object.keys(assignedPart);
+    if (this._songData) {
+      return this._songData.partsIds.map((partId) => {
+        const part = this._songData.included.parts[partId];
+        const line = this._songData.included.lines[part.lineId];
+        const section = this._songData.included.sections[line.sectionId];
+        const assignedPart = this._distribution.assignedParts[partId];
+        const distributedAssignees = Array.isArray(assignedPart) ? assignedPart : Object.keys(assignedPart);
 
-      return new DistributedPart({
-        ...part,
-        isDismissible: line.isDismissible,
-        sectionId: section.id,
-        membersIds: distributedAssignees,
+        return new DistributedPart({
+          ...part,
+          isDismissible: line.isDismissible,
+          sectionId: section.id,
+          membersIds: distributedAssignees,
+        });
       });
+    }
+
+    return this._partsData.map((part) => {
+      const assignedPart = this._distribution.assignedParts[part.id];
+      const distributedAssignees = Array.isArray(assignedPart) ? assignedPart : Object.keys(assignedPart);
+      return new DistributedPart({ ...part, membersIds: distributedAssignees });
     });
   }
 

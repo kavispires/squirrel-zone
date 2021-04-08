@@ -1,5 +1,7 @@
 .preview {
+  padding: get-unit(2);
+
   &__title {
-    text-align: center;
+    @include centered-title;
   }
 }

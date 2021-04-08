@@ -341,3 +341,17 @@ export const cleanupObject = (obj) => {
  * @return {boolean}
  */
 export const areArraysSimilar = (a, b) => JSON.stringify(a.sort()) === JSON.stringify(b.sort());
+
+/**
+ * Extract youtube video id from url
+ * @param {string} link
+ */
+export const extractYoutubeIdFromUrl = (link) => {
+  const splitLink = link.split('v=');
+
+  if (splitLink.length === 1) return splitLink[0];
+
+  const [videoId] = splitLink[1].split('&');
+
+  return videoId;
+};

@@ -14,7 +14,7 @@ import Header from '../components/chrome/Header';
 import Admin from '../components/AdminPage';
 import Creator from '../components/CreatorPage';
 import Distribution from './Distribution';
-import Distributor from '../components/DistributorPage';
+import Distributor from './Distributor';
 import Group from './Group';
 import Groups from './Groups';
 import Home from '../pages/Home';

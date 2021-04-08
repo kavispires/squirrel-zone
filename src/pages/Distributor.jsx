@@ -1,19 +1,20 @@
 import React, { useRef } from 'react';
 
 // Design Resources
-import { Layout, Divider, Collapse } from 'antd';
+import { Layout, Divider, Collapse, Typography, Button } from 'antd';
 
 // State
 import useDistributorState from '../states/useDistributorState';
 // Components
-import StepperProgress from './distributor/StepperProgress';
-import LoadSong from './distributor/LoadSong';
-import LyricsAndSections from './distributor/LyricsAndSections';
-import ModalOptions from './distributor/ModalOptions';
-import TimeAndSync from './distributor/TimeAndSync';
-import Preview from './distributor/Preview';
-import SongMetadata from './distributor/SongMetadata';
-import SaveSong from './distributor/SaveSong';
+import StepperProgress from '../components/distributor/StepperProgress';
+import LoadSong from '../components/distributor/LoadSong';
+import LyricsAndSections from '../components/distributor/LyricsAndSections';
+import ModalOptions from '../components/distributor/ModalOptions';
+import TimeAndSync from '../components/distributor/TimeAndSync';
+import Preview from '../components/distributor/Preview';
+import SongMetadata from '../components/distributor/SongMetadata';
+import SaveSong from '../components/distributor/SaveSong';
+import { DISTRIBUTOR_STEPS } from '../utils/constants';
 
 const { Panel } = Collapse;
 
@@ -42,12 +43,54 @@ function Distributor() {
     playerRef?.current?.internalPlayer?.playVideo();
   };
 
+  const disabledSteps = [
+    false,
+    !Boolean(song?.id),
+    !Boolean(videoId && song?.id),
+    !Boolean(videoId && song?.id),
+    !Boolean(videoId && song?.id),
+    !Boolean(videoId && song?.id),
+  ];
+
   return (
     <Layout.Content className="container">
       <main className="main distributor">
-        <h1>Distributor</h1>
-        <StepperProgress currentStep={step} />
-        <Collapse accordion defaultActiveKey={0} activeKey={step} onChange={changePanel}>
+        <Typography.Title>Distributor</Typography.Title>
+        <StepperProgress currentStep={step} setStep={setStep} disabledSteps={disabledSteps} />
+        <div className="distributor-content">
+          {step === 0 && <LoadSong />}
+          {step === 1 && <LyricsAndSections />}
+          {step === 2 && (
+            <TimeAndSync
+              playerRef={playerRef}
+              playVideo={playVideo}
+              pauseVideo={pauseVideo}
+              seekAndPlay={seekAndPlay}
+            />
+          )}
+          {step === 3 && <LoadSong />}
+          {step === 4 && <LoadSong />}
+          {step === 5 && <LoadSong />}
+        </div>
+        <Divider />
+        <nav className="distributor-nav">
+          <div className="distributor-nav__left-elements">
+            {step > 0 && (
+              <Button type="default" onClick={() => setStep(step - 1)} disabled={disabledSteps[step - 1]}>
+                « {DISTRIBUTOR_STEPS[step - 1]}
+              </Button>
+            )}
+          </div>
+          <div className="distributor-nav__right-elements">
+            {step < DISTRIBUTOR_STEPS.length - 1 && (
+              <Button type="primary" onClick={() => setStep(step + 1)} disabled={disabledSteps[step + 1]}>
+                {DISTRIBUTOR_STEPS[step + 1]} »
+              </Button>
+            )}
+          </div>
+        </nav>
+
+        {/* <Collapse accordion defaultActiveKey={0} activeKey={step} onChange={changePanel}>
           <Panel header="Load Song" key="0">
             <LoadSong />
           </Panel>
@@ -84,9 +127,7 @@ function Distributor() {
           <Panel header="Save" key="5">
             {song ? <SaveSong /> : <p>You can't see this step without a loaded song.</p>}
           </Panel>
-        </Collapse>
-
-        <Divider />
+        </Collapse> */}
 
         <ModalOptions activeInstance={activeInstance} setActiveInstance={setActiveInstance} />
       </main>

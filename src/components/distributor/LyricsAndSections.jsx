@@ -20,7 +20,7 @@ function LyricsAndSections() {
   const [song] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
 
-  const [isBuiltOnce, setIsBuiltOnce] = useState(Boolean(song.id));
+  const [isBuiltOnce, setIsBuiltOnce] = useState(Boolean(song?.id));
   const [textarea, setTextarea] = useState('Sample lyrics\nSample |lyrics\n\nSampleLyrics');
 
   const onTextareaChange = useCallback(

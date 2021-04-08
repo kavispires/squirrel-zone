@@ -155,3 +155,12 @@ export const IMAGE_URL = {
 };
 
 export const NEW_INSTANCE_ID = '_new';
+
+export const DISTRIBUTOR_STEPS = [
+  'Load Song',
+  'Lyrics & Sections',
+  'Time & Sync',
+  'Preview',
+  'Adjusts',
+  'Metadata & Save',
+];

@@ -1,21 +1,43 @@
 .load-song {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  // antd override
-  .ant-input-group-wrapper {
-    width: auto;
-  }
+  padding: get-unit(2);
+  text-align: center;
 
   &__title {
     @include centered-title;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__option {
+    width: 40%;
+
+    & > * {
+      margin: get-unit(2 0);
+    }
   }
 
   &__separator {
     text-transform: uppercase;
     margin: get-unit(0 3);
     font-size: 80%;
-    transform: translateY(6px);
+    align-self: center;
+    font-weight: bolder;
+  }
+
+  &__summary {
+    width: 60%;
+    margin: get-unit(10 auto);
+  }
+
+  &__input {
+    width: auto;
+  }
+
+  &__button {
+    display: block;
+    margin: get-unit(2 auto);
   }
 }

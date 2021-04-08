@@ -17,6 +17,7 @@ function LoadSongModal({
   onBeforeLoad = () => {},
   onLoad = loadSongState,
   onAfterLoad = () => {},
+  className = '',
 }) {
   const [isSongLoading] = useLoadingState('isSongLoading');
 
@@ -24,7 +25,12 @@ function LoadSongModal({
 
   return (
     <Fragment>
-      <Button type="primary" onClick={() => setIsModalVisible(true)} disabled={isSongLoading}>
+      <Button
+        className={className}
+        type="primary"
+        onClick={() => setIsModalVisible(true)}
+        disabled={isSongLoading}
+      >
         {isSongLoading ? <Spin size="small" /> : buttonLabel}
       </Button>
 

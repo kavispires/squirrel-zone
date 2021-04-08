@@ -43,7 +43,7 @@ export const loadSongStateOffline = async (song, songData) => {
   setDistributorGlobalState('song', newSong);
 
   setDistributorGlobalState('videoId', newSong.videoId);
-  setDistributorGlobalState('step', newSong.isComplete ? '3' : '2');
+  // setDistributorGlobalState('step', newSong.isComplete ? '3' : '2');
   setDistributorGlobalState('isFullyLoaded', true);
   return true;
 };

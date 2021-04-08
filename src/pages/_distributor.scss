@@ -1,0 +1,41 @@
+// .step {
+//   display: flex;
+
+//   &--0 {
+//     justify-content: center;
+
+//     .ant-input-group-wrapper {
+//       width: auto;
+//     }
+
+//     .separator {
+//       text-transform: uppercase;
+//       margin: get-unit(0 3);
+//       font-size: 80%;
+//       transform: translateY(6px);
+//     }
+//   }
+// }
+
+.distributor-content {
+  min-height: 400px;
+  background: rgba(get-color(white), 0.2);
+  border-radius: get-unit(1);
+}
+
+.distributor-nav {
+  display: grid;
+  gap: get-unit(4);
+  grid-template-columns: 50fr 50fr;
+  background: rgba(get-color(white), 0.2);
+  border-radius: get-unit(1);
+  padding: get-unit(2);
+
+  &__left-elements {
+    justify-self: end;
+  }
+
+  // background: red;
+  position: sticky;
+  bottom: get-unit(2);
+}

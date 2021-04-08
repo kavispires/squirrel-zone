@@ -15,6 +15,7 @@ import Preview from '../components/distributor/Preview';
 import SongMetadata from '../components/distributor/SongMetadata';
 import SaveSong from '../components/distributor/SaveSong';
 import { DISTRIBUTOR_STEPS } from '../utils/constants';
+import DrawerOptions from '../components/distributor/DrawerOptions';
 
 const { Panel } = Collapse;
 
@@ -72,7 +73,7 @@ function Distributor() {
           {step === 4 && <LoadSong />}
           {step === 5 && <LoadSong />}
         </div>
-        <Divider />
+        {/* <Divider />
         <nav className="distributor-nav">
           <div className="distributor-nav__left-elements">
             {step > 0 && (
@@ -88,7 +89,7 @@ function Distributor() {
               </Button>
             )}
           </div>
-        </nav>
+        </nav> */}
 
         {/* <Collapse accordion defaultActiveKey={0} activeKey={step} onChange={changePanel}>
           <Panel header="Load Song" key="0">
@@ -129,7 +130,9 @@ function Distributor() {
           </Panel>
         </Collapse> */}
 
-        <ModalOptions activeInstance={activeInstance} setActiveInstance={setActiveInstance} />
+        <DrawerOptions activeInstance={activeInstance} setActiveInstance={setActiveInstance} />
+
+        {/* <ModalOptions activeInstance={activeInstance} setActiveInstance={setActiveInstance} /> */}
       </main>
     </Layout.Content>
   );

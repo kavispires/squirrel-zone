@@ -1225,37 +1225,40 @@ body {
   margin: 8px auto;
 }
 
+.lyrics-and-sections {
+  padding: 8px;
+}
 .lyrics-and-sections__title {
   width: 100%;
   text-align: center;
 }
-
 .lyrics-and-sections__container {
   display: flex;
   width: 100%;
   margin-bottom: 12px;
   justify-content: space-between;
+  background: white;
 }
-
 .lyrics-and-sections__paragraph {
   width: 48%;
   align-self: flex-end;
 }
-
 .lyrics-and-sections__textarea {
   width: 50%;
   margin-right: 4px;
   flex: 1;
   min-height: 200px;
 }
-
 .lyrics-and-sections__log {
   width: 50%;
   flex: 1;
   border: 1px solid #d6d7d8;
   border-radius: 2px;
 }
-
+.lyrics-and-sections__warning {
+  width: 70%;
+  margin: 8px auto;
+}
 .lyrics-and-sections__action {
   text-align: center;
   margin: 4px;
@@ -1508,7 +1511,7 @@ body {
   border-bottom: 1px solid #f0f1f1;
   background: white;
   position: sticky;
-  top: 0;
+  top: -12px;
   z-index: 100;
 }
 .log__sections--compact {

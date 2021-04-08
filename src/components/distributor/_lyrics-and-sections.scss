@@ -1,4 +1,6 @@
 .lyrics-and-sections {
+  padding: get-unit(2);
+
   &__title {
     @include centered-title;
   }
@@ -8,6 +10,7 @@
     width: 100%;
     margin-bottom: get-unit(3);
     justify-content: space-between;
+    background: white;
   }
 
   &__paragraph {
@@ -26,6 +29,11 @@
     width: 50%;
     flex: 1;
     @include light-gray-border;
+  }
+
+  &__warning {
+    width: 70%;
+    margin: get-unit(2 auto);
   }
 
   &__action {

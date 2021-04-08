@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 // Design Resources
-import { Button, Divider, Input, Typography } from 'antd';
+import { Alert, Button, Divider, Input, Typography } from 'antd';
 import { DatabaseFilled, MessageFilled, NotificationFilled } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
@@ -11,7 +11,6 @@ import { Section, Line, Part } from '../../models';
 import { generateUniqueId } from '../../utils';
 // Components
 import Log from '../log/Log';
-const { Paragraph } = Typography;
 
 function LyricsAndSections() {
   const [, setLines] = useDistributorState('lines');
@@ -105,23 +104,26 @@ function LyricsAndSections() {
 
   return (
     <section className="lyrics-and-sections">
-      <h2 className="lyrics-and-sections__title">Add Lyrics</h2>
+      <Typography.Title level={2} className="lyrics-and-sections__title">
+        Add Lyrics
+      </Typography.Title>
 
-      <Paragraph>Paste the lyrics and press enter to auto generate the sections and lines.</Paragraph>
-      <Paragraph>
-        An line break creates a Line, a double line break generates a Section, and | generates parts.
-      </Paragraph>
-      <Paragraph>
+      <Typography.Paragraph>
+        Paste the lyrics and press enter to auto-generate the sections and lines.
+        <br />
+        An line break creates a Line, a double line break generates a Section, and <code>|</code> generates
+        parts.
+        <br />
         Click on each Section {<DatabaseFilled />}, Line {<MessageFilled />}, and Part{' '}
         {<NotificationFilled />} to edit their options
-      </Paragraph>
+      </Typography.Paragraph>
 
       <div className="lyrics-and-sections__container">
         <Input.TextArea
           placeholder="Insert lyrics here"
           className="lyrics-and-sections__textarea"
           onChange={onTextareaChange}
-          defaultValue={textarea}
+          defaultValue={song?.id ? "You can't edit this if you are editing" : textarea}
           disabled={song?.id}
         />
         <Log className="lyrics-and-sections__log" defaultCompactSetting={false} />
@@ -129,13 +131,15 @@ function LyricsAndSections() {
 
       <div className="lyrics-and-sections__action">
         {isBuiltOnce && (
-          <Paragraph type="danger">
-            Rebuilding Sections is destruction and will reset all details you might have enter to Sections,
-            Lines, and Parts.
-          </Paragraph>
+          <Alert
+            type="warning"
+            showIcon
+            message="Rebuilding Sections is destructive and will reset all details you might have entered on Sections, Lines, and Parts."
+            className="lyrics-and-sections__warning"
+          />
         )}
         <Button
-          type={isBuiltOnce ? 'default' : 'primary'}
+          type={isBuiltOnce ? 'primary' : 'primary'}
           danger={isBuiltOnce}
           onClick={Boolean(song.id) ? rebuildSections : buildSections}
           disabled={!textarea.length}
@@ -148,7 +152,7 @@ function LyricsAndSections() {
 
       {isBuiltOnce && (
         <div className="lyrics-and-sections__action">
-          <Button type="primary" onClick={() => setStep('2')}>
+          <Button type="primary" onClick={() => setStep(2)}>
             Next Step: Time & Sync
           </Button>
         </div>

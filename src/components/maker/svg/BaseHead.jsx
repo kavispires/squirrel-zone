@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PROPS from '../../utils/properties/';
-import DEFAULTS from '../../utils/properties/defaults';
+import PROPS from '../../../utils/properties/';
+import DEFAULTS from '../../../utils/properties/defaults';
 
 function BaseHead({
   furColor = DEFAULTS.FUR,
@@ -22,12 +22,7 @@ function BaseHead({
   const pupilClass = `svg-base-head__pupil ${eyeColorClass}`;
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      overflow="visible"
-      viewBox="0 0 1024 1024"
-      className="svg-sprite"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" overflow="visible" viewBox="0 0 1024 1024" className="svg-sprite">
       <g id="_x2B_Head_copy">
         <g id="_x2B_Base_copy">
           <g id="head_1_">

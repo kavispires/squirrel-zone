@@ -2,12 +2,7 @@ import React from 'react';
 
 export function Grid() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      overflow="visible"
-      viewBox="0 0 1024 1024"
-      className="svg-sprite"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" overflow="visible" viewBox="0 0 1024 1024" className="svg-sprite">
       <g>
         <g id="grid-base">
           <path

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PROPS from '../../utils/properties/';
-import DEFAULTS from '../../utils/properties/defaults';
+import PROPS from '../../../utils/properties/';
+import DEFAULTS from '../../../utils/properties/defaults';
 
 function BaseBody({ furColor = DEFAULTS.FUR }) {
   const furClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
@@ -9,12 +9,7 @@ function BaseBody({ furColor = DEFAULTS.FUR }) {
   const st2FurClass = `svg-base-body__st2 ${furClass}`;
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      overflow="visible"
-      viewBox="0 0 1024 1024"
-      className="svg-sprite"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" overflow="visible" viewBox="0 0 1024 1024" className="svg-sprite">
       <g id="_x2B_Body_copy">
         <g id="_x2B_Base_copy">
           <path

@@ -12,13 +12,13 @@ import Header from '../components/chrome/Header';
 
 // Pages
 import Admin from './Admin';
-import Creator from '../components/CreatorPage';
 import Distribution from './Distribution';
 import Distributor from './Distributor';
 import Group from './Group';
 import Groups from './Groups';
 import Home from './Home';
 import Login from './Login';
+import Maker from './Maker';
 import NotFound from './NotFound';
 
 // Other Components
@@ -77,11 +77,11 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home}></Route>
               <PrivateRoute path="/admin" authenticated={isAuthenticated} component={Admin} />
-              <PrivateRoute path="/creator" authenticated={isAuthenticated} component={Creator} />
               <PrivateRoute path="/distribution" authenticated={isAuthenticated} component={Distribution} />
               <PrivateRoute path="/distributor" authenticated={isAuthenticated} component={Distributor} />
               <PrivateRoute path="/groups" authenticated={isAuthenticated} component={Groups} exact />
               <PrivateRoute path="/groups/:id" authenticated={isAuthenticated} component={Group} />
+              <PrivateRoute path="/maker" authenticated={isAuthenticated} component={Maker} />
 
               <PublicRoute path="/login" authenticated={isAuthenticated} component={Login}></PublicRoute>
 

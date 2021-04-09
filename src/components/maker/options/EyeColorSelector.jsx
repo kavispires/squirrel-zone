@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 
 import { Radio } from 'antd';
 
-import useCharacterState from '../../states/useCharacterState';
+import useCharacterState from '../../../states/useCharacterState';
 
-import PROPS from '../../utils/properties/';
-import DEFAULTS from '../../utils/properties/defaults';
-import { printProps } from '../../utils';
+import PROPS from '../../../utils/properties';
+import DEFAULTS from '../../../utils/properties/defaults';
+import { printProps } from '../../../utils';
 
 const EYES = Object.values(PROPS.HEAD.EYES);
 
@@ -34,10 +34,7 @@ function EyeColorSelector() {
               className="color-swatch-radio"
               checked={swatch.dna === eyeColor}
             >
-              <span
-                className={`color-swatch eye-color-bg-${swatch.id}`}
-                title={`Eye Color ${swatch.name}`}
-              />
+              <span className={`color-swatch eye-color-bg-${swatch.id}`} title={`Eye Color ${swatch.name}`} />
             </Radio.Button>
           );
         })}

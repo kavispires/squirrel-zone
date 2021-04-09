@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 
 import { Radio } from 'antd';
 
-import useCharacterState from '../../states/useCharacterState';
+import useCharacterState from '../../../states/useCharacterState';
 
-import PROPS from '../../utils/properties/';
-import DEFAULTS from '../../utils/properties/defaults';
-import { printProps } from '../../utils';
+import PROPS from '../../../utils/properties/';
+import DEFAULTS from '../../../utils/properties/defaults';
+import { printProps } from '../../../utils';
 
 const NOSES = Object.values(PROPS.HEAD.NOSE);
 

@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 
 import { Radio } from 'antd';
 
-import useCharacterState from '../../states/useCharacterState';
+import useCharacterState from '../../../states/useCharacterState';
 
-import PROPS from '../../utils/properties/';
-import DEFAULTS from '../../utils/properties/defaults';
-import { printProps } from '../../utils';
+import PROPS from '../../../utils/properties/';
+import DEFAULTS from '../../../utils/properties/defaults';
+import { printProps } from '../../../utils';
 
 const FURS = Object.values(PROPS.FUR);
 
@@ -34,10 +34,7 @@ function FurColorSelector() {
               className="color-swatch-radio"
               checked={swatch.dna === furColor}
             >
-              <span
-                className={`color-swatch fur-color-bg-${swatch.id}`}
-                title={`Fur Color ${swatch.name}`}
-              />
+              <span className={`color-swatch fur-color-bg-${swatch.id}`} title={`Fur Color ${swatch.name}`} />
             </Radio.Button>
           );
         })}

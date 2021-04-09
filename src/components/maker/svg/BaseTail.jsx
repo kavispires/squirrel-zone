@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PROPS from '../../utils/properties/';
-import DEFAULTS from '../../utils/properties/defaults';
+import PROPS from '../../../utils/properties';
+import DEFAULTS from '../../../utils/properties/defaults';
 
 function BaseTail({ furColor = DEFAULTS.FUR }) {
   const furClass = `fur-color-fill-${PROPS.FUR[furColor].id}`;
@@ -9,12 +9,7 @@ function BaseTail({ furColor = DEFAULTS.FUR }) {
   const fillFurClass = `svg-base-tail__fill ${furClass}`;
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      overflow="visible"
-      viewBox="0 0 1024 1024"
-      className="svg-sprite"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" overflow="visible" viewBox="0 0 1024 1024" className="svg-sprite">
       <g id="_x2B_Tail_copy">
         <g id="_x2B_Base_copy">
           <g id="tail_1_">

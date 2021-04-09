@@ -1,17 +1,17 @@
 import React from 'react';
 
 // Design Resources
-import { Layout } from 'antd';
+import { Layout, Typography } from 'antd';
 
 // Components
-import Character from './Character';
-import CharacterOptions from './CharacterOptions';
+import Character from '../components/maker/Character';
+import CharacterOptions from '../components/maker/CharacterOptions';
 
-function Creator() {
+function Maker() {
   return (
     <Layout.Content className="container">
       <main className="main creator">
-        <h1>Creator</h1>
+        <Typography.Title>Squirrel Maker</Typography.Title>
         <section className="section">
           <Character />
           <CharacterOptions />
@@ -21,4 +21,4 @@ function Creator() {
   );
 }
 
-export default Creator;
+export default Maker;

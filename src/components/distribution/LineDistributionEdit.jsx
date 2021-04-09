@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import useGlobalState from '../../states/useGlobalState';
 import useLoadingState from '../../states/useLoadingState';
 import useDistributorState from '../../states/useDistributorState';
+import usePreviewState from '../../states/usePreviewState';
 import {
   loadSongStateOffline,
   resetStateForDistribution,
@@ -30,6 +31,7 @@ function LineDistributionEdit({ playerRef }) {
   const [activeSongData] = useGlobalState('activeSongData');
 
   const [parts] = useDistributorState('parts');
+  const [, setWasDistributionEdited] = usePreviewState('wasDistributionEdited');
 
   const [localMembers] = useState({ ...activeMembers, ...DEFAULT_MEMBERS });
   const [stats, setStats] = useState({});
@@ -71,6 +73,7 @@ function LineDistributionEdit({ playerRef }) {
       });
 
       resetStateForDistribution();
+      setWasDistributionEdited(true);
       history.push(`/distribution/${response.id}/view`);
     } catch (_) {}
   };

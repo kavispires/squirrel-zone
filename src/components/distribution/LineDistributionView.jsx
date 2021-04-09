@@ -21,14 +21,16 @@ function LineDistributionView({ playerRef }) {
   const [previewMembers, setPreviewMembers] = usePreviewState('previewMembers');
   const [previewBars, setPreviewBars] = usePreviewState('previewBars');
   const [previewLyrics, setPreviewLyrics] = usePreviewState('previewLyrics');
+  const [wasDistributionEdited, setWasDistributionEdited] = usePreviewState('wasDistributionEdited');
 
   useEffect(() => {
     if (
-      activeSong &&
-      activeDistribution &&
-      activeSongData &&
-      activeDistributionData &&
-      (activeSong.id !== songId || activeDistribution.id !== distributionId)
+      (activeSong &&
+        activeDistribution &&
+        activeSongData &&
+        activeDistributionData &&
+        (activeSong.id !== songId || activeDistribution.id !== distributionId)) ||
+      wasDistributionEdited
     ) {
       const preview = new Previewer({
         songTitle: activeSong.title,
@@ -42,8 +44,24 @@ function LineDistributionView({ playerRef }) {
       setPreviewLyrics(preview.lyrics());
       setSongId(activeSong.id);
       setDistributionId(activeDistribution.id);
+      setWasDistributionEdited(false);
     }
-  }, [activeSong, activeDistribution, activeSongData, activeDistributionData]);
+  }, [
+    activeSong,
+    activeDistribution,
+    activeDistributionData,
+    activeSongData,
+    activeMembers,
+    distributionId,
+    songId,
+    wasDistributionEdited,
+    setDistributionId,
+    setPreviewBars,
+    setPreviewLyrics,
+    setPreviewMembers,
+    setSongId,
+    setWasDistributionEdited,
+  ]);
 
   if (!activeSong || !previewMembers.length || !previewBars.length || !previewLyrics.length) {
     return <Loading />;

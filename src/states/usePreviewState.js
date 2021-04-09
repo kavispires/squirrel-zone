@@ -6,6 +6,7 @@ const initialState = {
   previewMembers: [],
   previewBars: [],
   previewLyrics: [],
+  wasDistributionEdited: false,
 };
 
 const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState(initialState);

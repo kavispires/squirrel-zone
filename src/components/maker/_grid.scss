@@ -1,0 +1,12 @@
+$grid-grey: #b3b3b3;
+$grid-cyan: #00ffff;
+
+.svg-grid {
+  &__gray {
+    fill: $grid-grey;
+  }
+
+  &__cyan {
+    fill: $grid-cyan;
+  }
+}

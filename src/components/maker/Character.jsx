@@ -1,9 +1,10 @@
 import React from 'react';
 
 // Components
-import SVG from './svg';
-
 import useCharacterState from '../../states/useCharacterState';
+import { getRandomAppearanceId } from '../../utils/maker/appearance';
+import Grid from './Grid';
+import SVG from './SVG';
 
 function Character() {
   const [furColor] = useCharacterState('furColor');
@@ -11,12 +12,25 @@ function Character() {
   const [noseColor] = useCharacterState('noseColor');
   const [eyeColor] = useCharacterState('eyeColor');
 
+  // const data = {
+  //   furColor,
+  //   snoutColor,
+  //   noseColor,
+  //   eyeColor,
+  // };
+
+  const data = {
+    tailId: getRandomAppearanceId('SHAPE', 'TAIL'),
+    furId: getRandomAppearanceId('COLOR', 'FUR'),
+    snoutId: getRandomAppearanceId('COLOR', 'SNOUT'),
+    noseId: getRandomAppearanceId('COLOR', 'NOSE'),
+    eyeColorId: getRandomAppearanceId('COLOR', 'EYE'),
+  };
+
   return (
     <div className="character">
-      <SVG.Grid />
-      <SVG.Base.Tail furColor={furColor} />
-      <SVG.Base.Body furColor={furColor} />
-      <SVG.Base.Head furColor={furColor} snoutColor={snoutColor} noseColor={noseColor} eyeColor={eyeColor} />
+      <Grid />
+      <SVG onGrid data={data} />
     </div>
   );
 }

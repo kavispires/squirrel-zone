@@ -4,7 +4,7 @@ export const TAIL = {
   'TAIL.SIMPLE.REGULAR': {
     id: 'TAIL.SIMPLE.REGULAR',
     type: 'shape',
-    TAIL: 'TAIL',
+    category: 'TAIL',
     group: 'SIMPLE',
     name: 'REGULAR',
     rate: 40,
@@ -25,7 +25,7 @@ export const TAIL = {
   'TAIL.HAIRY.REGULAR': {
     id: 'TAIL.HAIRY.REGULAR',
     type: 'shape',
-    TAIL: 'TAIL',
+    category: 'TAIL',
     group: 'HAIRY',
     name: 'REGULAR',
     rate: 30,
@@ -50,7 +50,7 @@ export const TAIL = {
   'TAIL.CURLY.REGULAR': {
     id: 'TAIL.CURLY.REGULAR',
     type: 'shape',
-    TAIL: 'TAIL',
+    category: 'TAIL',
     group: 'CURLY',
     name: 'REGULAR',
     rate: 20,
@@ -71,7 +71,7 @@ export const TAIL = {
   'TAIL.SPIKY.REGULAR': {
     id: 'TAIL.SPIKY.REGULAR',
     type: 'shape',
-    TAIL: 'TAIL',
+    category: 'TAIL',
     group: 'GROUP',
     name: 'REGULAR',
     rate: 10,

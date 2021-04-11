@@ -1,6 +1,7 @@
 import React from 'react';
 import { bemClassConditionalModifier } from '../../utils';
 import Body from './svg/Body';
+import EyeLids from './svg/EyeLids';
 import Eyes from './svg/Eyes';
 import Head from './svg/Head';
 import Nose from './svg/Nose';
@@ -35,7 +36,7 @@ function SVG({ onGrid = false, data }) {
       {/* EYES */}
       <Eyes eyeColorId={data.eyeColorId} />
       {/* EYE_LIDS */}
-
+      <EyeLids eyeLidsId={data.eyeLidsId} furId={data.furId} />
       {/* EYE_ACCESSORIES */}
 
       {/* FACE_VARIATIONS */}

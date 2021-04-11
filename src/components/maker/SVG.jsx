@@ -3,9 +3,12 @@ import { bemClassConditionalModifier } from '../../utils';
 import Body from './svg/Body';
 import EyeLids from './svg/EyeLids';
 import Eyes from './svg/Eyes';
+import EyeVariation from './svg/EyeVariation';
 import Head from './svg/Head';
+import Mouth from './svg/Mouth';
 import Nose from './svg/Nose';
 import Tail from './svg/Tail';
+import Underwear from './svg/Underwear';
 
 function SVG({ onGrid = false, data }) {
   const onGridClass = bemClassConditionalModifier('svg-squirrel', 'on-grid', onGrid);
@@ -24,7 +27,7 @@ function SVG({ onGrid = false, data }) {
       {/* BODY */}
       <Body furId={data.furId} />
       {/* UNDERWEAR */}
-
+      <Underwear underwearId={data.underwearId} mainColor={data.mainColor} />
       {/* CLOTHING */}
 
       {/* CLOTHING_ACCESSORIES */}
@@ -32,7 +35,7 @@ function SVG({ onGrid = false, data }) {
       {/* HEAD */}
       <Head furId={data.furId} snoutId={data.snoutId} />
       {/* EYES_VARIATIONS */}
-
+      <EyeVariation eyeVariationId={data.eyeVariationId} mainColor={data.mainColor} />
       {/* EYES */}
       <Eyes eyeColorId={data.eyeColorId} />
       {/* EYE_LIDS */}
@@ -45,9 +48,8 @@ function SVG({ onGrid = false, data }) {
 
       {/* NOSE */}
       <Nose noseId={data.noseId} />
-
       {/* MOUTH */}
-
+      <Mouth mouthId={data.mouthId} />
       {/* RINGS */}
 
       {/* BANGS */}

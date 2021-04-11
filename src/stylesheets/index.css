@@ -1772,6 +1772,18 @@ body {
   fill: #ffffff;
 }
 
+.svg-squirrel-tooth {
+  fill: #ffffff;
+}
+
+.svg-squirrel-mouth-inside {
+  fill: #661a1a;
+}
+
+.svg-squirrel-mouth-tongue {
+  fill: #cc3333;
+}
+
 .tail-color-here {
   fill: brown;
 }

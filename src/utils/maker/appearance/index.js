@@ -1,28 +1,33 @@
 import * as COLOR from './color';
 import * as SHAPE from './shape';
+import * as ACCESSORY from './accessory';
+import * as FEATURE from './feature';
 
 export const APPEARANCE = {
+  ACCESSORY,
   COLOR,
+  FEATURE,
   SHAPE,
 };
 
 export const SVG_LAYERS = [
-  'TAIL', // 4-8 variations
+  'TAIL', // 4-8 variations [DONE 4]
   'TAIL_ACCESSORIES', // 4-8 variations
   'BACK', // (16 variations v2.0)
   'HAIR_STYLE', // 16-32 variations
-  'BODY',
+  'BODY', // [DONE 1]
+  'UNDERWEAR', // [DONE 4]
   'CLOTHING', // 4 variations (32 v2.0)
   'CLOTHING_ACCESSORIES', // (16 variations v2.0)
-  'HEAD',
+  'HEAD', // [DONE 1]
   'EYES_VARIATIONS', // 4-8 variations (dark circles, mascara, makeup, none)
-  'EYES',
+  'EYES', // [DONE 1]
+  'EYE_LIDS', // [DONE 16]
   'EYES_ACCESSORIES',
   'FACE_VARIATIONS', // 16 (mole 4, freckles, rosacea, acne, scar 4, tattoo 4, none)
   'FACIAL_HAIR', // 8 variations
-  'NOSE',
-  'MOUTH',
-
+  'NOSE', // [DONE 1]
+  'MOUTH', // [DONE 16]
   'RINGS', // 8 variations (including nose and ear rings, no mouth)
   'BANGS', // 16-32 variations
   'HEAD_PIECE', // 16 variations
@@ -79,3 +84,7 @@ export const getRandomAppearanceId = (function () {
 
   return generate;
 })();
+
+export const getRandomColor = () => {
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+};

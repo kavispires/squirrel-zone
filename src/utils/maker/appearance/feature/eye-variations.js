@@ -3,7 +3,7 @@ import React from 'react';
 export const EYE_VARIATION = {
   'EYE_VARIATION.SIMPLE.NONE': {
     id: 'EYE_VARIATION.SIMPLE.NONE',
-    type: 'accessory',
+    type: 'feature',
     category: 'EYE_VARIATION',
     group: 'SIMPLE',
     name: 'NONE',
@@ -16,7 +16,7 @@ export const EYE_VARIATION = {
   },
   'EYE_VARIATION.NATURAL.DARK_CIRCLES': {
     id: 'EYE_VARIATION.NATURAL.DARK_CIRCLES',
-    type: 'accessory',
+    type: 'feature',
     category: 'EYE_VARIATION',
     group: 'NATURAL',
     name: 'DARK_CIRCLES',
@@ -44,7 +44,7 @@ export const EYE_VARIATION = {
   },
   'EYE_VARIATION.ACCENT.EYE_LINER': {
     id: 'EYE_VARIATION.ACCENT.EYE_LINER',
-    type: 'accessory',
+    type: 'feature',
     category: 'EYE_VARIATION',
     group: 'ACCENT',
     name: 'EYE_LINER',
@@ -58,7 +58,7 @@ export const EYE_VARIATION = {
   },
   'EYE_VARIATION.MAKEUP.EYE_SHADOW': {
     id: 'EYE_VARIATION.MAKEUP.EYE_SHADOW',
-    type: 'accessory',
+    type: 'feature',
     category: 'EYE_VARIATION',
     group: 'MAKEUP',
     name: 'EYE_SHADOW',

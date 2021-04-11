@@ -30,6 +30,7 @@ function Character() {
     mouthId: getRandomAppearanceId('SHAPE', 'MOUTH'),
     underwearId: getRandomAppearanceId('ACCESSORY', 'UNDERWEAR'),
     eyeVariationId: getRandomAppearanceId('FEATURE', 'EYE_VARIATION'),
+    faceVariationId: getRandomAppearanceId('FEATURE', 'FACE_VARIATION'),
   };
 
   return (

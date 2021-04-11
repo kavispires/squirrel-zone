@@ -4,6 +4,7 @@ import Body from './svg/Body';
 import EyeLids from './svg/EyeLids';
 import Eyes from './svg/Eyes';
 import EyeVariation from './svg/EyeVariation';
+import FaceVariation from './svg/FaceVariation';
 import Head from './svg/Head';
 import Mouth from './svg/Mouth';
 import Nose from './svg/Nose';
@@ -34,6 +35,8 @@ function SVG({ onGrid = false, data }) {
 
       {/* HEAD */}
       <Head furId={data.furId} snoutId={data.snoutId} />
+      {/* FACE_VARIATIONS */}
+      <FaceVariation faceVariationId={data.faceVariationId} snoutId={data.snoutId} />
       {/* EYES_VARIATIONS */}
       <EyeVariation eyeVariationId={data.eyeVariationId} mainColor={data.mainColor} />
       {/* EYES */}
@@ -41,8 +44,6 @@ function SVG({ onGrid = false, data }) {
       {/* EYE_LIDS */}
       <EyeLids eyeLidsId={data.eyeLidsId} furId={data.furId} />
       {/* EYE_ACCESSORIES */}
-
-      {/* FACE_VARIATIONS */}
 
       {/* FACIAL_HAIR */}
 

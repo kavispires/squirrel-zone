@@ -1,4 +1,5 @@
 import React from 'react';
+import basicStyles from '../../styles';
 
 export const EYE_VARIATION = {
   'EYE_VARIATION.SIMPLE.NONE': {
@@ -8,11 +9,7 @@ export const EYE_VARIATION = {
     group: 'SIMPLE',
     name: 'NONE',
     rate: 70,
-    value: () => (
-      <g>
-        <g></g>
-      </g>
-    ),
+    value: () => <g></g>,
   },
   'EYE_VARIATION.NATURAL.DARK_CIRCLES': {
     id: 'EYE_VARIATION.NATURAL.DARK_CIRCLES',
@@ -51,8 +48,11 @@ export const EYE_VARIATION = {
     rate: 10,
     value: () => (
       <g>
-        <ellipse cx="478.8" cy="353.8" rx="74" ry="65.2" />
-        <path d="M649.7 288.6c-29.3 0-53.1 29.3-53.1 65.2 0 36 23.8 65.2 53.1 65.2s53.1-29.3 53.1-65.2c-.1-36-23.9-65.2-53.1-65.2z" />
+        <ellipse style={basicStyles.baseFill} cx="478.8" cy="353.8" rx="74" ry="65.2" />
+        <path
+          style={basicStyles.baseFill}
+          d="M649.7 288.6c-29.3 0-53.1 29.3-53.1 65.2 0 36 23.8 65.2 53.1 65.2s53.1-29.3 53.1-65.2c-.1-36-23.9-65.2-53.1-65.2z"
+        />
       </g>
     ),
   },
@@ -65,7 +65,7 @@ export const EYE_VARIATION = {
     rate: 5,
     value: (mainColor) => (
       <g>
-        <ellipse style={{ opacity: 0.7, ...mainColor }} class="st0" cx="478.8" cy="347.5" rx="74" ry="66.3" />
+        <ellipse style={{ opacity: 0.7, ...mainColor }} cx="478.8" cy="347.5" rx="74" ry="66.3" />
         <path
           style={{ opacity: 0.7, ...mainColor }}
           d="M649.7,281.3c-29.3,0-53.1,29.7-53.1,66.3s23.8,66.3,53.1,66.3c29.3,0,53.1-29.7,53.1-66.3

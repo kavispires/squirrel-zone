@@ -8,39 +8,6 @@
   fill: none;
 }
 
-.svg-squirrel-base-stroke {
-  stroke: #000000;
-  stroke-width: 6.4829;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-miterlimit: 10;
-  fill: green;
-}
-
-.svg-squirrel-base-fill {
-  fill: #000000;
-}
-
-.svg-squirrel-eye-ball {
-  fill: #ffffff;
-}
-
-.svg-squirrel-tooth {
-  fill: #ffffff;
-}
-
-.svg-squirrel-mouth-inside {
-  fill: #661a1a;
-}
-
-.svg-squirrel-mouth-tongue {
-  fill: #cc3333;
-}
-
-.tail-color-here {
-  fill: brown;
-}
-
 .what-is-this {
   fill: hotpink;
 }

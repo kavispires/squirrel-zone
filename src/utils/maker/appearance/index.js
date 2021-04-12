@@ -1,9 +1,11 @@
-import * as COLOR from './color';
-import * as SHAPE from './shape';
 import * as ACCESSORY from './accessory';
+import * as BASE from './base';
+import * as COLOR from './color';
 import * as FEATURE from './feature';
+import * as SHAPE from './shape';
 
 export const APPEARANCE = {
+  BASE,
   ACCESSORY,
   COLOR,
   FEATURE,

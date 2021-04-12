@@ -1,4 +1,5 @@
 import React from 'react';
+import basicStyles from '../../styles';
 
 export const FACE_VARIATION = {
   'FACE_VARIATION.SNOUT.NONE': {
@@ -70,7 +71,7 @@ export const FACE_VARIATION = {
     rate: 12,
     value: () => (
       <g>
-        <circle className="svg-squirrel-base-fill" cx="414.6" cy="402.4" r="3.1" />
+        <circle style={basicStyles.baseFill} cx="414.6" cy="402.4" r="3.1" />
       </g>
     ),
   },
@@ -83,7 +84,7 @@ export const FACE_VARIATION = {
     rate: 9,
     value: () => (
       <g>
-        <circle className="svg-squirrel-base-fill" cx="502.1" cy="442.4" r="3.1" />
+        <circle style={basicStyles.baseFill} cx="502.1" cy="442.4" r="3.1" />
       </g>
     ),
   },
@@ -96,7 +97,7 @@ export const FACE_VARIATION = {
     rate: 6,
     value: () => (
       <g>
-        <circle className="svg-squirrel-base-fill" cx="616.1" cy="465" r="3.1" />
+        <circle style={basicStyles.baseFill} cx="616.1" cy="465" r="3.1" />
       </g>
     ),
   },
@@ -109,7 +110,7 @@ export const FACE_VARIATION = {
     rate: 3,
     value: () => (
       <g>
-        <circle className="svg-squirrel-base-fill" cx="600.6" cy="310.4" r="3.1" />
+        <circle style={basicStyles.baseFill} cx="600.6" cy="310.4" r="3.1" />
       </g>
     ),
   },
@@ -142,7 +143,6 @@ export const FACE_VARIATION = {
         <path
           style={{ opacity: 0.1, fill: '#000000' }}
           d="M589.3 308.8c.8-1.9 1.6-3.8 1.9-5.8.4-2.4.1-5-1.3-6.9-1.3-1.8-3.4-2.9-5.5-3.6-6.7-2.5-15.2-2.4-22.2-1.5-3.9.5-7.9 2.6-9.6 6.2-1.1 2.4-1.1 5.2-1 7.9.3 6.4 14.8 24.8 22.3 24.2 9.5-.6 11.9-12.6 14.9-19.5.2-.3.4-.7.5-1z"
-          class="st0"
         />
       </g>
     ),
@@ -194,7 +194,7 @@ export const FACE_VARIATION = {
           d="M582.6 520.6c2.4 3.9 2.8 8.9.9 13.1-1.8 4-5.5 6.7-9.5 8.2-5 1.8-8.8 1.5-12.9-2.1-2.5 2.5-5.4 4.7-8.7 5.9-5.7 2-11.6.3-16-3.8-4.6-4.2-6.9-11-6-17.1.4-2.5 1.5-4.9 3.4-6.5"
         />
         <path
-          className="svg-squirrel-base-fill"
+          style={basicStyles.baseFill}
           d="M584.5 519.4c1.5 1.4 2.5 3.3 3 5.3.6 2 .6 4.1.3 6.2-.3 2.1-.9 4.1-2 6-1.1 1.9-2.5 3.5-4.1 4.8-1.6 1.3-3.3 2.4-5.1 3.2-1.8.8-3.6 1.4-5.8 1.8-2.1.3-4.6.2-6.8-.6s-4-2-5.5-3.4l5.1-.2c-1.7 1.9-3.7 3.6-5.9 5-1.1.7-2.3 1.3-3.6 1.8-1.3.5-2.7.9-4.1 1.1-2.9.4-5.8.1-8.5-.8s-5.1-2.4-7.1-4.2c-4.2-3.6-6.7-8.7-7.5-13.9-.4-2.6-.3-5.3.5-8s2.4-5.3 5-6.8c1-.6 2.3-.2 2.9.8.4.7.4 1.5 0 2.2l-.2.2c-.9 1.5-1.4 3.1-1.5 4.9-.1 1.8.1 3.7.4 5.5.7 3.7 2.8 7 5.5 9.3 1.4 1.2 3 2 4.6 2.6 1.6.5 3.3.7 4.9.4.8-.1 1.6-.3 2.4-.6.8-.3 1.6-.7 2.5-1.1 1.6-.9 3.1-2.2 4.6-3.5 1.4-1.3 3.6-1.4 5.1-.3 1.1.8 2.1 1.5 3.1 1.8 1 .3 2 .4 3.2.2 1.2-.2 2.6-.6 3.9-1.1 1.3-.5 2.5-1.2 3.5-2 2.1-1.6 3.4-3.6 3.9-6.2.3-1.3.2-2.6.2-3.9-.1-.7-.1-1.3-.2-2l-.4-2.1-.1-.3c-.2-1.3.6-2.5 1.9-2.7.6-.1 1.4.1 1.9.6z"
         />
       </g>

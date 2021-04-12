@@ -31,6 +31,8 @@ function Character() {
     underwearId: getRandomAppearanceId('ACCESSORY', 'UNDERWEAR'),
     eyeVariationId: getRandomAppearanceId('FEATURE', 'EYE_VARIATION'),
     faceVariationId: getRandomAppearanceId('FEATURE', 'FACE_VARIATION'),
+    hairId: getRandomAppearanceId('COLOR', 'HAIR'),
+    facialHairId: getRandomAppearanceId('FEATURE', 'FACIAL_HAIR'),
   };
 
   return (

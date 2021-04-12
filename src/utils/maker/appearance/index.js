@@ -22,12 +22,12 @@ export const SVG_LAYERS = [
   'CLOTHING', // 4 variations (32 v2.0)
   'CLOTHING_ACCESSORIES', // (16 variations v2.0)
   'HEAD', // [DONE 1]
-  'EYES_VARIATIONS', // 4-8 variations (dark circles, mascara, makeup, none)
+  'FACE_VARIATIONS', // [DONE 16]
+  'EYES_VARIATIONS', // [DONE 4]
   'EYES', // [DONE 1]
   'EYE_LIDS', // [DONE 16]
   'EYES_ACCESSORIES',
-  'FACE_VARIATIONS', // 16 (mole 4, freckles, rosacea, acne, scar 4, tattoo 4, none)
-  'FACIAL_HAIR', // 8 variations
+  'FACIAL_HAIR', // [DONE 16]
   'NOSE', // [DONE 1]
   'MOUTH', // [DONE 16]
   'RINGS', // 8 variations (including nose and ear rings, no mouth)

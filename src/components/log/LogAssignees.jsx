@@ -2,20 +2,15 @@ import React from 'react';
 
 // Design Resources
 import { ApiOutlined } from '@ant-design/icons';
-// State
-import useGlobalState from '../../states/useGlobalState';
 
-function LogAssignees({ partId }) {
-  const [lineDistribution] = useGlobalState('lineDistribution');
-  const [activeMembers] = useGlobalState('activeMembers');
-
-  if (!Boolean(lineDistribution?.[partId])) {
+function LogAssignees({ partId, members, assignedParts }) {
+  if (!Boolean(assignedParts?.[partId])) {
     return <ApiOutlined />;
   }
 
-  const distributionAssignees = lineDistribution?.[partId] ?? {};
+  const distributionAssignees = assignedParts?.[partId] ?? {};
   const assignedMembers = Object.keys(distributionAssignees).map((memberId) => {
-    return activeMembers[memberId];
+    return members[memberId];
   });
 
   return (

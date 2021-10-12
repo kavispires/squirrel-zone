@@ -29,7 +29,7 @@ function Controls({ playerRef, playVideo, pauseVideo, isPlaying }) {
     <div className="distributor-grid__controls distributor-controls">
       <Button
         icon={<PlayCircleOutlined />}
-        danger={isRecording}
+        danger={true}
         type={isRecording ? 'primary' : null}
         onClick={toggleRecording}
         className="distributor-controls__record"

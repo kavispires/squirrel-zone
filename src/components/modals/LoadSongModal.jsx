@@ -12,14 +12,25 @@ import store from '../../services/store';
 import LoadingContainer from '../global/LoadingContainer';
 import { CheckOutlined } from '@ant-design/icons';
 
-function LoadSongModal({ buttonLabel = 'Load Song', onBeforeLoad = () => {}, onAfterLoad = () => {} }) {
+function LoadSongModal({
+  buttonLabel = 'Load Song',
+  onBeforeLoad = () => {},
+  onLoad = loadSongState,
+  onAfterLoad = () => {},
+  className = '',
+}) {
   const [isSongLoading] = useLoadingState('isSongLoading');
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <Fragment>
-      <Button type="primary" onClick={() => setIsModalVisible(true)} disabled={isSongLoading}>
+      <Button
+        className={className}
+        type="primary"
+        onClick={() => setIsModalVisible(true)}
+        disabled={isSongLoading}
+      >
         {isSongLoading ? <Spin size="small" /> : buttonLabel}
       </Button>
 
@@ -28,6 +39,7 @@ function LoadSongModal({ buttonLabel = 'Load Song', onBeforeLoad = () => {}, onA
           isModalVisible={isModalVisible}
           setIsModalVisible={setIsModalVisible}
           onBeforeLoad={onBeforeLoad}
+          onLoad={onLoad}
           onAfterLoad={onAfterLoad}
         />
       )}
@@ -35,7 +47,13 @@ function LoadSongModal({ buttonLabel = 'Load Song', onBeforeLoad = () => {}, onA
   );
 }
 
-function SongModal({ isModalVisible, setIsModalVisible, onBeforeLoad = () => {}, onAfterLoad = () => {} }) {
+function SongModal({
+  isModalVisible,
+  setIsModalVisible,
+  onLoad = loadSongState,
+  onBeforeLoad = () => {},
+  onAfterLoad = () => {},
+}) {
   const [isSongLoading] = useLoadingState('isSongLoading');
   const [activeGroupSongs] = useGlobalState('activeGroupSongs');
 
@@ -57,15 +75,15 @@ function SongModal({ isModalVisible, setIsModalVisible, onBeforeLoad = () => {},
     async function fetchSongData() {
       onBeforeLoad();
 
-      await loadSongState(selectedId);
+      const response = await onLoad(selectedId);
 
       setSelectedId(null);
-      onAfterLoad();
+      onAfterLoad(response);
       setIsModalVisible(false);
     }
 
     fetchSongData();
-  }, [selectedId, setIsModalVisible, onBeforeLoad, onAfterLoad]);
+  }, [selectedId, setIsModalVisible, onBeforeLoad, onAfterLoad, onLoad]);
 
   const columns = [
     {

@@ -12,9 +12,9 @@ import {
 } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
-
+// Models
+import { Line } from '../../models';
 // Engine and utilities
-import { Line } from '../../utils/distributor';
 import { bemClass, getBemModifier } from '../../utils';
 // Components
 import LogLine from './LogLine';
@@ -163,7 +163,14 @@ function LogSectionCompact({ section, onCheckboxChange, onListSelection, seekAnd
   );
 }
 
-function LogSectionDistribute({ section, seekAndPlay, assignMembers, onLineSelection }) {
+function LogSectionDistribute({
+  section,
+  seekAndPlay,
+  members,
+  assignMembers,
+  assignedParts,
+  onLineSelection,
+}) {
   const [lines] = useDistributorState('lines');
 
   const onPlaySection = useCallback(() => {
@@ -188,7 +195,9 @@ function LogSectionDistribute({ section, seekAndPlay, assignMembers, onLineSelec
             <LogLine.Distribute
               key={line.key}
               line={line}
+              members={members}
               assignMembers={assignMembers}
+              assignedParts={assignedParts}
               onLineSelection={onLineSelection}
             />
           );

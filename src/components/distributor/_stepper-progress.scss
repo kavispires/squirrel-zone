@@ -1,7 +1,4 @@
 .stepper-progress {
-  background: get-color(white);
-  padding: get-unit(10 0 4 0);
-  margin-bottom: get-unit(2);
-
-  @include light-gray-border;
+  padding: get-unit(2 6);
+  margin-bottom: get-unit(4);
 }

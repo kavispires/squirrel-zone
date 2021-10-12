@@ -7,9 +7,16 @@ const initialState = {
     description: null,
   },
   isLoading: false,
+
   activeGroup: null,
   activeGroupSongs: {},
   activeMembers: null,
+  activeSong: null,
+  activeSongData: null,
+  activeDistribution: null,
+  activeDistributionData: null,
+
+  // TODO: Probably can be removed
   loadedLineDistribution: {},
   lineDistribution: {},
   stats: {},

@@ -153,3 +153,14 @@ export const IMAGE_URL = {
   AVATAR: `${process.env.PUBLIC_URL}/images/members/`,
   GROUP: `${process.env.PUBLIC_URL}/images/groups/`,
 };
+
+export const NEW_INSTANCE_ID = '_new';
+
+export const DISTRIBUTOR_STEPS = [
+  'Start',
+  'Lyrics & Sections',
+  'Time & Sync',
+  'Preview',
+  'Adjustments',
+  'Metadata & Save',
+];

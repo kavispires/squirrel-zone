@@ -1,25 +1,25 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // Design Resources
-import {
-  Button,
-  InputNumber,
-  Form,
-  Input,
-  Checkbox,
-  Divider,
-  Tooltip,
-  Progress,
-  Select,
-  TimePicker,
-} from 'antd';
+import { Button, InputNumber, Form, Input, Checkbox, Select, TimePicker } from 'antd';
+// API
+import API from '../../adapters';
 // State
 import useDistributorState from '../../states/useDistributorState';
+import useLoadingState from '../../states/useLoadingState';
+// Utilities
 import { MUSIC_SCALE } from '../../utils/constants';
+// Components
+import StepTitle from './StepTitle';
+import StepActions from './StepActions';
+import SongProgress from './SongProgress';
 
 function SongMetadata() {
   const [song] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
+  const [isSongLoading] = useLoadingState('isSongLoading');
+
+  const [success, setSuccess] = useState(false);
 
   const onValuesChange = useCallback(
     (data) => {
@@ -28,9 +28,18 @@ function SongMetadata() {
     [song]
   );
 
+  const onSave = async () => {
+    try {
+      song.sort();
+      await API.saveSong(song.serialize());
+      setSuccess(true);
+      setStep(0);
+    } catch (_) {}
+  };
+
   return (
     <div className="song-metadata">
-      <h2 className="song-metadata__title">Finish Song Metadata</h2>
+      <StepTitle>Finish Song Metadata & Save</StepTitle>
 
       <Form
         layout="vertical"
@@ -99,18 +108,13 @@ function SongMetadata() {
         </div>
       </Form>
 
-      <div className="song-metadata__actions">
-        <Divider />
-        <Tooltip title="Song Completion Rate">
-          <Progress percent={song?.completion} />
-        </Tooltip>
-        <Divider />
-        <div className="song-metadata__action">
-          <Button type="primary" disabled={!song?.completion} onClick={() => setStep('5')}>
-            Next Step: Save On Database
-          </Button>
-        </div>
-      </div>
+      <SongProgress />
+
+      <StepActions>
+        <Button type="primary" disabled={!song?.completion ?? isSongLoading ?? success} onClick={onSave}>
+          Save On Database
+        </Button>
+      </StepActions>
     </div>
   );
 }

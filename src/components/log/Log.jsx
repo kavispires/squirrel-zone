@@ -12,8 +12,8 @@ import {
   getDuplicatedData,
   batchDeserializeInstancesSameData,
   serializeKey,
-} from '../../utils/distributor';
-import { bemClassConditionalModifier } from '../../utils';
+  bemClassConditionalModifier,
+} from '../../utils';
 // Components
 import LogSection from './LogSection';
 
@@ -23,6 +23,8 @@ function Log({
   defaultCompactSetting = true,
   locked = false,
   assignMembers = () => {},
+  members = {},
+  assignedParts = {},
 }) {
   const [song] = useDistributorState('song');
   const [sections] = useDistributorState('sections');
@@ -221,7 +223,9 @@ function Log({
                 key={section.key}
                 section={section}
                 seekAndPlay={seekAndPlay}
+                members={members}
                 assignMembers={assignMembers}
+                assignedParts={assignedParts}
                 onLineSelection={onLineSelection}
               />
             );

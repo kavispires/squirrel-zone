@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 // Design Resources
-import { Button, Table } from 'antd';
-import { EditOutlined, FileAddOutlined, FileTextOutlined, YoutubeOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { FileAddOutlined } from '@ant-design/icons';
 // Store
 import store from '../../services/store';
 // Utilities
-import { DISTRIBUTION_NAME } from '../../utils/constants';
+import { DISTRIBUTION_NAME, NEW_INSTANCE_ID } from '../../utils/constants';
 // Components
 import ButtonContainer from '../ButtonContainer';
+import GroupDistributionTables from './GroupDistributionTables';
 
-function GroupDistributions({ group, members, activateDistribution, activateLyrics }) {
+function GroupDistributions({ group, members, goToDistribution }) {
   const [groupDistributions, setGroupDistributions] = useState(null);
   const [groupedDistributions, setGroupedDistributions] = useState([]);
 
@@ -63,153 +65,37 @@ function GroupDistributions({ group, members, activateDistribution, activateLyri
 
   if (!groupDistributions) {
     return (
-      <div>
+      <div className="group-distributions">
         <p>Distributions not loaded yet.</p>
       </div>
     );
   }
 
-  const columns = [
-    {
-      title: 'Title',
-      dataIndex: 'songTitle',
-      className: 'group-distribution-table__title',
-    },
-    {
-      title: 'Snippet',
-      dataIndex: 'id',
-      className: 'group-distribution-table__snippet',
-      render: (_, data) => <GroupDistributionSnippet distribution={data} members={members} />,
-    },
-    {
-      title: 'Edit',
-      dataIndex: 'id',
-      className: 'group-distribution-table__button',
-      render: (_, data) => (
-        <Button
-          type="default"
-          size="small"
-          icon={<EditOutlined />}
-          onClick={() => activateDistribution(data, true)}
-        >
-          Edit
-        </Button>
-      ),
-    },
-    {
-      title: 'Lyrics',
-      dataIndex: 'id',
-      className: 'group-distribution-table__button',
-      render: (_, data) => (
-        <Button
-          type="primary"
-          size="small"
-          icon={<FileTextOutlined />}
-          onClick={() => activateLyrics(data)}
-          disabled
-        >
-          Lyrics
-        </Button>
-      ),
-    },
-    {
-      title: 'View',
-      dataIndex: 'id',
-      className: 'group-distribution-table__button',
-      render: (_, data) => (
-        <Button
-          type="primary"
-          size="small"
-          icon={<YoutubeOutlined />}
-          onClick={() => activateDistribution(data)}
-        >
-          View
-        </Button>
-      ),
-    },
-  ];
-
   return (
     <div className="group-distributions">
-      <ButtonContainer center fullWidth>
-        <Button type="default" icon={<FileAddOutlined />} onClick={() => activateDistribution()}>
+      <ButtonContainer alignment="center">
+        <Button
+          type="default"
+          icon={<FileAddOutlined />}
+          onClick={() => goToDistribution(NEW_INSTANCE_ID, 'new')}
+        >
           Create a Distribution for this group
         </Button>
       </ButtonContainer>
-      {groupedDistributions &&
-        groupedDistributions?.map((gDist) => (
-          <div key={`${group.id}-${gDist.sectionTitle}`}>
-            <h3>
-              {gDist.sectionTitle} ({gDist.distributions.length} songs)
-            </h3>
-            <OverallDistribution distributions={gDist.distributions} members={members} />
-            <Table
-              dataSource={gDist.distributions}
-              columns={columns}
-              showHeader={false}
-              size="small"
-              tableLayout="auto"
-            />
-          </div>
-        ))}
-    </div>
-  );
-}
-
-function OverallDistribution({ distributions, members }) {
-  const overallTotal = distributions.length * 100;
-
-  const overallDistribution = distributions.reduce(
-    (acc, dist) => {
-      Object.keys(members).forEach((memberKey) => {
-        if (acc.stats[memberKey] === undefined) {
-          acc.stats[memberKey] = {
-            absoluteProgress: 0,
-            overallTotal: 0,
-          };
-        }
-        acc.stats[memberKey].overallTotal += dist?.stats[memberKey]?.absoluteProgress ?? 0;
-
-        acc.stats[memberKey].absoluteProgress = Math.round(
-          (acc.stats[memberKey].overallTotal * 100) / overallTotal
-        );
-      });
-      return acc;
-    },
-    {
-      id: 'overall',
-      stats: {},
-    }
-  );
-
-  return (
-    <div className="group-distribution-overall">
-      <span className="group-distribution-overall__title">Overall</span>
-      <GroupDistributionSnippet
-        distribution={overallDistribution}
+      <GroupDistributionTables
+        group={group}
         members={members}
-        className="group-distribution-overall__snippet"
+        goToDistribution={goToDistribution}
+        groupedDistributions={groupedDistributions}
       />
     </div>
   );
 }
 
-function GroupDistributionSnippet({ distribution, members, className = '' }) {
-  return (
-    <ul className={`group-distribution-snippet ${className}`}>
-      {Object.entries(members).map(([memberKey, memberData]) => {
-        const progress = distribution?.stats[memberKey]?.absoluteProgress ?? 0;
-        return (
-          <span
-            key={`${distribution.id}${memberKey}`}
-            style={{ width: `${progress}%`, backgroundColor: memberData.color }}
-          >
-            {progress > 5 ? `${progress}%` : ''}
-          </span>
-        );
-      })}
-    </ul>
-  );
-}
+GroupDistributions.propTypes = {
+  group: PropTypes.object,
+  members: PropTypes.object,
+  goToDistribution: PropTypes.func,
+};
 
 export default GroupDistributions;

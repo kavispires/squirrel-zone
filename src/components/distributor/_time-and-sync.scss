@@ -1,4 +1,6 @@
 .distributor-grid {
+  background: white;
+
   display: grid;
   grid-template-columns: [start] 40% [middle] 60fr [end];
   grid-template-rows: [start] get-unit(1) [first] 180px [second] auto [third] auto [fourth] auto [end];
@@ -46,8 +48,8 @@
     grid-column-end: end;
     grid-row-start: first;
     grid-row-end: fourth;
-
-    max-height: 75vh;
+    height: 75vh;
+    resize: vertical;
     overflow-y: scroll;
     @include light-gray-border;
   }
@@ -57,12 +59,5 @@
     grid-column-end: end;
     grid-row-start: fourth;
     grid-row-end: end;
-  }
-}
-
-.time-and-sync {
-  &__action {
-    text-align: center;
-    margin: get-unit(1);
   }
 }

@@ -6,8 +6,7 @@ import { ClockCircleOutlined, DeleteFilled } from '@ant-design/icons';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
-import { bemClass, getBemModifier, getTimestampDuration } from '../../utils';
-import { deserializeKey } from '../../utils/distributor';
+import { bemClass, getBemModifier, getTimestampDuration, deserializeKey } from '../../utils';
 
 function TimestampsBank() {
   const [unassignedTimestamps, setUnassignedTimestamps] = useDistributorState('unassignedTimestamps');

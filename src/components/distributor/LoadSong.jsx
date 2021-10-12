@@ -1,51 +1,107 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 
 // Design Resources
-import { Button, Input } from 'antd';
+import { Button, Input, message, Typography } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
-// Engine and utilities
-import { Song } from '../../utils/distributor';
+// Models
+import { Song } from '../../models';
+// Utilities
+import { extractYoutubeIdFromUrl } from '../../utils';
 // Components
 import LoadSongModal from '../modals/LoadSongModal';
+import StepTitle from './StepTitle';
+import StepActions from './StepActions';
 
 function LoadSong() {
-  const [, setSong] = useDistributorState('song');
+  const [song, setSong] = useDistributorState('song');
   const [, setStep] = useDistributorState('step');
   const [videoId, setVideoId] = useDistributorState('videoId');
-  const [tempVideoId, setTempVideoId] = useState(videoId);
 
-  const onAddVideoId = useCallback(
+  const parseYoutubeLink = useCallback(
     (event) => {
-      const value = event?.target?.value ?? tempVideoId;
+      const value = event?.target?.value;
 
-      if (!value) {
-        alert('Invalid video id');
-        return;
+      try {
+        const newVideoId = extractYoutubeIdFromUrl(value);
+        setVideoId(newVideoId);
+      } catch (error) {
+        message.error(`Failed to parse youtube link error, ${error}`);
       }
-
-      setVideoId(value);
-      setSong(new Song({ videoId: value }));
-      setStep('1');
     },
-    [setSong, setStep, setVideoId, tempVideoId]
+    [setVideoId]
   );
+
+  const startDistributorProcess = useCallback(() => {
+    if (!videoId) {
+      message.error('A youtube video id is required to proceed');
+      return;
+    }
+
+    if (!song?.id) {
+      setSong(new Song({ videoId }));
+    }
+
+    setStep(1);
+  }, [setSong, setStep, videoId, song?.id]);
 
   return (
     <div className="load-song">
-      <h2 className="load-song__title">Load Song</h2>
-      <Input
-        addonBefore="https://www.youtube.com/watch?v="
-        defaultValue={videoId}
-        onPressEnter={onAddVideoId}
-        placeholder="Insert Youtube video id"
-        onChange={(e) => setTempVideoId(e.target.value)}
-      />
-      <Button onClick={onAddVideoId} disabled={!tempVideoId} type="primary">
-        Start
-      </Button>
-      <span className="load-song__separator">or</span>
-      <LoadSongModal />
+      <StepTitle>How to Start</StepTitle>
+
+      <div className="load-song__container">
+        <div className="load-song__option">
+          <Typography.Title level={3} className="load-song__title">
+            Start Fresh
+          </Typography.Title>
+          <Typography.Text>Create a new Song by pasting a new youtube link</Typography.Text>
+          <Input
+            onPressEnter={parseYoutubeLink}
+            placeholder="Insert Youtube video id or youtube link"
+            onChange={parseYoutubeLink}
+            className="load-song__input"
+          />
+          <Button onClick={parseYoutubeLink} disabled={!videoId} type="primary">
+            Parse
+          </Button>
+        </div>
+
+        <span className="load-song__separator">or</span>
+
+        <div className="load-song__option">
+          <Typography.Title level={3} className="load-song__title">
+            Previously Created Song
+          </Typography.Title>
+          <Typography.Text>Click on the button below to edit a previously created song.</Typography.Text>
+          <LoadSongModal className="load-song__button" />
+        </div>
+      </div>
+
+      <div className="load-song__summary">
+        <Typography.Paragraph>
+          You've selected the following youtube video id. If everything checks out, you may go to the next
+          step.
+          <br />
+          You can also edit the video id here in case you have loaded a song and wants a new video attached to
+          it.
+        </Typography.Paragraph>
+        <Input
+          value={videoId}
+          onPressEnter={(e) => setVideoId(e.target.value)}
+          className="load-song__input"
+          onChange={(e) => setVideoId(e.target.value)}
+        />
+      </div>
+      <StepActions>
+        <Button
+          onClick={startDistributorProcess}
+          disabled={!videoId}
+          type="primary"
+          className="load-song__button"
+        >
+          {song?.id && videoId ? 'Continue with this Song' : videoId ? 'Create a new Song' : 'Start'}
+        </Button>
+      </StepActions>
     </div>
   );
 }

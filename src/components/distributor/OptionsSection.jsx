@@ -4,7 +4,7 @@ import React from 'react';
 import { Button, InputNumber, Form, Input, Select, Divider } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 // Engine and utilities
-import { SECTION } from '../../utils/distributor';
+import { SECTION } from '../../utils/enums';
 
 function OptionsSection({ section, onValuesChange }) {
   const initialValues = {

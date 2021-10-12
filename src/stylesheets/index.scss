@@ -12,37 +12,47 @@
 @import './global/reset';
 @import './global/app';
 
+// Chrome
+@import '../components/chrome/header';
+@import '../components/chrome/footer';
+
 // Global components
-@import '../components/global/header';
 @import '../components/global/loading';
 @import '../components/global/loading-container';
 
 // Pages
-@import '../components/login';
-@import '../components/distributor';
-@import '../components/admin';
-@import '../components/groups';
-@import '../components/distribute';
+@import '../pages/app';
+@import '../pages/admin';
+@import '../pages/home';
+@import '../pages/login';
+@import '../pages/distribution';
+@import '../pages/distributor';
+@import '../pages/not-found';
 @import './character-colors';
 @import './character';
 @import './svg';
 @import './creator';
 
-// Components
+// Common Components
 @import '../components/button-container';
-@import '../components/distributor/modal-options';
-@import '../components/distributor/stepper-progress';
+@import '../components/loading-checklist';
+@import '../components/member';
+
+// Components
+@import '../components/distribution/line-distribution';
+@import '../components/distributor/controls';
+@import '../components/distributor/key-capture';
 @import '../components/distributor/load-song';
 @import '../components/distributor/lyrics-and-sections';
+@import '../components/distributor/modal-options';
+@import '../components/distributor/song-metadata';
+@import '../components/distributor/stepper-progress';
 @import '../components/distributor/time-and-sync';
-@import '../components/distributor/key-capture';
-@import '../components/distributor/controls';
 @import '../components/distributor/timestamps-bank';
+@import '../components/group/group-card';
 @import '../components/group/group-distributions';
 @import '../components/group/group-members';
+@import '../components/group/groups-cards';
 @import '../components/log/log';
-@import '../components/distributor/preview';
-@import '../components/distributor/line-distribution';
-@import '../components/distributor/song-metadata';
-@import '../components/distributor/save-song';
-@import '../components/member';
+@import '../components/maker/grid';
+@import '../components/maker/svg.scss';

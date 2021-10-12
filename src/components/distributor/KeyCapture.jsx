@@ -5,7 +5,8 @@ import { Button } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
 // Engine and utilities
-import { ASSIGNEE, ASSIGNEE_LABEL, convertStoMS, generateTempId } from '../../utils/distributor';
+import { convertStoMS, generateTempId } from '../../utils';
+import { ASSIGNEE, ASSIGNEE_LABEL } from '../../utils/enums';
 import { useKeyDown, useKeyUp } from '../../utils/useKeypress';
 import { KEYS, KEY_ASSIGNEE } from '../../utils/constants';
 

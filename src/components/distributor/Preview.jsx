@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 // Design Resources
-import { Button, Divider, Typography } from 'antd';
+import { Button, Typography } from 'antd';
 // State
 import useDistributorState from '../../states/useDistributorState';
-// Temp
-import sampleGroupJson from '../../utils/mock/sampleGroup.json';
-// Engine and utilities
-import Previewer from '../../utils/distribution/previewer';
-// Components
-import LineDistribution from './LineDistribution';
+// Models
+import { Previewer } from '../../models';
+// Utilities
 import { buildMockDistribution } from '../../utils';
-
-const { Paragraph } = Typography;
+import sampleGroupJson from '../../utils/mock/sampleGroup.json';
+// Components
+import ViewAnimatedBars from '../distribution/ViewAnimatedBars';
+import StepActions from './StepActions';
+import StepTitle from './StepTitle';
 
 function Preview({ playerRef }) {
   const [song] = useDistributorState('song');
@@ -25,12 +25,12 @@ function Preview({ playerRef }) {
   const [previewLyrics, setPreviewLyrics] = useState({});
 
   useEffect(() => {
-    if (step === '3') {
+    if (step === 3) {
       const preview = new Previewer({
         songTitle: song.title ?? 'Untitled',
-        allParts: song.allPartsIds.map((partId) => parts[partId].data),
+        partsData: song.allPartsIds.map((partId) => parts[partId].data),
         members: sampleGroup.members,
-        distribution: buildMockDistribution(parts).data,
+        distribution: buildMockDistribution(parts),
       });
       setPreviewMembers(preview.members());
       setPreviewBars(preview.bars());
@@ -40,11 +40,12 @@ function Preview({ playerRef }) {
 
   return (
     <section className="preview">
-      <h2 className="preview__title">Preview</h2>
-      <Paragraph>Visualize how this songs plays.</Paragraph>
+      <StepTitle>Preview</StepTitle>
 
-      {step === '3' && previewBars.length && (
-        <LineDistribution
+      <Typography.Paragraph>Visualize how this songs plays.</Typography.Paragraph>
+
+      {Boolean(previewBars.length) && (
+        <ViewAnimatedBars
           playerRef={playerRef}
           members={previewMembers}
           bars={previewBars}
@@ -52,13 +53,11 @@ function Preview({ playerRef }) {
         />
       )}
 
-      <Divider />
-
-      <div className="lyrics-and-sections__action">
-        <Button type="primary" onClick={() => setStep('4')}>
-          Next Step: Song Metadata
+      <StepActions>
+        <Button type="primary" onClick={() => setStep(4)}>
+          Next Step: Adjustments
         </Button>
-      </div>
+      </StepActions>
     </section>
   );
 }

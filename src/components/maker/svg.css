@@ -1,0 +1,13 @@
+.svg-squirrel--on-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.svg-squirrel__base {
+  fill: none;
+}
+
+.what-is-this {
+  fill: hotpink;
+}

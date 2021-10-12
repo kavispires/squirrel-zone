@@ -47,11 +47,11 @@ function SVG({ onGrid = false, data }) {
       {/* EYE_ACCESSORIES */}
 
       {/* FACIAL_HAIR */}
-      <FacialHair facialHairId={data.facialHairId} hairColorId={data.hairColorId} />
+      <FacialHair facialHairId={'FACIAL_HAIR.BEARD.SHORT'} hairColorId={data.hairColorId} />
       {/* NOSE */}
       <Nose noseId={data.noseId} />
       {/* MOUTH */}
-      <Mouth mouthId={data.mouthId} />
+      <Mouth mouthId={'MOUTH.REGULAR.SMILE'} snoutId={data.snoutId} />
       {/* RINGS */}
 
       {/* BANGS */}

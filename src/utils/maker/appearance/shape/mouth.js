@@ -9,8 +9,13 @@ export const MOUTH = {
     group: 'REGULAR',
     name: 'SMILE',
     rate: 16,
-    value: () => (
+    value: (snoutColor) => (
       <g>
+        <path
+          style={snoutColor}
+          d="M518.4 521c12.2 4.1 26.4 3 39.3 2.6 9.4-.3 21.4-2 29.9-6.4 8.2-4.3 20-17.2 18.3-27.1-.8-4.5-4.4-7.9-8-10.6-12.9-9.4-29-13.1-44.8-15.5-10.1-1.5-20.4-2.6-30.6-3.1-7.3-.4-15-.5-21.8 2.3-9.3 3.8-12.1 16.1-10.5 25.2 1.5 8.6 6.5 16.3 12.5 22.7 4.7 4.9 10 8 15.7 9.9z"
+        />
+
         <path
           style={basicStyles.toothFill}
           d="M537.4 483.2s-4.4 28.3.7 29.9c5.2 1.7 19.3 2.3 25.6 1.8 2.8-.2 9.7-20.2 8.4-21.5-1.4-1.3-32.4-11.3-34.7-10.2z"
@@ -29,7 +34,7 @@ export const MOUTH = {
     group: 'REGULAR',
     name: 'TEETH',
     rate: 12,
-    value: () => (
+    value: (snoutColor) => (
       <g id="regular-smile_1_">
         <path
           style={basicStyles.toothFill}
@@ -64,7 +69,7 @@ export const MOUTH = {
     group: 'REGULAR',
     name: 'FROWN',
     rate: 8,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}
@@ -84,7 +89,7 @@ export const MOUTH = {
     group: 'REGULAR',
     name: 'TINY',
     rate: 4,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.baseFill}
@@ -101,7 +106,7 @@ export const MOUTH = {
     group: 'STRAIGHT',
     name: 'UP',
     rate: 12,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}
@@ -121,7 +126,7 @@ export const MOUTH = {
     group: 'STRAIGHT',
     name: 'STRAIGHT',
     rate: 9,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}
@@ -141,7 +146,7 @@ export const MOUTH = {
     group: 'STRAIGHT',
     name: 'DOWN',
     rate: 6,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}
@@ -161,7 +166,7 @@ export const MOUTH = {
     group: 'STRAIGHT',
     name: 'NAME',
     rate: 3,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}
@@ -182,7 +187,7 @@ export const MOUTH = {
     group: 'OPEN',
     name: 'NORMAL',
     rate: 8,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.mouthFill}
@@ -210,7 +215,7 @@ export const MOUTH = {
     group: 'OPEN',
     name: 'WIDE',
     rate: 6,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.mouthFill}
@@ -238,7 +243,7 @@ export const MOUTH = {
     group: 'OPEN',
     name: 'FLIPPED',
     rate: 4,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           d="M584.1 505.4c1.1-3.8.8-8.8.5-12.7-.7-9.1-5.5-18.1-13.3-23-14-8.8-26.5 12.3-31.6 22.2-1.8 3.4-7 11.9-.2 13.2 5.6 1.1 44.5.5 44.6.3z"
@@ -266,8 +271,15 @@ export const MOUTH = {
     group: 'OPEN',
     name: 'TRIANGLE',
     rate: 2,
-    value: () => (
+    value: (snoutColor) => (
       <g>
+        <path
+          style={snoutColor}
+          className="what-is-this"
+          d="M557.9,511c3.1-2.5,5.3-5.9,4.6-10c-0.6-3.8-3.6-6.7-6.7-9.1c-6.4-5.1-13.4-9.4-20.4-13.6
+	c-9-5.5-18.1-10.9-27.2-16.3c-7.1-4.2-16.6-12.5-25.1-12.5c-4,0-7.6,2.1-11,4.2c-11.2,6.9-20.3,20.5-21,34.1
+	c-0.4,6.7,5.7,9.6,10.9,11.6c8.3,3.1,16.6,6.1,25,8.9c19.2,6.2,42,13,62,7.2C551.8,514.7,555.2,513.1,557.9,511z"
+        />
         <path
           style={basicStyles.mouthFill}
           d="M551.3 505.2c-21.3-1.5-42-3.2-62.9-7.9-6.5-1.4-19.3-4.4-20-12.8-.2-1.9.4-3.8 1-5.7 1.6-5.1 3.2-10.3 4.8-15.4.1-.3.2-.6.4-.7.3-.2.8-.1 1.2.1 5.8 2.5 70.9 39.9 75.5 42.4z"
@@ -291,7 +303,7 @@ export const MOUTH = {
     group: 'SPECIAL',
     name: 'LIPS',
     rate: 4,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.baseFill}
@@ -307,7 +319,7 @@ export const MOUTH = {
     group: 'SPECIAL',
     name: 'WIGGLE',
     rate: 3,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}
@@ -344,7 +356,7 @@ export const MOUTH = {
     group: 'SPECIAL',
     name: 'CREEPY',
     rate: 2,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}
@@ -373,7 +385,7 @@ export const MOUTH = {
     group: 'SPECIAL',
     name: 'BRACES',
     rate: 1,
-    value: () => (
+    value: (snoutColor) => (
       <g>
         <path
           style={basicStyles.toothFill}

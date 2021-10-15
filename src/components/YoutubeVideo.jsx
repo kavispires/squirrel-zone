@@ -7,11 +7,11 @@ import useDistributorState from '../states/useDistributorState';
 
 function YoutubeVideo({
   className = '',
-  height = '180',
+  height = 180,
   onStateChange = () => {},
   playerRef,
   videoId,
-  width = '320',
+  width = 320,
 }) {
   const [videoIdFromState] = useDistributorState('videoId');
   const [, setIsRecording] = useDistributorState('isRecording');
@@ -79,14 +79,14 @@ YoutubeVideo.propTypes = {
   onStateChange: PropTypes.func,
   playerRef: PropTypes.any,
   videoId: PropTypes.string,
-  width: PropTypes.string,
+  width: PropTypes.number,
 };
 
 YoutubeVideo.defaultProps = {
   className: '',
-  height: '180',
+  height: 180,
   onStateChange: () => {},
-  width: '320',
+  width: 320,
 };
 
 export default YoutubeVideo;

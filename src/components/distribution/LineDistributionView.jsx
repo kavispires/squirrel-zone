@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import React, { Fragment, useEffect, useState } from 'react';
 
 // State
 import useGlobalState from '../../states/useGlobalState';
@@ -8,8 +9,10 @@ import { Previewer } from '../../models';
 // Components
 import ViewAnimatedBars from './ViewAnimatedBars';
 import Loading from '../global/Loading';
+import { useHistory } from 'react-router';
 
 function LineDistributionView({ playerRef }) {
+  const history = useHistory();
   const [activeMembers] = useGlobalState('activeMembers');
   const [activeDistribution] = useGlobalState('activeDistribution');
   const [activeDistributionData] = useGlobalState('activeDistributionData');
@@ -22,6 +25,15 @@ function LineDistributionView({ playerRef }) {
   const [previewBars, setPreviewBars] = usePreviewState('previewBars');
   const [previewLyrics, setPreviewLyrics] = usePreviewState('previewLyrics');
   const [wasDistributionEdited, setWasDistributionEdited] = usePreviewState('wasDistributionEdited');
+
+  const [fixedSize, setFixedSize] = useState(null);
+
+  useEffect(() => {
+    if (history.location.search) {
+      const [, size] = history.location.search.split('=');
+      setFixedSize(Number(size));
+    }
+  }, [history.location.search]);
 
   useEffect(() => {
     if (
@@ -68,16 +80,23 @@ function LineDistributionView({ playerRef }) {
   }
 
   return (
-    <ViewAnimatedBars
-      playerRef={playerRef}
-      videoId={activeSong.videoId}
-      members={previewMembers}
-      bars={previewBars}
-      lyrics={previewLyrics}
-      framerate={30}
-      className="line-distribution__animated-bars"
-    />
+    <Fragment>
+      <ViewAnimatedBars
+        playerRef={playerRef}
+        videoId={activeSong.videoId}
+        members={previewMembers}
+        bars={previewBars}
+        lyrics={previewLyrics}
+        framerate={30}
+        className="line-distribution__animated-bars"
+        fixedSize={fixedSize}
+      />
+    </Fragment>
   );
 }
+
+LineDistributionView.propTypes = {
+  playerRef: PropTypes.any,
+};
 
 export default LineDistributionView;

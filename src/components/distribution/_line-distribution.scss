@@ -1,23 +1,23 @@
-$avatar-size: 30px;
-$container-height: 45vw;
-$rank-entry-height: 35px;
+$avatar-size: 2em;
+$container-height: 80vh;
+$rank-entry-height: 2.5em;
 
 .line-distribution {
   &__container {
     display: grid;
     width: 100%;
+    margin: 0 auto 3em auto;
     height: $container-height;
-    margin: 0 auto;
 
-    grid-template-columns: [start] 25vw [middle] auto [end];
-    grid-template-rows: [start] 14vw [middle] auto [end];
+    grid-template-columns: [start] 33.33% [middle] auto [end];
+    grid-template-rows: [start] 33.33% [middle] auto [end];
 
     background-color: black;
   }
 
   &__video {
     grid-column: start / middle;
-    grid-row-start: start / middle;
+    grid-row: start / middle;
 
     display: flex;
     justify-content: center;
@@ -42,14 +42,14 @@ $rank-entry-height: 35px;
     grid-row: start / end;
     background: linear-gradient(to bottom, #c7d3db, #5f6e79);
 
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 }
 
 .rank-entry {
   width: 95%;
   height: $rank-entry-height;
-  margin-bottom: get-unit(1);
+  margin-bottom: 0.25em;
   position: absolute;
 
   display: grid;
@@ -58,11 +58,11 @@ $rank-entry-height: 35px;
 
   transition: opacity 500ms, transform 1s;
 
-  $progress-bar-size: 8px;
+  $progress-bar-size: 0.5em;
 
-  grid-template-columns: [start] $avatar-size [first] auto [second] 40px [end];
-  grid-template-rows: [start] 16px [middle] auto [end];
-  gap: get-unit(1);
+  grid-template-columns: [start] $avatar-size [first] auto [second] 2.5em [end];
+  grid-template-rows: [start] 1em [middle] auto [end];
+  gap: 0.25em;
 
   &__avatar {
     grid-column: start / first;
@@ -71,7 +71,6 @@ $rank-entry-height: 35px;
     display: flex;
 
     width: 100%;
-    height: $avatar-size;
     justify-content: center;
     align-items: center;
 
@@ -83,7 +82,8 @@ $rank-entry-height: 35px;
     grid-row: start / middle;
     font-weight: bold;
     color: white;
-    padding-left: get-unit(1);
+    padding-left: 0.25em;
+    line-height: 1em;
   }
 
   &__progress {
@@ -91,15 +91,15 @@ $rank-entry-height: 35px;
     grid-row: middle / end;
 
     display: flex;
-    margin: get-unit(0 1 1 1);
+    margin: 0 0.25em 0.25em 0.25em;
     background: rgba(255, 255, 255, 0.1);
     height: $progress-bar-size;
-    border-radius: get-unit(1);
+    border-radius: 0.25em;
   }
 
   &__progress-bar {
     height: $progress-bar-size;
-    border-radius: get-unit(1);
+    border-radius: 0.25em;
     transition: width 500ms, background-color 1s;
   }
 
@@ -114,7 +114,7 @@ $rank-entry-height: 35px;
     opacity: 1;
   }
 
-  $bar-entry-height: $rank-entry-height + 4px;
+  $bar-entry-height: $rank-entry-height + 0.25em;
 
   &---1 {
     transform: translateY((10 - 1) * $bar-entry-height);
@@ -131,11 +131,11 @@ $rank-entry-height: 35px;
 .lyrics-scroller {
   &__entries-container {
     &:first-child {
-      transform: translateY($container-height);
+      transform: translateY(100vh);
     }
 
     &:last-child {
-      padding-bottom: $container-height;
+      padding-bottom: 100vh;
     }
   }
 
@@ -143,7 +143,7 @@ $rank-entry-height: 35px;
     transition: opacity 1s;
 
     &--padded {
-      opacity: 0.1;
+      opacity: 0.05;
     }
   }
 }
@@ -151,9 +151,9 @@ $rank-entry-height: 35px;
 .lyrics-entry {
   display: grid;
   grid-template-columns: [start] $avatar-size [middle] auto [end];
-  grid-template-rows: [start] 28px [middle] auto [end];
-  width: 450px;
-  margin: 16px auto;
+  grid-template-rows: [start] 1.75em [middle] auto [end];
+  width: 60%;
+  margin: 1em auto;
 
   &__avatars {
     grid-column: start / middle;

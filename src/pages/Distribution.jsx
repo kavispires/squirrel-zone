@@ -110,7 +110,7 @@ function Distribution() {
             <Tabs.TabPane
               tab={TabIcon('view')}
               key="view"
-              className="distribution__tab"
+              className="distribution__tab distribution__tab--dark"
               disabled={!activeDistribution?.id}
             >
               {mode === 'view' && (

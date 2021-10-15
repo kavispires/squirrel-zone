@@ -15,6 +15,10 @@
 
   &__tab {
     padding: get-unit(2);
+
+    &--dark {
+      background: black;
+    }
   }
 
   &__tab-icon {

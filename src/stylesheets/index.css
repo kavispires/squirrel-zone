@@ -398,6 +398,11 @@ body {
 .distribution__tab-icon > .anticon {
   margin: 0;
 }
+.distribution__tab-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .distributor-content {
   min-height: 400px;

@@ -1,3 +1,5 @@
+import { DISTRIBUTION_SEPARATOR } from '../utils/constants';
+
 export class LineEntry {
   constructor({ lineId, startTime }) {
     this.lineId = lineId;
@@ -12,7 +14,7 @@ export class LineEntry {
     this.partsIds.push(part.id);
     this.sectionId = part.sectionId;
     this.text.push(part.text);
-    this.assignees.push(part.assignees.sort().join('+++'));
+    this.assignees.push(part.assignees.sort().join(DISTRIBUTION_SEPARATOR));
     this.startTime = part.startTime < this.startTime ? part.startTime : this.startTime;
   }
 
@@ -24,7 +26,7 @@ export class LineEntry {
         this.assignees = [this.assignees[0]];
       }
     }
-    this.assignees = this.assignees.join('+++');
+    this.assignees = this.assignees.join(DISTRIBUTION_SEPARATOR);
   }
 }
 

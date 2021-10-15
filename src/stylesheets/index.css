@@ -1082,6 +1082,21 @@ body {
   opacity: 0.05;
 }
 
+.lyrics-scroller__title {
+  background: white;
+  width: 60%;
+  text-align: center;
+  border-radius: 0.25em;
+  margin: 1em auto 45vh auto;
+  padding: 2em;
+}
+.lyrics-scroller__title h1 {
+  font-size: 1.5em;
+}
+.lyrics-scroller__title h2 {
+  font-size: 2.5em;
+}
+
 .lyrics-entry {
   display: grid;
   grid-template-columns: [start] 2em [middle] auto [end];

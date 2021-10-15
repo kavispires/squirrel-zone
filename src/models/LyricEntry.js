@@ -1,3 +1,5 @@
+import { DISTRIBUTION_SEPARATOR } from '../utils/constants';
+
 export class LyricEntry {
   constructor(entry) {
     this.startTime = entry.startTime;
@@ -11,7 +13,7 @@ export class LyricEntry {
   }
 
   data(members, framerate) {
-    const assignees = [...new Set(this.assignees.split('+++'))].map((key) => members[key]);
+    const assignees = [...new Set(this.assignees.split(DISTRIBUTION_SEPARATOR))].map((key) => members[key]);
 
     return {
       startTime: this.startTime,

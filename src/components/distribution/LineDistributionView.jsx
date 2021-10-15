@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 
 // State
 import useGlobalState from '../../states/useGlobalState';
@@ -13,6 +13,7 @@ import { useHistory } from 'react-router';
 
 function LineDistributionView({ playerRef }) {
   const history = useHistory();
+  const [activeGroup] = useGlobalState('activeGroup');
   const [activeMembers] = useGlobalState('activeMembers');
   const [activeDistribution] = useGlobalState('activeDistribution');
   const [activeDistributionData] = useGlobalState('activeDistributionData');
@@ -25,7 +26,7 @@ function LineDistributionView({ playerRef }) {
   const [previewBars, setPreviewBars] = usePreviewState('previewBars');
   const [previewLyrics, setPreviewLyrics] = usePreviewState('previewLyrics');
   const [wasDistributionEdited, setWasDistributionEdited] = usePreviewState('wasDistributionEdited');
-
+  // Local state
   const [fixedSize, setFixedSize] = useState(null);
 
   useEffect(() => {
@@ -34,6 +35,20 @@ function LineDistributionView({ playerRef }) {
       setFixedSize(Number(size));
     }
   }, [history.location.search]);
+
+  const preview = useMemo(
+    () =>
+      new Previewer({
+        songTitle: activeSong.title,
+        distributionType: activeDistribution.name,
+        groupName: activeGroup.name,
+        songData: activeSongData,
+        members: activeMembers,
+        distribution: activeDistributionData,
+        framerate: 30,
+      }),
+    [activeDistributionData, activeMembers, activeSong.title, activeSongData, activeDistribution, activeGroup]
+  );
 
   useEffect(() => {
     if (
@@ -44,13 +59,6 @@ function LineDistributionView({ playerRef }) {
         (activeSong.id !== songId || activeDistribution.id !== distributionId)) ||
       wasDistributionEdited
     ) {
-      const preview = new Previewer({
-        songTitle: activeSong.title,
-        songData: activeSongData,
-        members: activeMembers,
-        distribution: activeDistributionData,
-        framerate: 30,
-      });
       setPreviewMembers(preview.members());
       setPreviewBars(preview.bars());
       setPreviewLyrics(preview.lyrics());
@@ -59,6 +67,7 @@ function LineDistributionView({ playerRef }) {
       setWasDistributionEdited(false);
     }
   }, [
+    preview,
     activeSong,
     activeDistribution,
     activeDistributionData,

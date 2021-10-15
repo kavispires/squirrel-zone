@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Utils
@@ -9,18 +9,23 @@ import ViewLyricEntry from './ViewLyricEntry';
 
 function ViewLyricsScroller({ currentTime, lyrics, dimensions }) {
   const lyricsRef = useRef([]);
-  const [latestIndex, setLatestIndex] = useState(-1);
+  const [latestIndex, setLatestIndex] = useState(0);
+  // const [latestAcceptableTime, setLatestAcceptableTime] = useState(0);
+
+  // Center song title from the start
+  useEffect(() => {
+    lyricsRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
 
   // If the next line is gonna start within 500ms, center it
   useEffect(() => {
     if (latestIndex === lyrics.length - 1) return;
 
-    if (currentTime > 0 && currentTime < 0.3) {
-      console.log(currentTime);
-      lyricsRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'end' });
-      setLatestIndex(-1);
-      return;
-    }
+    // if (currentTime > 0 && currentTime < 0.3) {
+    //   lyricsRef.current[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //   setLatestIndex(-1);
+    //   return;
+    // }
 
     if (lyrics[latestIndex + 1].startTime <= Math.trunc(currentTime * 1000) + 100) {
       lyricsRef.current[latestIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -32,14 +37,22 @@ function ViewLyricsScroller({ currentTime, lyrics, dimensions }) {
     <div className="line-distribution__live-lyrics lyrics-scroller">
       <ul className="lyrics-scroller__entries-container">
         {lyrics.map((lyric, index) => {
-          const paddingClass = getBemModifier(index > latestIndex, 'padded');
+          const paddingClass = getBemModifier(index > latestIndex && !lyric.title, 'padded');
+
           return (
             <li
               key={`lyrics-${index}`}
               ref={(el) => (lyricsRef.current[index] = el)}
               className={bemClass('lyrics-scroller__li', paddingClass)}
             >
-              <ViewLyricEntry lyric={lyric} number={index} dimensions={dimensions} />
+              {Boolean(lyric.title) ? (
+                <div className="lyrics-scroller__title">
+                  <h1>{lyric.subtitle}</h1>
+                  <h2>{lyric.title}</h2>
+                </div>
+              ) : (
+                <ViewLyricEntry lyric={lyric} number={index} dimensions={dimensions} />
+              )}
             </li>
           );
         })}
@@ -54,4 +67,4 @@ ViewLyricsScroller.propTypes = {
   lyrics: PropTypes.array,
 };
 
-export default ViewLyricsScroller;
+export default memo(ViewLyricsScroller);

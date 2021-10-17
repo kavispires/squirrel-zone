@@ -11,6 +11,32 @@ import ViewAnimatedBars from './ViewAnimatedBars';
 import Loading from '../global/Loading';
 import { useHistory } from 'react-router';
 
+const prepareResultsChart = (previewBars, members) => {
+  const finalResults = previewBars[previewBars.length - 1];
+  if (!finalResults) return {};
+
+  const sortedResults = Object.values(finalResults).sort((a, b) => (a.percentage > b.percentage ? -1 : 1));
+
+  return sortedResults.reduce(
+    (acc, entry, index) => {
+      const member = members[entry.key];
+
+      // Add chart entry
+      acc.data.push([member.name, Number(entry.value)]);
+      // Add color entry
+      acc.options.slices[index] = { color: member.color };
+
+      return acc;
+    },
+    {
+      data: [['Member', 'Total Singing Time (in seconds)']],
+      options: {
+        slices: {},
+      },
+    }
+  );
+};
+
 function LineDistributionView({ playerRef }) {
   const history = useHistory();
   const [activeGroup] = useGlobalState('activeGroup');
@@ -28,6 +54,11 @@ function LineDistributionView({ playerRef }) {
   const [wasDistributionEdited, setWasDistributionEdited] = usePreviewState('wasDistributionEdited');
   // Local state
   const [fixedSize, setFixedSize] = useState(null);
+
+  const distributionResults = useMemo(() => prepareResultsChart(previewBars, activeMembers), [
+    previewBars,
+    activeMembers,
+  ]);
 
   useEffect(() => {
     if (history.location.search) {
@@ -99,6 +130,7 @@ function LineDistributionView({ playerRef }) {
         framerate={30}
         className="line-distribution__animated-bars"
         fixedSize={fixedSize}
+        distributionResults={distributionResults}
       />
     </Fragment>
   );

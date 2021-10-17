@@ -1,11 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+// State
+import useDistributorState from '../../states/useDistributorState';
 // Utils
 import { getFrameFromTimestamp } from '../../utils';
 // Components
 import YoutubeVideo from '../YoutubeVideo';
 import ViewRankingBars from './ViewRankingBars';
 import ViewLyricsScroller from './ViewLyricsScroller';
+import ViewResults from './ViewResults';
 
 const getDistributionDimensions = (resolution) => {
   const ratio = 1.777777777777778;
@@ -26,6 +29,9 @@ const getDistributionDimensions = (resolution) => {
       border: [4, 2]?.[index] ?? 2,
       allSize: [32, 18]?.[index] ?? 18,
     },
+    pieChart: {
+      size: [600, 400]?.[index] ?? 300,
+    },
   };
 };
 
@@ -35,10 +41,13 @@ function ViewAnimatedBars({
   members,
   bars,
   lyrics,
+  distributionResults,
   framerate = 30,
   className = '',
   fixedSize = null,
 }) {
+  const [hasEnded] = useDistributorState('hasEnded');
+
   const [intervalId, setIntervalId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentRank, setCurrentRank] = useState(bars[0]);
@@ -86,7 +95,11 @@ function ViewAnimatedBars({
         onStateChange={onStateChange}
       />
       <ViewRankingBars members={members} currentRank={currentRank} dimensions={dimensions} />
-      <ViewLyricsScroller currentTime={currentTime} lyrics={lyrics} dimensions={dimensions} />
+      {hasEnded ? (
+        <ViewResults dimensions={dimensions} distributionResults={distributionResults} />
+      ) : (
+        <ViewLyricsScroller currentTime={currentTime} lyrics={lyrics} dimensions={dimensions} />
+      )}
     </section>
   );
 }

@@ -983,6 +983,14 @@ body {
   background: linear-gradient(to bottom, #c7d3db, #5f6e79);
   overflow-y: hidden;
 }
+.line-distribution__live-lyrics--results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.line-distribution__live-lyrics h1 {
+  text-align: center;
+}
 
 .rank-entry {
   width: 95%;

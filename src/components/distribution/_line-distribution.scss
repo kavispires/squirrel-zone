@@ -43,7 +43,16 @@ $rank-entry-height: 2.5em;
     background: linear-gradient(to bottom, #c7d3db, #5f6e79);
 
     overflow-y: hidden;
-    // overflow-y: scroll;
+
+    &--results {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 {
+      text-align: center;
+    }
   }
 }
 

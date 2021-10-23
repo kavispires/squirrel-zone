@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 import Avatar from '../Avatar';
 
 function LyricEntry({ lyric, number, dimensions }) {
+  if (lyric.title !== undefined) {
+    return null;
+  }
+
   return (
     <div className="lyrics-entry">
       <div className="lyrics-entry__avatars">

@@ -12,9 +12,9 @@ function ViewResults({ dimensions, distributionResults }) {
           height={pieChartSize}
           chartType="PieChart"
           loader={<div>Loading Results...</div>}
-          data={distributionResults.data}
+          data={distributionResults?.data ?? {}}
           options={{
-            ...distributionResults.options,
+            ...(distributionResults?.options ?? {}),
           }}
         />
       </div>

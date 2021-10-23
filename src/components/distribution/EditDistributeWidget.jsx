@@ -144,7 +144,7 @@ function EditDistributeWidget({
   return (
     <div className="distribute-widget">
       <div className="distribute-widget__options">
-        <YoutubeVideo playerRef={playerRef} width="320" height="180" className="distribute-widget__video" />
+        <YoutubeVideo playerRef={playerRef} width={320} height={180} className="distribute-widget__video" />
         <div className="distribute-widget__controls">
           <div>
             Progress Bar Type{' '}

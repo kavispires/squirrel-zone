@@ -2,8 +2,14 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Design Resources
-import { Layout, Tabs, Typography } from 'antd';
-import { EyeFilled, FileAddOutlined, HighlightFilled, ProfileFilled } from '@ant-design/icons';
+import { Button, Layout, Tabs, Typography } from 'antd';
+import {
+  CompressOutlined,
+  EyeFilled,
+  FileAddOutlined,
+  HighlightFilled,
+  ProfileFilled,
+} from '@ant-design/icons';
 // State
 import useGlobalState from '../states/useGlobalState';
 // Utilities
@@ -22,6 +28,35 @@ import LineDistributionLyrics from '../components/distribution/LineDistributionL
 import LineDistributionEdit from '../components/distribution/LineDistributionEdit';
 import LineDistributionNew from '../components/distribution/LineDistributionNew';
 import LoadingChecklist from '../components/LoadingChecklist';
+
+const ViewOptions = () => {
+  const history = useHistory();
+
+  const clickButton = (resolution) => {
+    if (resolution) {
+      history.push({
+        search: `?${new URLSearchParams({ fixedVideo: resolution })}`,
+      });
+    }
+  };
+
+  return (
+    <div className="distribution__tab-options">
+      <span>
+        <CompressOutlined alt="Video Resolution" />
+      </span>
+      <Button type="text" onClick={() => clickButton('')} size="small">
+        Auto
+      </Button>
+      <Button type="text" onClick={() => clickButton('720')} size="small">
+        720p
+      </Button>
+      <Button type="text" onClick={() => clickButton('1080')} size="small">
+        1080p
+      </Button>
+    </div>
+  );
+};
 
 function Distribution() {
   const history = useHistory();
@@ -106,11 +141,17 @@ function Distribution() {
             )}
           </Typography.Title>
 
-          <Tabs activeKey={mode} tabPosition="left" className="distribution__tabs" onChange={onSwitchMode}>
+          <Tabs
+            activeKey={mode}
+            tabPosition="left"
+            className="distribution__tabs"
+            onChange={onSwitchMode}
+            tabBarExtraContent={mode === 'view' && <ViewOptions />}
+          >
             <Tabs.TabPane
               tab={TabIcon('view')}
               key="view"
-              className="distribution__tab"
+              className="distribution__tab distribution__tab--dark"
               disabled={!activeDistribution?.id}
             >
               {mode === 'view' && (

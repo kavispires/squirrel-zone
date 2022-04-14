@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 
 // State
 import useGlobalState from '../../states/useGlobalState';
@@ -8,8 +9,37 @@ import { Previewer } from '../../models';
 // Components
 import ViewAnimatedBars from './ViewAnimatedBars';
 import Loading from '../global/Loading';
+import { useHistory } from 'react-router';
+
+const prepareResultsChart = (previewBars, members) => {
+  const finalResults = previewBars[previewBars.length - 1];
+  if (!finalResults) return {};
+
+  const sortedResults = Object.values(finalResults).sort((a, b) => (a.percentage > b.percentage ? -1 : 1));
+
+  return sortedResults.reduce(
+    (acc, entry, index) => {
+      const member = members[entry.key];
+
+      // Add chart entry
+      acc.data.push([member.name, Number(entry.value)]);
+      // Add color entry
+      acc.options.slices[index] = { color: member.color };
+
+      return acc;
+    },
+    {
+      data: [['Member', 'Total Singing Time (in seconds)']],
+      options: {
+        slices: {},
+      },
+    }
+  );
+};
 
 function LineDistributionView({ playerRef }) {
+  const history = useHistory();
+  const [activeGroup] = useGlobalState('activeGroup');
   const [activeMembers] = useGlobalState('activeMembers');
   const [activeDistribution] = useGlobalState('activeDistribution');
   const [activeDistributionData] = useGlobalState('activeDistributionData');
@@ -22,6 +52,34 @@ function LineDistributionView({ playerRef }) {
   const [previewBars, setPreviewBars] = usePreviewState('previewBars');
   const [previewLyrics, setPreviewLyrics] = usePreviewState('previewLyrics');
   const [wasDistributionEdited, setWasDistributionEdited] = usePreviewState('wasDistributionEdited');
+  // Local state
+  const [fixedSize, setFixedSize] = useState(null);
+
+  const distributionResults = useMemo(() => prepareResultsChart(previewBars, activeMembers), [
+    previewBars,
+    activeMembers,
+  ]);
+
+  useEffect(() => {
+    if (history.location.search) {
+      const [, size] = history.location.search.split('=');
+      setFixedSize(Number(size));
+    }
+  }, [history.location.search]);
+
+  const preview = useMemo(
+    () =>
+      new Previewer({
+        songTitle: activeSong.title,
+        distributionType: activeDistribution.name,
+        groupName: activeGroup.name,
+        songData: activeSongData,
+        members: activeMembers,
+        distribution: activeDistributionData,
+        framerate: 30,
+      }),
+    [activeDistributionData, activeMembers, activeSong.title, activeSongData, activeDistribution, activeGroup]
+  );
 
   useEffect(() => {
     if (
@@ -32,13 +90,6 @@ function LineDistributionView({ playerRef }) {
         (activeSong.id !== songId || activeDistribution.id !== distributionId)) ||
       wasDistributionEdited
     ) {
-      const preview = new Previewer({
-        songTitle: activeSong.title,
-        songData: activeSongData,
-        members: activeMembers,
-        distribution: activeDistributionData,
-        framerate: 30,
-      });
       setPreviewMembers(preview.members());
       setPreviewBars(preview.bars());
       setPreviewLyrics(preview.lyrics());
@@ -47,6 +98,7 @@ function LineDistributionView({ playerRef }) {
       setWasDistributionEdited(false);
     }
   }, [
+    preview,
     activeSong,
     activeDistribution,
     activeDistributionData,
@@ -68,16 +120,24 @@ function LineDistributionView({ playerRef }) {
   }
 
   return (
-    <ViewAnimatedBars
-      playerRef={playerRef}
-      videoId={activeSong.videoId}
-      members={previewMembers}
-      bars={previewBars}
-      lyrics={previewLyrics}
-      framerate={30}
-      className="line-distribution__animated-bars"
-    />
+    <Fragment>
+      <ViewAnimatedBars
+        playerRef={playerRef}
+        videoId={activeSong.videoId}
+        members={previewMembers}
+        bars={previewBars}
+        lyrics={previewLyrics}
+        framerate={30}
+        className="line-distribution__animated-bars"
+        fixedSize={fixedSize}
+        distributionResults={distributionResults}
+      />
+    </Fragment>
   );
 }
+
+LineDistributionView.propTypes = {
+  playerRef: PropTypes.any,
+};
 
 export default LineDistributionView;

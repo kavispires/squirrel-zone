@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 // Components
 import Avatar from '../Avatar';
 
-function LyricEntry({ lyric, number }) {
+function LyricEntry({ lyric, number, dimensions }) {
+  if (lyric.title !== undefined) {
+    return null;
+  }
+
   return (
     <div className="lyrics-entry">
       <div className="lyrics-entry__avatars">
@@ -14,7 +18,10 @@ function LyricEntry({ lyric, number }) {
             name={name}
             color={lyric.colors[index]}
             className={name === 'ALL' && lyric.names.length > 1 && 'lyrics-entry__avatar--all'}
-            size={name === 'ALL' && lyric.names.length > 1 && 'small'}
+            size={
+              name === 'ALL' && lyric.names.length > 1 ? dimensions.avatar.allSize : dimensions.avatar.size
+            }
+            borderSize={dimensions.avatar.border}
           />
         ))}
       </div>
@@ -41,6 +48,13 @@ function LyricEntry({ lyric, number }) {
 }
 
 LyricEntry.propTypes = {
+  dimensions: PropTypes.shape({
+    avatar: PropTypes.shape({
+      allSize: PropTypes.number,
+      border: PropTypes.number,
+      size: PropTypes.number,
+    }),
+  }),
   lyric: PropTypes.object,
   number: PropTypes.number,
 };

@@ -1,4 +1,5 @@
 import { deepCopy, getFrameFromTimestamp, getTimestampFromFrame } from '../utils';
+import { DISTRIBUTION_NAME } from '../utils/constants';
 import ChartEntry from './ChartEntry';
 import DistributedPart from './DistributedPart';
 import LineEntry from './LineEntry';
@@ -11,8 +12,19 @@ const ALL_NONE_MEMBERS = ['ALL', 'NONE', 'member::ALL', 'member::NONE'];
  * Class to generate a Line Distribution preview.
  */
 export class Previewer {
-  constructor({ songTitle, songData, partsData, members, distribution, framerate = 30 }) {
+  constructor({
+    songTitle,
+    distributionType,
+    groupName,
+    songData,
+    partsData,
+    members,
+    distribution,
+    framerate = 30,
+  }) {
     this._songTitle = songTitle;
+    this._groupName = groupName;
+    this._distributionType = distributionType;
     this._songData = songData;
     this._partsData = partsData;
     this._distribution = distribution;
@@ -199,6 +211,19 @@ export class Previewer {
     return this._bars;
   }
 
+  get subtitle() {
+    switch (this._distributionType) {
+      case DISTRIBUTION_NAME.COVER:
+      case DISTRIBUTION_NAME.WHAT_IF:
+      case DISTRIBUTION_NAME.SPECIAL:
+        return `How ${this._groupName} would sing`;
+      case DISTRIBUTION_NAME.REDO:
+        return `A new way for ${this._groupName} to sing`;
+      default:
+        return `${this._groupName}  `;
+    }
+  }
+
   /**
    *
    * @param {*} force
@@ -222,7 +247,12 @@ export class Previewer {
       lineEntries[dPart.lineId].add(dPart);
     });
 
-    const lyricsEntries = {};
+    const lyricsEntries = {
+      0: {
+        title: this._songTitle,
+        subtitle: this.subtitle,
+      },
+    };
 
     // Grouping
     // Rules if different sectionId, new lyricEntry
@@ -263,7 +293,9 @@ export class Previewer {
 
     // Cleanup
     Object.entries(lyricsEntries).forEach(([key, entry]) => {
-      lyricsEntries[key] = entry.data(this._members, this._framerate);
+      if (entry.data) {
+        lyricsEntries[key] = entry.data(this._members, this._framerate);
+      }
     });
 
     this._lyrics = Object.values(lyricsEntries);

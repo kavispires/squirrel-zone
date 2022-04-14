@@ -24,8 +24,8 @@ function TimeAndSync({ playerRef, playVideo, pauseVideo, seekAndPlay }) {
 
       <YoutubeVideo
         playerRef={playerRef}
-        width="320"
-        height="180"
+        width={320}
+        height={180}
         className="distributor-grid__video-container"
       />
 

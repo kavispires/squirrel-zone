@@ -1,17 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-
+// State
+import useDistributorState from '../../states/useDistributorState';
 // Utils
 import { getFrameFromTimestamp } from '../../utils';
 // Components
 import YoutubeVideo from '../YoutubeVideo';
 import ViewRankingBars from './ViewRankingBars';
 import ViewLyricsScroller from './ViewLyricsScroller';
+import ViewResults from './ViewResults';
 
-function ViewAnimatedBars({ playerRef, videoId, members, bars, lyrics, framerate = 30, className = '' }) {
+const getDistributionDimensions = (resolution) => {
+  const ratio = 1.777777777777778;
+  const index = [1080, 720].indexOf(resolution);
+
+  return {
+    container: {
+      width: resolution ? `${resolution * ratio}px` : '100%',
+      height: `${resolution}px`,
+      fontSize: `${[24, 16]?.[index] ?? 16}px`,
+    },
+    youtubeVideo: {
+      width: [640, 320]?.[index] ?? 320,
+      height: [360, 180]?.[index] ?? 180,
+    },
+    avatar: {
+      size: [48, 32]?.[index] ?? 32,
+      border: [4, 2]?.[index] ?? 2,
+      allSize: [32, 18]?.[index] ?? 18,
+    },
+    pieChart: {
+      size: [600, 400]?.[index] ?? 300,
+    },
+  };
+};
+
+function ViewAnimatedBars({
+  playerRef,
+  videoId,
+  members,
+  bars,
+  lyrics,
+  distributionResults,
+  framerate = 30,
+  className = '',
+  fixedSize = null,
+}) {
+  const [hasEnded] = useDistributorState('hasEnded');
+
   const [intervalId, setIntervalId] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentRank, setCurrentRank] = useState(bars[0]);
+
+  const dimensions = useMemo(() => getDistributionDimensions(fixedSize), [fixedSize]);
 
   useEffect(() => {
     setCurrentRank(bars[0]);
@@ -44,29 +85,34 @@ function ViewAnimatedBars({ playerRef, videoId, members, bars, lyrics, framerate
   }, [currentRank, currentTime, bars, framerate]);
 
   return (
-    <section className={`line-distribution__container ${className}`}>
+    <section className={`line-distribution__container ${className}`} style={dimensions.container}>
       <YoutubeVideo
         playerRef={playerRef}
         videoId={videoId}
-        width="320"
-        height="180"
+        width={dimensions.youtubeVideo.width}
+        height={dimensions.youtubeVideo.height}
         className="line-distribution__video"
         onStateChange={onStateChange}
       />
-      <ViewRankingBars members={members} currentRank={currentRank} />
-      <ViewLyricsScroller currentTime={currentTime} lyrics={lyrics} />
+      <ViewRankingBars members={members} currentRank={currentRank} dimensions={dimensions} />
+      {hasEnded ? (
+        <ViewResults dimensions={dimensions} distributionResults={distributionResults} />
+      ) : (
+        <ViewLyricsScroller currentTime={currentTime} lyrics={lyrics} dimensions={dimensions} />
+      )}
     </section>
   );
 }
 
 ViewAnimatedBars.propTypes = {
+  bars: PropTypes.array,
+  className: PropTypes.string,
+  fixedSize: PropTypes.number,
+  framerate: PropTypes.number,
+  lyrics: PropTypes.array,
+  members: PropTypes.array,
   playerRef: PropTypes.any,
   videoId: PropTypes.string,
-  members: PropTypes.array,
-  bars: PropTypes.array,
-  lyrics: PropTypes.array,
-  framerate: PropTypes.number,
-  className: PropTypes.string,
 };
 
 ViewAnimatedBars.defaultProps = {

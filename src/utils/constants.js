@@ -97,6 +97,8 @@ export const ROMAN_NUMBER = {
 
 export const SEPARATOR = '::';
 
+export const DISTRIBUTION_SEPARATOR = '+++';
+
 export const DEFAULT_MEMBERS = {
   'member::ALL': {
     id: 'ALL',

@@ -7,12 +7,18 @@ import { bemClass, getBemModifier } from '../../utils';
 // Components
 import Avatar from '../Avatar';
 
-function ViewRankEntry({ member, rank }) {
+function ViewRankEntry({ member, rank, dimensions }) {
   const onClass = getBemModifier(rank.on, 'on');
 
   return (
     <li className={bemClass('rank-entry', onClass, rank.position)}>
-      <Avatar name={member.name} className="rank-entry__avatar" color={member.color ?? 'black'} />
+      <Avatar
+        name={member.name}
+        className="rank-entry__avatar"
+        color={member.color ?? 'black'}
+        size={dimensions.avatar.size}
+        borderSize={dimensions.avatar.border}
+      />
       <div className="rank-entry__name">{member.name}</div>
       <div className="rank-entry__progress">
         <span
@@ -26,6 +32,12 @@ function ViewRankEntry({ member, rank }) {
 }
 
 ViewRankEntry.propTypes = {
+  dimensions: PropTypes.shape({
+    avatar: PropTypes.shape({
+      border: PropTypes.number,
+      size: PropTypes.number,
+    }),
+  }),
   member: PropTypes.object,
   rank: PropTypes.object,
 };

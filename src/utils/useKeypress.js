@@ -12,7 +12,7 @@ export function useKeyUp(keys, action) {
     }
     window.addEventListener('keyup', onKeyup);
     return () => window.removeEventListener('keyup', onKeyup);
-  }, []);
+  }, []); // eslint-disable-line
 }
 
 /**
@@ -27,5 +27,5 @@ export function useKeyDown(keys, action) {
     }
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
+  }, []); // eslint-disable-line
 }

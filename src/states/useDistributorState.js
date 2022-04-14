@@ -15,6 +15,7 @@ const initialState = {
 
   selectedTimestamps: [],
   isPlaying: false,
+  hasEnded: false,
 
   isFullyLoaded: false,
 

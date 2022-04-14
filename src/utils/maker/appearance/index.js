@@ -80,7 +80,6 @@ export const getRandomAppearanceId = (function () {
       randomIndex += 1;
       result = items[randomIndex];
     }
-    console.log('Generated', result, 'for', libraryId);
     return result;
   }
 

@@ -46,7 +46,7 @@ function LineDistributionEdit({ playerRef }) {
     }
 
     loadContent();
-  }, []);
+  }, []); // eslint-disable-line
 
   const resetDistribution = () => {
     setupNewActiveDistribution({});

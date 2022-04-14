@@ -62,10 +62,10 @@ function Group() {
   }, [groupId, setActiveGroup]);
 
   const goToDistribution = useCallback(
-    (id, mode = 'view') => {
+    (id, mode = 'view', qp = '') => {
       resetStateForDistribution();
       // Modes can be `view`, `edit`, `lyrics`, `new` (in case of new a songId is sent instead of a distributionID)
-      history.push(`/distribution/${id}/${mode}`);
+      history.push(`/distribution/${id}/${mode}${qp}`);
     },
     [history]
   );

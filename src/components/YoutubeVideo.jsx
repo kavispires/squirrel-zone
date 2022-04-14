@@ -7,15 +7,16 @@ import useDistributorState from '../states/useDistributorState';
 
 function YoutubeVideo({
   className = '',
-  height = '180',
+  height = 180,
   onStateChange = () => {},
   playerRef,
   videoId,
-  width = '320',
+  width = 320,
 }) {
   const [videoIdFromState] = useDistributorState('videoId');
   const [, setIsRecording] = useDistributorState('isRecording');
   const [, setIsPlaying] = useDistributorState('isPlaying');
+  const [, setHasEnded] = useDistributorState('hasEnded');
 
   const youtubeId = videoId ?? videoIdFromState;
 
@@ -29,23 +30,22 @@ function YoutubeVideo({
   };
 
   const onReady = (e) => {
-    console.log('onReady', e);
+    setHasEnded(false);
   };
 
   const onPlay = (e) => {
-    console.log('onPlay', e);
+    setHasEnded(false);
     setIsPlaying(true);
   };
 
   const onPause = (e) => {
-    console.log('onPause', e);
     setIsPlaying(false);
   };
 
   const onEnd = (e) => {
-    console.log('onEnd', e);
     setIsRecording(false);
     setIsPlaying(false);
+    setHasEnded(true);
   };
 
   const onPlaybackRateChange = (e) => {
@@ -75,18 +75,18 @@ function YoutubeVideo({
 
 YoutubeVideo.propTypes = {
   className: PropTypes.string,
-  height: PropTypes.string,
+  height: PropTypes.number,
   onStateChange: PropTypes.func,
   playerRef: PropTypes.any,
   videoId: PropTypes.string,
-  width: PropTypes.string,
+  width: PropTypes.number,
 };
 
 YoutubeVideo.defaultProps = {
   className: '',
-  height: '180',
+  height: 180,
   onStateChange: () => {},
-  width: '320',
+  width: 320,
 };
 
 export default YoutubeVideo;

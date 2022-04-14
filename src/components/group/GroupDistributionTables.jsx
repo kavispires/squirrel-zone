@@ -69,6 +69,21 @@ function GroupDistributionTables({ group, members, goToDistribution, groupedDist
         </Button>
       ),
     },
+    {
+      title: 'View 1080p',
+      dataIndex: 'id',
+      className: 'group-distribution-table__button',
+      render: (_, data) => (
+        <Button
+          type="primary"
+          size="small"
+          icon={<YoutubeOutlined />}
+          onClick={() => goToDistribution(data.id, 'view', '?fixedVideo=1080')}
+        >
+          View 1080p
+        </Button>
+      ),
+    },
   ];
 
   return (
@@ -94,11 +109,12 @@ function GroupDistributionTables({ group, members, goToDistribution, groupedDist
 }
 
 GroupDistributionTables.propTypes = {
-  group: PropTypes.object,
-  members: PropTypes.object,
   activateDistribution: PropTypes.func,
   activateLyrics: PropTypes.func,
+  goToDistribution: PropTypes.func,
+  group: PropTypes.object,
   groupedDistributions: PropTypes.array,
+  members: PropTypes.object,
 };
 
 export default GroupDistributionTables;
